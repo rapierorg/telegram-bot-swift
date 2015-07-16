@@ -1,5 +1,5 @@
 //
-// GroupChat.swift
+// Audio.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -24,21 +24,27 @@
 import Foundation
 import SwiftyJSON
 
-/// Represents a group chat.
-public class GroupChat {
+// Represents an audio file (voice note).
+public class Audio {
     
-    /// Unique identifier for this group chat.
-    public var id: Int
+    /// Unique identifier for this file.
+    public var fileId: String
     
-    /// Group name.
-    public var title: String
+    /// Duration of the audio in seconds as defined by sender.
+    public var duration: Int
+    
+    /// Optional. MIME type of the file as defined by sender
+    public var mimeType: String?
+    
+    /// Optional. File size
+    public var fileSize: Int?
     
     /// Create an empty instance.
     public init() {
-        id = 0
-        title = ""
+        fileId = ""
+        duration = 0
     }
-    
+
     /// Create an instance from JSON data.
     ///
     /// Will return nil if `json` is empty or invalid.
@@ -46,11 +52,14 @@ public class GroupChat {
         self.init()
         
         if json.isNullOrUnknown { return nil }
+
+        guard let fileId = json["file_id"].string else { return nil }
+        self.fileId = fileId
         
-        guard let id = json["id"].int else { return nil }
-        self.id = id
+        guard let duration = json["duration"].int else { return nil }
+        self.duration = duration
         
-        guard let title = json["title"].string else { return nil }
-        self.title = title
+        mimeType = json["mime_type"].string
+        fileSize = json["file_size"].int
     }
 }

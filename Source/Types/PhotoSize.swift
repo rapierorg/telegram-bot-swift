@@ -26,16 +26,16 @@ import SwiftyJSON
 /// Represents one size of a photo or a file / sticker thumbnail.
 public class PhotoSize {
     
-    /// Unique identifier for this file
+    /// Unique identifier for this file.
     public var fileId: String
     
-    /// Photo width
+    /// Photo width.
     public var width: Int
     
-    /// Photo height
+    /// Photo height.
     public var height: Int
     
-    /// Optional. File size
+    /// Optional. File size.
     public var fileSize: Int?
     
     /// Create an empty instance.

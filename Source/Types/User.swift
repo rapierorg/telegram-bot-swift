@@ -33,7 +33,7 @@ public class User {
     /// User‘s or bot’s first name.
     public var firstName: String
     
-    /// Optional. User‘s or bot’s last name*.
+    /// Optional. User‘s or bot’s last name.
     public var lastName: String?
     
     /// Optional. User‘s or bot’s username.
