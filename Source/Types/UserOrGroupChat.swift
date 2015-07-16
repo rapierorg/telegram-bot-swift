@@ -23,7 +23,7 @@
 
 import Foundation
 
-enum UserOrGroupChat {
+public enum UserOrGroupChat {
     case User(TeleBot.User)
     case GroupChat(TeleBot.GroupChat)
 }

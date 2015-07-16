@@ -24,6 +24,7 @@
 		CEDFBF2F1B586F7B00E8928E /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF2E1B586F7B00E8928E /* Video.swift */; };
 		CEDFBF311B58709100E8928E /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF301B58709100E8928E /* Contact.swift */; };
 		CEDFBF331B58717A00E8928E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF321B58717A00E8928E /* Location.swift */; };
+		CEDFBF351B58727600E8928E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF341B58727600E8928E /* Message.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		CEDFBF2E1B586F7B00E8928E /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Video.swift; path = Types/Video.swift; sourceTree = "<group>"; };
 		CEDFBF301B58709100E8928E /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = Types/Contact.swift; sourceTree = "<group>"; };
 		CEDFBF321B58717A00E8928E /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Types/Location.swift; sourceTree = "<group>"; };
+		CEDFBF341B58727600E8928E /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Message.swift; path = Types/Message.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 			children = (
 				CE29DBA41B58541C00BCA03B /* User.swift */,
 				CEDFBF1F1B5861D600E8928E /* GroupChat.swift */,
+				CEDFBF341B58727600E8928E /* Message.swift */,
 				CEDFBF241B5862F700E8928E /* PhotoSize.swift */,
 				CEDFBF261B5864D700E8928E /* Audio.swift */,
 				CEDFBF2A1B58681300E8928E /* Document.swift */,
@@ -355,6 +358,7 @@
 				CEDFBF311B58709100E8928E /* Contact.swift in Sources */,
 				CE0ADC1A1B58585500FCA08C /* TeleBot.swift in Sources */,
 				CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */,
+				CEDFBF351B58727600E8928E /* Message.swift in Sources */,
 				CEDFBF291B58676100E8928E /* UserOrGroupChat.swift in Sources */,
 				CEDFBF331B58717A00E8928E /* Location.swift in Sources */,
 				CEDFBF2F1B586F7B00E8928E /* Video.swift in Sources */,
