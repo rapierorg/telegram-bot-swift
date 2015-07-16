@@ -15,6 +15,7 @@
 		CE3B38261B584B3F00090037 /* TeleBot.h in Headers */ = {isa = PBXBuildFile; fileRef = CE3B38251B584B3F00090037 /* TeleBot.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE3B382D1B584B4000090037 /* TeleBot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3B38221B584B3F00090037 /* TeleBot.framework */; };
 		CE3B38321B584B4000090037 /* TeleBotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B38311B584B4000090037 /* TeleBotTests.swift */; };
+		CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF1F1B5861D600E8928E /* GroupChat.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		CE3B382C1B584B4000090037 /* TeleBotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeleBotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3B38311B584B4000090037 /* TeleBotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeleBotTests.swift; sourceTree = "<group>"; };
 		CE3B38331B584B4000090037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEDFBF1F1B5861D600E8928E /* GroupChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupChat.swift; path = Types/GroupChat.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				CE29DBA41B58541C00BCA03B /* User.swift */,
+				CEDFBF1F1B5861D600E8928E /* GroupChat.swift */,
 			);
 			name = Types;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				CE29DBA51B58541C00BCA03B /* User.swift in Sources */,
 				CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */,
 				CE0ADC1A1B58585500FCA08C /* TeleBot.swift in Sources */,
+				CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

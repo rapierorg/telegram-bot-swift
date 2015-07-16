@@ -1,5 +1,5 @@
 //
-// User.swift
+// GroupChat.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -24,25 +24,19 @@
 import Foundation
 import SwiftyJSON
 
-/// Represents a Telegram user or bot.
-public class User {
+/// Represents a group chat.
+public class GroupChat {
     
-    /// Unique identifier for this user or bot.
+    /// Unique identifier for this group chat
     public var id: Int
     
-    /// User‘s or bot’s first name.
-    public var firstName: String
-    
-    /// Optional. User‘s or bot’s last name*.
-    public var lastName: String?
-    
-    /// Optional. User‘s or bot’s username.
-    public var username: String?
+    /// Group name
+    public var title: String
     
     /// Create an empty instance.
     public init() {
         id = 0
-        firstName = ""
+        title = ""
     }
     
     /// Create an instance from JSON data.
@@ -54,11 +48,9 @@ public class User {
             return nil
         }
         id = json["id"].intValue
-        guard let firstName = json["first_name"].string else {
+        guard let title = json["title"].string else {
             return nil
         }
-        self.firstName = firstName
-        lastName = json["last_name"].string
-        username = json["username"].string
+        self.title = title
     }
 }
