@@ -22,6 +22,7 @@
 		CEDFBF2B1B58681300E8928E /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF2A1B58681300E8928E /* Document.swift */; };
 		CEDFBF2D1B586DC500E8928E /* Sticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF2C1B586DC500E8928E /* Sticker.swift */; };
 		CEDFBF2F1B586F7B00E8928E /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF2E1B586F7B00E8928E /* Video.swift */; };
+		CEDFBF311B58709100E8928E /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF301B58709100E8928E /* Contact.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		CEDFBF2A1B58681300E8928E /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Document.swift; path = Types/Document.swift; sourceTree = "<group>"; };
 		CEDFBF2C1B586DC500E8928E /* Sticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sticker.swift; path = Types/Sticker.swift; sourceTree = "<group>"; };
 		CEDFBF2E1B586F7B00E8928E /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Video.swift; path = Types/Video.swift; sourceTree = "<group>"; };
+		CEDFBF301B58709100E8928E /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = Types/Contact.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 				CEDFBF2A1B58681300E8928E /* Document.swift */,
 				CEDFBF2C1B586DC500E8928E /* Sticker.swift */,
 				CEDFBF2E1B586F7B00E8928E /* Video.swift */,
+				CEDFBF301B58709100E8928E /* Contact.swift */,
 				CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */,
 			);
 			name = Types;
@@ -346,6 +349,7 @@
 				CE29DBA51B58541C00BCA03B /* User.swift in Sources */,
 				CEDFBF2D1B586DC500E8928E /* Sticker.swift in Sources */,
 				CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */,
+				CEDFBF311B58709100E8928E /* Contact.swift in Sources */,
 				CE0ADC1A1B58585500FCA08C /* TeleBot.swift in Sources */,
 				CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */,
 				CEDFBF291B58676100E8928E /* UserOrGroupChat.swift in Sources */,
