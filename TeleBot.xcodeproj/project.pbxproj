@@ -21,6 +21,7 @@
 		CEDFBF291B58676100E8928E /* UserOrGroupChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */; };
 		CEDFBF2B1B58681300E8928E /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF2A1B58681300E8928E /* Document.swift */; };
 		CEDFBF2D1B586DC500E8928E /* Sticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF2C1B586DC500E8928E /* Sticker.swift */; };
+		CEDFBF2F1B586F7B00E8928E /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF2E1B586F7B00E8928E /* Video.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,7 @@
 		CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserOrGroupChat.swift; path = Types/UserOrGroupChat.swift; sourceTree = "<group>"; };
 		CEDFBF2A1B58681300E8928E /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Document.swift; path = Types/Document.swift; sourceTree = "<group>"; };
 		CEDFBF2C1B586DC500E8928E /* Sticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sticker.swift; path = Types/Sticker.swift; sourceTree = "<group>"; };
+		CEDFBF2E1B586F7B00E8928E /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Video.swift; path = Types/Video.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 				CEDFBF261B5864D700E8928E /* Audio.swift */,
 				CEDFBF2A1B58681300E8928E /* Document.swift */,
 				CEDFBF2C1B586DC500E8928E /* Sticker.swift */,
+				CEDFBF2E1B586F7B00E8928E /* Video.swift */,
 				CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */,
 			);
 			name = Types;
@@ -346,6 +349,7 @@
 				CE0ADC1A1B58585500FCA08C /* TeleBot.swift in Sources */,
 				CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */,
 				CEDFBF291B58676100E8928E /* UserOrGroupChat.swift in Sources */,
+				CEDFBF2F1B586F7B00E8928E /* Video.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
