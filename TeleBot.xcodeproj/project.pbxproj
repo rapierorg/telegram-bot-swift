@@ -23,6 +23,7 @@
 		CEDFBF2D1B586DC500E8928E /* Sticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF2C1B586DC500E8928E /* Sticker.swift */; };
 		CEDFBF2F1B586F7B00E8928E /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF2E1B586F7B00E8928E /* Video.swift */; };
 		CEDFBF311B58709100E8928E /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF301B58709100E8928E /* Contact.swift */; };
+		CEDFBF331B58717A00E8928E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF321B58717A00E8928E /* Location.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		CEDFBF2C1B586DC500E8928E /* Sticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sticker.swift; path = Types/Sticker.swift; sourceTree = "<group>"; };
 		CEDFBF2E1B586F7B00E8928E /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Video.swift; path = Types/Video.swift; sourceTree = "<group>"; };
 		CEDFBF301B58709100E8928E /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = Types/Contact.swift; sourceTree = "<group>"; };
+		CEDFBF321B58717A00E8928E /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Types/Location.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				CEDFBF2C1B586DC500E8928E /* Sticker.swift */,
 				CEDFBF2E1B586F7B00E8928E /* Video.swift */,
 				CEDFBF301B58709100E8928E /* Contact.swift */,
+				CEDFBF321B58717A00E8928E /* Location.swift */,
 				CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */,
 			);
 			name = Types;
@@ -353,6 +356,7 @@
 				CE0ADC1A1B58585500FCA08C /* TeleBot.swift in Sources */,
 				CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */,
 				CEDFBF291B58676100E8928E /* UserOrGroupChat.swift in Sources */,
+				CEDFBF331B58717A00E8928E /* Location.swift in Sources */,
 				CEDFBF2F1B586F7B00E8928E /* Video.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

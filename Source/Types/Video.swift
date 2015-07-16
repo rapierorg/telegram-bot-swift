@@ -27,28 +27,28 @@ import SwiftyJSON
 // Represents a video file.
 public class Video {
 
-    /// Unique identifier for this file
+    /// Unique identifier for this file.
     public var fileId: String
     
-    /// Video width as defined by sender
+    /// Video width as defined by sender.
     public var width: Int
     
-    /// Video height as defined by sender
+    /// Video height as defined by sender.
     public var height: Int
     
-    /// Duration of the video in seconds as defined by sender
+    /// Duration of the video in seconds as defined by sender.
     public var duration: Int
     
-    /// Video thumbnail
+    /// Video thumbnail.
     public var thumb: PhotoSize
     
-    /// Optional. Mime type of a file as defined by sender
+    /// Optional. Mime type of a file as defined by sender.
     public var mimeType: String?
     
-    /// Optional. File size
+    /// Optional. File size.
     public var fileSize: Int?
     
-    /// Optional. Text description of the video (usually empty)
+    /// Optional. Text description of the video (usually empty).
     public var caption: String?
     
     /// Create an empty instance.

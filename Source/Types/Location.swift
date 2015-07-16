@@ -1,5 +1,5 @@
 //
-// Contact.swift
+// Location.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -24,39 +24,34 @@
 import Foundation
 import SwiftyJSON
 
-/// Represents a phone contact.
-public class Contact {
+/// Represents a point on the map.
+public class Location {
 
-    /// Contact's phone number.
-    public var phoneNumber: String
+    /// Longitude as defined by sender.
+    public var longitude: Float
     
-    /// Contact's first name.
-    public var firstName: String
-    
-    /// Optional. Contact's last name.
-    public var lastName: String?
-    
-    /// Optional. Contact's user identifier in Telegram.
-    public var userId: String?
+    /// Latitude as defined by sender.
+    public var latitude: Float
     
     /// Create an empty instance.
     public init() {
-        phoneNumber = ""
-        firstName = ""
+        longitude = 0.0
+        latitude = 0.0
     }
     
+    /// Create an instance from JSON data.
+    ///
+    /// Will return nil if `json` is empty or invalid.
     public convenience init?(json: JSON) {
         self.init()
         
         if json.isNullOrUnknown { return nil }
         
-        guard let phoneNumber = json["phone_number"].string else { return nil }
-        self.phoneNumber = phoneNumber
+        guard let longitude = json["longitude"].float else { return nil }
+        self.longitude = longitude
         
-        guard let firstName = json["first_name"].string else { return nil }
-        self.firstName = firstName
-        
-        lastName = json["last_name"].string
-        userId = json["user_id"].string
+        guard let latitude = json["latitude"].float else { return nil }
+        self.latitude = latitude
     }
 }
+
