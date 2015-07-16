@@ -1,5 +1,5 @@
 //
-// TeleBotTests.swift
+// User.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -21,37 +21,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import XCTest
-@testable import TeleBot
+import Foundation
+import SwiftyJSON
 
-class TeleBotTests: XCTestCase {
-    var testDataPath: String!
+/// Represents a Telegram user or bot.
+public class User {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        if let path = NSBundle(forClass: self.dynamicType).resourcePath {
-            testDataPath = path
-        } else {
-            XCTFail("Unable to get resourcePath")
+    /// Unique identifier for this user or bot
+    public var id: Int
+    
+    /// User‘s or bot’s first name
+    var firstName: String
+    
+    /// Optional. User‘s or bot’s last name
+    var lastName: String?
+    
+    /// Optional. User‘s or bot’s username
+    var username: String?
+    
+    init() {
+        id = 0
+        firstName = ""
+    }
+    
+    convenience init?(json: JSON) {
+        self.init()
+        if json.isNullOrUnknown {
+            return nil
         }
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
+        id = json["id"].intValue
+        guard let firstName = json["first_name"].string else {
+            return nil
         }
+        self.firstName = firstName
+        lastName = json["last_name"].string
+        username = json["username"].string
     }
-
 }

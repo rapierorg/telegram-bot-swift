@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE0ADC181B58582900FCA08C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE29DB9E1B584F7B00BCA03B /* SwiftyJSON.framework */; };
+		CE0ADC1A1B58585500FCA08C /* TeleBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ADC191B58585500FCA08C /* TeleBot.swift */; };
+		CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ADC201B58592300FCA08C /* JSON+Utils.swift */; };
 		CE29DBA31B58522E00BCA03B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = CE29DBA21B58522E00BCA03B /* LICENSE */; };
+		CE29DBA51B58541C00BCA03B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29DBA41B58541C00BCA03B /* User.swift */; };
 		CE3B38261B584B3F00090037 /* TeleBot.h in Headers */ = {isa = PBXBuildFile; fileRef = CE3B38251B584B3F00090037 /* TeleBot.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE3B382D1B584B4000090037 /* TeleBot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3B38221B584B3F00090037 /* TeleBot.framework */; };
 		CE3B38321B584B4000090037 /* TeleBotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B38311B584B4000090037 /* TeleBotTests.swift */; };
@@ -42,6 +46,13 @@
 			remoteGlobalIDString = 9C7DFC651A9102BD005AA3F7;
 			remoteInfo = "SwiftyJSON OSX Tests";
 		};
+		CE29DBA71B58563C00BCA03B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE29DB921B584F7B00BCA03B /* SwiftyJSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9C7DFC5A1A9102BD005AA3F7;
+			remoteInfo = "SwiftyJSON OSX";
+		};
 		CE3B382E1B584B4000090037 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE3B38191B584B3F00090037 /* Project object */;
@@ -52,8 +63,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE0ADC191B58585500FCA08C /* TeleBot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeleBot.swift; sourceTree = "<group>"; };
+		CE0ADC201B58592300FCA08C /* JSON+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Utils.swift"; sourceTree = "<group>"; };
 		CE29DB921B584F7B00BCA03B /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = ThirdParty/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		CE29DBA21B58522E00BCA03B /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		CE29DBA41B58541C00BCA03B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Types/User.swift; sourceTree = "<group>"; };
 		CE3B38221B584B3F00090037 /* TeleBot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TeleBot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3B38251B584B3F00090037 /* TeleBot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TeleBot.h; sourceTree = "<group>"; };
 		CE3B38271B584B3F00090037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -67,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE0ADC181B58582900FCA08C /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +96,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE0ADC1F1B58592300FCA08C /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ADC201B58592300FCA08C /* JSON+Utils.swift */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		CE29DB911B584F6E00BCA03B /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +126,7 @@
 		CE29DBA11B58519500BCA03B /* Types */ = {
 			isa = PBXGroup;
 			children = (
+				CE29DBA41B58541C00BCA03B /* User.swift */,
 			);
 			name = Types;
 			sourceTree = "<group>";
@@ -128,9 +152,11 @@
 		CE3B38241B584B3F00090037 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				CE0ADC1F1B58592300FCA08C /* Categories */,
 				CE29DBA11B58519500BCA03B /* Types */,
 				CE29DB911B584F6E00BCA03B /* ThirdParty */,
 				CE3B38251B584B3F00090037 /* TeleBot.h */,
+				CE0ADC191B58585500FCA08C /* TeleBot.swift */,
 				CE3B38271B584B3F00090037 /* Info.plist */,
 				CE29DBA21B58522E00BCA03B /* LICENSE */,
 			);
@@ -172,6 +198,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CE29DBA81B58563C00BCA03B /* PBXTargetDependency */,
 			);
 			name = TeleBot;
 			productName = TeleBot;
@@ -202,6 +229,7 @@
 		CE3B38191B584B3F00090037 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Andrey Fidrya";
 				TargetAttributes = {
@@ -291,6 +319,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE29DBA51B58541C00BCA03B /* User.swift in Sources */,
+				CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */,
+				CE0ADC1A1B58585500FCA08C /* TeleBot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,6 +336,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		CE29DBA81B58563C00BCA03B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftyJSON OSX";
+			targetProxy = CE29DBA71B58563C00BCA03B /* PBXContainerItemProxy */;
+		};
 		CE3B382F1B584B4000090037 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CE3B38211B584B3F00090037 /* TeleBot */;
@@ -400,6 +436,7 @@
 		CE3B38371B584B4000090037 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -412,12 +449,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zabiyaka.TeleBot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		CE3B38381B584B4000090037 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -437,7 +476,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = TeleBotTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zabiyaka.TeleBotTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -448,7 +487,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = TeleBotTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zabiyaka.TeleBotTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
