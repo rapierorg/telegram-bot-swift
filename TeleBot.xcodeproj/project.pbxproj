@@ -19,6 +19,7 @@
 		CEDFBF251B5862F700E8928E /* PhotoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF241B5862F700E8928E /* PhotoSize.swift */; };
 		CEDFBF271B5864D700E8928E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF261B5864D700E8928E /* Audio.swift */; };
 		CEDFBF291B58676100E8928E /* UserOrGroupChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */; };
+		CEDFBF2B1B58681300E8928E /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF2A1B58681300E8928E /* Document.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		CEDFBF241B5862F700E8928E /* PhotoSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoSize.swift; path = Types/PhotoSize.swift; sourceTree = "<group>"; };
 		CEDFBF261B5864D700E8928E /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Audio.swift; path = Types/Audio.swift; sourceTree = "<group>"; };
 		CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserOrGroupChat.swift; path = Types/UserOrGroupChat.swift; sourceTree = "<group>"; };
+		CEDFBF2A1B58681300E8928E /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Document.swift; path = Types/Document.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 				CEDFBF1F1B5861D600E8928E /* GroupChat.swift */,
 				CEDFBF241B5862F700E8928E /* PhotoSize.swift */,
 				CEDFBF261B5864D700E8928E /* Audio.swift */,
+				CEDFBF2A1B58681300E8928E /* Document.swift */,
 				CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */,
 			);
 			name = Types;
@@ -331,6 +334,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEDFBF2B1B58681300E8928E /* Document.swift in Sources */,
 				CEDFBF271B5864D700E8928E /* Audio.swift in Sources */,
 				CEDFBF251B5862F700E8928E /* PhotoSize.swift in Sources */,
 				CE29DBA51B58541C00BCA03B /* User.swift in Sources */,

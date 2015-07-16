@@ -1,5 +1,5 @@
 //
-// Audio.swift
+//  Document.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -24,14 +24,17 @@
 import Foundation
 import SwiftyJSON
 
-// Represents an audio file (voice note).
-public class Audio {
+/// Represents a general file (as opposed to photos and audio files).
+public class Document {
     
-    /// Unique identifier for this file.
+    /// Unique file identifier.
     public var fileId: String
     
-    /// Duration of the audio in seconds as defined by sender.
-    public var duration: Int
+    /// Document thumbnail as defined by sender.
+    public var thumb: PhotoSize
+    
+    /// Optional. Original filename as defined by sender.
+    public var fileName: String?
     
     /// Optional. MIME type of the file as defined by sender.
     public var mimeType: String?
@@ -42,9 +45,9 @@ public class Audio {
     /// Create an empty instance.
     public init() {
         fileId = ""
-        duration = 0
+        thumb = PhotoSize()
     }
-
+    
     /// Create an instance from JSON data.
     ///
     /// Will return nil if `json` is empty or invalid.
@@ -52,14 +55,16 @@ public class Audio {
         self.init()
         
         if json.isNullOrUnknown { return nil }
-
+        
         guard let fileId = json["file_id"].string else { return nil }
         self.fileId = fileId
         
-        guard let duration = json["duration"].int else { return nil }
-        self.duration = duration
+        guard let thumb = PhotoSize(json: json["thumb"]) else { return nil }
+        self.thumb = thumb
         
+        fileName = json["file_name"].string
         mimeType = json["mime_type"].string
         fileSize = json["file_size"].int
     }
 }
+
