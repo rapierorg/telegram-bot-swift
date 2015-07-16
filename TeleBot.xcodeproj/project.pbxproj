@@ -18,6 +18,7 @@
 		CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF1F1B5861D600E8928E /* GroupChat.swift */; };
 		CEDFBF251B5862F700E8928E /* PhotoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF241B5862F700E8928E /* PhotoSize.swift */; };
 		CEDFBF271B5864D700E8928E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF261B5864D700E8928E /* Audio.swift */; };
+		CEDFBF291B58676100E8928E /* UserOrGroupChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		CEDFBF1F1B5861D600E8928E /* GroupChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupChat.swift; path = Types/GroupChat.swift; sourceTree = "<group>"; };
 		CEDFBF241B5862F700E8928E /* PhotoSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoSize.swift; path = Types/PhotoSize.swift; sourceTree = "<group>"; };
 		CEDFBF261B5864D700E8928E /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Audio.swift; path = Types/Audio.swift; sourceTree = "<group>"; };
+		CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserOrGroupChat.swift; path = Types/UserOrGroupChat.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 				CEDFBF1F1B5861D600E8928E /* GroupChat.swift */,
 				CEDFBF241B5862F700E8928E /* PhotoSize.swift */,
 				CEDFBF261B5864D700E8928E /* Audio.swift */,
+				CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */,
 			);
 			name = Types;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */,
 				CE0ADC1A1B58585500FCA08C /* TeleBot.swift in Sources */,
 				CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */,
+				CEDFBF291B58676100E8928E /* UserOrGroupChat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
