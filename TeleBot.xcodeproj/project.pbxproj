@@ -7,12 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE29DBA31B58522E00BCA03B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = CE29DBA21B58522E00BCA03B /* LICENSE */; };
 		CE3B38261B584B3F00090037 /* TeleBot.h in Headers */ = {isa = PBXBuildFile; fileRef = CE3B38251B584B3F00090037 /* TeleBot.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE3B382D1B584B4000090037 /* TeleBot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3B38221B584B3F00090037 /* TeleBot.framework */; };
 		CE3B38321B584B4000090037 /* TeleBotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B38311B584B4000090037 /* TeleBotTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		CE29DB991B584F7B00BCA03B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE29DB921B584F7B00BCA03B /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2E4FEFDB19575BE100351305;
+			remoteInfo = "SwiftyJSON iOS";
+		};
+		CE29DB9B1B584F7B00BCA03B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE29DB921B584F7B00BCA03B /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2E4FEFE619575BE100351305;
+			remoteInfo = "SwiftyJSON iOS Tests";
+		};
+		CE29DB9D1B584F7B00BCA03B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE29DB921B584F7B00BCA03B /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9C7DFC5B1A9102BD005AA3F7;
+			remoteInfo = "SwiftyJSON OSX";
+		};
+		CE29DB9F1B584F7B00BCA03B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE29DB921B584F7B00BCA03B /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9C7DFC651A9102BD005AA3F7;
+			remoteInfo = "SwiftyJSON OSX Tests";
+		};
 		CE3B382E1B584B4000090037 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE3B38191B584B3F00090037 /* Project object */;
@@ -23,6 +52,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE29DB921B584F7B00BCA03B /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = ThirdParty/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
+		CE29DBA21B58522E00BCA03B /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
 		CE3B38221B584B3F00090037 /* TeleBot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TeleBot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3B38251B584B3F00090037 /* TeleBot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TeleBot.h; sourceTree = "<group>"; };
 		CE3B38271B584B3F00090037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -50,6 +81,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE29DB911B584F6E00BCA03B /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				CE29DB921B584F7B00BCA03B /* SwiftyJSON.xcodeproj */,
+			);
+			name = ThirdParty;
+			sourceTree = "<group>";
+		};
+		CE29DB931B584F7B00BCA03B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CE29DB9A1B584F7B00BCA03B /* SwiftyJSON.framework */,
+				CE29DB9C1B584F7B00BCA03B /* SwiftyJSON iOS Tests.xctest */,
+				CE29DB9E1B584F7B00BCA03B /* SwiftyJSON.framework */,
+				CE29DBA01B584F7B00BCA03B /* SwiftyJSON OSX Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CE29DBA11B58519500BCA03B /* Types */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Types;
+			sourceTree = "<group>";
+		};
 		CE3B38181B584B3F00090037 = {
 			isa = PBXGroup;
 			children = (
@@ -71,8 +128,11 @@
 		CE3B38241B584B3F00090037 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				CE29DBA11B58519500BCA03B /* Types */,
+				CE29DB911B584F6E00BCA03B /* ThirdParty */,
 				CE3B38251B584B3F00090037 /* TeleBot.h */,
 				CE3B38271B584B3F00090037 /* Info.plist */,
+				CE29DBA21B58522E00BCA03B /* LICENSE */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -163,6 +223,12 @@
 			mainGroup = CE3B38181B584B3F00090037;
 			productRefGroup = CE3B38231B584B3F00090037 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = CE29DB931B584F7B00BCA03B /* Products */;
+					ProjectRef = CE29DB921B584F7B00BCA03B /* SwiftyJSON.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				CE3B38211B584B3F00090037 /* TeleBot */,
@@ -171,11 +237,43 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		CE29DB9A1B584F7B00BCA03B /* SwiftyJSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftyJSON.framework;
+			remoteRef = CE29DB991B584F7B00BCA03B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CE29DB9C1B584F7B00BCA03B /* SwiftyJSON iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SwiftyJSON iOS Tests.xctest";
+			remoteRef = CE29DB9B1B584F7B00BCA03B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CE29DB9E1B584F7B00BCA03B /* SwiftyJSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftyJSON.framework;
+			remoteRef = CE29DB9D1B584F7B00BCA03B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CE29DBA01B584F7B00BCA03B /* SwiftyJSON OSX Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SwiftyJSON OSX Tests.xctest";
+			remoteRef = CE29DB9F1B584F7B00BCA03B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		CE3B38201B584B3F00090037 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE29DBA31B58522E00BCA03B /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
