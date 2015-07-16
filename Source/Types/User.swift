@@ -50,14 +50,15 @@ public class User {
     /// Will return nil if `json` is empty or invalid.
     public convenience init?(json: JSON) {
         self.init()
-        if json.isNullOrUnknown {
-            return nil
-        }
-        id = json["id"].intValue
-        guard let firstName = json["first_name"].string else {
-            return nil
-        }
+        
+        if json.isNullOrUnknown { return nil }
+        
+        guard let id = json["id"].int else { return nil }
+        self.id = id
+        
+        guard let firstName = json["first_name"].string else { return nil }
         self.firstName = firstName
+        
         lastName = json["last_name"].string
         username = json["username"].string
     }

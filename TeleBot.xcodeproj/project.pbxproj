@@ -16,6 +16,7 @@
 		CE3B382D1B584B4000090037 /* TeleBot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3B38221B584B3F00090037 /* TeleBot.framework */; };
 		CE3B38321B584B4000090037 /* TeleBotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B38311B584B4000090037 /* TeleBotTests.swift */; };
 		CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF1F1B5861D600E8928E /* GroupChat.swift */; };
+		CEDFBF251B5862F700E8928E /* PhotoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF241B5862F700E8928E /* PhotoSize.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		CE3B38311B584B4000090037 /* TeleBotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeleBotTests.swift; sourceTree = "<group>"; };
 		CE3B38331B584B4000090037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEDFBF1F1B5861D600E8928E /* GroupChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupChat.swift; path = Types/GroupChat.swift; sourceTree = "<group>"; };
+		CEDFBF241B5862F700E8928E /* PhotoSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoSize.swift; path = Types/PhotoSize.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 			children = (
 				CE29DBA41B58541C00BCA03B /* User.swift */,
 				CEDFBF1F1B5861D600E8928E /* GroupChat.swift */,
+				CEDFBF241B5862F700E8928E /* PhotoSize.swift */,
 			);
 			name = Types;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEDFBF251B5862F700E8928E /* PhotoSize.swift in Sources */,
 				CE29DBA51B58541C00BCA03B /* User.swift in Sources */,
 				CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */,
 				CE0ADC1A1B58585500FCA08C /* TeleBot.swift in Sources */,

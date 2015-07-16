@@ -1,5 +1,5 @@
 //
-// GroupChat.swift
+// PhotoSize.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -20,23 +20,29 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
 import Foundation
 import SwiftyJSON
 
-/// Represents a group chat.
-public class GroupChat {
+/// Represents one size of a photo or a file / sticker thumbnail.
+public class PhotoSize {
     
-    /// Unique identifier for this group chat
-    public var id: Int
+    /// Unique identifier for this file
+    public var fileId: String
     
-    /// Group name
-    public var title: String
+    /// Photo width
+    public var width: Int
+    
+    /// Photo height
+    public var height: Int
+    
+    /// Optional. File size
+    public var fileSize: Int?
     
     /// Create an empty instance.
     public init() {
-        id = 0
-        title = ""
+        fileId = ""
+        width = 0
+        height = 0
     }
     
     /// Create an instance from JSON data.
@@ -47,10 +53,15 @@ public class GroupChat {
         
         if json.isNullOrUnknown { return nil }
         
-        guard let id = json["id"].int else { return nil }
-        self.id = id
+        guard let fileId = json["file_id"].string else { return nil }
+        self.fileId = fileId
         
-        guard let title = json["title"].string else { return nil }
-        self.title = title
+        guard let width = json["width"].int else { return nil }
+        self.width = width
+        
+        guard let height = json["height"].int else { return nil }
+        self.height = height
+        
+        fileSize = json["file_size"].int
     }
 }
