@@ -20,6 +20,7 @@
 		CEDFBF271B5864D700E8928E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF261B5864D700E8928E /* Audio.swift */; };
 		CEDFBF291B58676100E8928E /* UserOrGroupChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */; };
 		CEDFBF2B1B58681300E8928E /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF2A1B58681300E8928E /* Document.swift */; };
+		CEDFBF2D1B586DC500E8928E /* Sticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF2C1B586DC500E8928E /* Sticker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		CEDFBF261B5864D700E8928E /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Audio.swift; path = Types/Audio.swift; sourceTree = "<group>"; };
 		CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserOrGroupChat.swift; path = Types/UserOrGroupChat.swift; sourceTree = "<group>"; };
 		CEDFBF2A1B58681300E8928E /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Document.swift; path = Types/Document.swift; sourceTree = "<group>"; };
+		CEDFBF2C1B586DC500E8928E /* Sticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sticker.swift; path = Types/Sticker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 				CEDFBF241B5862F700E8928E /* PhotoSize.swift */,
 				CEDFBF261B5864D700E8928E /* Audio.swift */,
 				CEDFBF2A1B58681300E8928E /* Document.swift */,
+				CEDFBF2C1B586DC500E8928E /* Sticker.swift */,
 				CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */,
 			);
 			name = Types;
@@ -338,6 +341,7 @@
 				CEDFBF271B5864D700E8928E /* Audio.swift in Sources */,
 				CEDFBF251B5862F700E8928E /* PhotoSize.swift in Sources */,
 				CE29DBA51B58541C00BCA03B /* User.swift in Sources */,
+				CEDFBF2D1B586DC500E8928E /* Sticker.swift in Sources */,
 				CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */,
 				CE0ADC1A1B58585500FCA08C /* TeleBot.swift in Sources */,
 				CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */,
