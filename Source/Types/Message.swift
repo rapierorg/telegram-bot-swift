@@ -39,55 +39,55 @@ public class Message {
     /// Conversation the message belongs to — user in case of a private message, GroupChat in case of a group.
     public var chat: UserOrGroupChat
     
-    /// Optional. For forwarded messages, sender of the original message.
+    /// *Optional.* For forwarded messages, sender of the original message.
     public var forwardFrom: User?
     
-    /// Optional. For forwarded messages, date the original message was sent in Unix time.
+    /// *Optional.* For forwarded messages, date the original message was sent in Unix time.
     public var forwardDate: Int?
     
-    /// Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
+    /// *Optional.* For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
     public var replyToMessage: Message?
     
-    /// Optional. For text messages, the actual UTF-8 text of the message.
+    /// *Optional.* For text messages, the actual UTF-8 text of the message.
     public var text: String?
     
-    /// Optional. Message is an audio file, information about the file.
+    /// *Optional.* Message is an audio file, information about the file.
     public var audio: Audio?
     
-    /// Optional. Message is a general file, information about the file.
+    /// *Optional.* Message is a general file, information about the file.
     public var document: Document?
     
-    /// Optional. Message is a photo, available sizes of the photo.
+    /// *Optional.* Message is a photo, available sizes of the photo.
     public var photo: [PhotoSize]
     
-    /// Optional. Message is a sticker, information about the sticker.
+    /// *Optional.* Message is a sticker, information about the sticker.
     public var sticker: Sticker?
     
-    /// Optional. Message is a video, information about the video.
+    /// *Optional.* Message is a video, information about the video.
     public var video: Video?
     
-    /// Optional. Message is a shared contact, information about the contact.
+    /// *Optional.* Message is a shared contact, information about the contact.
     public var contact: Contact?
     
-    /// Optional. Message is a shared location, information about the location.
+    /// *Optional.* Message is a shared location, information about the location.
     public var location: Location?
     
-    /// Optional. A new member was added to the group, information about them (this member may be bot itself).
+    /// *Optional.* A new member was added to the group, information about them (this member may be bot itself).
     public var newChatParticipant: User?
     
-    /// Optional. A member was removed from the group, information about them (this member may be bot itself).
+    /// *Optional.* A member was removed from the group, information about them (this member may be bot itself).
     public var leftChatParticipant: User?
     
-    /// Optional. A group title was changed to this value.
+    /// *Optional.* A group title was changed to this value.
     public var newChatTitle: String?
     
-    /// Optional. A group photo was changed to this value.
+    /// *Optional.* A group photo was changed to this value.
     public var newChatPhoto: [PhotoSize]
     
-    /// Optional. Informs that the group photo was deleted
+    /// *Optional.* Informs that the group photo was deleted.
     public var deleteChatPhoto: Bool
     
-    /// Optional. Informs that the group has been created
+    /// *Optional.* Informs that the group has been created.
     public var groupChatCreated: Bool
     
     /// Create an empty instance.

@@ -25,6 +25,7 @@
 		CEDFBF311B58709100E8928E /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF301B58709100E8928E /* Contact.swift */; };
 		CEDFBF331B58717A00E8928E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF321B58717A00E8928E /* Location.swift */; };
 		CEDFBF351B58727600E8928E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF341B58727600E8928E /* Message.swift */; };
+		CEDFBF371B587B6000E8928E /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF361B587B6000E8928E /* Update.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,7 @@
 		CEDFBF301B58709100E8928E /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = Types/Contact.swift; sourceTree = "<group>"; };
 		CEDFBF321B58717A00E8928E /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Types/Location.swift; sourceTree = "<group>"; };
 		CEDFBF341B58727600E8928E /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Message.swift; path = Types/Message.swift; sourceTree = "<group>"; };
+		CEDFBF361B587B6000E8928E /* Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Update.swift; path = Types/Update.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 				CEDFBF2E1B586F7B00E8928E /* Video.swift */,
 				CEDFBF301B58709100E8928E /* Contact.swift */,
 				CEDFBF321B58717A00E8928E /* Location.swift */,
+				CEDFBF361B587B6000E8928E /* Update.swift */,
 				CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */,
 			);
 			name = Types;
@@ -351,6 +354,7 @@
 			files = (
 				CEDFBF2B1B58681300E8928E /* Document.swift in Sources */,
 				CEDFBF271B5864D700E8928E /* Audio.swift in Sources */,
+				CEDFBF371B587B6000E8928E /* Update.swift in Sources */,
 				CEDFBF251B5862F700E8928E /* PhotoSize.swift in Sources */,
 				CE29DBA51B58541C00BCA03B /* User.swift in Sources */,
 				CEDFBF2D1B586DC500E8928E /* Sticker.swift in Sources */,

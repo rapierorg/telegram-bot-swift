@@ -35,7 +35,7 @@ public class PhotoSize {
     /// Photo height.
     public var height: Int
     
-    /// Optional. File size.
+    /// *Optional.* File size.
     public var fileSize: Int?
     
     /// Create an empty instance.

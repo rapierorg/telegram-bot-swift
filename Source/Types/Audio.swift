@@ -33,10 +33,10 @@ public class Audio {
     /// Duration of the audio in seconds as defined by sender.
     public var duration: Int
     
-    /// Optional. MIME type of the file as defined by sender.
+    /// *Optional.* MIME type of the file as defined by sender.
     public var mimeType: String?
     
-    /// Optional. File size.
+    /// *Optional.* File size.
     public var fileSize: Int?
     
     /// Create an empty instance.

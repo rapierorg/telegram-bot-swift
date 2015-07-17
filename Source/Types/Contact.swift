@@ -33,10 +33,10 @@ public class Contact {
     /// Contact's first name.
     public var firstName: String
     
-    /// Optional. Contact's last name.
+    /// *Optional.* Contact's last name.
     public var lastName: String?
     
-    /// Optional. Contact's user identifier in Telegram.
+    /// *Optional.* Contact's user identifier in Telegram.
     public var userId: String?
     
     /// Create an empty instance.

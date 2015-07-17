@@ -42,13 +42,13 @@ public class Video {
     /// Video thumbnail.
     public var thumb: PhotoSize
     
-    /// Optional. Mime type of a file as defined by sender.
+    /// *Optional.* Mime type of a file as defined by sender.
     public var mimeType: String?
     
-    /// Optional. File size.
+    /// *Optional.* File size.
     public var fileSize: Int?
     
-    /// Optional. Text description of the video (usually empty).
+    /// *Optional.* Text description of the video (usually empty).
     public var caption: String?
     
     /// Create an empty instance.

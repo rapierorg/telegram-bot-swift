@@ -1,5 +1,5 @@
 //
-// Sticker.swift
+// Update.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -24,30 +24,18 @@
 import Foundation
 import SwiftyJSON
 
-// Represents a sticker.
-public class Sticker {
+/// Represents an incoming update.
+public class Update {
+
+    /// The update‘s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order.
+    var updateId: Int
     
-    /// Unique identifier for this file.
-    public var fileId: String
-    
-    /// Sticker width.
-    public var width: Int
-    
-    /// Sticker height.
-    public var height: Int
-    
-    /// Sticker thumbnail in .webp or .jpg format.
-    public var thumb: PhotoSize
-    
-    /// *Optional.* File size.
-    public var fileSize: Int?
+    /// *Optional.* New incoming message of any kind — text, photo, sticker, etc.
+    var message: Message?
     
     /// Create an empty instance.
     public init() {
-        fileId = ""
-        width = 0
-        height = 0
-        thumb = PhotoSize()
+        updateId = 0
     }
     
     /// Create an instance from JSON data.
@@ -58,18 +46,9 @@ public class Sticker {
         
         if json.isNullOrUnknown { return nil }
         
-        guard let fileId = json["file_id"].string else { return nil }
-        self.fileId = fileId
+        guard let updateId = json["update_id"].int else { return nil }
+        self.updateId = updateId
         
-        guard let width = json["width"].int else { return nil }
-        self.width = width
-        
-        guard let height = json["height"].int else { return nil }
-        self.height = height
-        
-        guard let thumb = PhotoSize(json: json["thumb"]) else { return nil }
-        self.thumb = thumb
-        
-        fileSize = json["file_size"].int
+        message = Message(json: json["message"])
     }
 }

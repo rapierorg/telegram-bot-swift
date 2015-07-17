@@ -33,13 +33,13 @@ public class Document {
     /// Document thumbnail as defined by sender.
     public var thumb: PhotoSize
     
-    /// Optional. Original filename as defined by sender.
+    /// *Optional.* Original filename as defined by sender.
     public var fileName: String?
     
-    /// Optional. MIME type of the file as defined by sender.
+    /// *Optional.* MIME type of the file as defined by sender.
     public var mimeType: String?
     
-    /// Optional. File size.
+    /// *Optional.* File size.
     public var fileSize: Int?
     
     /// Create an empty instance.
