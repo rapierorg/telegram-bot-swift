@@ -44,7 +44,7 @@ extension String {
     /// Should be used for encoding parameter values when
     /// using `application/x-www-form-urlencoded` Content-Type.
     ///
-    /// - SeeAlso: urlQueryEncode()
+    /// - SeeAlso: `func urlQueryEncode() -> String`
     /// - Returns: Encoded string
     func formUrlencode() -> String {
         return stringByAddingPercentEncodingWithAllowedCharacters(HTTPData.formUrlencodedAllowedCharacters)?.stringByReplacingOccurrencesOfString(" ", withString: "+") ?? ""
@@ -56,7 +56,7 @@ extension String {
     /// Should be used for encoding URL query components.
     ///
     /// - Returns: Encoded string
-    /// - SeeAlso: formUrlencode()
+    /// - SeeAlso: `func formUrlencode() -> String`
     func urlQueryEncode() -> String {
         return stringByAddingPercentEncodingWithAllowedCharacters(HTTPData.urlQueryAllowedCharacters) ?? ""
     }
