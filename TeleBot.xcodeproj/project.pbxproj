@@ -26,6 +26,7 @@
 		CEDFBF331B58717A00E8928E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF321B58717A00E8928E /* Location.swift */; };
 		CEDFBF351B58727600E8928E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF341B58727600E8928E /* Message.swift */; };
 		CEDFBF371B587B6000E8928E /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF361B587B6000E8928E /* Update.swift */; };
+		CEDFBF391B58F30700E8928E /* String+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF381B58F30700E8928E /* String+HTTP.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		CEDFBF321B58717A00E8928E /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Types/Location.swift; sourceTree = "<group>"; };
 		CEDFBF341B58727600E8928E /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Message.swift; path = Types/Message.swift; sourceTree = "<group>"; };
 		CEDFBF361B587B6000E8928E /* Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Update.swift; path = Types/Update.swift; sourceTree = "<group>"; };
+		CEDFBF381B58F30700E8928E /* String+HTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HTTP.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				CE0ADC201B58592300FCA08C /* JSON+Utils.swift */,
+				CEDFBF381B58F30700E8928E /* String+HTTP.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 				CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */,
 				CEDFBF311B58709100E8928E /* Contact.swift in Sources */,
 				CE0ADC1A1B58585500FCA08C /* TeleBot.swift in Sources */,
+				CEDFBF391B58F30700E8928E /* String+HTTP.swift in Sources */,
 				CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */,
 				CEDFBF351B58727600E8928E /* Message.swift in Sources */,
 				CEDFBF291B58676100E8928E /* UserOrGroupChat.swift in Sources */,
