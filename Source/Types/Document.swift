@@ -68,3 +68,10 @@ public class Document {
     }
 }
 
+extension Document: CustomDebugStringConvertible {
+    // MARK: CustomDebugStringConvertible
+    public var debugDescription: String {
+        return "Document(fileId: \(fileId), thumb: \(thumb), fileName: \(fileName), " +
+            "mimeType: \(mimeType), fileSize: \(fileSize))"
+    }
+}

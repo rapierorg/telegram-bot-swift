@@ -161,3 +161,16 @@ public class Message {
         groupChatCreated = json["group_chat_created"].boolValue
     }
 }
+
+extension Message: CustomDebugStringConvertible {
+    // MARK: CustomDebugStringConvertible
+    public var debugDescription: String {
+        return "Message(messageId: \(messageId), from: \(from), date: \(date), chat: \(chat), " +
+            "forwardFrom: \(forwardFrom), forwardDate: \(forwardDate), replyToMessage: \(replyToMessage), " +
+            "text: \(text), audio: \(audio), document: \(document), photo: \(photo), sticker: \(sticker)" +
+            "video: \(video), contact: \(contact), location: \(location), " +
+            "newChatParticipant: \(newChatParticipant), leftChatParticipant: \(leftChatParticipant), " +
+            "newChatTitle: \(newChatTitle), newChatPhoto: \(newChatPhoto), " +
+            "deleteChatPhoto: \(deleteChatPhoto), groupChatCreated: \(groupChatCreated))"
+    }
+}

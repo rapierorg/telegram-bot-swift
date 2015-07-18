@@ -60,3 +60,12 @@ public class Contact {
         userId = json["user_id"].string
     }
 }
+
+extension Contact: CustomDebugStringConvertible {
+    // MARK: CustomDebugStringConvertible
+    public var debugDescription: String {
+        return "Contact(phoneNumber: \(phoneNumber), firstName: \(firstName), lastName: \(lastName), " +
+            "userId: \(userId))"
+    }
+}
+

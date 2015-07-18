@@ -88,3 +88,11 @@ public class Video {
         caption = json["caption"].string
     }
 }
+
+extension Video: CustomDebugStringConvertible {
+    // MARK: CustomDebugStringConvertible
+    public var debugDescription: String {
+        return "Sticker(fileId: \(fileId), width: \(width), height: \(height), duration: \(duration), " +
+            "thumb: \(thumb), mimeType: \(mimeType), fileSize: \(fileSize), caption: \(caption))"
+    }
+}

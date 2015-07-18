@@ -54,3 +54,10 @@ public class GroupChat {
         self.title = title
     }
 }
+
+extension GroupChat: CustomDebugStringConvertible {
+    // MARK: CustomDebugStringConvertible
+    public var debugDescription: String {
+        return "GroupChat(id: \(id), title: \(title))"
+    }
+}

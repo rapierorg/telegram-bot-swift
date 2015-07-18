@@ -63,3 +63,10 @@ public class Audio {
         fileSize = json["file_size"].int
     }
 }
+
+extension Audio: CustomDebugStringConvertible {
+    // MARK: CustomDebugStringConvertible
+    public var debugDescription: String {
+        return "Audio(fileId: \(fileId), duration: \(duration), mimeType: \(mimeType), fileSize: \(fileSize))"
+    }
+}

@@ -55,3 +55,10 @@ public class Location {
     }
 }
 
+extension Location: CustomDebugStringConvertible {
+    // MARK: CustomDebugStringConvertible
+    public var debugDescription: String {
+        return "Location(longitude: \(longitude), latitude: \(latitude))"
+    }
+}
+

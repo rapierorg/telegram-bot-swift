@@ -65,3 +65,10 @@ public class PhotoSize {
         fileSize = json["file_size"].int
     }
 }
+
+extension PhotoSize: CustomDebugStringConvertible {
+    // MARK: CustomDebugStringConvertible
+    public var debugDescription: String {
+        return "PhotoSize(fileId: \(fileId), width: \(width), height: \(height), fileSize: \(fileSize))"
+    }
+}

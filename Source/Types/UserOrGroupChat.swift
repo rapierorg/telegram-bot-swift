@@ -27,3 +27,16 @@ public enum UserOrGroupChat {
     case User(TeleBot.User)
     case GroupChat(TeleBot.GroupChat)
 }
+
+extension UserOrGroupChat: CustomDebugStringConvertible {
+    // MARK: CustomDebugStringConvertible
+    public var debugDescription: String {
+        var s = "UserOrGroupChat("
+        switch self {
+        case let .User(user): s += "user: \(user)"
+        case let .GroupChat(groupChat): s += "groupChat: \(groupChat)"
+        }
+        s += ")"
+        return s
+    }
+}

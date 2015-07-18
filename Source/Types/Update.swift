@@ -52,3 +52,10 @@ public class Update {
         message = Message(json: json["message"])
     }
 }
+
+extension Update: CustomDebugStringConvertible {
+    // MARK: CustomDebugStringConvertible
+    public var debugDescription: String {
+        return "Update(updateId: \(updateId), message: \(message))"
+    }
+}

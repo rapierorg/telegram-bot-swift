@@ -63,3 +63,11 @@ public class User {
         username = json["username"].string
     }
 }
+
+extension User: CustomDebugStringConvertible {
+    // MARK: CustomDebugStringConvertible
+    public var debugDescription: String {
+        return "User(id: \(id), firstName: \(firstName), lastName: \(lastName), username: \(username))"
+    }
+}
+
