@@ -27,6 +27,7 @@ import XCTest
 class TeleBotTests: XCTestCase {
     var testDataPath: String!
     var token: String!
+    let connectionTimeout = 3.0
     
     override func setUp() {
         super.setUp()
@@ -57,17 +58,17 @@ class TeleBotTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+//    func testExample() {
+//        // This is an example of a functional test case.
+//        // Use XCTAssert and related functions to verify your tests produce the correct results.
+//    }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
-    }
+//    func testPerformanceExample() {
+//        // This is an example of a performance test case.
+//        self.measureBlock {
+//            // Put the code you want to measure the time of here.
+//        }
+//    }
 
     func testUrlencode() {
         let v1 = "value 1"
@@ -102,9 +103,26 @@ class TeleBotTests: XCTestCase {
     }
     
     func testRequestsSynchronous() {
-        print("Token: \(token)")
         let bot = TelegramBot(token: token)
+        print("Bot token: \(token)")
+        
         let user = bot.getMe()
-        print("getMe: user=\(user)")
+        print("getMe: user: \(user)")
+    }
+    
+    func testRequestsAsynchronous() {
+        let bot = TelegramBot(token: token)
+        print("Bot token: \(token)")
+
+        let expectGetMe = expectationWithDescription("getMe")
+        bot.getMe { user in
+            print("getMe: user: \(user)")
+            expectGetMe.fulfill()
+        }
+        waitForExpectationsWithTimeout(connectionTimeout) { error in
+            print("getMe: \(error)")
+        }
+        
+        
     }
 }

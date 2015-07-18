@@ -27,30 +27,34 @@ import SwiftyJSON
 
 public class TelegramBot {
     
-    /// Telegram server URL
+    /// Telegram server URL.
     public var url = "https://api.telegram.org"
     
-    /// Unique authentication token obtained from BotFather
+    /// Unique authentication token obtained from BotFather.
     public var token: String
-    
+
+    /// Session. By default, configured with ephemeralSessionConfiguration().
+    public var session: NSURLSession
+
     /// Offset for long polling
     public var nextOffset = 0
     
-    let configuration: NSURLSessionConfiguration
-    let session: NSURLSession
+    public static let defaultSession: NSURLSession = {
+        let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+        return NSURLSession(configuration: configuration)
+    }()
     
     typealias DataTaskCompletion = (json: JSON)->()
     
-    init(token: String) {
-        self.token = token;
-        
-        configuration = .ephemeralSessionConfiguration()
-        session = NSURLSession(configuration: configuration)
+    init(token: String, session: NSURLSession = defaultSession) {
+        self.token = token
+        self.session = session
     }
     
-    func getMe(completion: ()->User) {
+    func getMe(completion: (user: User)->()) {
         startDataTaskForEndpoint("getMe") { json in
             print(json)
+            completion(user: User())
         }
     }
 
