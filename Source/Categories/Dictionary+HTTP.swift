@@ -1,5 +1,5 @@
 //
-// TeleBot.swift
+// Dictionary+HTTP.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -21,5 +21,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 import Foundation
+
+extension Dictionary {
+    public func formUrlencode() -> String {
+        var result = ""
+        for (key, value) in self {
+            let key = String(key)
+            let value = String(value)
+            
+            if !result.isEmpty {
+                result += "&"
+            }
+            let keyUrlencoded = key.formUrlencode()
+            let valueUrlencoded = value.formUrlencode()
+            result += "\(keyUrlencoded)=\(valueUrlencoded)"
+        }
+        return result
+    }
+
+}

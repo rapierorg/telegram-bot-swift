@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		CE0ADC181B58582900FCA08C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE29DB9E1B584F7B00BCA03B /* SwiftyJSON.framework */; };
-		CE0ADC1A1B58585500FCA08C /* TeleBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ADC191B58585500FCA08C /* TeleBot.swift */; };
+		CE0ADC1A1B58585500FCA08C /* TelegramBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ADC191B58585500FCA08C /* TelegramBot.swift */; };
 		CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ADC201B58592300FCA08C /* JSON+Utils.swift */; };
 		CE29DBA31B58522E00BCA03B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = CE29DBA21B58522E00BCA03B /* LICENSE */; };
 		CE29DBA51B58541C00BCA03B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29DBA41B58541C00BCA03B /* User.swift */; };
 		CE3B38261B584B3F00090037 /* TeleBot.h in Headers */ = {isa = PBXBuildFile; fileRef = CE3B38251B584B3F00090037 /* TeleBot.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE3B382D1B584B4000090037 /* TeleBot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3B38221B584B3F00090037 /* TeleBot.framework */; };
 		CE3B38321B584B4000090037 /* TeleBotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B38311B584B4000090037 /* TeleBotTests.swift */; };
+		CED3814A1B5AB0ED00ADFBBF /* Dictionary+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED381491B5AB0ED00ADFBBF /* Dictionary+HTTP.swift */; };
 		CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF1F1B5861D600E8928E /* GroupChat.swift */; };
 		CEDFBF251B5862F700E8928E /* PhotoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF241B5862F700E8928E /* PhotoSize.swift */; };
 		CEDFBF271B5864D700E8928E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF261B5864D700E8928E /* Audio.swift */; };
@@ -75,7 +76,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CE0ADC191B58585500FCA08C /* TeleBot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeleBot.swift; sourceTree = "<group>"; };
+		CE0ADC191B58585500FCA08C /* TelegramBot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelegramBot.swift; sourceTree = "<group>"; };
 		CE0ADC201B58592300FCA08C /* JSON+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Utils.swift"; sourceTree = "<group>"; };
 		CE29DB921B584F7B00BCA03B /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = ThirdParty/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		CE29DBA21B58522E00BCA03B /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
@@ -86,6 +87,7 @@
 		CE3B382C1B584B4000090037 /* TeleBotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeleBotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3B38311B584B4000090037 /* TeleBotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeleBotTests.swift; sourceTree = "<group>"; };
 		CE3B38331B584B4000090037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CED381491B5AB0ED00ADFBBF /* Dictionary+HTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+HTTP.swift"; sourceTree = "<group>"; };
 		CEDFBF1F1B5861D600E8928E /* GroupChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupChat.swift; path = Types/GroupChat.swift; sourceTree = "<group>"; };
 		CEDFBF241B5862F700E8928E /* PhotoSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoSize.swift; path = Types/PhotoSize.swift; sourceTree = "<group>"; };
 		CEDFBF261B5864D700E8928E /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Audio.swift; path = Types/Audio.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			children = (
 				CE0ADC201B58592300FCA08C /* JSON+Utils.swift */,
 				CEDFBF381B58F30700E8928E /* String+HTTP.swift */,
+				CED381491B5AB0ED00ADFBBF /* Dictionary+HTTP.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -192,7 +195,7 @@
 				CE29DBA11B58519500BCA03B /* Types */,
 				CE29DB911B584F6E00BCA03B /* ThirdParty */,
 				CE3B38251B584B3F00090037 /* TeleBot.h */,
-				CE0ADC191B58585500FCA08C /* TeleBot.swift */,
+				CE0ADC191B58585500FCA08C /* TelegramBot.swift */,
 				CE3B38271B584B3F00090037 /* Info.plist */,
 				CE29DBA21B58522E00BCA03B /* LICENSE */,
 			);
@@ -363,9 +366,10 @@
 				CEDFBF2D1B586DC500E8928E /* Sticker.swift in Sources */,
 				CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */,
 				CEDFBF311B58709100E8928E /* Contact.swift in Sources */,
-				CE0ADC1A1B58585500FCA08C /* TeleBot.swift in Sources */,
+				CE0ADC1A1B58585500FCA08C /* TelegramBot.swift in Sources */,
 				CEDFBF391B58F30700E8928E /* String+HTTP.swift in Sources */,
 				CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */,
+				CED3814A1B5AB0ED00ADFBBF /* Dictionary+HTTP.swift in Sources */,
 				CEDFBF351B58727600E8928E /* Message.swift in Sources */,
 				CEDFBF291B58676100E8928E /* UserOrGroupChat.swift in Sources */,
 				CEDFBF331B58717A00E8928E /* Location.swift in Sources */,
