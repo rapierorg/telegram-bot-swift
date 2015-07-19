@@ -1,5 +1,5 @@
 //
-// TaskAssociatedData.swift
+// RequestAssociatedData.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -23,10 +23,15 @@
 
 import Foundation
 
-class RequestAssociatedData<T> {
-    var completion: T?
+public class TaskAssociatedData {
+    /// If no networking errors occur and the data returned by the server
+    /// is parsed successfully, this handler will be called
+    public var completion: TelegramBot.DataTaskCompletion?
     
-    init(_ completion: T?) {
+    /// Current number of reconnect attempts
+    public var retryCount: Int = 0
+    
+    init(_ completion: TelegramBot.DataTaskCompletion?) {
         self.completion = completion
     }
 }

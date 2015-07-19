@@ -30,7 +30,7 @@ public class TelegramBot {
     /// - Seealso: `public var errorHandler: ErrorHandler?`
     public typealias ErrorHandler = (NSURLSessionDataTask, DataTaskError) -> ()
     
-    private typealias DataTaskCompletion = (result: JSON)->()
+    public typealias DataTaskCompletion = (result: JSON)->()
 
     /// Telegram server URL.
     public var url = "https://api.telegram.org"
@@ -55,9 +55,6 @@ public class TelegramBot {
     ///
     /// `defaultErrorHandler` is used by default.
     public var errorHandler: ErrorHandler?
-    
-    /// Number of reconnect attempts
-    public var retryCount: Int = 0
     
     /// Defines reconnect delay in seconds depending on `retryCount`. Can be overridden.
     ///
@@ -84,21 +81,27 @@ public class TelegramBot {
             fatalError("\(error)")
         }
  
+        guard let taskAssociatedData = objc_getAssociatedObject(
+            task, &TelegramBot.taskAssociatedDataKey) as?
+                TaskAssociatedData else {
+            fatalError("\(error)")
+        }
+        let retryCount = taskAssociatedData.retryCount
+        
         // Strong capture the self if it's still not nil
         guard let actualSelf = self else { return }
         
-        let retryCount = actualSelf.retryCount
         let reconnectDelay = actualSelf.reconnectDelay(retryCount: retryCount)
-        ++actualSelf.retryCount
+        ++taskAssociatedData.retryCount
         
         // This closure is called from dataTask queue,
         // but startDataTaskForRequest will start the new
         // dataTask from workQueue.
         if reconnectDelay == 0.0 {
-            print("Reconnect attempt \(actualSelf.retryCount), will retry at once")
-            actualSelf.startDataTaskForRequest(originalRequest)
+            print("Reconnect attempt \(taskAssociatedData.retryCount), will retry at once")
+            actualSelf.startDataTaskForRequest(originalRequest, taskAssociatedData: taskAssociatedData)
         } else {
-            print("Reconnect attempt \(actualSelf.retryCount), will retry after \(reconnectDelay) sec")
+            print("Reconnect attempt \(taskAssociatedData.retryCount), will retry after \(reconnectDelay) sec")
             // Be aware that dispatch_after does NOT work correctly with serial queues.
             // The queue will perform async blocks BEFORE those inserted via dispatch_after.
             // So, use global queue for the pause, then execute the actual request on workQueue.
@@ -107,7 +110,7 @@ public class TelegramBot {
                     Int64(reconnectDelay * Double(NSEC_PER_SEC))),
                 dispatch_get_global_queue(
                     DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                actualSelf.startDataTaskForRequest(originalRequest)
+                actualSelf.startDataTaskForRequest(originalRequest, taskAssociatedData: taskAssociatedData)
             }
         }
     }
@@ -118,7 +121,7 @@ public class TelegramBot {
         return NSURLSession(configuration: configuration)
     }()
     
-    private static var completionKey = "dataTaskCompletionHandler"
+    private static var taskAssociatedDataKey = "taskAssociatedData"
     
     /// Creates an instance of Telegram Bot.
     /// - Parameter token: A unique authentication token.
@@ -183,17 +186,16 @@ public class TelegramBot {
         request.HTTPMethod = "POST"
         request.HTTPBody = data.dataUsingEncoding(NSUTF8StringEncoding)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        let associatedData = RequestAssociatedData<DataTaskCompletion>(completion)
-        objc_setAssociatedObject(request, &TelegramBot.completionKey, associatedData, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         
-        startDataTaskForRequest(request)
+        let taskAssociatedData = TaskAssociatedData(completion)
+        startDataTaskForRequest(request, taskAssociatedData: taskAssociatedData)
     }
     
     /// Use this function for implementing retrying in
     /// custom `errorHandler`.
     ///
     /// See `defaultErrorHandler` implementation for an example.
-    public func startDataTaskForRequest(request: NSURLRequest) {
+    public func startDataTaskForRequest(request: NSURLRequest, taskAssociatedData: TaskAssociatedData) {
         // This function can be called from main queue (when
         // call is initiated by user) or from dataTask queue (when
         // automatically retrying).
@@ -203,7 +205,10 @@ public class TelegramBot {
             task = self.session.dataTaskWithRequest(request) { dataOrNil, responseOrNil, errorOrNil in
                 self.urlSessionDataTaskCompletion(task!, dataOrNil, responseOrNil, errorOrNil)
             }
-            task?.resume()
+            if let t = task {
+                objc_setAssociatedObject(t, &TelegramBot.taskAssociatedDataKey, taskAssociatedData, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                t.resume()
+            }
         }
     }
     
@@ -253,18 +258,18 @@ public class TelegramBot {
                 telegramResponse: telegramResponse, data: data, response: response))
             return
         }
-        
-        // Success
-        retryCount = 0
-        
+
         // If user completion handler is attached to this
-        // request, call it. Completion handler is stored as
+        // task, call it. Completion handler is stored as
         // an associated property and not passed as a function
         // argument to support retrying.
-        if let originalRequest = task.originalRequest {
-            if let associatedData = objc_getAssociatedObject(originalRequest, &TelegramBot.completionKey) as? RequestAssociatedData<DataTaskCompletion> {
-                associatedData.completion?(result: result)
-            }
+        if let taskAssociatedData = objc_getAssociatedObject(task,
+            &TelegramBot.taskAssociatedDataKey) as? TaskAssociatedData {
+            
+            // Success
+            taskAssociatedData.retryCount = 0
+
+            taskAssociatedData.completion?(result: result)
         }
     }
 
