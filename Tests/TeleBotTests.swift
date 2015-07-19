@@ -27,7 +27,7 @@ import XCTest
 class TeleBotTests: XCTestCase {
     var testDataPath: String!
     var token: String!
-    let connectionTimeout = 5.0
+    let connectionTimeout = 10.0
     let invalidUrl = "https://localhost:7777/doesNotExist"
     
     override func setUp() {
@@ -131,10 +131,15 @@ class TeleBotTests: XCTestCase {
 
         let expectGetMe = expectationWithDescription("getMe")
 
+        // Comment out custom errorHandler to see
+        // autoreconnects in action (but the test
+        // will fail)
+#if true
         bot.errorHandler = { task, error in
             print("getMe: errorHandler: task: \(task), error: \(error)")
             expectGetMe.fulfill()
         }
+#endif
 
         bot.getMe { user in
             XCTFail("Expected error handler to run")

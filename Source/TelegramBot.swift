@@ -56,6 +56,20 @@ public class TelegramBot {
     /// `defaultErrorHandler` is used by default.
     public var errorHandler: ErrorHandler?
     
+    /// Number of reconnect attempts
+    public var retryCount: Int = 0
+    
+    /// Defines reconnect delay in seconds depending on `retryCount`. Can be overridden.
+    ///
+    /// Used by default `errorHandler` implementation.
+    ///
+    /// - Reconnect instantly on first error.
+    /// - Add 2 seconds delay for each failed attempt up to 60 seconds maximum to avoid
+    /// spamming the server.
+    public var reconnectDelay: (retryCount: Int) -> Double = { retryCount in
+        return Double(retryCount) * 2.0
+    }
+    
     /// Implements the default error handling logic. Consult
     /// `TelegramBot` class description for details.
     public lazy var defaultErrorHandler: ErrorHandler = {
@@ -64,13 +78,33 @@ public class TelegramBot {
         guard let originalRequest = task.originalRequest else {
             fatalError("\(error)")
         }
+ 
+        // Strong capture the self if it's still not nil
+        guard let actualSelf = self else { return }
         
-        print("Will retry")
+        let retryCount = actualSelf.retryCount
+        let reconnectDelay = actualSelf.reconnectDelay(retryCount: retryCount)
+        ++actualSelf.retryCount
         
         // This closure is called from dataTask queue,
         // but startDataTaskForRequest will start the new
-        // dataTask from workQueue
-        self?.startDataTaskForRequest(originalRequest)
+        // dataTask from workQueue.
+        if reconnectDelay == 0.0 {
+            print("Reconnect attempt \(actualSelf.retryCount), will retry at once")
+            actualSelf.startDataTaskForRequest(originalRequest)
+        } else {
+            print("Reconnect attempt \(actualSelf.retryCount), will retry after \(reconnectDelay) sec")
+            // Be aware that dispatch_after does NOT work correctly with serial queues.
+            // The queue will perform async blocks BEFORE those inserted via dispatch_after.
+            // So, use global queue for the pause, then execute the actual request on workQueue.
+            dispatch_after(
+                dispatch_time(DISPATCH_TIME_NOW,
+                    Int64(reconnectDelay * Double(NSEC_PER_SEC))),
+                dispatch_get_global_queue(
+                    DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                actualSelf.startDataTaskForRequest(originalRequest)
+            }
+        }
     }
     
     /// Default handling of network and parse errors.
@@ -150,7 +184,11 @@ public class TelegramBot {
         startDataTaskForRequest(request)
     }
     
-    private func startDataTaskForRequest(request: NSURLRequest) {
+    /// Use this function for implementing retrying in
+    /// custom `errorHandler`.
+    ///
+    /// See `defaultErrorHandler` implementation for an example.
+    public func startDataTaskForRequest(request: NSURLRequest) {
         // This function can be called from main queue (when
         // call is initiated by user) or from dataTask queue (when
         // automatically retrying).
@@ -210,6 +248,9 @@ public class TelegramBot {
                 telegramResponse: telegramResponse, data: data, response: response))
             return
         }
+        
+        // Success
+        retryCount = 0
         
         // If user completion handler is attached to this
         // request, call it. Completion handler is stored as
