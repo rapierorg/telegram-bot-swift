@@ -39,6 +39,9 @@ public class TelegramBot {
     /// Offset for long polling
     public var nextOffset = 0
     
+    /// Queue for callbacks
+    public var queue = dispatch_get_main_queue()
+    
     public static let defaultSession: NSURLSession = {
         let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
         return NSURLSession(configuration: configuration)
@@ -53,8 +56,13 @@ public class TelegramBot {
     
     func getMe(completion: (user: User)->()) {
         startDataTaskForEndpoint("getMe") { json in
-            print(json)
-            completion(user: User())
+            print("getMe: json: \(json)")
+            guard let user = User(json: json) else {
+                fatalError("getMe: JSON parse error")
+            }
+            dispatch_async(self.queue) {
+                completion(user: user)
+            }
         }
     }
 
@@ -62,11 +70,37 @@ public class TelegramBot {
         return User()
     }
     
-    private func startDataTaskForEndpoint(endpoint: String,
-        parameters: [String: AnyObject?], completion: DataTaskCompletion) {
+    private func startDataTaskForEndpoint(endpoint: String, parameters: [String: AnyObject?], completion: DataTaskCompletion) {
         let endpointUrl = urlForEndpoint(endpoint)
         let data = parameters.formUrlencode()
-        completion(json: JSON(""))
+        
+        let request = NSMutableURLRequest(URL: endpointUrl)
+        request.cachePolicy = .ReloadIgnoringLocalAndRemoteCacheData
+        request.HTTPMethod = "POST"
+        request.HTTPBody = data.dataUsingEncoding(NSUTF8StringEncoding)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            if let error = error {
+                fatalError("dataTaskWithRequest: error: \(error)")
+            }
+            
+            guard let response = response as? NSHTTPURLResponse else {
+                fatalError("Response is not NSHTTPURLResponse")
+            }
+            
+            if response.statusCode != 200 {
+                fatalError("Expected status code 200, got \(response.statusCode)")
+            }
+            
+            guard let data = data else {
+                fatalError("No data received")
+            }
+            
+            let json = JSON(data: data)
+            completion(json: json)
+        }
+        task?.resume()
     }
 
     private func startDataTaskForEndpoint(endpoint: String, completion: DataTaskCompletion) {
