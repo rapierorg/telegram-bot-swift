@@ -66,6 +66,11 @@ public class TelegramBot {
     /// - Reconnect instantly on first error.
     /// - Add 2 seconds delay for each failed attempt up to 60 seconds maximum to avoid
     /// spamming the server.
+    ///
+    /// Warning: called on `dataTask` queue.
+    ///
+    /// - Parameter retryCount: Number of reconnect retries associated with `request`.
+    /// - Returns: Seconds to wait before next reconnect attempt. Return `0.0` for instant reconnect.
     public var reconnectDelay: (retryCount: Int) -> Double = { retryCount in
         return Double(retryCount) * 2.0
     }
