@@ -25,6 +25,7 @@ import Foundation
 import SwiftyJSON
 
 extension SwiftyJSON.JSON {
+    /// - Returns: True if json is empty or of unknown type
     public var isNullOrUnknown: Bool {
         return type == .Null || type == .Unknown
     }

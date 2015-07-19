@@ -24,6 +24,15 @@
 import Foundation
 
 extension Dictionary {
+    /// Encodes keys and values in a dictionary for using with
+    /// `application/x-www-form-urlencoded` Content-Type and
+    /// joins them into a single string.
+    ///
+    /// Keys corresponding to nil values are skipped and
+    /// are not added to the resulting string.
+    ///
+    /// - SeeAlso: Encoding is performed using String's  `formUrlencode` method.
+    /// - Returns: Encoded string.
     public func formUrlencode() -> String {
         var result = ""
         for (key, value) in self {
