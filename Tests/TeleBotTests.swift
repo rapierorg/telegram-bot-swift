@@ -140,7 +140,7 @@ class TeleBotTests: XCTestCase {
             XCTFail("Expected error handler to run")
         }
         
-        waitForExpectationsWithTimeout(100.0) { error in
+        waitForExpectationsWithTimeout(connectionTimeout) { error in
             print("getMe: \(error)")
         }
         
