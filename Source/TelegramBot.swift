@@ -39,7 +39,7 @@ public class TelegramBot {
     /// Offset for long polling
     public var nextOffset = 0
     
-    /// Queue for callbacks
+    /// Queue for callbacks in asynchronous versions of requests.
     public var queue = dispatch_get_main_queue()
     
     public static let defaultSession: NSURLSession = {
@@ -49,24 +49,53 @@ public class TelegramBot {
     
     typealias DataTaskCompletion = (result: JSON)->()
     
+    /// Creates an instance of Telegram Bot.
+    /// - Parameter token: A unique authentication token.
+    /// - Parameter session: `NSURLSession` instance, a session with `ephemeralSessionConfiguration` is used by default.
     init(token: String, session: NSURLSession = defaultSession) {
         self.token = token
         self.session = session
     }
     
+    /// A simple method for testing your bot's auth token. Requires no parameters.
+    ///
+    /// This is an asynchronous version of the method,
+    /// a blocking one is also available.
+    ///
+    /// - Parameter completion: Completion handler which is called on main queue by default. The queue can be overridden by setting `queue` property of TelegramBot.
+    /// - Returns: Basic information about the bot in form of a `User` object.
+    /// - Seealso: `func getMe() -> User`
     func getMe(completion: (user: User)->()) {
+        getMe(self.queue, completion: completion)
+    }
+
+    /// A simple method for testing your bot's auth token. Requires no parameters.
+    ///
+    /// This is a blocking version of the method,
+    /// an asynchronous one is also available.
+    ///
+    /// - Returns: Basic information about the bot in form of a `User` object.
+    /// - Seealso: `func getMe(completion: (user: User)->())`
+    func getMe() -> User {
+        var result: User!
+        let sem = dispatch_semaphore_create(0)
+        getMe(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { user in
+            result = user
+            dispatch_semaphore_signal(sem)
+        }
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
+        return result
+    }
+    
+    private func getMe(queue: dispatch_queue_t, completion: (user: User)->()) {
         startDataTaskForEndpoint("getMe") { result in
             guard let user = User(json: result) else {
                 fatalError("getMe: JSON parse error")
             }
-            dispatch_async(self.queue) {
+            dispatch_async(queue) {
                 completion(user: user)
             }
         }
-    }
-
-    func getMe() -> User {
-        return User()
     }
     
     private func startDataTaskForEndpoint(endpoint: String, parameters: [String: AnyObject?], completion: DataTaskCompletion) {
@@ -81,7 +110,7 @@ public class TelegramBot {
 
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if let error = error {
-                fatalError("dataTaskWithRequest: error: \(error)")
+                fatalError("dataTaskWithRequest: error: \(error.localizedDescription)")
             }
             
             guard let response = response as? NSHTTPURLResponse else {

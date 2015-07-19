@@ -27,7 +27,8 @@ import XCTest
 class TeleBotTests: XCTestCase {
     var testDataPath: String!
     var token: String!
-    let connectionTimeout = 3.0
+    let connectionTimeout = 5.0
+    let invalidUrl = "https://localhost:7777/doesNotExist"
     
     override func setUp() {
         super.setUp()
@@ -123,6 +124,22 @@ class TeleBotTests: XCTestCase {
             print("getMe: \(error)")
         }
         
+        
+        
+    }
+    
+    func testErrorHandling() {
+        let bot = TelegramBot(token: token)
+        bot.url = invalidUrl
+
+        let expectGetMe = expectationWithDescription("getMe")
+        bot.getMe { user in
+            print("getMe: user: \(user)")
+            expectGetMe.fulfill()
+        }
+        waitForExpectationsWithTimeout(100.0) { error in
+            print("getMe: \(error)")
+        }
         
     }
 }
