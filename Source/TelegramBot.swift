@@ -26,7 +26,12 @@ import Foundation
 import SwiftyJSON
 
 public class TelegramBot {
+    /// `errorHandler`'s completion block type
+    /// - Seealso: `public var errorHandler: ErrorHandler?`
+    public typealias ErrorHandler = (NSURLSessionDataTask, DataTaskError) -> ()
     
+    private typealias DataTaskCompletion = (result: JSON)->()
+
     /// Telegram server URL.
     public var url = "https://api.telegram.org"
     
@@ -42,12 +47,26 @@ public class TelegramBot {
     /// Queue for callbacks in asynchronous versions of requests.
     public var queue = dispatch_get_main_queue()
     
+    /// To handle network or parse errors,
+    /// set a custom callback using this property.
+    /// In a typical case this is not needed.
+    ///
+    /// `defaultErrorHandler` is used by default.
+    public var errorHandler: ErrorHandler?
+    
+    /// Implements the default error handling logic. Consult
+    /// `TelegramBot` class description for details.
+    public lazy var defaultErrorHandler: ErrorHandler = {
+        [weak self] task, error in
+        fatalError("\(error)")
+        //fatalError("dataTaskWithRequest: error: \(error.localizedDescription)")
+    }
+    
+    /// Default handling of network and parse errors.
     public static let defaultSession: NSURLSession = {
         let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
         return NSURLSession(configuration: configuration)
     }()
-    
-    typealias DataTaskCompletion = (result: JSON)->()
     
     /// Creates an instance of Telegram Bot.
     /// - Parameter token: A unique authentication token.
@@ -55,6 +74,7 @@ public class TelegramBot {
     init(token: String, session: NSURLSession = defaultSession) {
         self.token = token
         self.session = session
+        self.errorHandler = defaultErrorHandler
     }
     
     /// A simple method for testing your bot's auth token. Requires no parameters.
@@ -108,38 +128,52 @@ public class TelegramBot {
         request.HTTPBody = data.dataUsingEncoding(NSUTF8StringEncoding)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
 
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if let error = error {
-                fatalError("dataTaskWithRequest: error: \(error.localizedDescription)")
+        var task: NSURLSessionDataTask?
+        task = session.dataTaskWithRequest(request) { dataOrNil, responseOrNil, errorOrNil in
+            if let error = errorOrNil {
+                self.errorHandler?(task!, .GenericError(
+                    data: dataOrNil, response: responseOrNil, error: error))
+                return
             }
             
-            guard let response = response as? NSHTTPURLResponse else {
-                fatalError("Response is not NSHTTPURLResponse")
+            guard let response = responseOrNil as? NSHTTPURLResponse else {
+                self.errorHandler?(task!, .InvalidResponseType(
+                    data: dataOrNil, response: responseOrNil))
+                return
             }
             
             if response.statusCode != 200 {
-                fatalError("Expected status code 200, got \(response.statusCode)")
+                self.errorHandler?(task!, .InvalidStatusCode(
+                    statusCode: response.statusCode,
+                    data: dataOrNil, response: response))
+                return
             }
             
-            guard let data = data else {
-                fatalError("No data received")
+            guard let data = dataOrNil else {
+                self.errorHandler?(task!, .NoDataReceived(
+                    response: response))
+                return
             }
             
             let json = JSON(data: data)
             
             guard let telegramResponse = Response(json: json) else {
-                fatalError("Error while parsing response")
+                self.errorHandler?(task!, .ResponseParseError(
+                    json: json, data: data, response: response))
+                return
             }
             
             if !telegramResponse.ok {
-                fatalError("Telegram server returned an error")
+                self.errorHandler?(task!, .ServerError(
+                    telegramResponse: telegramResponse, data: data, response: response))
+                return
             }
             
             guard let result = telegramResponse.result else {
-                fatalError("No results in Telegram response")
+                self.errorHandler?(task!, .NoResult(
+                    telegramResponse: telegramResponse, data: data, response: response))
+                return
             }
-            
-            // TODO: raw result hook
             
             completion(result: result)
         }

@@ -123,20 +123,23 @@ class TeleBotTests: XCTestCase {
         waitForExpectationsWithTimeout(connectionTimeout) { error in
             print("getMe: \(error)")
         }
-        
-        
-        
     }
     
-    func testErrorHandling() {
+    func testErrorHandlingAsynchronous() {
         let bot = TelegramBot(token: token)
         bot.url = invalidUrl
 
         let expectGetMe = expectationWithDescription("getMe")
-        bot.getMe { user in
-            print("getMe: user: \(user)")
+
+        bot.errorHandler = { task, error in
+            print("getMe: errorHandler: task: \(task), error: \(error)")
             expectGetMe.fulfill()
         }
+
+        bot.getMe { user in
+            XCTFail("Expected error handler to run")
+        }
+        
         waitForExpectationsWithTimeout(100.0) { error in
             print("getMe: \(error)")
         }
