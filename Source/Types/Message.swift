@@ -166,11 +166,14 @@ extension Message: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Message(messageId: \(messageId), from: \(from), date: \(date), chat: \(chat), " +
-            "forwardFrom: \(forwardFrom), forwardDate: \(forwardDate), replyToMessage: \(replyToMessage), " +
-            "text: \(text), audio: \(audio), document: \(document), photo: \(photo), sticker: \(sticker)" +
-            "video: \(video), contact: \(contact), location: \(location), " +
-            "newChatParticipant: \(newChatParticipant), leftChatParticipant: \(leftChatParticipant), " +
-            "newChatTitle: \(newChatTitle), newChatPhoto: \(newChatPhoto), " +
+            "forwardFrom: \(forwardFrom.prettyPrint), forwardDate: \(forwardDate.prettyPrint), " +
+            "replyToMessage: \(replyToMessage.prettyPrint), text: \(text.prettyPrint), " +
+            "audio: \(audio.prettyPrint), document: \(document.prettyPrint), photo: \(photo), " +
+            "sticker: \(sticker.prettyPrint), video: \(video.prettyPrint), " +
+            "contact: \(contact.prettyPrint), location: \(location.prettyPrint), " +
+            "newChatParticipant: \(newChatParticipant.prettyPrint), " +
+            "leftChatParticipant: \(leftChatParticipant.prettyPrint), " +
+            "newChatTitle: \(newChatTitle.prettyPrint), newChatPhoto: \(newChatPhoto), " +
             "deleteChatPhoto: \(deleteChatPhoto), groupChatCreated: \(groupChatCreated))"
     }
 }

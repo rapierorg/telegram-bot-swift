@@ -56,6 +56,6 @@ public class Update {
 extension Update: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        return "Update(updateId: \(updateId), message: \(message))"
+        return "Update(updateId: \(updateId), message: \(message.prettyPrint))"
     }
 }

@@ -69,6 +69,6 @@ public class PhotoSize {
 extension PhotoSize: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        return "PhotoSize(fileId: \(fileId), width: \(width), height: \(height), fileSize: \(fileSize))"
+        return "PhotoSize(fileId: \(fileId), width: \(width), height: \(height), fileSize: \(fileSize.prettyPrint))"
     }
 }

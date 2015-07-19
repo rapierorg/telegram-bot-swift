@@ -93,6 +93,7 @@ extension Video: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Sticker(fileId: \(fileId), width: \(width), height: \(height), duration: \(duration), " +
-            "thumb: \(thumb), mimeType: \(mimeType), fileSize: \(fileSize), caption: \(caption))"
+            "thumb: \(thumb), mimeType: \(mimeType.prettyPrint), fileSize: \(fileSize.prettyPrint), " +
+            "caption: \(caption.prettyPrint))"
     }
 }

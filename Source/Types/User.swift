@@ -67,7 +67,7 @@ public class User {
 extension User: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        return "User(id: \(id), firstName: \(firstName), lastName: \(lastName), username: \(username))"
+        return "User(id: \(id), firstName: \(firstName), lastName: \(lastName.prettyPrint), username: \(username.prettyPrint))"
     }
 }
 

@@ -67,6 +67,7 @@ public class Audio {
 extension Audio: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        return "Audio(fileId: \(fileId), duration: \(duration), mimeType: \(mimeType), fileSize: \(fileSize))"
+        return "Audio(fileId: \(fileId), duration: \(duration), " +
+            "mimeType: \(mimeType.prettyPrint), fileSize: \(fileSize.prettyPrint))"
     }
 }

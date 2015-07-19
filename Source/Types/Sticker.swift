@@ -78,7 +78,7 @@ extension Sticker: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Sticker(fileId: \(fileId), width: \(width), height: \(height), thumb: \(thumb), " +
-            "fileSize: \(fileSize))"
+            "fileSize: \(fileSize.prettyPrint))"
     }
 }
 

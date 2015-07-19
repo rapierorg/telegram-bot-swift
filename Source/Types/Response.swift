@@ -66,8 +66,8 @@ public class Response {
 extension Response: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        return "Response(ok: \(ok), errorDescription: \(errorDescription), " +
-            "errorCode: \(errorCode), result: \(result))"
+        return "Response(ok: \(ok), errorDescription: \(errorDescription.prettyPrint), " +
+            "errorCode: \(errorCode.prettyPrint), result: \(result.prettyPrint))"
     }
 }
 

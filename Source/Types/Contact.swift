@@ -64,8 +64,8 @@ public class Contact {
 extension Contact: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        return "Contact(phoneNumber: \(phoneNumber), firstName: \(firstName), lastName: \(lastName), " +
-            "userId: \(userId))"
+        return "Contact(phoneNumber: \(phoneNumber), firstName: \(firstName), " +
+            "lastName: \(lastName.prettyPrint), userId: \(userId.prettyPrint))"
     }
 }
 
