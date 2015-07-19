@@ -20,6 +20,7 @@
 		CEC40C151B5BC22B00F2F9D8 /* DataTaskError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC40C141B5BC22B00F2F9D8 /* DataTaskError.swift */; };
 		CED3814A1B5AB0ED00ADFBBF /* Dictionary+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED381491B5AB0ED00ADFBBF /* Dictionary+HTTP.swift */; };
 		CEDC4A4E1B5C41200037545E /* TaskAssociatedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC4A4D1B5C41200037545E /* TaskAssociatedData.swift */; };
+		CEDC4A501B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC4A4F1B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift */; };
 		CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF1F1B5861D600E8928E /* GroupChat.swift */; };
 		CEDFBF251B5862F700E8928E /* PhotoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF241B5862F700E8928E /* PhotoSize.swift */; };
 		CEDFBF271B5864D700E8928E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF261B5864D700E8928E /* Audio.swift */; };
@@ -96,6 +97,7 @@
 		CEC40C141B5BC22B00F2F9D8 /* DataTaskError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataTaskError.swift; sourceTree = "<group>"; };
 		CED381491B5AB0ED00ADFBBF /* Dictionary+HTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+HTTP.swift"; sourceTree = "<group>"; };
 		CEDC4A4D1B5C41200037545E /* TaskAssociatedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskAssociatedData.swift; sourceTree = "<group>"; };
+		CEDC4A4F1B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSessionDataTask+AssociatedData.swift"; sourceTree = "<group>"; };
 		CEDFBF1F1B5861D600E8928E /* GroupChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupChat.swift; path = Types/GroupChat.swift; sourceTree = "<group>"; };
 		CEDFBF241B5862F700E8928E /* PhotoSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoSize.swift; path = Types/PhotoSize.swift; sourceTree = "<group>"; };
 		CEDFBF261B5864D700E8928E /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Audio.swift; path = Types/Audio.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				CEDFBF381B58F30700E8928E /* String+HTTP.swift */,
 				CED381491B5AB0ED00ADFBBF /* Dictionary+HTTP.swift */,
 				CEC40C121B5B346600F2F9D8 /* Optional+PrettyPrint.swift */,
+				CEDC4A4F1B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				CEDC4A4E1B5C41200037545E /* TaskAssociatedData.swift in Sources */,
 				CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */,
 				CEDFBF311B58709100E8928E /* Contact.swift in Sources */,
+				CEDC4A501B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift in Sources */,
 				CE0ADC1A1B58585500FCA08C /* TelegramBot.swift in Sources */,
 				CEDFBF391B58F30700E8928E /* String+HTTP.swift in Sources */,
 				CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */,
