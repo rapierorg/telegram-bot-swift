@@ -47,7 +47,7 @@ public class TelegramBot {
         return NSURLSession(configuration: configuration)
     }()
     
-    typealias DataTaskCompletion = (json: JSON)->()
+    typealias DataTaskCompletion = (result: JSON)->()
     
     init(token: String, session: NSURLSession = defaultSession) {
         self.token = token
@@ -55,9 +55,8 @@ public class TelegramBot {
     }
     
     func getMe(completion: (user: User)->()) {
-        startDataTaskForEndpoint("getMe") { json in
-            print("getMe: json: \(json)")
-            guard let user = User(json: json) else {
+        startDataTaskForEndpoint("getMe") { result in
+            guard let user = User(json: result) else {
                 fatalError("getMe: JSON parse error")
             }
             dispatch_async(self.queue) {
@@ -98,7 +97,22 @@ public class TelegramBot {
             }
             
             let json = JSON(data: data)
-            completion(json: json)
+            
+            guard let telegramResponse = Response(json: json) else {
+                fatalError("Error while parsing response")
+            }
+            
+            if !telegramResponse.ok {
+                fatalError("Telegram server returned an error")
+            }
+            
+            guard let result = telegramResponse.result else {
+                fatalError("No results in Telegram response")
+            }
+            
+            // TODO: raw result hook
+            
+            completion(result: result)
         }
         task?.resume()
     }
