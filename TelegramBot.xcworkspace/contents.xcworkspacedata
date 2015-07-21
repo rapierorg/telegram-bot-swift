@@ -5,6 +5,6 @@
       location = "group:Example.xcodeproj">
    </FileRef>
    <FileRef
-      location = "container:TeleBot.xcodeproj">
+      location = "container:TelegramBot.xcodeproj">
    </FileRef>
 </Workspace>

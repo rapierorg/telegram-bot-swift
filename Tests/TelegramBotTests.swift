@@ -1,5 +1,5 @@
 //
-// TeleBotTests.swift
+// TelegramBotTests.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -22,9 +22,9 @@
 // SOFTWARE.
 
 import XCTest
-@testable import TeleBot
+@testable import TelegramBot
 
-class TeleBotTests: XCTestCase {
+class TelegramBotTests: XCTestCase {
     var testDataPath: String!
     var token: String!
     let connectionTimeout = 10.0

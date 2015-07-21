@@ -12,9 +12,9 @@
     "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : "telegram-bot-swift\/Source\/ThirdParty\/SwiftyJSON\/",
     "DF131F4A19078BFBF099FB1214AE423E3C756228" : "telegram-bot-swift\/"
   },
-  "DVTSourceControlWorkspaceBlueprintNameKey" : "TeleBot",
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "TelegramBot",
   "DVTSourceControlWorkspaceBlueprintVersion" : 203,
-  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "TeleBot.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "TelegramBot.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/SwiftyJSON\/SwiftyJSON.git",

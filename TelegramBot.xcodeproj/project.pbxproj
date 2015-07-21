@@ -12,9 +12,9 @@
 		CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ADC201B58592300FCA08C /* JSON+Utils.swift */; };
 		CE29DBA31B58522E00BCA03B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = CE29DBA21B58522E00BCA03B /* LICENSE */; };
 		CE29DBA51B58541C00BCA03B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29DBA41B58541C00BCA03B /* User.swift */; };
-		CE3B38261B584B3F00090037 /* TeleBot.h in Headers */ = {isa = PBXBuildFile; fileRef = CE3B38251B584B3F00090037 /* TeleBot.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE3B382D1B584B4000090037 /* TeleBot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3B38221B584B3F00090037 /* TeleBot.framework */; };
-		CE3B38321B584B4000090037 /* TeleBotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B38311B584B4000090037 /* TeleBotTests.swift */; };
+		CE3B38261B584B3F00090037 /* TelegramBot.h in Headers */ = {isa = PBXBuildFile; fileRef = CE3B38251B584B3F00090037 /* TelegramBot.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE3B382D1B584B4000090037 /* TelegramBot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3B38221B584B3F00090037 /* TelegramBot.framework */; };
+		CE3B38321B584B4000090037 /* TelegramBotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B38311B584B4000090037 /* TelegramBotTests.swift */; };
 		CEC40C0C1B5B29CD00F2F9D8 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC40C0B1B5B29CD00F2F9D8 /* Response.swift */; };
 		CEC40C131B5B346600F2F9D8 /* Optional+PrettyPrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC40C121B5B346600F2F9D8 /* Optional+PrettyPrint.swift */; };
 		CEC40C151B5BC22B00F2F9D8 /* DataTaskError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC40C141B5BC22B00F2F9D8 /* DataTaskError.swift */; };
@@ -76,7 +76,7 @@
 			containerPortal = CE3B38191B584B3F00090037 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = CE3B38211B584B3F00090037;
-			remoteInfo = TeleBot;
+			remoteInfo = TelegramBot;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -86,11 +86,11 @@
 		CE29DB921B584F7B00BCA03B /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = ThirdParty/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		CE29DBA21B58522E00BCA03B /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
 		CE29DBA41B58541C00BCA03B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Types/User.swift; sourceTree = "<group>"; };
-		CE3B38221B584B3F00090037 /* TeleBot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TeleBot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE3B38251B584B3F00090037 /* TeleBot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TeleBot.h; sourceTree = "<group>"; };
+		CE3B38221B584B3F00090037 /* TelegramBot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TelegramBot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE3B38251B584B3F00090037 /* TelegramBot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TelegramBot.h; sourceTree = "<group>"; };
 		CE3B38271B584B3F00090037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CE3B382C1B584B4000090037 /* TeleBotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeleBotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE3B38311B584B4000090037 /* TeleBotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeleBotTests.swift; sourceTree = "<group>"; };
+		CE3B382C1B584B4000090037 /* TelegramBotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TelegramBotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE3B38311B584B4000090037 /* TelegramBotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelegramBotTests.swift; sourceTree = "<group>"; };
 		CE3B38331B584B4000090037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEC40C0B1B5B29CD00F2F9D8 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Response.swift; path = Types/Response.swift; sourceTree = "<group>"; };
 		CEC40C121B5B346600F2F9D8 /* Optional+PrettyPrint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optional+PrettyPrint.swift"; sourceTree = "<group>"; };
@@ -125,7 +125,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE3B382D1B584B4000090037 /* TeleBot.framework in Frameworks */,
+				CE3B382D1B584B4000090037 /* TelegramBot.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,8 +195,8 @@
 		CE3B38231B584B3F00090037 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CE3B38221B584B3F00090037 /* TeleBot.framework */,
-				CE3B382C1B584B4000090037 /* TeleBotTests.xctest */,
+				CE3B38221B584B3F00090037 /* TelegramBot.framework */,
+				CE3B382C1B584B4000090037 /* TelegramBotTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -207,7 +207,7 @@
 				CE0ADC1F1B58592300FCA08C /* Categories */,
 				CE29DBA11B58519500BCA03B /* Types */,
 				CE29DB911B584F6E00BCA03B /* ThirdParty */,
-				CE3B38251B584B3F00090037 /* TeleBot.h */,
+				CE3B38251B584B3F00090037 /* TelegramBot.h */,
 				CE0ADC191B58585500FCA08C /* TelegramBot.swift */,
 				CEC40C141B5BC22B00F2F9D8 /* DataTaskError.swift */,
 				CEDC4A4D1B5C41200037545E /* TaskAssociatedData.swift */,
@@ -220,7 +220,7 @@
 		CE3B38301B584B4000090037 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				CE3B38311B584B4000090037 /* TeleBotTests.swift */,
+				CE3B38311B584B4000090037 /* TelegramBotTests.swift */,
 				CE3B38331B584B4000090037 /* Info.plist */,
 			);
 			path = Tests;
@@ -233,16 +233,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE3B38261B584B3F00090037 /* TeleBot.h in Headers */,
+				CE3B38261B584B3F00090037 /* TelegramBot.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		CE3B38211B584B3F00090037 /* TeleBot */ = {
+		CE3B38211B584B3F00090037 /* TelegramBot */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CE3B38361B584B4000090037 /* Build configuration list for PBXNativeTarget "TeleBot" */;
+			buildConfigurationList = CE3B38361B584B4000090037 /* Build configuration list for PBXNativeTarget "TelegramBot" */;
 			buildPhases = (
 				CE3B381D1B584B3F00090037 /* Sources */,
 				CE3B381E1B584B3F00090037 /* Frameworks */,
@@ -254,14 +254,14 @@
 			dependencies = (
 				CE29DBA81B58563C00BCA03B /* PBXTargetDependency */,
 			);
-			name = TeleBot;
-			productName = TeleBot;
-			productReference = CE3B38221B584B3F00090037 /* TeleBot.framework */;
+			name = TelegramBot;
+			productName = TelegramBot;
+			productReference = CE3B38221B584B3F00090037 /* TelegramBot.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		CE3B382B1B584B4000090037 /* TeleBotTests */ = {
+		CE3B382B1B584B4000090037 /* TelegramBotTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CE3B38391B584B4000090037 /* Build configuration list for PBXNativeTarget "TeleBotTests" */;
+			buildConfigurationList = CE3B38391B584B4000090037 /* Build configuration list for PBXNativeTarget "TelegramBotTests" */;
 			buildPhases = (
 				CE3B38281B584B4000090037 /* Sources */,
 				CE3B38291B584B4000090037 /* Frameworks */,
@@ -272,9 +272,9 @@
 			dependencies = (
 				CE3B382F1B584B4000090037 /* PBXTargetDependency */,
 			);
-			name = TeleBotTests;
-			productName = TeleBotTests;
-			productReference = CE3B382C1B584B4000090037 /* TeleBotTests.xctest */;
+			name = TelegramBotTests;
+			productName = TelegramBotTests;
+			productReference = CE3B382C1B584B4000090037 /* TelegramBotTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -295,7 +295,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CE3B381C1B584B3F00090037 /* Build configuration list for PBXProject "TeleBot" */;
+			buildConfigurationList = CE3B381C1B584B3F00090037 /* Build configuration list for PBXProject "TelegramBot" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -313,8 +313,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				CE3B38211B584B3F00090037 /* TeleBot */,
-				CE3B382B1B584B4000090037 /* TeleBotTests */,
+				CE3B38211B584B3F00090037 /* TelegramBot */,
+				CE3B382B1B584B4000090037 /* TelegramBotTests */,
 			);
 		};
 /* End PBXProject section */
@@ -401,7 +401,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE3B38321B584B4000090037 /* TeleBotTests.swift in Sources */,
+				CE3B38321B584B4000090037 /* TelegramBotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,7 +415,7 @@
 		};
 		CE3B382F1B584B4000090037 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CE3B38211B584B3F00090037 /* TeleBot */;
+			target = CE3B38211B584B3F00090037 /* TelegramBot */;
 			targetProxy = CE3B382E1B584B4000090037 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -518,7 +518,7 @@
 				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zabiyaka.TeleBot;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zabiyaka.TelegramBot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -538,7 +538,7 @@
 				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zabiyaka.TeleBot;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zabiyaka.TelegramBot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -550,7 +550,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zabiyaka.TeleBotTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zabiyaka.TelegramBotTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -561,7 +561,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zabiyaka.TeleBotTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zabiyaka.TelegramBotTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -569,7 +569,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CE3B381C1B584B3F00090037 /* Build configuration list for PBXProject "TeleBot" */ = {
+		CE3B381C1B584B3F00090037 /* Build configuration list for PBXProject "TelegramBot" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE3B38341B584B4000090037 /* Debug */,
@@ -578,7 +578,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE3B38361B584B4000090037 /* Build configuration list for PBXNativeTarget "TeleBot" */ = {
+		CE3B38361B584B4000090037 /* Build configuration list for PBXNativeTarget "TelegramBot" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE3B38371B584B4000090037 /* Debug */,
@@ -587,7 +587,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE3B38391B584B4000090037 /* Build configuration list for PBXNativeTarget "TeleBotTests" */ = {
+		CE3B38391B584B4000090037 /* Build configuration list for PBXNativeTarget "TelegramBotTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE3B383A1B584B4000090037 /* Debug */,

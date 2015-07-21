@@ -24,8 +24,8 @@
 import Foundation
 
 public enum UserOrGroupChat {
-    case User(TeleBot.User)
-    case GroupChat(TeleBot.GroupChat)
+    case User(TelegramBot.User)
+    case GroupChat(TelegramBot.GroupChat)
 }
 
 extension UserOrGroupChat: CustomDebugStringConvertible {

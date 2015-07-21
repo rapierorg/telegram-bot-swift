@@ -1,5 +1,5 @@
 //
-// TeleBot.h
+// TelegramBot.h
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -23,11 +23,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-//! Project version number for TeleBot.
-FOUNDATION_EXPORT double TeleBotVersionNumber;
+//! Project version number for TelegramBot.
+FOUNDATION_EXPORT double TelegramBotVersionNumber;
 
-//! Project version string for TeleBot.
-FOUNDATION_EXPORT const unsigned char TeleBotVersionString[];
+//! Project version string for TelegramBot.
+FOUNDATION_EXPORT const unsigned char TelegramBotVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Source/PublicHeader.h>
 
