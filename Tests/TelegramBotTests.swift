@@ -36,22 +36,24 @@ class TelegramBotTests: XCTestCase {
         if let path = NSBundle(forClass: self.dynamicType).resourcePath {
             testDataPath = path
         } else {
-            XCTFail("Unable to get resourcePath")
+            fatalError("Unable to get resourcePath")
         }
         
         let environment = NSProcessInfo.processInfo().environment
         token = environment["TelegramTestBotToken"]
-        XCTAssert(token != nil, "Please create a bot for testing")
-        // -------------------
-        // How to create a bot
-        // -------------------
-        // * In Telegram, add BotFather.
-        // /newbot
-        // TestBot
-        // apitest_bot
-        // BotFather will return a token.
-        // * In Xcode, click on project scheme, Edit Scheme -> Run. Add to Environment Variables:
-        // TelegramTestBotToken yourToken
+        if token == nil {
+            fatalError("Please create a bot for testing and add it's token to environment variable TelegramTestBotToken in Scheme settings")
+            // -------------------
+            // How to create a bot
+            // -------------------
+            // * In Telegram, add BotFather.
+            // /newbot
+            // TestBot
+            // apitest_bot
+            // BotFather will return a token.
+            // * In Xcode, click on project scheme, Edit Scheme -> Run. Add to Environment Variables:
+            // TelegramTestBotToken yourToken
+        }
     }
     
     override func tearDown() {
@@ -103,26 +105,51 @@ class TelegramBotTests: XCTestCase {
         XCTAssert(fd2 == "param3=%21%40%23%24%25%5E%26*%28%29-%3D%2B_&param1=value+1&param2=%D0%B2%D0%B0%D0%BB%D1%8E%D0%B5%092")
     }
     
-    func testRequestsSynchronous() {
+    func testGetMeSynchronous() {
         let bot = TelegramBot(token: token)
-        print("Bot token: \(token)")
-        
         let user = bot.getMe()
-        print("getMe: user: \(user)")
+        let error = bot.lastError
+        print("getMe: user: \(user), error: \(error)")
     }
     
-    func testRequestsAsynchronous() {
+    func testGetMeAsynchronous() {
         let bot = TelegramBot(token: token)
-        print("Bot token: \(token)")
-
+        
         let expectGetMe = expectationWithDescription("getMe")
-        bot.getMe { user in
-            print("getMe: user: \(user)")
+        bot.getMe { user, error in
+            print("getMe: user: \(user), error: \(error)")
             expectGetMe.fulfill()
         }
         waitForExpectationsWithTimeout(connectionTimeout) { error in
             print("getMe: \(error)")
         }
+    }
+
+    func testGetUpdatesSynchronous() {
+        let bot = TelegramBot(token: token)
+        let updates = bot.getUpdatesWithOffset()
+        let error = bot.lastError
+        print("getUpdates: \(updates), error: \(error)")
+    }
+    
+    func testGetUpdatesAsynchronous() {
+        let bot = TelegramBot(token: token)
+        
+        let expectGetUpdates = expectationWithDescription("getUpdates")
+        bot.getUpdatesWithOffset { updates, error in
+            print("getUpdates: updates: \(updates), error: \(error)")
+            expectGetUpdates.fulfill()
+        }
+        waitForExpectationsWithTimeout(connectionTimeout) { error in
+            print("getUpdates: \(error)")
+        }
+    }
+
+    func testBadToken() {
+        let badBot = TelegramBot(token: "badToken")
+        let user = badBot.getMe()
+        let error = badBot.lastError
+        print("getMe: user: \(user), error: \(error)")
     }
     
     func testErrorHandlingAsynchronous() {

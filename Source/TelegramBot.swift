@@ -21,31 +21,101 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 import Foundation
 import SwiftyJSON
 
 public class TelegramBot {
     /// `errorHandler`'s completion block type
-    /// - Seealso: `public var errorHandler: ErrorHandler?`
+    /// - SeeAlso: `public var errorHandler: ErrorHandler?`
     public typealias ErrorHandler = (NSURLSessionDataTask, DataTaskError) -> ()
     
-    public typealias DataTaskCompletion = (result: JSON)->()
+    public typealias DataTaskCompletion = (result: JSON, error: DataTaskError?)->()
 
     /// Telegram server URL.
     public var url = "https://api.telegram.org"
     
     /// Unique authentication token obtained from BotFather.
     public var token: String
+    
+    /// In case of network errors or server problems,
+    /// do not report the errors and try to reconnect
+    /// automatically.
+    public var autoReconnect: Bool = true
 
+    /// A list of errors to handle automatically if `autoReconnect` is on.
+    public static var autoReconnectCodes: Set<Int> = [
+        //NSURLErrorUnknown,
+        //NSURLErrorCancelled,
+        //NSURLErrorBadURL,
+        NSURLErrorTimedOut,
+        //NSURLErrorUnsupportedURL,
+        NSURLErrorCannotFindHost,
+        NSURLErrorCannotConnectToHost,
+        NSURLErrorNetworkConnectionLost,
+        NSURLErrorDNSLookupFailed,
+        //NSURLErrorHTTPTooManyRedirects,
+        NSURLErrorResourceUnavailable,
+        NSURLErrorNotConnectedToInternet,
+        //NSURLErrorRedirectToNonExistentLocation,
+        NSURLErrorBadServerResponse,
+        //NSURLErrorUserCancelledAuthentication,
+        //NSURLErrorUserAuthenticationRequired,
+        //NSURLErrorZeroByteResource,
+        //NSURLErrorCannotDecodeRawData,
+        //NSURLErrorCannotDecodeContentData,
+        //NSURLErrorCannotParseResponse,
+        //@available(OSX 10.11, *)
+        //NSURLErrorAppTransportSecurityRequiresSecureConnection,
+        //NSURLErrorFileDoesNotExist,
+        //NSURLErrorFileIsDirectory,
+        //NSURLErrorNoPermissionsToReadFile,
+        //@available(OSX 10.5, *)
+        //NSURLErrorDataLengthExceedsMaximum,
+        // SSL errors
+        NSURLErrorSecureConnectionFailed,
+        //NSURLErrorServerCertificateHasBadDate,
+        //NSURLErrorServerCertificateUntrusted,
+        //NSURLErrorServerCertificateHasUnknownRoot,
+        //NSURLErrorServerCertificateNotYetValid,
+        //NSURLErrorClientCertificateRejected,
+        //NSURLErrorClientCertificateRequired,
+        NSURLErrorCannotLoadFromNetwork,
+        // Download and file I/O errors
+        //NSURLErrorCannotCreateFile,
+        //NSURLErrorCannotOpenFile,
+        //NSURLErrorCannotCloseFile,
+        //NSURLErrorCannotWriteToFile,
+        //NSURLErrorCannotRemoveFile,
+        //NSURLErrorCannotMoveFile,
+        NSURLErrorDownloadDecodingFailedMidStream,
+        NSURLErrorDownloadDecodingFailedToComplete,
+        //@available(OSX 10.7, *)
+        NSURLErrorInternationalRoamingOff,
+        //@available(OSX 10.7, *)
+        NSURLErrorCallIsActive,
+        //@available(OSX 10.7, *)
+        NSURLErrorDataNotAllowed,
+        //@available(OSX 10.7, *)
+        //NSURLErrorRequestBodyStreamExhausted,
+        //@available(OSX 10.10, *)
+        //NSURLErrorBackgroundSessionRequiresSharedContainer,
+        //@available(OSX 10.10, *)
+        NSURLErrorBackgroundSessionInUseByAnotherProcess,
+        //@available(OSX 10.10, *)
+        NSURLErrorBackgroundSessionWasDisconnected,
+    ]
+    
     /// Session. By default, configured with ephemeralSessionConfiguration().
     public var session: NSURLSession
 
     /// Offset for long polling
-    public var nextOffset = 0
+    //public var nextOffset: Int?
     
     /// Queue for callbacks in asynchronous versions of requests.
     public var queue = dispatch_get_main_queue()
+    
+    /// Last error for use with synchronous requests
+    public var lastError: DataTaskError?
     
     private let workQueue = dispatch_queue_create("com.zabiyaka.TelegramBot", DISPATCH_QUEUE_SERIAL)
     
@@ -84,15 +154,31 @@ public class TelegramBot {
         guard let taskAssociatedData = task.associatedData else {
             fatalError("\(error)")
         }
-        let retryCount = taskAssociatedData.retryCount
         
         // Strong capture the self if it's still not nil
         guard let actualSelf = self else { return }
+
+        if !actualSelf.autoReconnect {
+            taskAssociatedData.completion?(result: nil, error: error)
+            return
+        }
         
+        // Report errors back to user except network ones
+        guard case let .GenericError(_, _, networkError) = error
+            where networkError.domain == NSURLErrorDomain &&
+                TelegramBot.autoReconnectCodes.contains(networkError.code)
+        else {
+            taskAssociatedData.completion?(result: nil, error: error)
+            return
+        }
+        
+        // Network error, reconnect:
+        
+        let retryCount = taskAssociatedData.retryCount
         let reconnectDelay = actualSelf.reconnectDelay(retryCount: retryCount)
         ++taskAssociatedData.retryCount
         
-        // This closure is called from dataTask queue,
+        // This closure will be called from dataTask queue,
         // but startDataTaskForRequest will start the new
         // dataTask from workQueue.
         if reconnectDelay == 0.0 {
@@ -129,51 +215,18 @@ public class TelegramBot {
     }
     
     deinit {
-        print("Deinit")
+        //print("Deinit")
     }
     
-    /// A simple method for testing your bot's auth token. Requires no parameters.
-    ///
-    /// This is an asynchronous version of the method,
-    /// a blocking one is also available.
-    ///
-    /// - Parameter completion: Completion handler which is called on main queue by default. The queue can be overridden by setting `queue` property of TelegramBot.
-    /// - Returns: Basic information about the bot in form of a `User` object.
-    /// - Seealso: `func getMe() -> User`
-    func getMe(completion: (user: User)->()) {
-        getMe(self.queue, completion: completion)
-    }
-
-    /// A simple method for testing your bot's auth token. Requires no parameters.
-    ///
-    /// This is a blocking version of the method,
-    /// an asynchronous one is also available.
-    ///
-    /// - Returns: Basic information about the bot in form of a `User` object.
-    /// - Seealso: `func getMe(completion: (user: User)->())`
-    func getMe() -> User {
-        var result: User!
-        let sem = dispatch_semaphore_create(0)
-        getMe(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { user in
-            result = user
-            dispatch_semaphore_signal(sem)
-        }
-        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
-        return result
+    /// Initiates a request to the server. Used for implementing
+    /// specific requests (getMe, getStatus etc).
+    public func startDataTaskForEndpoint(endpoint: String, completion: DataTaskCompletion) {
+        startDataTaskForEndpoint(endpoint, parameters: [:], completion: completion)
     }
     
-    private func getMe(queue: dispatch_queue_t, completion: (user: User)->()) {
-        startDataTaskForEndpoint("getMe") { result in
-            guard let user = User(json: result) else {
-                fatalError("getMe: JSON parse error")
-            }
-            dispatch_async(queue) {
-                completion(user: user)
-            }
-        }
-    }
-    
-    private func startDataTaskForEndpoint(endpoint: String, parameters: [String: AnyObject?], completion: DataTaskCompletion) {
+    /// Initiates a request to the server. Used for implementing
+    /// specific requests.
+    public func startDataTaskForEndpoint(endpoint: String, parameters: [String: Any], completion: DataTaskCompletion) {
         let endpointUrl = urlForEndpoint(endpoint)
         let data = parameters.formUrlencode()
         
@@ -264,12 +317,8 @@ public class TelegramBot {
             // Success
             taskAssociatedData.retryCount = 0
 
-            taskAssociatedData.completion?(result: result)
+            taskAssociatedData.completion?(result: result, error: nil)
         }
-    }
-
-    private func startDataTaskForEndpoint(endpoint: String, completion: DataTaskCompletion) {
-        startDataTaskForEndpoint(endpoint, parameters: [:], completion: completion)
     }
 
     private func urlForEndpoint(endpoint: String) -> NSURL {

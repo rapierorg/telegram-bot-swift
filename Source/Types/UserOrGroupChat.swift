@@ -24,8 +24,8 @@
 import Foundation
 
 public enum UserOrGroupChat {
-    case User(TelegramBot.User)
-    case GroupChat(TelegramBot.GroupChat)
+    case UserInfo(User)
+    case GroupChatInfo(GroupChat)
 }
 
 extension UserOrGroupChat: CustomDebugStringConvertible {
@@ -33,8 +33,8 @@ extension UserOrGroupChat: CustomDebugStringConvertible {
     public var debugDescription: String {
         var s = "UserOrGroupChat("
         switch self {
-        case let .User(user): s += "user: \(user)"
-        case let .GroupChat(groupChat): s += "groupChat: \(groupChat)"
+        case let .UserInfo(user): s += "user: \(user)"
+        case let .GroupChatInfo(groupChat): s += "groupChat: \(groupChat)"
         }
         s += ")"
         return s

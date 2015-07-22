@@ -49,9 +49,12 @@ public enum DataTaskError {
     case ServerError(telegramResponse: Response,
         data: NSData, response: NSHTTPURLResponse)
     
-    /// No 'result' in Telegram response
+    /// No `result` in Telegram response
     case NoResult(telegramResponse: Response,
         data: NSData, response: NSHTTPURLResponse)
+    
+    /// `Result` couldn't be parsed
+    case ResultParseError(json: JSON)
 }
 
 extension DataTaskError: CustomDebugStringConvertible {
@@ -72,6 +75,8 @@ extension DataTaskError: CustomDebugStringConvertible {
             "Telegram server returned an error"
         case .NoResult(_, _, _):
             return "No result in Telegram response"
+        case .ResultParseError:
+            return "Result couldn't be parsed"
         }
         return "Unknown error"
     }
