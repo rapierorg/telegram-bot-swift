@@ -40,8 +40,20 @@ public class HTTPUtils {
                 // Ignore keys with nil values
                 continue
             }
+            
             let keyString = String(key)
-            let valueString = String(value)
+            
+            var valueString: String
+            
+            if let boolValue = value as? Bool {
+                if !boolValue {
+                    continue
+                }
+                // If true, add "key=" to encoded string
+                valueString = ""
+            } else {
+                valueString = String(value)
+            }
             
             if !result.isEmpty {
                 result += "&"
