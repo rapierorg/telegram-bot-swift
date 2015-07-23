@@ -237,9 +237,9 @@ public class TelegramBot {
     
     /// Initiates a request to the server. Used for implementing
     /// specific requests.
-    public func startDataTaskForEndpoint(endpoint: String, parameters: [String: Any], completion: DataTaskCompletion) {
+    public func startDataTaskForEndpoint(endpoint: String, parameters: [String: Any?], completion: DataTaskCompletion) {
         let endpointUrl = urlForEndpoint(endpoint)
-        let data = parameters.formUrlencode()
+        let data = HTTPUtils.formUrlencode(parameters)
         
         let request = NSMutableURLRequest(URL: endpointUrl)
         request.cachePolicy = .ReloadIgnoringLocalAndRemoteCacheData

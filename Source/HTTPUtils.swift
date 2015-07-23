@@ -1,5 +1,5 @@
 //
-// Dictionary+HTTP.swift
+// HTTPUtils.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -23,7 +23,7 @@
 
 import Foundation
 
-extension Dictionary {
+public class HTTPUtils {
     /// Encodes keys and values in a dictionary for using with
     /// `application/x-www-form-urlencoded` Content-Type and
     /// joins them into a single string.
@@ -33,10 +33,9 @@ extension Dictionary {
     ///
     /// - SeeAlso: Encoding is performed using String's `formUrlencode` method.
     /// - Returns: Encoded string.
-    public func formUrlencode() -> String {
+    public class func formUrlencode(dictionary: [String: Any?]) -> String {
         var result = ""
-        for (key, value) in self {
-            let valueOrNil = unwrap(value) // workaround for absence of 'value as Optional'
+        for (key, valueOrNil) in dictionary {
             guard let value = valueOrNil else {
                 // Ignore keys with nil values
                 continue
@@ -53,5 +52,23 @@ extension Dictionary {
         }
         return result
     }
-
+    
+    /// Encodes keys and values in a dictionary for using with
+    /// `application/x-www-form-urlencoded` Content-Type and
+    /// joins them into a single string.
+    ///
+    /// - SeeAlso: Encoding is performed using String's `formUrlencode` method.
+    /// - Returns: Encoded string.
+    public class func formUrlencode(dictionary: [String: String]) -> String {
+        var result = ""
+        for (keyString, valueString) in dictionary {
+            if !result.isEmpty {
+                result += "&"
+            }
+            let keyUrlencoded = keyString.formUrlencode()
+            let valueUrlencoded = valueString.formUrlencode()
+            result += "\(keyUrlencoded)=\(valueUrlencoded)"
+        }
+        return result
+    }
 }

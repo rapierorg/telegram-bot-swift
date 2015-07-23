@@ -18,11 +18,11 @@
 		CE7DE0211B5EE46700188093 /* TelegramBot+getMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7DE0201B5EE46700188093 /* TelegramBot+getMe.swift */; };
 		CE7DE0231B5F1F8E00188093 /* TelegramBot+getUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7DE0221B5F1F8E00188093 /* TelegramBot+getUpdates.swift */; };
 		CE7DE0261B60FD2900188093 /* BlockingServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7DE0241B60FCEE00188093 /* BlockingServerTests.swift */; };
-		CE7DE0281B6113FF00188093 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7DE0271B6113FF00188093 /* Utils.swift */; };
+		CE7DE02B1B612A8400188093 /* UrlencodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7DE0291B612A6900188093 /* UrlencodeTests.swift */; };
+		CE7DE02D1B613C7D00188093 /* HTTPUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7DE02C1B613C7D00188093 /* HTTPUtils.swift */; };
 		CEC40C0C1B5B29CD00F2F9D8 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC40C0B1B5B29CD00F2F9D8 /* Response.swift */; };
 		CEC40C131B5B346600F2F9D8 /* Optional+PrettyPrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC40C121B5B346600F2F9D8 /* Optional+PrettyPrint.swift */; };
 		CEC40C151B5BC22B00F2F9D8 /* DataTaskError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC40C141B5BC22B00F2F9D8 /* DataTaskError.swift */; };
-		CED3814A1B5AB0ED00ADFBBF /* Dictionary+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED381491B5AB0ED00ADFBBF /* Dictionary+HTTP.swift */; };
 		CEDC4A4E1B5C41200037545E /* TaskAssociatedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC4A4D1B5C41200037545E /* TaskAssociatedData.swift */; };
 		CEDC4A501B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC4A4F1B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift */; };
 		CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF1F1B5861D600E8928E /* GroupChat.swift */; };
@@ -99,11 +99,11 @@
 		CE7DE0201B5EE46700188093 /* TelegramBot+getMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TelegramBot+getMe.swift"; path = "Requests/TelegramBot+getMe.swift"; sourceTree = "<group>"; };
 		CE7DE0221B5F1F8E00188093 /* TelegramBot+getUpdates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TelegramBot+getUpdates.swift"; path = "Requests/TelegramBot+getUpdates.swift"; sourceTree = "<group>"; };
 		CE7DE0241B60FCEE00188093 /* BlockingServerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockingServerTests.swift; sourceTree = "<group>"; };
-		CE7DE0271B6113FF00188093 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		CE7DE0291B612A6900188093 /* UrlencodeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlencodeTests.swift; sourceTree = "<group>"; };
+		CE7DE02C1B613C7D00188093 /* HTTPUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPUtils.swift; sourceTree = "<group>"; };
 		CEC40C0B1B5B29CD00F2F9D8 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Response.swift; path = Types/Response.swift; sourceTree = "<group>"; };
 		CEC40C121B5B346600F2F9D8 /* Optional+PrettyPrint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optional+PrettyPrint.swift"; sourceTree = "<group>"; };
 		CEC40C141B5BC22B00F2F9D8 /* DataTaskError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataTaskError.swift; sourceTree = "<group>"; };
-		CED381491B5AB0ED00ADFBBF /* Dictionary+HTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+HTTP.swift"; sourceTree = "<group>"; };
 		CEDC4A4D1B5C41200037545E /* TaskAssociatedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskAssociatedData.swift; sourceTree = "<group>"; };
 		CEDC4A4F1B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSessionDataTask+AssociatedData.swift"; sourceTree = "<group>"; };
 		CEDFBF1F1B5861D600E8928E /* GroupChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupChat.swift; path = Types/GroupChat.swift; sourceTree = "<group>"; };
@@ -145,7 +145,6 @@
 			children = (
 				CE0ADC201B58592300FCA08C /* JSON+Utils.swift */,
 				CEDFBF381B58F30700E8928E /* String+HTTP.swift */,
-				CED381491B5AB0ED00ADFBBF /* Dictionary+HTTP.swift */,
 				CEC40C121B5B346600F2F9D8 /* Optional+PrettyPrint.swift */,
 				CEDC4A4F1B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift */,
 			);
@@ -220,7 +219,7 @@
 				CE0ADC191B58585500FCA08C /* TelegramBot.swift */,
 				CEC40C141B5BC22B00F2F9D8 /* DataTaskError.swift */,
 				CEDC4A4D1B5C41200037545E /* TaskAssociatedData.swift */,
-				CE7DE0271B6113FF00188093 /* Utils.swift */,
+				CE7DE02C1B613C7D00188093 /* HTTPUtils.swift */,
 				CE3B38271B584B3F00090037 /* Info.plist */,
 				CE29DBA21B58522E00BCA03B /* LICENSE */,
 			);
@@ -232,6 +231,7 @@
 			children = (
 				CE3B38311B584B4000090037 /* TelegramBotTests.swift */,
 				CE7DE0241B60FCEE00188093 /* BlockingServerTests.swift */,
+				CE7DE0291B612A6900188093 /* UrlencodeTests.swift */,
 				CE3B38331B584B4000090037 /* Info.plist */,
 			);
 			path = Tests;
@@ -393,6 +393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE7DE02D1B613C7D00188093 /* HTTPUtils.swift in Sources */,
 				CEC40C131B5B346600F2F9D8 /* Optional+PrettyPrint.swift in Sources */,
 				CE7DE0211B5EE46700188093 /* TelegramBot+getMe.swift in Sources */,
 				CEDFBF2B1B58681300E8928E /* Document.swift in Sources */,
@@ -409,14 +410,12 @@
 				CE0ADC1A1B58585500FCA08C /* TelegramBot.swift in Sources */,
 				CEDFBF391B58F30700E8928E /* String+HTTP.swift in Sources */,
 				CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */,
-				CED3814A1B5AB0ED00ADFBBF /* Dictionary+HTTP.swift in Sources */,
 				CEDFBF351B58727600E8928E /* Message.swift in Sources */,
 				CEC40C151B5BC22B00F2F9D8 /* DataTaskError.swift in Sources */,
 				CEDFBF291B58676100E8928E /* UserOrGroupChat.swift in Sources */,
 				CEDFBF331B58717A00E8928E /* Location.swift in Sources */,
 				CEDFBF2F1B586F7B00E8928E /* Video.swift in Sources */,
 				CE7DE0231B5F1F8E00188093 /* TelegramBot+getUpdates.swift in Sources */,
-				CE7DE0281B6113FF00188093 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE3B38321B584B4000090037 /* TelegramBotTests.swift in Sources */,
+				CE7DE02B1B612A8400188093 /* UrlencodeTests.swift in Sources */,
 				CE7DE0261B60FD2900188093 /* BlockingServerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

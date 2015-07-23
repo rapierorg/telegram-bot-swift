@@ -54,15 +54,6 @@ extension TelegramBot {
         return update
     }
     
-//    func getUpdates() -> [Update]? {
-//        if let updates = getUpdatesWithOffset(nextOffset, limit: nil, timeout: defaultTimeout) {
-//            if let updateId = updates.last?.updateId {
-//                nextOffset = updateId
-//            }
-//        }
-//        return updates
-//    }
-    
     /// Receive incoming updates using long polling.
     ///
     /// This is an asynchronous version of the method,
@@ -116,14 +107,13 @@ extension TelegramBot {
     }
     
     private func getUpdatesWithOffset(offset: Int?, limit: Int?, timeout: Int?, queue: dispatch_queue_t, completion: (updates: [Update]?, error: DataTaskError?)->()) {
-        let parameters: [String: Any] = [
+        let parameters: [String: Any?] = [
             "offset": offset,
             "limit": limit,
             "timeout": timeout
         ]
         startDataTaskForEndpoint("getUpdates", parameters: parameters) {
-                result, dataTaskError in
-            var error = dataTaskError
+                (result, var error) in
             var updates = [Update]()
             if error == nil {
                 updates.reserveCapacity(result.count)
