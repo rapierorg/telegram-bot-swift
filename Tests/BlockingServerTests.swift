@@ -38,12 +38,17 @@ class BlockingServerTests: XCTestCase {
         super.tearDown()
     }
     
-    func testServer() {
+    func _testServer() {
         let bot = TelegramBot(token: token)
         //bot.defaultUpdatesTimeout = 5
 
         while let update = bot.nextUpdate() {
             print("update: \(update)")
+            if let message = update.message, let text = message.text
+                    where text == "Hello" {
+                    
+                
+            }
         }
         print("Server stopped due to error: \(bot.lastError)")
     }

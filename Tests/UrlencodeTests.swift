@@ -122,5 +122,32 @@ class UrlencodeTests: XCTestCase {
         let encoded = HTTPUtils.formUrlencode(parameters)
         XCTAssert(encoded == "")
     }
+    
+    func testFormUrlencodeTypes() {
+        let parameters: [String: Any?] = [
+            "key1": 123,
+            "key2": 123.456,
+            "key3": true,
+            "key4": false,
+            "key5": "text"
+        ]
+        let encoded = HTTPUtils.formUrlencode(parameters)
+        XCTAssert(encoded == "key1=123&key5=text&key2=123.456&key3=")
+    }
+    
+    func testFormUrlencodeReplyMarkup() {
+        let keyboardMarkup = ReplyKeyboardMarkup()
+        keyboardMarkup.keyboard = [
+            [ "A", "B", "C" ],
+            [ "D", "E" ]
+        ]
+        let replyMarkup = ReplyMarkup.ReplyKeyboardMarkupType(keyboardMarkup)
+        let parameters: [String: Any?] = [
+            "key": replyMarkup
+        ]
+        let encoded = HTTPUtils.formUrlencode(parameters)
+        // key={"keyboard":[["A","B","C"],["D","E"]]}
+        XCTAssert(encoded == "key=%7B%22keyboard%22%3A%5B%5B%22A%22%2C%22B%22%2C%22C%22%5D%2C%5B%22D%22%2C%22E%22%5D%5D%7D")
+    }
 }
 

@@ -1,5 +1,5 @@
 //
-// UserOrGroupChat.swift
+// ForceReply.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -22,21 +22,39 @@
 // SOFTWARE.
 
 import Foundation
+import SwiftyJSON
 
-public enum UserOrGroupChat {
-    case UserType(User)
-    case GroupChatType(GroupChat)
+/// Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply').
+public class ForceReply {
+    
+    /// Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'.
+    let forceReply = true
+    
+    /// *Optional.* Use this parameter if you want to force reply from specific users only.
+    var selective: Bool?
+    
+    /// Create an empty instance.
+    public init() {
+    }
 }
 
-extension UserOrGroupChat: CustomDebugStringConvertible {
+extension ForceReply: CustomStringConvertible {
+    public var description: String {
+        var json = JSON([:])
+        
+        json["force_reply"].boolValue = forceReply
+
+        if let selective = selective {
+            json["selective"].boolValue = selective
+        }
+        return json.rawString(NSUTF8StringEncoding, options: []) ?? ""
+    }
+}
+
+extension ForceReply: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        var s = "UserOrGroupChat("
-        switch self {
-        case let .UserType(user): s += "user: \(user)"
-        case let .GroupChatType(groupChat): s += "groupChat: \(groupChat)"
-        }
-        s += ")"
-        return s
+        return "ForceReply(forceReply: \(forceReply), " +
+        "selective: \(selective.prettyPrint))"
     }
 }

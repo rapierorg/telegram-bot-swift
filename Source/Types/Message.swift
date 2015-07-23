@@ -95,7 +95,7 @@ public class Message {
         messageId = 0
         from = User()
         date = 0
-        chat = .UserInfo(User())
+        chat = .UserType(User())
         photo = []
         newChatPhoto = []
         deleteChatPhoto = false
@@ -121,9 +121,9 @@ public class Message {
         
         let jsonChat = json["chat"]
         if let user = User(json: jsonChat) {
-            chat = .UserInfo(user)
+            chat = .UserType(user)
         } else if let groupChat = GroupChat(json: jsonChat) {
-            chat = .GroupChatInfo(groupChat)
+            chat = .GroupChatType(groupChat)
         }
         
         forwardFrom = User(json: json["forward_from"])

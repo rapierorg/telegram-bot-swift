@@ -1,5 +1,5 @@
 //
-// UserOrGroupChat.swift
+// ReplyMarkup.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -23,18 +23,36 @@
 
 import Foundation
 
-public enum UserOrGroupChat {
-    case UserType(User)
-    case GroupChatType(GroupChat)
+public enum ReplyMarkup {
+    case ReplyKeyboardMarkupType(ReplyKeyboardMarkup)
+    case ReplyKeyboardHideType(ReplyKeyboardHide)
+    case ForceReplyType(ForceReply)
 }
 
-extension UserOrGroupChat: CustomDebugStringConvertible {
+extension ReplyMarkup: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case let .ReplyKeyboardMarkupType(v):
+            return v.description
+        case let .ReplyKeyboardHideType(v):
+            return v.description
+        case let .ForceReplyType(v):
+            return v.description
+        }        
+    }
+}
+
+extension ReplyMarkup: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        var s = "UserOrGroupChat("
+        var s = "ReplyMarkup("
         switch self {
-        case let .UserType(user): s += "user: \(user)"
-        case let .GroupChatType(groupChat): s += "groupChat: \(groupChat)"
+        case let .ReplyKeyboardMarkupType(v):
+            s += "replyKeyboardMarkup: \(v)"
+        case let .ReplyKeyboardHideType(v):
+            s += "replyKeyboardHide: \(v)"
+        case let .ForceReplyType(v):
+            s += "forceReply: \(v)"
         }
         s += ")"
         return s

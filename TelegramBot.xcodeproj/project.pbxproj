@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE06203E1B616C22008CAFF2 /* TelegramBot+sendMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE06203D1B616C22008CAFF2 /* TelegramBot+sendMessage.swift */; };
+		CE0620401B6185D2008CAFF2 /* ReplyMarkup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE06203F1B6185D2008CAFF2 /* ReplyMarkup.swift */; };
+		CE0620421B6186E5008CAFF2 /* ReplyKeyboardMarkup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0620411B6186E5008CAFF2 /* ReplyKeyboardMarkup.swift */; };
+		CE0620441B6186EF008CAFF2 /* ReplyKeyboardHide.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0620431B6186EF008CAFF2 /* ReplyKeyboardHide.swift */; };
+		CE0620461B6186F9008CAFF2 /* ForceReply.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0620451B6186F9008CAFF2 /* ForceReply.swift */; };
 		CE0ADC181B58582900FCA08C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE29DB9E1B584F7B00BCA03B /* SwiftyJSON.framework */; };
 		CE0ADC1A1B58585500FCA08C /* TelegramBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ADC191B58585500FCA08C /* TelegramBot.swift */; };
 		CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ADC201B58592300FCA08C /* JSON+Utils.swift */; };
@@ -85,6 +90,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE06203D1B616C22008CAFF2 /* TelegramBot+sendMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TelegramBot+sendMessage.swift"; path = "Requests/TelegramBot+sendMessage.swift"; sourceTree = "<group>"; };
+		CE06203F1B6185D2008CAFF2 /* ReplyMarkup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyMarkup.swift; path = Types/ReplyMarkup.swift; sourceTree = "<group>"; };
+		CE0620411B6186E5008CAFF2 /* ReplyKeyboardMarkup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyKeyboardMarkup.swift; path = Types/ReplyKeyboardMarkup.swift; sourceTree = "<group>"; };
+		CE0620431B6186EF008CAFF2 /* ReplyKeyboardHide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyKeyboardHide.swift; sourceTree = "<group>"; };
+		CE0620451B6186F9008CAFF2 /* ForceReply.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForceReply.swift; sourceTree = "<group>"; };
 		CE0ADC191B58585500FCA08C /* TelegramBot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelegramBot.swift; sourceTree = "<group>"; };
 		CE0ADC201B58592300FCA08C /* JSON+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Utils.swift"; sourceTree = "<group>"; };
 		CE29DB921B584F7B00BCA03B /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = ThirdParty/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
@@ -186,6 +196,10 @@
 				CEDFBF361B587B6000E8928E /* Update.swift */,
 				CEDFBF281B58676100E8928E /* UserOrGroupChat.swift */,
 				CEC40C0B1B5B29CD00F2F9D8 /* Response.swift */,
+				CE0620411B6186E5008CAFF2 /* ReplyKeyboardMarkup.swift */,
+				CE0620431B6186EF008CAFF2 /* ReplyKeyboardHide.swift */,
+				CE0620451B6186F9008CAFF2 /* ForceReply.swift */,
+				CE06203F1B6185D2008CAFF2 /* ReplyMarkup.swift */,
 			);
 			name = Types;
 			sourceTree = "<group>";
@@ -242,6 +256,7 @@
 			children = (
 				CE7DE0201B5EE46700188093 /* TelegramBot+getMe.swift */,
 				CE7DE0221B5F1F8E00188093 /* TelegramBot+getUpdates.swift */,
+				CE06203D1B616C22008CAFF2 /* TelegramBot+sendMessage.swift */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -401,17 +416,22 @@
 				CEDFBF371B587B6000E8928E /* Update.swift in Sources */,
 				CEC40C0C1B5B29CD00F2F9D8 /* Response.swift in Sources */,
 				CEDFBF251B5862F700E8928E /* PhotoSize.swift in Sources */,
+				CE06203E1B616C22008CAFF2 /* TelegramBot+sendMessage.swift in Sources */,
 				CE29DBA51B58541C00BCA03B /* User.swift in Sources */,
 				CEDFBF2D1B586DC500E8928E /* Sticker.swift in Sources */,
 				CEDC4A4E1B5C41200037545E /* TaskAssociatedData.swift in Sources */,
+				CE0620441B6186EF008CAFF2 /* ReplyKeyboardHide.swift in Sources */,
 				CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */,
+				CE0620461B6186F9008CAFF2 /* ForceReply.swift in Sources */,
 				CEDFBF311B58709100E8928E /* Contact.swift in Sources */,
 				CEDC4A501B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift in Sources */,
 				CE0ADC1A1B58585500FCA08C /* TelegramBot.swift in Sources */,
 				CEDFBF391B58F30700E8928E /* String+HTTP.swift in Sources */,
+				CE0620401B6185D2008CAFF2 /* ReplyMarkup.swift in Sources */,
 				CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */,
 				CEDFBF351B58727600E8928E /* Message.swift in Sources */,
 				CEC40C151B5BC22B00F2F9D8 /* DataTaskError.swift in Sources */,
+				CE0620421B6186E5008CAFF2 /* ReplyKeyboardMarkup.swift in Sources */,
 				CEDFBF291B58676100E8928E /* UserOrGroupChat.swift in Sources */,
 				CEDFBF331B58717A00E8928E /* Location.swift in Sources */,
 				CEDFBF2F1B586F7B00E8928E /* Video.swift in Sources */,
