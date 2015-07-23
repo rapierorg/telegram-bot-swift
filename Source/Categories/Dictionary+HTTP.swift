@@ -31,19 +31,24 @@ extension Dictionary {
     /// Keys corresponding to nil values are skipped and
     /// are not added to the resulting string.
     ///
-    /// - SeeAlso: Encoding is performed using String's  `formUrlencode` method.
+    /// - SeeAlso: Encoding is performed using String's `formUrlencode` method.
     /// - Returns: Encoded string.
     public func formUrlencode() -> String {
         var result = ""
         for (key, value) in self {
-            let key = String(key)
-            let value = String(value)
+            let valueOrNil = unwrap(value) // workaround for absence of 'value as Optional'
+            guard let value = valueOrNil else {
+                // Ignore keys with nil values
+                continue
+            }
+            let keyString = String(key)
+            let valueString = String(value)
             
             if !result.isEmpty {
                 result += "&"
             }
-            let keyUrlencoded = key.formUrlencode()
-            let valueUrlencoded = value.formUrlencode()
+            let keyUrlencoded = keyString.formUrlencode()
+            let valueUrlencoded = valueString.formUrlencode()
             result += "\(keyUrlencoded)=\(valueUrlencoded)"
         }
         return result

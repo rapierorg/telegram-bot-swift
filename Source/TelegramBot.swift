@@ -108,8 +108,18 @@ public class TelegramBot {
     /// Session. By default, configured with ephemeralSessionConfiguration().
     public var session: NSURLSession
 
-    /// Offset for long polling
-    //public var nextOffset: Int?
+    /// Offset for long polling.
+    public var nextOffset: Int?
+
+    /// Number of updates to fetch by default.
+    public var defaultUpdatesLimit: Int = 100
+
+    /// Default getUpdates timeout in seconds.
+    public var defaultUpdatesTimeout: Int = 20
+    
+    // Should probably be a LinkedList, but it won't be longer than
+    // 100 elements anyway.
+    var unprocessedUpdates: [Update]
     
     /// Queue for callbacks in asynchronous versions of requests.
     public var queue = dispatch_get_main_queue()
@@ -211,6 +221,7 @@ public class TelegramBot {
     init(token: String, session: NSURLSession = defaultSession) {
         self.token = token
         self.session = session
+        self.unprocessedUpdates = []
         self.errorHandler = defaultErrorHandler
     }
     

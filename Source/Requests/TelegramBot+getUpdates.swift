@@ -25,6 +25,44 @@ import Foundation
 
 extension TelegramBot {
 
+    /// Returns next unprocessed update from Telegram.
+    ///
+    /// If no more updates are available in local queue, the method blocks while
+    /// trying to fetch more from the server.
+    ///
+    /// - Returns: `Update` object. Null on error, in which case details can be
+    ///            obtained using `lastError` property.
+    func nextUpdate() -> Update? {
+        if unprocessedUpdates.isEmpty {
+            guard let updates = getUpdatesWithOffset(nextOffset,
+                    limit: defaultUpdatesLimit,
+                    timeout: defaultUpdatesTimeout)
+            else {
+                return nil
+            }
+            unprocessedUpdates = updates
+        }
+        
+        guard let update = unprocessedUpdates.first else {
+            return nil
+        }
+        
+        if nextOffset == nil || update.updateId > nextOffset {
+            nextOffset = update.updateId
+        }
+        unprocessedUpdates.removeAtIndex(0)
+        return update
+    }
+    
+//    func getUpdates() -> [Update]? {
+//        if let updates = getUpdatesWithOffset(nextOffset, limit: nil, timeout: defaultTimeout) {
+//            if let updateId = updates.last?.updateId {
+//                nextOffset = updateId
+//            }
+//        }
+//        return updates
+//    }
+    
     /// Receive incoming updates using long polling.
     ///
     /// This is an asynchronous version of the method,

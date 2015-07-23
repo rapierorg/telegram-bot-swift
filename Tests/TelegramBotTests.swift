@@ -87,22 +87,77 @@ class TelegramBotTests: XCTestCase {
         XCTAssert(uv3 == "%21%40%23%24%25%5E%26%2A%28%29-%3D%2B_")
     }
     
-    func testFormUrlencode() {
-        let d1 = [
-            "param1": "value1",
-            "param2": "value2",
-            "param3": "value3"
+    func testFormUrlencodeSimple() {
+        let parameters = [
+            "key1": "value1",
+            "key2": "value2",
+            "key3": "value3"
         ]
-        let fd1 = d1.formUrlencode()
-        XCTAssert(fd1 == "param3=value3&param1=value1&param2=value2")
+        let encoded = parameters.formUrlencode()
+        XCTAssert(encoded == "key1=value1&key3=value3&key2=value2")
+    }
+    
+    func testFormUrlencodePercentEscaping() {
+        let text = [
+            "key1": "value 1",
+            "key2": "валюе\t2",
+            "key3": "!@#$%^&*()-=+_"
+        ]
+        let encoded = text.formUrlencode()
+        XCTAssert(encoded == "key1=value+1&key3=%21%40%23%24%25%5E%26*%28%29-%3D%2B_&key2=%D0%B2%D0%B0%D0%BB%D1%8E%D0%B5%092")
         
-        let d2 = [
-            "param1": "value 1",
-            "param2": "валюе\t2",
-            "param3": "!@#$%^&*()-=+_"
+    }
+    
+    func testFormUrlencodeNilValue() {
+        let text: [String: String?] = [
+            "key": nil
         ]
-        let fd2 = d2.formUrlencode()
-        XCTAssert(fd2 == "param3=%21%40%23%24%25%5E%26*%28%29-%3D%2B_&param1=value+1&param2=%D0%B2%D0%B0%D0%BB%D1%8E%D0%B5%092")
+        let encoded = text.formUrlencode()
+        XCTAssert(encoded == "")
+    }
+    
+    func testFormUrlencodeOptionalString() {
+        let value: String? = "value"
+        let text = [
+            "key": value
+        ]
+        let encoded = text.formUrlencode()
+        XCTAssert(encoded == "key=value")
+    }
+    
+    func testFormUrlencodeOptionalAny() {
+        let value: String? = "value"
+        let text: [String: Any?] = [
+            "key": value
+        ]
+        let encoded = text.formUrlencode()
+        XCTAssert(encoded == "key=value")
+    }
+
+    func testFormUrlencodeAny() {
+        let text: [String: Any] = [
+            "key": "value"
+        ]
+        let encoded = text.formUrlencode()
+        XCTAssert(encoded == "key=value")
+    }
+
+    func testFormUrlencodeOptionalAsAny() {
+        let value: String? = "value"
+        let text: [String: Any] = [
+            "key": value
+        ]
+        let encoded = text.formUrlencode()
+        XCTAssert(encoded == "key=value")
+    }
+
+    func testFormUrlencodeNilAsAny() {
+        let value: String? = nil
+        let text: [String: Any] = [
+            "key": value
+        ]
+        let encoded = text.formUrlencode()
+        XCTAssert(encoded == "")
     }
     
     func testGetMeSynchronous() {
