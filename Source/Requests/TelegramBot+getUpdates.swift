@@ -101,7 +101,8 @@ extension TelegramBot {
     func getUpdatesWithOffset(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil) -> [Update]? {
         var result: [Update]!
         let sem = dispatch_semaphore_create(0)
-        getUpdatesWithOffset(offset, limit: limit, timeout: timeout, queue: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+        getUpdatesWithOffset(offset, limit: limit, timeout: timeout, queue: queue) {
                 updates, error in
             result = updates
             self.lastError = error
