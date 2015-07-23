@@ -115,7 +115,7 @@ public class TelegramBot {
     public var defaultUpdatesLimit: Int = 100
 
     /// Default getUpdates timeout in seconds.
-    public var defaultUpdatesTimeout: Int = 20
+    public var defaultUpdatesTimeout: Int = 60
     
     // Should probably be a LinkedList, but it won't be longer than
     // 100 elements anyway.

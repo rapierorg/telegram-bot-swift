@@ -34,21 +34,26 @@ extension TelegramBot {
     ///            obtained using `lastError` property.
     func nextUpdate() -> Update? {
         if unprocessedUpdates.isEmpty {
-            guard let updates = getUpdatesWithOffset(nextOffset,
+            var updates: [Update]?
+            repeat {
+                updates = getUpdatesWithOffset(nextOffset,
                     limit: defaultUpdatesLimit,
                     timeout: defaultUpdatesTimeout)
-            else {
-                return nil
-            }
-            unprocessedUpdates = updates
+                if updates == nil {
+                    // Error, report to caller
+                    return nil
+                }
+            } while updates!.isEmpty // Timeout, retry
+            unprocessedUpdates = updates!
         }
         
         guard let update = unprocessedUpdates.first else {
             return nil
         }
         
-        if nextOffset == nil || update.updateId > nextOffset {
-            nextOffset = update.updateId
+        let nextUpdateId = update.updateId + 1
+        if nextOffset == nil || nextUpdateId > nextOffset {
+            nextOffset = nextUpdateId
         }
         unprocessedUpdates.removeAtIndex(0)
         return update
