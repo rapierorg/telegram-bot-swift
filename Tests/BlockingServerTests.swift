@@ -40,14 +40,13 @@ class BlockingServerTests: XCTestCase {
     
     func testServer() {
         let bot = TelegramBot(token: token)
-        //bot.defaultUpdatesTimeout = 5
 
         while let update = bot.nextUpdate() {
+            print("--- updateId: \(update.updateId)")
             print("update: \(update)")
-            if let message = update.message, let text = message.text
-                    where text == "Hello" {
-                        if let sentMessage = bot.sendMessageToChatId(message.from.id, text: "How are you?", disableWebPagePreview: nil, replyToMessageId: message.messageId) {
-                    print("sentMessage: \(sentMessage)")
+            if let message = update.message, let text = message.text {
+                if text == "Hello" {
+                    bot.sendMessageToChatId(message.from.id, text: "How are you?")
                 }
             }
         }
