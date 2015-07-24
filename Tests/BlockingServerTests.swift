@@ -38,7 +38,7 @@ class BlockingServerTests: XCTestCase {
         super.tearDown()
     }
     
-    func _testServer() {
+    func testServer() {
         let bot = TelegramBot(token: token)
         //bot.defaultUpdatesTimeout = 5
 
@@ -46,8 +46,9 @@ class BlockingServerTests: XCTestCase {
             print("update: \(update)")
             if let message = update.message, let text = message.text
                     where text == "Hello" {
-                    
-                
+                        if let sentMessage = bot.sendMessageToChatId(message.from.id, text: "How are you?", disableWebPagePreview: nil, replyToMessageId: message.messageId) {
+                    print("sentMessage: \(sentMessage)")
+                }
             }
         }
         print("Server stopped due to error: \(bot.lastError)")
