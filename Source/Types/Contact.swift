@@ -59,13 +59,27 @@ public class Contact {
         lastName = json["last_name"].string
         userId = json["user_id"].string
     }
+    
+    public var prettyPrint: String {
+        var result = "Contact(" +
+            "  phoneNumber: \(phoneNumber)" +
+            "  firstName: \(firstName)"
+        if let lastName = lastName {
+            result += "  lastName: \(lastName)"
+        }
+        if let userId = userId {
+            result += "  userId: \(userId)"
+        }
+        result += ")"
+        return result
+    }
 }
 
 extension Contact: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Contact(phoneNumber: \(phoneNumber), firstName: \(firstName), " +
-            "lastName: \(lastName.prettyPrint), userId: \(userId.prettyPrint))"
+            "lastName: \(lastName.unwrapAndPrint), userId: \(userId.unwrapAndPrint))"
     }
 }
 

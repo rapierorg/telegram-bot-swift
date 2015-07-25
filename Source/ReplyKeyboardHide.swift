@@ -36,6 +36,10 @@ public class ReplyKeyboardHide {
     /// Create an empty instance.
     public init() {
     }
+    
+    public var prettyPrint: String {
+        return debugDescription
+    }
 }
 
 extension ReplyKeyboardHide: CustomStringConvertible {
@@ -55,6 +59,6 @@ extension ReplyKeyboardHide: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "ReplyKeyboardHide(hideKeyboard: \(hideKeyboard), " +
-            "selective: \(selective.prettyPrint))"
+            "selective: \(selective.unwrapAndPrint))"
     }
 }

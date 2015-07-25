@@ -51,11 +51,21 @@ public class Update {
         
         message = Message(json: json["message"])
     }
+    
+    public var prettyPrint: String {
+        var result = "Update(\n"
+            "  updateId: \(updateId)\n"
+        if let message = message {
+            result += "  message: \(message.prettyPrint.indent().trim())\n"
+        }
+        result += ")"
+        return result
+    }
 }
 
 extension Update: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        return "Update(updateId: \(updateId), message: \(message.prettyPrint))"
+        return "Update(updateId: \(updateId), message: \(message.unwrapAndPrint))"
     }
 }

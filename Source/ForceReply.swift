@@ -36,6 +36,10 @@ public class ForceReply {
     /// Create an empty instance.
     public init() {
     }
+    
+    public var prettyPrint: String {
+        return debugDescription
+    }
 }
 
 extension ForceReply: CustomStringConvertible {
@@ -55,6 +59,6 @@ extension ForceReply: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "ForceReply(forceReply: \(forceReply), " +
-        "selective: \(selective.prettyPrint))"
+        "selective: \(selective.unwrapAndPrint))"
     }
 }

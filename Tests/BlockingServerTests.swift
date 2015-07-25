@@ -43,8 +43,8 @@ class BlockingServerTests: XCTestCase {
 
         while let update = bot.nextUpdate() {
             print("--- updateId: \(update.updateId)")
-            print("update: \(update)")
-            if let message = update.message, let text = message.text {
+            print("update: \(update.prettyPrint)")
+            if let message = update.message, text = message.text {
                 if text == "Hello" {
                     bot.sendMessageToChatId(message.from.id, text: "How are you?")
                 }

@@ -87,13 +87,33 @@ public class Video {
         fileSize = json["file_size"].int
         caption = json["caption"].string
     }
+    
+    public var prettyPrint: String {
+        var result = "Video(" +
+            "  fileId: \(fileId)\n" +
+            "  width: \(width)\n" +
+            "  height: \(height)\n" +
+            "  duration: \(duration)\n" +
+            "  thumb: \(thumb.prettyPrint.indent().trim())\n"
+        if let mimeType = mimeType {
+            result += "  mimeType: \(mimeType)\n"
+        }
+        if let fileSize = fileSize {
+            result += "  fileSize: \(fileSize)\n"
+        }
+        if let caption = caption {
+            result += "  caption: \(caption)\n"
+        }
+        result += ")"
+        return result
+    }
 }
 
 extension Video: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Sticker(fileId: \(fileId), width: \(width), height: \(height), duration: \(duration), " +
-            "thumb: \(thumb), mimeType: \(mimeType.prettyPrint), fileSize: \(fileSize.prettyPrint), " +
-            "caption: \(caption.prettyPrint))"
+            "thumb: \(thumb), mimeType: \(mimeType.unwrapAndPrint), fileSize: \(fileSize.unwrapAndPrint), " +
+            "caption: \(caption.unwrapAndPrint))"
     }
 }

@@ -66,12 +66,29 @@ public class Document {
         mimeType = json["mime_type"].string
         fileSize = json["file_size"].int
     }
+    
+    public var prettyPrint: String {
+        var result = "Document(" +
+            "  fileId: \(fileId)\n" +
+            "  thumb: \(thumb.prettyPrint.indent().trim())\n"
+        if let fileName = fileName {
+            result += "  fileName=\(fileName)\n"
+        }
+        if let mimeType = mimeType {
+            result += "  mimeType=\(mimeType)\n"
+        }
+        if let fileSize = fileSize {
+            result += "  fileSize=\(fileSize)\n"
+        }
+        result += ")"
+        return result
+    }
 }
 
 extension Document: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        return "Document(fileId: \(fileId), thumb: \(thumb), fileName: \(fileName.prettyPrint), " +
-            "mimeType: \(mimeType.prettyPrint), fileSize: \(fileSize.prettyPrint))"
+        return "Document(fileId: \(fileId), thumb: \(thumb), fileName: \(fileName.unwrapAndPrint), " +
+            "mimeType: \(mimeType.unwrapAndPrint), fileSize: \(fileSize.unwrapAndPrint))"
     }
 }

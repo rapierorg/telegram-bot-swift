@@ -53,6 +53,13 @@ public class Location {
         guard let latitude = json["latitude"].float else { return nil }
         self.latitude = latitude
     }
+    
+    public var prettyPrint: String {
+        return "Location(" +
+            "  longitude: \(longitude)\n" +
+            "  latitude: \(latitude)\n" +
+        ")"
+    }
 }
 
 extension Location: CustomDebugStringConvertible {

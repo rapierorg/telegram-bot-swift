@@ -62,12 +62,26 @@ public class User {
         lastName = json["last_name"].string
         username = json["username"].string
     }
+    
+    public var prettyPrint: String {
+        var result = "User(\n"
+        result += "  id: \(id)\n"
+        result += "  firstName: \(firstName)\n"
+        if let lastName = lastName {
+            result += "  lastName: \(lastName)\n"
+        }
+        if let username = username {
+            result += "  username: \(username)\n"
+        }
+        result += ")"
+        return result
+    }
 }
 
 extension User: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        return "User(id: \(id), firstName: \(firstName), lastName: \(lastName.prettyPrint), username: \(username.prettyPrint))"
+        return "User(id: \(id), firstName: \(firstName), lastName: \(lastName.unwrapAndPrint), username: \(username.unwrapAndPrint))"
     }
 }
 

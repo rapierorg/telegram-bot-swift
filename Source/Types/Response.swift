@@ -61,13 +61,29 @@ public class Response {
             errorCode = json["error_code"].int
         }
     }
+    
+    public var prettyPrint: String {
+        var result = "Response(\n"
+            "  ok: \(ok)\n"
+        if let errorDescription = errorDescription {
+            result += "  errorDescription: \(errorDescription)\n"
+        }
+        if let errorCode = errorCode {
+            result += "  errorCode: \(errorCode)\n"
+        }
+        if let value = self.result {
+            result += "  result: \(value)\n"
+        }
+        result += ")"
+        return result
+    }
 }
 
 extension Response: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        return "Response(ok: \(ok), errorDescription: \(errorDescription.prettyPrint), " +
-            "errorCode: \(errorCode.prettyPrint), result: \(result.prettyPrint))"
+        return "Response(ok: \(ok), errorDescription: \(errorDescription.unwrapAndPrint), " +
+            "errorCode: \(errorCode.unwrapAndPrint), result: \(result.unwrapAndPrint))"
     }
 }
 

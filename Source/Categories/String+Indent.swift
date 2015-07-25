@@ -1,5 +1,5 @@
 //
-// ReplyMarkup.swift
+// String+Indent.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -23,42 +23,17 @@
 
 import Foundation
 
-public enum ReplyMarkup {
-    case ReplyKeyboardMarkupType(ReplyKeyboardMarkup)
-    case ReplyKeyboardHideType(ReplyKeyboardHide)
-    case ForceReplyType(ForceReply)
-    
-    public var prettyPrint: String {
-        return debugDescription
-    }
-}
+extension String {
+    /// Indents every line with prefix.
+    public func indent(prefix: String = "  ") -> String {
+        let lines = split(characters) { $0 == "\n" }
+        
+        var result = String()
+        result.reserveCapacity(characters.count + lines.count * prefix.characters.count)
 
-extension ReplyMarkup: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case let .ReplyKeyboardMarkupType(v):
-            return v.description
-        case let .ReplyKeyboardHideType(v):
-            return v.description
-        case let .ForceReplyType(v):
-            return v.description
-        }        
-    }
-}
-
-extension ReplyMarkup: CustomDebugStringConvertible {
-    // MARK: CustomDebugStringConvertible
-    public var debugDescription: String {
-        var s = "ReplyMarkup("
-        switch self {
-        case let .ReplyKeyboardMarkupType(v):
-            s += "replyKeyboardMarkup: \(v)"
-        case let .ReplyKeyboardHideType(v):
-            s += "replyKeyboardHide: \(v)"
-        case let .ForceReplyType(v):
-            s += "forceReply: \(v)"
-        }
-        s += ")"
-        return s
+        // $1 is String.CharacterView
+        result = lines.reduce(result) { $0 + prefix + String($1) + "\n" }
+        
+        return result
     }
 }

@@ -53,6 +53,13 @@ public class GroupChat {
         guard let title = json["title"].string else { return nil }
         self.title = title
     }
+    
+    public var prettyPrint: String {
+        return "GroupChat(\n" +
+            "  id: \(id)\n" +
+            "  title: \(title)\n" +
+        ")"
+    }
 }
 
 extension GroupChat: CustomDebugStringConvertible {

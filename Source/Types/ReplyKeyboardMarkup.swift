@@ -43,6 +43,10 @@ public class ReplyKeyboardMarkup {
     public init() {
         keyboard = [[]]
     }
+    
+    public var prettyPrint: String {
+        return debugDescription
+    }
 }
 
 extension ReplyKeyboardMarkup: CustomStringConvertible {
@@ -73,7 +77,7 @@ extension ReplyKeyboardMarkup: CustomStringConvertible {
 extension ReplyKeyboardMarkup: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        return "ReplyKeyboardMarkup(keyboard: \(keyboard), resizeKeyboard: \(resizeKeyboard.prettyPrint), " +
-            "oneTimeKeyboard: \(oneTimeKeyboard.prettyPrint), selective: \(selective.prettyPrint))"
+        return "ReplyKeyboardMarkup(keyboard: \(keyboard), resizeKeyboard: \(resizeKeyboard.unwrapAndPrint), " +
+            "oneTimeKeyboard: \(oneTimeKeyboard.unwrapAndPrint), selective: \(selective.unwrapAndPrint))"
     }
 }

@@ -72,13 +72,26 @@ public class Sticker {
         
         fileSize = json["file_size"].int
     }
+    
+    public var prettyPrint: String {
+        var result = "Sticker(" +
+            "  fileId: \(fileId)\n" +
+            "  width: \(width)\n" +
+            "  height: \(height)\n" +
+            "  thumb: \(thumb.prettyPrint.indent().trim())\n"
+        if let fileSize = fileSize {
+            result += "  fileSize=\(fileSize)\n"
+        }
+        result += ")"
+        return result
+    }
 }
 
 extension Sticker: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Sticker(fileId: \(fileId), width: \(width), height: \(height), thumb: \(thumb), " +
-            "fileSize: \(fileSize.prettyPrint))"
+            "fileSize: \(fileSize.unwrapAndPrint))"
     }
 }
 

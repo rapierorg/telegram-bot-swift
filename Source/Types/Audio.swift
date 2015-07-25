@@ -62,12 +62,26 @@ public class Audio {
         mimeType = json["mime_type"].string
         fileSize = json["file_size"].int
     }
+    
+    public var prettyPrint: String {
+        var result = "Audio(\n" +
+            "  fileId: \(fileId)\n" +
+            "  duration: \(duration)\n"
+        if let mimeType = mimeType {
+            result += "  mimeType: \(mimeType)\n"
+        }
+        if let fileSize = fileSize {
+            result += "  fileSize: \(fileSize)\n"
+        }
+        result += ")"
+        return result
+    }
 }
 
 extension Audio: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Audio(fileId: \(fileId), duration: \(duration), " +
-            "mimeType: \(mimeType.prettyPrint), fileSize: \(fileSize.prettyPrint))"
+            "mimeType: \(mimeType.unwrapAndPrint), fileSize: \(fileSize.unwrapAndPrint))"
     }
 }

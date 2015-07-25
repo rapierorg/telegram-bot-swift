@@ -26,6 +26,17 @@ import Foundation
 public enum UserOrGroupChat {
     case UserType(User)
     case GroupChatType(GroupChat)
+    
+    public var prettyPrint: String {
+        var s = "UserOrGroupChat(\n"
+        switch self {
+        case let .UserType(user): s += "  user: \(user.prettyPrint.indent().trim())\n"
+        case let .GroupChatType(groupChat): s += "  groupChat: \(groupChat.prettyPrint.indent().trim())\n"
+        }
+        s += ")"
+        return s
+        
+    }
 }
 
 extension UserOrGroupChat: CustomDebugStringConvertible {

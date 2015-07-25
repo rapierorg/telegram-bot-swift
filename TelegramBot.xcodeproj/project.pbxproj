@@ -29,6 +29,8 @@
 		CEC40C131B5B346600F2F9D8 /* Optional+Unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC40C121B5B346600F2F9D8 /* Optional+Unwrap.swift */; };
 		CEC40C151B5BC22B00F2F9D8 /* DataTaskError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC40C141B5BC22B00F2F9D8 /* DataTaskError.swift */; };
 		CED9FDCC1B6374D000AA44E2 /* NSScanner+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED9FDCB1B6374D000AA44E2 /* NSScanner+Swift.swift */; };
+		CED9FDCE1B63B4EF00AA44E2 /* String+Indent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED9FDCD1B63B4EF00AA44E2 /* String+Indent.swift */; };
+		CED9FDD01B63C37900AA44E2 /* String+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED9FDCF1B63C37900AA44E2 /* String+Trim.swift */; };
 		CEDC4A4E1B5C41200037545E /* TaskAssociatedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC4A4D1B5C41200037545E /* TaskAssociatedData.swift */; };
 		CEDC4A501B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC4A4F1B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift */; };
 		CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF1F1B5861D600E8928E /* GroupChat.swift */; };
@@ -113,8 +115,11 @@
 		CE7DE0291B612A6900188093 /* UrlencodeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlencodeTests.swift; sourceTree = "<group>"; };
 		CE7DE02C1B613C7D00188093 /* HTTPUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPUtils.swift; sourceTree = "<group>"; };
 		CEC40C0B1B5B29CD00F2F9D8 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Response.swift; path = Types/Response.swift; sourceTree = "<group>"; };
-		CEC40C121B5B346600F2F9D8 /* Optional+PrettyPrint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optional+PrettyPrint.swift"; sourceTree = "<group>"; };
+		CEC40C121B5B346600F2F9D8 /* Optional+Unwrap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optional+Unwrap.swift"; sourceTree = "<group>"; };
 		CEC40C141B5BC22B00F2F9D8 /* DataTaskError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataTaskError.swift; sourceTree = "<group>"; };
+		CED9FDCB1B6374D000AA44E2 /* NSScanner+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSScanner+Swift.swift"; sourceTree = "<group>"; };
+		CED9FDCD1B63B4EF00AA44E2 /* String+Indent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Indent.swift"; sourceTree = "<group>"; };
+		CED9FDCF1B63C37900AA44E2 /* String+Trim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Trim.swift"; sourceTree = "<group>"; };
 		CEDC4A4D1B5C41200037545E /* TaskAssociatedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskAssociatedData.swift; sourceTree = "<group>"; };
 		CEDC4A4F1B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSessionDataTask+AssociatedData.swift"; sourceTree = "<group>"; };
 		CEDFBF1F1B5861D600E8928E /* GroupChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupChat.swift; path = Types/GroupChat.swift; sourceTree = "<group>"; };
@@ -155,9 +160,12 @@
 			isa = PBXGroup;
 			children = (
 				CE0ADC201B58592300FCA08C /* JSON+Utils.swift */,
+				CED9FDCD1B63B4EF00AA44E2 /* String+Indent.swift */,
 				CEDFBF381B58F30700E8928E /* String+HTTP.swift */,
-				CEC40C121B5B346600F2F9D8 /* Optional+PrettyPrint.swift */,
+				CED9FDCF1B63C37900AA44E2 /* String+Trim.swift */,
+				CEC40C121B5B346600F2F9D8 /* Optional+Unwrap.swift */,
 				CEDC4A4F1B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift */,
+				CED9FDCB1B6374D000AA44E2 /* NSScanner+Swift.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -235,6 +243,7 @@
 				CEC40C141B5BC22B00F2F9D8 /* DataTaskError.swift */,
 				CEDC4A4D1B5C41200037545E /* TaskAssociatedData.swift */,
 				CE7DE02C1B613C7D00188093 /* HTTPUtils.swift */,
+				CED9FDC61B62E48300AA44E2 /* CommandParser.swift */,
 				CE3B38271B584B3F00090037 /* Info.plist */,
 				CE29DBA21B58522E00BCA03B /* LICENSE */,
 			);
@@ -410,7 +419,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE7DE02D1B613C7D00188093 /* HTTPUtils.swift in Sources */,
-				CEC40C131B5B346600F2F9D8 /* Optional+PrettyPrint.swift in Sources */,
+				CEC40C131B5B346600F2F9D8 /* Optional+Unwrap.swift in Sources */,
 				CE7DE0211B5EE46700188093 /* TelegramBot+getMe.swift in Sources */,
 				CEDFBF2B1B58681300E8928E /* Document.swift in Sources */,
 				CEDFBF271B5864D700E8928E /* Audio.swift in Sources */,
@@ -419,14 +428,18 @@
 				CEDFBF251B5862F700E8928E /* PhotoSize.swift in Sources */,
 				CE06203E1B616C22008CAFF2 /* TelegramBot+sendMessage.swift in Sources */,
 				CE29DBA51B58541C00BCA03B /* User.swift in Sources */,
+				CED9FDD01B63C37900AA44E2 /* String+Trim.swift in Sources */,
 				CEDFBF2D1B586DC500E8928E /* Sticker.swift in Sources */,
 				CEDC4A4E1B5C41200037545E /* TaskAssociatedData.swift in Sources */,
 				CE0620441B6186EF008CAFF2 /* ReplyKeyboardHide.swift in Sources */,
 				CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */,
 				CE0620461B6186F9008CAFF2 /* ForceReply.swift in Sources */,
 				CEDFBF311B58709100E8928E /* Contact.swift in Sources */,
+				CED9FDC71B62E48300AA44E2 /* CommandParser.swift in Sources */,
+				CED9FDCC1B6374D000AA44E2 /* NSScanner+Swift.swift in Sources */,
 				CEDC4A501B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift in Sources */,
 				CE0ADC1A1B58585500FCA08C /* TelegramBot.swift in Sources */,
+				CED9FDCE1B63B4EF00AA44E2 /* String+Indent.swift in Sources */,
 				CEDFBF391B58F30700E8928E /* String+HTTP.swift in Sources */,
 				CE0620401B6185D2008CAFF2 /* ReplyMarkup.swift in Sources */,
 				CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */,

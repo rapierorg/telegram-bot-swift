@@ -64,11 +64,23 @@ public class PhotoSize {
         
         fileSize = json["file_size"].int
     }
+    
+    public var prettyPrint: String {
+        var result = "PhotoSize(\n" +
+            "  fileId: \(fileId)\n"
+            "  width: \(width)\n"
+            "  height: \(height)\n"
+        if let fileSize = fileSize {
+            result += "  fileSize: \(fileSize)\n"
+        }
+        result += ")"
+        return result
+    }
 }
 
 extension PhotoSize: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        return "PhotoSize(fileId: \(fileId), width: \(width), height: \(height), fileSize: \(fileSize.prettyPrint))"
+        return "PhotoSize(fileId: \(fileId), width: \(width), height: \(height), fileSize: \(fileSize.unwrapAndPrint))"
     }
 }
