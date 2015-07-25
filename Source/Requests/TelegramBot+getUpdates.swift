@@ -18,7 +18,7 @@ extension TelegramBot {
     ///
     /// - Returns: `Update` object. Null on error, in which case details can be
     ///            obtained using `lastError` property.
-    func nextUpdate() -> Update? {
+    public func nextUpdate() -> Update? {
         if unprocessedUpdates.isEmpty {
             var updates: [Update]?
             repeat {
@@ -64,7 +64,7 @@ extension TelegramBot {
     /// - Returns: Array of `Update` objects. Null on error, in which case `error`
     ///                    contains the details.
     /// - SeeAlso: `func getUpdatesWithLimit(timeout:) -> [Update]?`
-    func getUpdatesWithOffset(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil, completion: (updates: [Update]?, error: DataTaskError?)->()) {
+    public func getUpdatesWithOffset(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil, completion: (updates: [Update]?, error: DataTaskError?)->()) {
         getUpdatesWithOffset(offset, limit: limit, timeout: timeout, queue: queue, completion: completion)
     }
     
@@ -84,7 +84,7 @@ extension TelegramBot {
     /// - Returns: Array of `Update` objects. Null on error, in which case details
     ///            can be obtained using `lastError` property.
     /// - SeeAlso: `func getUpdatesWithLimit(timeout:completion:)->()`
-    func getUpdatesWithOffset(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil) -> [Update]? {
+    public func getUpdatesWithOffset(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil) -> [Update]? {
         var result: [Update]!
         let sem = dispatch_semaphore_create(0)
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)

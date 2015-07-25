@@ -24,7 +24,7 @@ extension TelegramBot {
     /// - Returns: Sent message on success. Null on error, in which case `error`
     ///            contains the details.
     /// - SeeAlso: `func sendMessageWithChatId(text:disableWebPagePreview:replyToMessageId:replyMarkup:)->Message?`
-    func sendMessageToChatId(chatId: Int, text: String, disableWebPagePreview: Bool? = nil, replyToMessageId: Int? = nil, replyMarkup: ReplyMarkup? = nil, completion: (message: Message?, error: DataTaskError?)->()) {
+    public func sendMessageToChatId(chatId: Int, text: String, disableWebPagePreview: Bool? = nil, replyToMessageId: Int? = nil, replyMarkup: ReplyMarkup? = nil, completion: (message: Message?, error: DataTaskError?)->()) {
         sendMessageToChatId(chatId, text: text, disableWebPagePreview: disableWebPagePreview, replyToMessageId: replyToMessageId, replyMarkup: replyMarkup, queue: queue, completion: completion)
     }
 
@@ -41,7 +41,7 @@ extension TelegramBot {
     /// - Returns: Sent message on success. Null on error, in which case `error`
     ///            contains the details.
     /// - SeeAlso: `func sendMessageWithChatId(text:disableWebPagePreview:replyToMessageId:replyMarkup:completion:)->()`
-    func sendMessageToChatId(chatId: Int, text: String, disableWebPagePreview: Bool? = nil, replyToMessageId: Int? = nil, replyMarkup: ReplyMarkup? = nil) -> Message? {
+    public func sendMessageToChatId(chatId: Int, text: String, disableWebPagePreview: Bool? = nil, replyToMessageId: Int? = nil, replyMarkup: ReplyMarkup? = nil) -> Message? {
         var result: Message!
         let sem = dispatch_semaphore_create(0)
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)

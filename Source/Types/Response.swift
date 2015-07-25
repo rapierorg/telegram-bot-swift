@@ -13,16 +13,16 @@ import SwiftyJSON
 /// Response to Bot API request.
 public class Response {
     /// If `ok` equals true, the request was successful and the result of the query can be found in the `result` field. In case of an unsuccessful request, ‘ok’ equals false and the error is explained in the ‘errorDescription’.
-    var ok: Bool
+    public var ok: Bool
     
     /// *Optional.* Error description.
-    var errorDescription: String?
+    public var errorDescription: String?
     
     /// *Optional.* Error code. Its contents are subject to change in the future.
-    var errorCode: Int?
+    public var errorCode: Int?
     
     /// *Optional.* Result.
-    var result: JSON?
+    public var result: JSON?
     
     /// Create an empty instance.
     public init() {

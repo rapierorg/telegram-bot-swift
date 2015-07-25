@@ -22,7 +22,7 @@ extension TelegramBot {
     /// - Returns: Basic information about the bot in form of a `User` object.
     ///            Null on error, in which case `error` contains the details.
     /// - SeeAlso: `func getMe() -> User?`
-    func getMe(completion: (user: User?, error: DataTaskError?)->()) {
+    public func getMe(completion: (user: User?, error: DataTaskError?)->()) {
         getMeWithQueue(queue, completion: completion)
     }
     
@@ -35,7 +35,7 @@ extension TelegramBot {
     ///            Null on error, in which case details can be obtained using
     ///            `lastError` property.
     /// - SeeAlso: `func getMe(completion:)->()`
-    func getMe() -> User? {
+    public func getMe() -> User? {
         var result: User!
         let sem = dispatch_semaphore_create(0)
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)

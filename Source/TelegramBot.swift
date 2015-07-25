@@ -204,7 +204,7 @@ public class TelegramBot {
     /// Creates an instance of Telegram Bot.
     /// - Parameter token: A unique authentication token.
     /// - Parameter session: `NSURLSession` instance, a session with `ephemeralSessionConfiguration` is used by default.
-    init(token: String, session: NSURLSession = defaultSession) {
+    public init(token: String, session: NSURLSession = defaultSession) {
         self.token = token
         self.session = session
         self.unprocessedUpdates = []

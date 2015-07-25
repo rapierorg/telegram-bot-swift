@@ -24,7 +24,7 @@ class BlockingServerTests: XCTestCase {
         super.tearDown()
     }
     
-    func testServer() {
+    func disable_testServer() {
         let bot = TelegramBot(token: token)
 
         while let update = bot.nextUpdate() {

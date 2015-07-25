@@ -14,10 +14,10 @@ import SwiftyJSON
 public class ForceReply {
     
     /// Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'.
-    let forceReply = true
+    public let forceReply = true
     
     /// *Optional.* Use this parameter if you want to force reply from specific users only.
-    var selective: Bool?
+    public var selective: Bool?
     
     /// Create an empty instance.
     public init() {

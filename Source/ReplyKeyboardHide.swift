@@ -14,10 +14,10 @@ import SwiftyJSON
 public class ReplyKeyboardHide {
 
     /// Requests clients to hide the custom keyboard.
-    let hideKeyboard = true
+    public let hideKeyboard = true
     
     /// *Optional.* Use this parameter if you want to hide keyboard for specific users only.
-    var selective: Bool?
+    public var selective: Bool?
     
     /// Create an empty instance.
     public init() {
