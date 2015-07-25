@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CEDDA4B91B584D220030F5A4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDA4B81B584D220030F5A4 /* main.swift */; };
+		CEEB5C0F1B642BBE000F7374 /* TelegramBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEB5C0E1B642BBE000F7374 /* TelegramBot.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		CEDDA4B51B584D220030F5A4 /* Example */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Example; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDDA4B81B584D220030F5A4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		CEEB5C0E1B642BBE000F7374 /* TelegramBot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelegramBot.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 		CEDDA4B71B584D220030F5A4 /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				CEEB5C0E1B642BBE000F7374 /* TelegramBot.swift */,
 				CEDDA4B81B584D220030F5A4 /* main.swift */,
 			);
 			path = Example;
@@ -119,6 +122,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEEB5C0F1B642BBE000F7374 /* TelegramBot.swift in Sources */,
 				CEDDA4B91B584D220030F5A4 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
