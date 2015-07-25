@@ -1,5 +1,5 @@
 //
-// main.swift
+// CommandParser.swift
 //
 // Copyright (c) 2015 Andrey Fidrya
 //
@@ -9,3 +9,11 @@
 
 import Foundation
 
+class CommandParser {
+
+    init(command: String) {
+        //let scanner = NSScanner(string: command)
+        //scanner.
+    }
+    
+}
