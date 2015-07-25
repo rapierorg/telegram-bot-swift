@@ -36,7 +36,7 @@ extension Optional {
     /// Optional("text"), nil
     /// text, nil
     /// ```
-    var prettyPrint: String {
+    var unwrapAndPrint: String {
         if let v = self {
             return "\(v)"
         }
