@@ -24,8 +24,8 @@ extension TelegramBot {
     /// - Returns: Sent message on success. Null on error, in which case `error`
     ///            contains the details.
     /// - SeeAlso: `func sendMessageWithChatId(text:disableWebPagePreview:replyToMessageId:replyMarkup:)->Message?`
-    public func sendMessageToChatId(chatId: Int, text: String, disableWebPagePreview: Bool? = nil, replyToMessageId: Int? = nil, replyMarkup: ReplyMarkup? = nil, completion: (message: Message?, error: DataTaskError?)->()) {
-        sendMessageToChatId(chatId, text: text, disableWebPagePreview: disableWebPagePreview, replyToMessageId: replyToMessageId, replyMarkup: replyMarkup, queue: queue, completion: completion)
+    public func sendMessage(chatId chatId: Int, text: String, disableWebPagePreview: Bool? = nil, replyToMessageId: Int? = nil, replyMarkup: ReplyMarkup? = nil, completion: (message: Message?, error: DataTaskError?)->()) {
+        sendMessage(chatId: chatId, text: text, disableWebPagePreview: disableWebPagePreview, replyToMessageId: replyToMessageId, replyMarkup: replyMarkup, queue: queue, completion: completion)
     }
 
     /// Send text messages. On success, the sent Message is returned.
@@ -41,11 +41,11 @@ extension TelegramBot {
     /// - Returns: Sent message on success. Null on error, in which case `error`
     ///            contains the details.
     /// - SeeAlso: `func sendMessageWithChatId(text:disableWebPagePreview:replyToMessageId:replyMarkup:completion:)->()`
-    public func sendMessageToChatId(chatId: Int, text: String, disableWebPagePreview: Bool? = nil, replyToMessageId: Int? = nil, replyMarkup: ReplyMarkup? = nil) -> Message? {
+    public func sendMessage(chatId chatId: Int, text: String, disableWebPagePreview: Bool? = nil, replyToMessageId: Int? = nil, replyMarkup: ReplyMarkup? = nil) -> Message? {
         var result: Message!
         let sem = dispatch_semaphore_create(0)
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-        sendMessageToChatId(chatId, text: text, disableWebPagePreview: disableWebPagePreview, replyToMessageId: replyToMessageId, replyMarkup: replyMarkup, queue: queue) {
+        sendMessage(chatId: chatId, text: text, disableWebPagePreview: disableWebPagePreview, replyToMessageId: replyToMessageId, replyMarkup: replyMarkup, queue: queue) {
                 message, error in
             result = message
             self.lastError = error
@@ -55,7 +55,7 @@ extension TelegramBot {
         return result
     }
     
-    private func sendMessageToChatId(chatId: Int, text: String, disableWebPagePreview: Bool?, replyToMessageId: Int?, replyMarkup: ReplyMarkup?, queue: dispatch_queue_t, completion: (message: Message?, error: DataTaskError?)->()) {
+    private func sendMessage(chatId chatId: Int, text: String, disableWebPagePreview: Bool?, replyToMessageId: Int?, replyMarkup: ReplyMarkup?, queue: dispatch_queue_t, completion: (message: Message?, error: DataTaskError?)->()) {
         let parameters: [String: Any?] = [
             "chat_id": chatId,
             "text": text,

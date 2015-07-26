@@ -22,7 +22,7 @@ extension TelegramBot {
         if unprocessedUpdates.isEmpty {
             var updates: [Update]?
             repeat {
-                updates = getUpdatesWithOffset(nextOffset,
+                updates = getUpdates(offset: nextOffset,
                     limit: defaultUpdatesLimit,
                     timeout: defaultUpdatesTimeout)
                 if updates == nil {
@@ -64,8 +64,8 @@ extension TelegramBot {
     /// - Returns: Array of `Update` objects. Null on error, in which case `error`
     ///                    contains the details.
     /// - SeeAlso: `func getUpdatesWithLimit(timeout:) -> [Update]?`
-    public func getUpdatesWithOffset(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil, completion: (updates: [Update]?, error: DataTaskError?)->()) {
-        getUpdatesWithOffset(offset, limit: limit, timeout: timeout, queue: queue, completion: completion)
+    public func getUpdates(offset offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil, completion: (updates: [Update]?, error: DataTaskError?)->()) {
+        getUpdates(offset: offset, limit: limit, timeout: timeout, queue: queue, completion: completion)
     }
     
     /// Receive incoming updates using long polling.
@@ -84,11 +84,11 @@ extension TelegramBot {
     /// - Returns: Array of `Update` objects. Null on error, in which case details
     ///            can be obtained using `lastError` property.
     /// - SeeAlso: `func getUpdatesWithLimit(timeout:completion:)->()`
-    public func getUpdatesWithOffset(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil) -> [Update]? {
+    public func getUpdates(offset offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil) -> [Update]? {
         var result: [Update]!
         let sem = dispatch_semaphore_create(0)
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-        getUpdatesWithOffset(offset, limit: limit, timeout: timeout, queue: queue) {
+        getUpdates(offset: offset, limit: limit, timeout: timeout, queue: queue) {
                 updates, error in
             result = updates
             self.lastError = error
@@ -98,7 +98,7 @@ extension TelegramBot {
         return result
     }
     
-    private func getUpdatesWithOffset(offset: Int?, limit: Int?, timeout: Int?, queue: dispatch_queue_t, completion: (updates: [Update]?, error: DataTaskError?)->()) {
+    private func getUpdates(offset offset: Int?, limit: Int?, timeout: Int?, queue: dispatch_queue_t, completion: (updates: [Update]?, error: DataTaskError?)->()) {
         let parameters: [String: Any?] = [
             "offset": offset,
             "limit": limit,

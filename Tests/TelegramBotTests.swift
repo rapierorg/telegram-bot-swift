@@ -83,7 +83,7 @@ class TelegramBotTests: XCTestCase {
 
     func testGetUpdatesSynchronous() {
         let bot = TelegramBot(token: token)
-        let updates = bot.getUpdatesWithOffset()
+        let updates = bot.getUpdates()
         let error = bot.lastError
         print("getUpdates: \(updates), error: \(error)")
     }
@@ -92,7 +92,7 @@ class TelegramBotTests: XCTestCase {
         let bot = TelegramBot(token: token)
         
         let expectGetUpdates = expectationWithDescription("getUpdates")
-        bot.getUpdatesWithOffset { updates, error in
+        bot.getUpdates { updates, error in
             print("getUpdates: updates: \(updates), error: \(error)")
             expectGetUpdates.fulfill()
         }
