@@ -332,6 +332,7 @@
 				CE3B381E1B584B3F00090037 /* Frameworks */,
 				CE3B381F1B584B3F00090037 /* Headers */,
 				CE3B38201B584B3F00090037 /* Resources */,
+				CEEF5D411B6AE16D004D2881 /* Amalgamate Sources (for use in console projects) */,
 			);
 			buildRules = (
 			);
@@ -451,6 +452,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CEEF5D411B6AE16D004D2881 /* Amalgamate Sources (for use in console projects) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Amalgamate Sources (for use in console projects)";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ./amalgamate.swift;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CE3B381D1B584B3F00090037 /* Sources */ = {

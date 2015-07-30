@@ -11,6 +11,30 @@
 		CEEB5C0F1B642BBE000F7374 /* TelegramBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEB5C0E1B642BBE000F7374 /* TelegramBot.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		CEEF5D3B1B6AE102004D2881 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEEF5D361B6AE102004D2881 /* TelegramBot.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CE3B38221B584B3F00090037;
+			remoteInfo = TelegramBot;
+		};
+		CEEF5D3D1B6AE102004D2881 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEEF5D361B6AE102004D2881 /* TelegramBot.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CE3B382C1B584B4000090037;
+			remoteInfo = TelegramBotTests;
+		};
+		CEEF5D3F1B6AE119004D2881 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEEF5D361B6AE102004D2881 /* TelegramBot.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CE3B38211B584B3F00090037;
+			remoteInfo = TelegramBot;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		CEDDA4B31B584D220030F5A4 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -27,6 +51,7 @@
 		CEDDA4B51B584D220030F5A4 /* Example */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Example; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDDA4B81B584D220030F5A4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		CEEB5C0E1B642BBE000F7374 /* TelegramBot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelegramBot.swift; sourceTree = SOURCE_ROOT; };
+		CEEF5D361B6AE102004D2881 /* TelegramBot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = TelegramBot.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +68,7 @@
 		CEDDA4AC1B584D220030F5A4 = {
 			isa = PBXGroup;
 			children = (
+				CEEF5D361B6AE102004D2881 /* TelegramBot.xcodeproj */,
 				CEDDA4B71B584D220030F5A4 /* Example */,
 				CEDDA4B61B584D220030F5A4 /* Products */,
 			);
@@ -65,6 +91,15 @@
 			path = Example;
 			sourceTree = "<group>";
 		};
+		CEEF5D371B6AE102004D2881 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CEEF5D3C1B6AE102004D2881 /* TelegramBot.framework */,
+				CEEF5D3E1B6AE102004D2881 /* TelegramBotTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -79,6 +114,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CEEF5D401B6AE119004D2881 /* PBXTargetDependency */,
 			);
 			name = Example;
 			productName = Example;
@@ -110,12 +146,35 @@
 			mainGroup = CEDDA4AC1B584D220030F5A4;
 			productRefGroup = CEDDA4B61B584D220030F5A4 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = CEEF5D371B6AE102004D2881 /* Products */;
+					ProjectRef = CEEF5D361B6AE102004D2881 /* TelegramBot.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				CEDDA4B41B584D220030F5A4 /* Example */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		CEEF5D3C1B6AE102004D2881 /* TelegramBot.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = TelegramBot.framework;
+			remoteRef = CEEF5D3B1B6AE102004D2881 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CEEF5D3E1B6AE102004D2881 /* TelegramBotTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TelegramBotTests.xctest;
+			remoteRef = CEEF5D3D1B6AE102004D2881 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CEDDA4B11B584D220030F5A4 /* Sources */ = {
@@ -128,6 +187,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CEEF5D401B6AE119004D2881 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TelegramBot;
+			targetProxy = CEEF5D3F1B6AE119004D2881 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		CEDDA4BA1B584D220030F5A4 /* Debug */ = {
