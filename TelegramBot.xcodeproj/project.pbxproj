@@ -46,6 +46,13 @@
 		CEDFBF351B58727600E8928E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF341B58727600E8928E /* Message.swift */; };
 		CEDFBF371B587B6000E8928E /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF361B587B6000E8928E /* Update.swift */; };
 		CEDFBF391B58F30700E8928E /* String+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFBF381B58F30700E8928E /* String+HTTP.swift */; };
+		CEEF5D241B6AD0BE004D2881 /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D231B6AD0BE004D2881 /* Parameter.swift */; };
+		CEEF5D2B1B6AD1C4004D2881 /* String+Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D2A1B6AD1C4004D2881 /* String+Parameter.swift */; };
+		CEEF5D2D1B6AD1D9004D2881 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D2C1B6AD1D9004D2881 /* Word.swift */; };
+		CEEF5D2F1B6AD1F7004D2881 /* RestOfString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D2E1B6AD1F7004D2881 /* RestOfString.swift */; };
+		CEEF5D311B6AD233004D2881 /* Arguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D301B6AD233004D2881 /* Arguments.swift */; };
+		CEEF5D331B6AD2D0004D2881 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D321B6AD2D0004D2881 /* Path.swift */; };
+		CEEF5D351B6AD2EC004D2881 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D341B6AD2EC004D2881 /* Router.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +143,13 @@
 		CEDFBF341B58727600E8928E /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Message.swift; path = Types/Message.swift; sourceTree = "<group>"; };
 		CEDFBF361B587B6000E8928E /* Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Update.swift; path = Types/Update.swift; sourceTree = "<group>"; };
 		CEDFBF381B58F30700E8928E /* String+HTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HTTP.swift"; sourceTree = "<group>"; };
+		CEEF5D231B6AD0BE004D2881 /* Parameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Parameter.swift; path = Router/Parameter.swift; sourceTree = "<group>"; };
+		CEEF5D2A1B6AD1C4004D2881 /* String+Parameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Parameter.swift"; path = "Router/Parameters/String+Parameter.swift"; sourceTree = "<group>"; };
+		CEEF5D2C1B6AD1D9004D2881 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Word.swift; path = Router/Parameters/Word.swift; sourceTree = "<group>"; };
+		CEEF5D2E1B6AD1F7004D2881 /* RestOfString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestOfString.swift; path = Router/Parameters/RestOfString.swift; sourceTree = "<group>"; };
+		CEEF5D301B6AD233004D2881 /* Arguments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Arguments.swift; path = Router/Arguments.swift; sourceTree = "<group>"; };
+		CEEF5D321B6AD2D0004D2881 /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Path.swift; path = Router/Path.swift; sourceTree = "<group>"; };
+		CEEF5D341B6AD2EC004D2881 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Router.swift; path = Router/Router.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +250,7 @@
 		CE3B38241B584B3F00090037 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				CEEF5D1F1B6AD09F004D2881 /* Router */,
 				CE7DE01C1B5EE44700188093 /* Requests */,
 				CE0ADC1F1B58592300FCA08C /* Categories */,
 				CE29DBA11B58519500BCA03B /* Types */,
@@ -271,6 +286,28 @@
 				CE06203D1B616C22008CAFF2 /* TelegramBot+sendMessage.swift */,
 			);
 			name = Requests;
+			sourceTree = "<group>";
+		};
+		CEEF5D1F1B6AD09F004D2881 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				CEEF5D291B6AD199004D2881 /* Parameters */,
+				CEEF5D231B6AD0BE004D2881 /* Parameter.swift */,
+				CEEF5D301B6AD233004D2881 /* Arguments.swift */,
+				CEEF5D321B6AD2D0004D2881 /* Path.swift */,
+				CEEF5D341B6AD2EC004D2881 /* Router.swift */,
+			);
+			name = Router;
+			sourceTree = "<group>";
+		};
+		CEEF5D291B6AD199004D2881 /* Parameters */ = {
+			isa = PBXGroup;
+			children = (
+				CEEF5D2A1B6AD1C4004D2881 /* String+Parameter.swift */,
+				CEEF5D2C1B6AD1D9004D2881 /* Word.swift */,
+				CEEF5D2E1B6AD1F7004D2881 /* RestOfString.swift */,
+			);
+			name = Parameters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -429,9 +466,12 @@
 				CEC40C0C1B5B29CD00F2F9D8 /* Response.swift in Sources */,
 				CEDFBF251B5862F700E8928E /* PhotoSize.swift in Sources */,
 				CE06203E1B616C22008CAFF2 /* TelegramBot+sendMessage.swift in Sources */,
+				CEEF5D241B6AD0BE004D2881 /* Parameter.swift in Sources */,
 				CE29DBA51B58541C00BCA03B /* User.swift in Sources */,
 				CED9FDD01B63C37900AA44E2 /* String+Trim.swift in Sources */,
+				CEEF5D2B1B6AD1C4004D2881 /* String+Parameter.swift in Sources */,
 				CEDFBF2D1B586DC500E8928E /* Sticker.swift in Sources */,
+				CEEF5D331B6AD2D0004D2881 /* Path.swift in Sources */,
 				CEDC4A4E1B5C41200037545E /* TaskAssociatedData.swift in Sources */,
 				CE0620441B6186EF008CAFF2 /* ReplyKeyboardHide.swift in Sources */,
 				CE0ADC211B58592300FCA08C /* JSON+Utils.swift in Sources */,
@@ -440,6 +480,10 @@
 				CED9FDC71B62E48300AA44E2 /* CommandParser.swift in Sources */,
 				CED9FDCC1B6374D000AA44E2 /* NSScanner+Swift.swift in Sources */,
 				CEDC4A501B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift in Sources */,
+				CEEF5D2D1B6AD1D9004D2881 /* Word.swift in Sources */,
+				CEEF5D311B6AD233004D2881 /* Arguments.swift in Sources */,
+				CEEF5D351B6AD2EC004D2881 /* Router.swift in Sources */,
+				CEEF5D2F1B6AD1F7004D2881 /* RestOfString.swift in Sources */,
 				CE0ADC1A1B58585500FCA08C /* TelegramBot.swift in Sources */,
 				CED9FDCE1B63B4EF00AA44E2 /* String+Indent.swift in Sources */,
 				CEDFBF391B58F30700E8928E /* String+HTTP.swift in Sources */,

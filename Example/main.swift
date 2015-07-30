@@ -19,7 +19,7 @@ while let update = bot.nextUpdate() {
     print("update: \(update.prettyPrint)")
     if let message = update.message, text = message.text {
         if text == "Hello" {
-            bot.sendMessageToChatId(message.from.id, text: "How are you?")
+            bot.sendMessage(chatId: message.from.id, text: "How are you?")
         }
     }
 }
