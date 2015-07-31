@@ -17,10 +17,9 @@ let bot = TelegramBot(token: token)
 class Controller {
     var update = Update()
     
-    func help(arguments: Arguments) -> Bool {
-        guard let message = update.message else { return false }
+    func help() {
+        guard let message = update.message else { return }
         bot.sendMessage(chatId: message.from.id, text: "Help text")
-        return true
     }
 }
 

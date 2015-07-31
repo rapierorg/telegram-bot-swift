@@ -10,7 +10,12 @@
 import Foundation
 
 public class Path {
-    public typealias Handler = (Arguments)->(Bool)
+    public enum Handler {
+        case CancellableHandlerWithoutArguments(()->(Bool))
+        case NonCancellableHandlerWithoutArguments(()->())
+        case CancellableHandlerWithArguments((Arguments)->(Bool))
+        case NonCancellableHandlerWithArguments((Arguments)->())
+    }
     
     public var parameters: [Parameter]
     public var handler: Handler

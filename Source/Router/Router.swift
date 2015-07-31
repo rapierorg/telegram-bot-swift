@@ -20,13 +20,50 @@ public class Router {
         let path = Path(parameters: parameters, handler: handler)
         paths.append(path)
     }
-    
+
+    public func addPath(parameters: [Parameter], _ handler: ()->(Bool)) {
+        let path = Path(parameters: parameters,
+            handler: .CancellableHandlerWithoutArguments(handler))
+        paths.append(path)
+    }
+
+    public func addPath(parameters: [Parameter], _ handler: ()->()) {
+        let path = Path(parameters: parameters,
+            handler: .NonCancellableHandlerWithoutArguments(handler))
+        paths.append(path)
+    }
+
+    public func addPath(parameters: [Parameter], _ handler: (Arguments)->(Bool)) {
+        let path = Path(parameters: parameters,
+            handler: .CancellableHandlerWithArguments(handler))
+        paths.append(path)
+    }
+
+    public func addPath(parameters: [Parameter], _ handler: (Arguments)->()) {
+        let path = Path(parameters: parameters,
+            handler: .NonCancellableHandlerWithArguments(handler))
+        paths.append(path)
+    }
+
     public func processString(string: String) -> Bool {
         let scanner = NSScanner(string: string)
         
         for path in paths {
             if let arguments = fetchArgumentsInPath(path, withScanner: scanner) {
-                if path.handler(arguments) {
+                switch path.handler {
+                case let .CancellableHandlerWithoutArguments(handler):
+                    if handler() {
+                        return true
+                    }
+                case let .NonCancellableHandlerWithoutArguments(handler):
+                    handler()
+                    return true
+                case let .CancellableHandlerWithArguments(handler):
+                    if handler(arguments) {
+                        return true
+                    }
+                case let .NonCancellableHandlerWithArguments(handler):
+                    handler(arguments)
                     return true
                 }
             }
