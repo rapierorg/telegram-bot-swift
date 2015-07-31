@@ -24,7 +24,6 @@ public class Word: Parameter {
         guard let word = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) else {
             return nil
         }
-        print("Word:Parameter: self=\(self), word=\(word)")
         return word
     }
 }

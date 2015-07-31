@@ -456,13 +456,15 @@
 /* Begin PBXShellScriptBuildPhase section */
 		CEEF5D411B6AE16D004D2881 /* Amalgamate Sources (for use in console projects) */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(PRODUCT_NAME).framework",
 			);
 			name = "Amalgamate Sources (for use in console projects)";
 			outputPaths = (
+				./TelegramBot.swift,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

@@ -19,7 +19,6 @@ extension String: Parameter {
         guard let word = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) else {
             return nil
         }
-        print("String:Parameter: self=\(self), word=\(word)")
         return self.hasPrefix(word) ? word : nil
     }
 }

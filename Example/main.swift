@@ -14,6 +14,8 @@ guard let token = environment["TelegramExampleBotToken"] else {
 
 let bot = TelegramBot(token: token)
 
+let router = Router()
+
 while let update = bot.nextUpdate() {
     print("--- updateId: \(update.updateId)")
     print("update: \(update.prettyPrint)")

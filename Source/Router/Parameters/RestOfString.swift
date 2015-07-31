@@ -23,7 +23,6 @@ public class RestOfString: Parameter {
         guard let restOfString = scanner.scanUpToString("") else {
             return nil
         }
-        print("RestOfString:Parameter: self=\(self), restOfString=\(restOfString)")
         return restOfString
     }
 }
