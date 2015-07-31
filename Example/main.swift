@@ -14,15 +14,28 @@ guard let token = environment["TelegramExampleBotToken"] else {
 
 let bot = TelegramBot(token: token)
 
-let router = Router()
+class Controller {
+    var update = Update()
+    
+    func help(arguments: Arguments) -> Bool {
+        guard let message = update.message else { return false }
+        bot.sendMessage(chatId: message.from.id, text: "Help text")
+        return true
+    }
+}
 
+let controller = Controller()
+
+let router = Router()
+router.addPath(["/help"], controller.help)
+
+print("Ready to accept commands")
 while let update = bot.nextUpdate() {
     print("--- updateId: \(update.updateId)")
     print("update: \(update.prettyPrint)")
     if let message = update.message, text = message.text {
-        if text == "Hello" {
-            bot.sendMessage(chatId: message.from.id, text: "How are you?")
-        }
+        controller.update = update
+        router.processString(text)
     }
 }
 fatalError("Server stopped due to error: \(bot.lastError)")
