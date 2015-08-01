@@ -13,10 +13,7 @@ guard let token = environment["TelegramExampleBotToken"] else {
 }
 
 let bot = TelegramBot(token: token)
-guard let botUser = bot.getMe(), username = botUser.username else {
-    fatalError("Unable to fetch bot information")
-}
-let botName = BotName(username: username)
+let botName = BotName(username: bot.username)
 
 class Controller {
     var update = Update()

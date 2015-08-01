@@ -201,6 +201,26 @@ public class TelegramBot {
         return NSURLSession(configuration: configuration)
     }()
     
+    /// Equivalent of calling `getMe()`
+    ///
+    /// This function will block until the request is finished.
+    public lazy var user: User = {
+        guard let me = self.getMe() else {
+            fatalError("Unable to fetch bot information")
+        }
+        return me
+    }()
+    
+    /// Equivalent of calling `user.username` and unwrapping it
+    ///
+    /// This function will block until the request is finished.
+    public lazy var username: String = {
+        guard let username = self.user.username else {
+            fatalError("Unable to fetch bot username")
+        }
+        return username
+    }()
+    
     /// Creates an instance of Telegram Bot.
     /// - Parameter token: A unique authentication token.
     /// - Parameter session: `NSURLSession` instance, a session with `ephemeralSessionConfiguration` is used by default.
