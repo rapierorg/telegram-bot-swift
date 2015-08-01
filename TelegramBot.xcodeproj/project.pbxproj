@@ -56,6 +56,7 @@
 		CEEF5D431B6BD173004D2881 /* BotName.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D421B6BD173004D2881 /* BotName.swift */; };
 		CEEF5D471B6C3F4C004D2881 /* String+ExtractBotCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D461B6C3F4C004D2881 /* String+ExtractBotCommand.swift */; };
 		CEEF5D491B6D0166004D2881 /* Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D481B6D0166004D2881 /* Argument.swift */; };
+		CEEF5D4B1B6D62C0004D2881 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D4A1B6D62C0004D2881 /* Command.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +157,7 @@
 		CEEF5D421B6BD173004D2881 /* BotName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotName.swift; sourceTree = "<group>"; };
 		CEEF5D461B6C3F4C004D2881 /* String+ExtractBotCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+ExtractBotCommand.swift"; sourceTree = "<group>"; };
 		CEEF5D481B6D0166004D2881 /* Argument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Argument.swift; path = Router/Argument.swift; sourceTree = "<group>"; };
+		CEEF5D4A1B6D62C0004D2881 /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Command.swift; path = Router/Parameters/Command.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				CEEF5D2A1B6AD1C4004D2881 /* String+Parameter.swift */,
+				CEEF5D4A1B6D62C0004D2881 /* Command.swift */,
 				CEEF5D2C1B6AD1D9004D2881 /* Word.swift */,
 				CEEF5D2E1B6AD1F7004D2881 /* RestOfString.swift */,
 			);
@@ -520,6 +523,7 @@
 				CED9FDCE1B63B4EF00AA44E2 /* String+Indent.swift in Sources */,
 				CEDFBF391B58F30700E8928E /* String+HTTP.swift in Sources */,
 				CE0620401B6185D2008CAFF2 /* ReplyMarkup.swift in Sources */,
+				CEEF5D4B1B6D62C0004D2881 /* Command.swift in Sources */,
 				CEDFBF201B5861D600E8928E /* GroupChat.swift in Sources */,
 				CEDFBF351B58727600E8928E /* Message.swift in Sources */,
 				CEC40C151B5BC22B00F2F9D8 /* DataTaskError.swift in Sources */,
