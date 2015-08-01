@@ -11,6 +11,8 @@ import Foundation
 
 public class Router {
     public var allowPartialMatch: Bool = false
+    public var caseSensitive: Bool = false
+    public var charactersToBeskipped: NSCharacterSet? = NSCharacterSet.whitespaceAndNewlineCharacterSet()
     
     public func addPath(path: Path) {
         paths.append(path)
@@ -47,6 +49,8 @@ public class Router {
 
     public func processString(string: String) -> Bool {
         let scanner = NSScanner(string: string)
+        scanner.caseSensitive = caseSensitive
+        scanner.charactersToBeSkipped = charactersToBeskipped
         
         for path in paths {
             if let arguments = fetchArgumentsInPath(path, withScanner: scanner) {
