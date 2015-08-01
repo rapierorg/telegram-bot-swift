@@ -244,6 +244,23 @@ public class TelegramBot {
         //print("Deinit")
     }
     
+    /// Returns next command addressed at this bot and associated update.
+    ///
+    /// This function blocks while fetching updates from the server.
+    /// - Returns: A `String` containing the preprocessed command
+    /// and associated update.
+    /// Nil on error, in which case details can be obtained
+    /// from `lastError` property.
+    public func nextCommandAndUpdate() -> (String, Update)? {
+        while let update = nextUpdate() {
+            if let message = update.message, text = message.text,
+                command = text.extractBotCommand(name) {
+                    return (command, update)
+            }
+        }
+        return nil
+    }
+    
     /// Initiates a request to the server. Used for implementing
     /// specific requests (getMe, getStatus etc).
     public func startDataTaskForEndpoint(endpoint: String, completion: DataTaskCompletion) {

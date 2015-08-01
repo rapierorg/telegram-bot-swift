@@ -41,13 +41,10 @@ router.addPath(["/help"], controller.help)
 router.addPath([RestOfString("text")], controller.defaultHandler)
 
 print("Ready to accept commands")
-while let update = bot.nextUpdate() {
+while let (command, update) = bot.nextCommandAndUpdate() {
     print("--- updateId: \(update.updateId)")
     print("update: \(update.prettyPrint)")
-    if let message = update.message, text = message.text,
-            command = text.extractBotCommand(bot.name) {
-        controller.update = update
-        router.processString(command)
-    }
+    controller.update = update
+    router.processString(command)
 }
 fatalError("Server stopped due to error: \(bot.lastError)")
