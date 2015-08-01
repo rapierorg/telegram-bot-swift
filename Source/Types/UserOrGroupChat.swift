@@ -13,6 +13,14 @@ public enum UserOrGroupChat {
     case UserType(User)
     case GroupChatType(GroupChat)
     
+    /// Unique identifier for this user or group chat.
+    public var id: Int {
+        switch self {
+        case let .UserType(user): return user.id
+        case let .GroupChatType(groupChat): return groupChat.id
+        }
+    }
+    
     public var prettyPrint: String {
         var s = "UserOrGroupChat(\n"
         switch self {
