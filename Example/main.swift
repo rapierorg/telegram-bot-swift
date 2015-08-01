@@ -25,8 +25,12 @@ class Controller {
     func defaultHandler(args: Arguments) {
         guard let text = args["text"] as? String else { fatalError() }
         guard let message = update.message else { return }
+        
         bot.sendMessage(chatId: message.from.id, text: "You said: \(text)")
-        bot.sendMessage(chatId: message.chat.id, text: "\(message.from.firstName) said: \(text)")
+        
+        if case .GroupChatType = message.chat {
+            bot.sendMessage(chatId: message.chat.id, text: "\(message.from.firstName) said: \(text)")
+        }
     }
 }
 
