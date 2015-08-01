@@ -25,9 +25,14 @@ class Controller {
     func help() {
         bot.sendMessage(chatId: message.from.id, text: "Help text")
     }
-    
+
+    func partialMatchHandler(unmatched: String, args: Arguments, path: Path) {
+        bot.sendMessage(chatId: bot.lastMessage.chat.id,
+            text: "❗ Part of your input was ignored: \(unmatched)")
+    }
+
     func defaultHandler(args: Arguments) {
-        guard let text = args["text"] as? String else { fatalError() }
+        let text = args["text"].stringValue
         
         bot.sendMessage(chatId: message.from.id, text: "You said: \(text)")
         
@@ -39,7 +44,7 @@ class Controller {
 
 let controller = Controller(bot: bot)
 
-let router = Router()
+let router = Router(partialMatchHandler: controller.partialMatchHandler)
 router.addPath(["/help"], controller.help)
 router.addPath([RestOfString("text")], controller.defaultHandler)
 

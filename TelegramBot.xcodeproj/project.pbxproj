@@ -55,6 +55,7 @@
 		CEEF5D351B6AD2EC004D2881 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D341B6AD2EC004D2881 /* Router.swift */; };
 		CEEF5D431B6BD173004D2881 /* BotName.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D421B6BD173004D2881 /* BotName.swift */; };
 		CEEF5D471B6C3F4C004D2881 /* String+ExtractBotCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D461B6C3F4C004D2881 /* String+ExtractBotCommand.swift */; };
+		CEEF5D491B6D0166004D2881 /* Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D481B6D0166004D2881 /* Argument.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +155,7 @@
 		CEEF5D341B6AD2EC004D2881 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Router.swift; path = Router/Router.swift; sourceTree = "<group>"; };
 		CEEF5D421B6BD173004D2881 /* BotName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotName.swift; sourceTree = "<group>"; };
 		CEEF5D461B6C3F4C004D2881 /* String+ExtractBotCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+ExtractBotCommand.swift"; sourceTree = "<group>"; };
+		CEEF5D481B6D0166004D2881 /* Argument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Argument.swift; path = Router/Argument.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +302,7 @@
 				CEEF5D291B6AD199004D2881 /* Parameters */,
 				CEEF5D231B6AD0BE004D2881 /* Parameter.swift */,
 				CEEF5D301B6AD233004D2881 /* Arguments.swift */,
+				CEEF5D481B6D0166004D2881 /* Argument.swift */,
 				CEEF5D321B6AD2D0004D2881 /* Path.swift */,
 				CEEF5D341B6AD2EC004D2881 /* Router.swift */,
 			);
@@ -511,6 +514,7 @@
 				CEEF5D2D1B6AD1D9004D2881 /* Word.swift in Sources */,
 				CEEF5D311B6AD233004D2881 /* Arguments.swift in Sources */,
 				CEEF5D351B6AD2EC004D2881 /* Router.swift in Sources */,
+				CEEF5D491B6D0166004D2881 /* Argument.swift in Sources */,
 				CEEF5D2F1B6AD1F7004D2881 /* RestOfString.swift in Sources */,
 				CE0ADC1A1B58585500FCA08C /* TelegramBot.swift in Sources */,
 				CED9FDCE1B63B4EF00AA44E2 /* String+Indent.swift in Sources */,

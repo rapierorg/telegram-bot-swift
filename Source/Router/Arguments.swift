@@ -21,13 +21,18 @@ public class Arguments {
         return ordered
     }
     
-    public subscript(name: String) -> Any? {
-        return byName[name]
+    public subscript(name: String) -> Argument {
+        return Argument(value: byName[name])
+    }
+    
+    public subscript(index: Int) -> Argument {
+        return Argument(value: ordered[index])
     }
     
     var first: Any? { return ordered.first }
     var last: Any? { return ordered.last }
     var isEmpty: Bool { return ordered.isEmpty }
+    var count: Int { return ordered.count }
     
     var ordered = [Any]()
     var byName = [String: Any]()

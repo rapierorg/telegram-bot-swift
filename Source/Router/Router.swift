@@ -10,9 +10,28 @@
 import Foundation
 
 public class Router {
-    public var allowPartialMatch: Bool = false
+    public typealias PartialMatchHandler = (unmatched: String, arguments: Arguments, path: Path)->()
+    
+    public var allowPartialMatch: Bool = true
+    public var partialMatchHandler: PartialMatchHandler?
     public var caseSensitive: Bool = false
     public var charactersToBeskipped: NSCharacterSet? = NSCharacterSet.whitespaceAndNewlineCharacterSet()
+    
+    public var defaultHandler: (()->())? = nil
+
+    init(allowPartialMatch: Bool, partialMatchHandler: PartialMatchHandler? = nil) {
+        
+        self.allowPartialMatch = allowPartialMatch
+        self.partialMatchHandler = partialMatchHandler
+
+        if allowPartialMatch && partialMatchHandler == nil {
+            print("WARNING: partialMatchHandler not set. Part of user input will be ignored silently.")
+        }
+    }
+
+    convenience init(partialMatchHandler: PartialMatchHandler? = nil) {
+        self.init(allowPartialMatch: true, partialMatchHandler: partialMatchHandler)
+    }
     
     public func addPath(path: Path) {
         paths.append(path)
@@ -92,8 +111,20 @@ public class Router {
             }
         }
         
-        if !allowPartialMatch {
-            return scanner.atEnd ? arguments : nil
+        // Note that scanner.atEnd automatically
+        // ignores charactersToBeSkipped
+        if !scanner.atEnd {
+            // Partial match
+            guard allowPartialMatch else {
+                return nil
+            }
+            if let handler = partialMatchHandler {
+                guard let unmatched = scanner.scanUpToString("") else {
+                    print("Inconsistent scanner state: expected data, got empty string")
+                    return nil
+                }
+                handler(unmatched: unmatched, arguments: arguments, path: path)
+            }
         }
         
         return arguments
