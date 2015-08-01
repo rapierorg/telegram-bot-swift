@@ -41,7 +41,7 @@ while let update = bot.nextUpdate() {
     print("--- updateId: \(update.updateId)")
     print("update: \(update.prettyPrint)")
     if let message = update.message, text = message.text,
-            command = text.extractBotCommand(botName) {
+            command = text.extractBotCommand(bot.name) {
         controller.update = update
         router.processString(command)
     }

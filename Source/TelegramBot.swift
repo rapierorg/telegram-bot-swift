@@ -228,12 +228,16 @@ public class TelegramBot {
     
     /// Creates an instance of Telegram Bot.
     /// - Parameter token: A unique authentication token.
+    /// - Parameter fetchBotInfo: If true, issue a blocking `getMe()` call and cache the bot information. Otherwise it will be lazy-loaded when needed. Defaults to true.
     /// - Parameter session: `NSURLSession` instance, a session with `ephemeralSessionConfiguration` is used by default.
-    public init(token: String, session: NSURLSession = defaultSession) {
+    public init(token: String, fetchBotInfo: Bool = true, session: NSURLSession = defaultSession) {
         self.token = token
         self.session = session
         self.unprocessedUpdates = []
         self.errorHandler = defaultErrorHandler
+        if fetchBotInfo {
+            _ = user // Load the lazy user variable
+        }
     }
     
     deinit {
