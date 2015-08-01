@@ -27,6 +27,7 @@ extension TelegramBot {
                     timeout: defaultUpdatesTimeout)
                 if updates == nil {
                     // Error, report to caller
+                    lastUpdate = nil
                     return nil
                 }
             } while updates!.isEmpty // Timeout, retry
@@ -34,6 +35,7 @@ extension TelegramBot {
         }
         
         guard let update = unprocessedUpdates.first else {
+            lastUpdate = nil
             return nil
         }
         
@@ -42,6 +44,7 @@ extension TelegramBot {
             nextOffset = nextUpdateId
         }
         unprocessedUpdates.removeAtIndex(0)
+        lastUpdate = update
         return update
     }
     

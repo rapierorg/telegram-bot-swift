@@ -113,6 +113,9 @@ public class TelegramBot {
     /// Last error for use with synchronous requests
     public var lastError: DataTaskError?
     
+    /// Last update from the call to `nextUpdate` function.
+    public var lastUpdate: Update?
+
     private let workQueue = dispatch_queue_create("com.zabiyaka.TelegramBot", DISPATCH_QUEUE_SERIAL)
     
     /// To handle network or parse errors,
