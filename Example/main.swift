@@ -17,13 +17,36 @@ let bot = TelegramBot(token: token)
 class Controller {
     let bot: TelegramBot
     var message: Message { return bot.lastMessage }
+
+    func privateResponse(text: String, groupText: String? = nil) {
+        bot.sendMessage(chatId: message.from.id, text: text)
+        if let groupText = groupText {
+            if case .GroupChatType = message.chat {
+                bot.sendMessage(chatId: message.chat.id, text: groupText)
+            }
+        }
+    }
+    
+    func groupResponse(groupText: String) {
+        bot.sendMessage(chatId: message.chat.id, text: groupText)
+    }
     
     init(bot: TelegramBot) {
         self.bot = bot
     }
     
+    func start() {
+        groupResponse("Start")
+    }
+    
     func help() {
-        bot.sendMessage(chatId: message.from.id, text: "Help text")
+        privateResponse("Hello",
+            groupText: "\(message.from.firstName), please find usage instructions in a personal message.")
+    }
+    
+    func settings() {
+        privateResponse("Settings",
+            groupText: "\(message.from.firstName), please find a list of settings in a personal message.")
     }
 
     func partialMatchHandler(unmatched: String, args: Arguments, path: Path) {
@@ -45,7 +68,9 @@ class Controller {
 let controller = Controller(bot: bot)
 
 let router = Router(partialMatchHandler: controller.partialMatchHandler)
+router.addPath(["/start"], controller.start)
 router.addPath(["/help"], controller.help)
+router.addPath(["/settings"], controller.settings)
 router.addPath([RestOfString("text")], controller.defaultHandler)
 
 print("Ready to accept commands")
