@@ -116,6 +116,9 @@ public class TelegramBot {
     /// Last update from the call to `nextUpdate` function.
     public var lastUpdate: Update?
 
+    /// Last message from the call to `nextCommand` function.
+    public lazy var lastMessage: Message = Message()
+
     private let workQueue = dispatch_queue_create("com.zabiyaka.TelegramBot", DISPATCH_QUEUE_SERIAL)
     
     /// To handle network or parse errors,
@@ -247,20 +250,27 @@ public class TelegramBot {
         //print("Deinit")
     }
     
-    /// Returns next command addressed at this bot and associated update.
+    /// Returns a next command addressed to this bot.
+    ///
+    /// Associated message can be retrieved using `lastMessage` property.
+    ///
+    /// Associated update can be retrieved using `lastUpdate` property.
     ///
     /// This function blocks while fetching updates from the server.
-    /// - Returns: A `String` containing the preprocessed command
-    /// and associated update.
+    ///
+    /// - Returns: A `String` containing the preprocessed command.
     /// Nil on error, in which case details can be obtained
     /// from `lastError` property.
-    public func nextCommandAndUpdate() -> (String, Update)? {
+    public func nextCommand() -> String? {
         while let update = nextUpdate() {
-            if let message = update.message, text = message.text,
-                command = text.extractBotCommand(name) {
-                    return (command, update)
-            }
+            guard let message = update.message else { continue }
+            guard let text = message.text else { continue }
+            guard let command = text.extractBotCommand(name) else { continue }
+            
+            lastMessage = message
+            return command
         }
+        lastMessage = Message()
         return nil
     }
     

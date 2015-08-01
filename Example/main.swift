@@ -15,16 +15,19 @@ guard let token = environment["TelegramExampleBotToken"] else {
 let bot = TelegramBot(token: token)
 
 class Controller {
-    var update = Update()
+    let bot: TelegramBot
+    var message: Message { return bot.lastMessage }
+    
+    init(bot: TelegramBot) {
+        self.bot = bot
+    }
     
     func help() {
-        guard let message = update.message else { return }
         bot.sendMessage(chatId: message.from.id, text: "Help text")
     }
     
     func defaultHandler(args: Arguments) {
         guard let text = args["text"] as? String else { fatalError() }
-        guard let message = update.message else { return }
         
         bot.sendMessage(chatId: message.from.id, text: "You said: \(text)")
         
@@ -34,17 +37,16 @@ class Controller {
     }
 }
 
-let controller = Controller()
+let controller = Controller(bot: bot)
 
 let router = Router()
 router.addPath(["/help"], controller.help)
 router.addPath([RestOfString("text")], controller.defaultHandler)
 
 print("Ready to accept commands")
-while let (command, update) = bot.nextCommandAndUpdate() {
-    print("--- updateId: \(update.updateId)")
-    print("update: \(update.prettyPrint)")
-    controller.update = update
+while let command = bot.nextCommand() {
+    print("--- updateId: \(bot.lastUpdate!.updateId)")
+    print("message: \(bot.lastMessage.prettyPrint)")
     router.processString(command)
 }
 fatalError("Server stopped due to error: \(bot.lastError)")
