@@ -221,6 +221,11 @@ public class TelegramBot {
         return username
     }()
     
+    /// Equivalent of calling `BotName(username: username)`
+    ///
+    /// This function will block until the request is finished.
+    public lazy var name: BotName = BotName(username: self.username)
+    
     /// Creates an instance of Telegram Bot.
     /// - Parameter token: A unique authentication token.
     /// - Parameter session: `NSURLSession` instance, a session with `ephemeralSessionConfiguration` is used by default.

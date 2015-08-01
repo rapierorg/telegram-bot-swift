@@ -13,7 +13,6 @@ guard let token = environment["TelegramExampleBotToken"] else {
 }
 
 let bot = TelegramBot(token: token)
-let botName = BotName(username: bot.username)
 
 class Controller {
     var update = Update()
