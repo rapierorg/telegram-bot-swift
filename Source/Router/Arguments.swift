@@ -21,7 +21,7 @@ public class Arguments {
         return ordered
     }
     
-    public subscript(name: String) -> Any {
+    public subscript(name: String) -> Any? {
         return byName[name]
     }
     
