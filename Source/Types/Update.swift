@@ -39,7 +39,7 @@ public class Update {
     }
     
     public var prettyPrint: String {
-        var result = "Update(\n"
+        var result = "Update(\n" +
             "  updateId: \(updateId)\n"
         if let message = message {
             result += "  message: \(message.prettyPrint.indent().trim())\n"
