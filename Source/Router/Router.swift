@@ -15,7 +15,7 @@ public class Router {
     public var allowPartialMatch: Bool = true
     public var partialMatchHandler: PartialMatchHandler?
     public var caseSensitive: Bool = false
-    public var charactersToBeskipped: NSCharacterSet? = NSCharacterSet.whitespaceAndNewlineCharacterSet()
+    public var charactersToBeSkipped: NSCharacterSet? = NSCharacterSet.whitespaceAndNewlineCharacterSet()
     
     public var defaultHandler: (()->())? = nil
 
@@ -69,7 +69,7 @@ public class Router {
     public func processString(string: String) -> Bool {
         let scanner = NSScanner(string: string)
         scanner.caseSensitive = caseSensitive
-        scanner.charactersToBeSkipped = charactersToBeskipped
+        scanner.charactersToBeSkipped = charactersToBeSkipped
         
         for path in paths {
             if let arguments = fetchArgumentsInPath(path, withScanner: scanner) {
