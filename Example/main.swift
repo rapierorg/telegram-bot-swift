@@ -40,7 +40,16 @@ class Controller {
     }
     
     func help() {
-        privateResponse("Hello",
+        let helpText = "What can this bot do?\n" +
+            "\n" +
+            "This is a sample bot which shuffles letters inside of words. " +
+            "If you want to invite friends, simply open the bot's profile " +
+            "and use the 'Add to group' button to invite them.\n" +
+            "\n"
+            "Send /start to begin shuffling letters.\n"
+            "Tell the bot to /stop when you're done."
+        
+        privateResponse(helpText,
             groupText: "\(message.from.firstName), please find usage instructions in a personal message.")
     }
     
@@ -50,27 +59,22 @@ class Controller {
     }
 
     func partialMatchHandler(unmatched: String, args: Arguments, path: Path) {
-        bot.sendMessage(chatId: bot.lastMessage.chat.id,
-            text: "❗ Part of your input was ignored: \(unmatched)")
+        groupResponse("❗ Part of your input was ignored: \(unmatched)")
     }
 
     func defaultHandler(args: Arguments) {
         let text = args["text"].stringValue
         
-        bot.sendMessage(chatId: message.from.id, text: "You said: \(text)")
-        
-        if case .GroupChatType = message.chat {
-            bot.sendMessage(chatId: message.chat.id, text: "\(message.from.firstName) said: \(text)")
-        }
+        groupResponse("I guess I don't understand what this command means: \(text)")
     }
 }
 
 let controller = Controller(bot: bot)
 
 let router = Router(partialMatchHandler: controller.partialMatchHandler)
-router.addPath(["/start"], controller.start)
-router.addPath(["/help"], controller.help)
-router.addPath(["/settings"], controller.settings)
+router.addPath([Command("start")], controller.start)
+router.addPath([Command("help")], controller.help)
+router.addPath([Command("settings")], controller.settings)
 router.addPath([RestOfString("text")], controller.defaultHandler)
 
 print("Ready to accept commands")
