@@ -53,6 +53,8 @@
 		CEEF5D311B6AD233004D2881 /* Arguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D301B6AD233004D2881 /* Arguments.swift */; };
 		CEEF5D331B6AD2D0004D2881 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D321B6AD2D0004D2881 /* Path.swift */; };
 		CEEF5D351B6AD2EC004D2881 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D341B6AD2EC004D2881 /* Router.swift */; };
+		CEEF5D431B6BD173004D2881 /* BotName.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D421B6BD173004D2881 /* BotName.swift */; };
+		CEEF5D471B6C3F4C004D2881 /* String+ExtractBotCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D461B6C3F4C004D2881 /* String+ExtractBotCommand.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +152,8 @@
 		CEEF5D301B6AD233004D2881 /* Arguments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Arguments.swift; path = Router/Arguments.swift; sourceTree = "<group>"; };
 		CEEF5D321B6AD2D0004D2881 /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Path.swift; path = Router/Path.swift; sourceTree = "<group>"; };
 		CEEF5D341B6AD2EC004D2881 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Router.swift; path = Router/Router.swift; sourceTree = "<group>"; };
+		CEEF5D421B6BD173004D2881 /* BotName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotName.swift; sourceTree = "<group>"; };
+		CEEF5D461B6C3F4C004D2881 /* String+ExtractBotCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+ExtractBotCommand.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +265,8 @@
 				CEDC4A4D1B5C41200037545E /* TaskAssociatedData.swift */,
 				CE7DE02C1B613C7D00188093 /* HTTPUtils.swift */,
 				CED9FDC61B62E48300AA44E2 /* CommandParser.swift */,
+				CEEF5D421B6BD173004D2881 /* BotName.swift */,
+				CEEF5D461B6C3F4C004D2881 /* String+ExtractBotCommand.swift */,
 				CE3B38271B584B3F00090037 /* Info.plist */,
 				CE29DBA21B58522E00BCA03B /* LICENSE */,
 			);
@@ -491,6 +497,7 @@
 				CED9FDD01B63C37900AA44E2 /* String+Trim.swift in Sources */,
 				CEEF5D2B1B6AD1C4004D2881 /* String+Parameter.swift in Sources */,
 				CEDFBF2D1B586DC500E8928E /* Sticker.swift in Sources */,
+				CEEF5D431B6BD173004D2881 /* BotName.swift in Sources */,
 				CEEF5D331B6AD2D0004D2881 /* Path.swift in Sources */,
 				CEDC4A4E1B5C41200037545E /* TaskAssociatedData.swift in Sources */,
 				CE0620441B6186EF008CAFF2 /* ReplyKeyboardHide.swift in Sources */,
@@ -500,6 +507,7 @@
 				CED9FDC71B62E48300AA44E2 /* CommandParser.swift in Sources */,
 				CED9FDCC1B6374D000AA44E2 /* NSScanner+Swift.swift in Sources */,
 				CEDC4A501B5C415B0037545E /* NSURLSessionDataTask+AssociatedData.swift in Sources */,
+				CEEF5D471B6C3F4C004D2881 /* String+ExtractBotCommand.swift in Sources */,
 				CEEF5D2D1B6AD1D9004D2881 /* Word.swift in Sources */,
 				CEEF5D311B6AD233004D2881 /* Arguments.swift in Sources */,
 				CEEF5D351B6AD2EC004D2881 /* Router.swift in Sources */,

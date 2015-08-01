@@ -13,6 +13,10 @@ guard let token = environment["TelegramExampleBotToken"] else {
 }
 
 let bot = TelegramBot(token: token)
+guard let botUser = bot.getMe(), username = botUser.username else {
+    fatalError("Unable to fetch bot information")
+}
+let botName = BotName(username: username)
 
 class Controller {
     var update = Update()
@@ -21,20 +25,29 @@ class Controller {
         guard let message = update.message else { return }
         bot.sendMessage(chatId: message.from.id, text: "Help text")
     }
+    
+    func defaultHandler(args: Arguments) {
+        guard let text = args["text"] as? String else { fatalError() }
+        guard let message = update.message else { return }
+        bot.sendMessage(chatId: message.from.id, text: "You said: \(text)")
+        bot.sendMessage(chatId: message.chat.id, text: "\(message.from.firstName) said: \(text)")
+    }
 }
 
 let controller = Controller()
 
 let router = Router()
 router.addPath(["/help"], controller.help)
+router.addPath([RestOfString("text")], controller.defaultHandler)
 
 print("Ready to accept commands")
 while let update = bot.nextUpdate() {
     print("--- updateId: \(update.updateId)")
     print("update: \(update.prettyPrint)")
-    if let message = update.message, text = message.text {
+    if let message = update.message, text = message.text,
+            command = text.extractBotCommand(botName) {
         controller.update = update
-        router.processString(text)
+        router.processString(command)
     }
 }
 fatalError("Server stopped due to error: \(bot.lastError)")
