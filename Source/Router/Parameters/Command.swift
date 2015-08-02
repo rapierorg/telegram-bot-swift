@@ -10,10 +10,19 @@
 import Foundation
 
 public class Command: Parameter {
+    enum SlashMode {
+        /// Both 'command' and '/command' allowed
+        case Optional
+        /// Only '/command' allowed
+        case Required
+    }
+    
     let name: String
     let nameWithSlash: String
+    let slash: SlashMode
     
-    init(_ name: String) {
+    init(_ name: String, slash: SlashMode = .Optional) {
+        self.slash = slash
         if name.hasPrefix("/") {
             self.nameWithSlash = name
             self.name = name.substringFromIndex(name.startIndex.successor())
@@ -32,8 +41,15 @@ public class Command: Parameter {
         guard let word = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) else {
             return nil
         }
-        if name.hasPrefix(word) || nameWithSlash.hasPrefix(word) {
-            return word
+        switch slash {
+        case .Required:
+            if nameWithSlash.hasPrefix(word) {
+                return word
+            }
+        case .Optional:
+            if name.hasPrefix(word) || nameWithSlash.hasPrefix(word) {
+                return word
+            }
         }
         return nil
     }
