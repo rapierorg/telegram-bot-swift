@@ -17,31 +17,54 @@ let bot = TelegramBot(token: token)
 class Controller {
     let bot: TelegramBot
     var message: Message { return bot.lastMessage }
+    var started = false
 
     init(bot: TelegramBot) {
         self.bot = bot
     }
     
     func start() {
-        bot.respondToGroup("Start")
+        guard !started else {
+            bot.respondToGroup("@\(bot.username) already started.")
+            return
+        }
+        started = true
+        bot.respondToGroup("@\(bot.username) started. Please type some text.\n" +
+            "To stop, type /stop")
+    }
+    
+    func stop() {
+        guard started else {
+            bot.respondToGroup("@\(bot.username) already stopped.")
+            return
+        }
+        started = false
+        bot.respondToGroup("@\(bot.username) stopped. To restart, type /start")
     }
     
     func help() {
         let helpText = "What can this bot do?\n" +
             "\n" +
-            "This is a sample bot which shuffles letters inside of words. " +
+            "This is a sample bot which reverses sentences. " +
             "If you want to invite friends, simply open the bot's profile " +
             "and use the 'Add to group' button to invite them.\n" +
-            "\n"
-            "Send /start to begin shuffling letters.\n"
-            "Tell the bot to /stop when you're done."
+            "\n" +
+            "Send /start to begin reversing sentences.\n" +
+            "Tell the bot to /stop when you're done.\n" +
+            "In private chat simply type some text and it will be reversed.\n" +
+            "In group chats use this command:\n" +
+            "/reverse Sentence"
         
         bot.respondPrivately(helpText,
             groupText: "\(message.from.firstName), please find usage instructions in a personal message.")
     }
     
     func settings() {
-        bot.respondPrivately("Settings",
+        let settingsText = "Settings\n" +
+            "\n" +
+            "No settings are available for this bot."
+        
+        bot.respondPrivately(settingsText,
             groupText: "\(message.from.firstName), please find a list of settings in a personal message.")
     }
 
@@ -49,10 +72,12 @@ class Controller {
         bot.respondToGroup("❗ Part of your input was ignored: \(unmatched)")
     }
 
-    func defaultHandler(args: Arguments) {
+    func reverseText(args: Arguments) {
+        guard started else { return }
+        
         let text = args["text"].stringValue
         
-        bot.respondToGroup("I guess I don't understand what this command means: \(text)")
+        bot.respondToGroup(String(text.characters.reverse()))
     }
 }
 
@@ -60,9 +85,13 @@ let controller = Controller(bot: bot)
 
 let router = Router(partialMatchHandler: controller.partialMatchHandler)
 router.addPath([Command("start")], controller.start)
+router.addPath([Command("stop")], controller.stop)
 router.addPath([Command("help")], controller.help)
 router.addPath([Command("settings")], controller.settings)
-router.addPath([RestOfString("text")], controller.defaultHandler)
+router.addPath([Command("reverse", slash: .Required), RestOfString("text")],
+    controller.reverseText)
+// Default handler
+router.addPath([RestOfString("text")], controller.reverseText)
 
 print("Ready to accept commands")
 while let command = bot.nextCommand() {
