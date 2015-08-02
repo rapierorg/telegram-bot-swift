@@ -17,7 +17,16 @@ let bot = TelegramBot(token: token)
 class Controller {
     let bot: TelegramBot
     var message: Message { return bot.lastMessage }
-    var started = false
+    var startedInChatId = Set<Int>()
+    var started: Bool {
+        get { return startedInChatId.contains(message.chat.id) }
+        set {
+            switch newValue {
+            case true: startedInChatId.insert(message.chat.id)
+            case false: startedInChatId.remove(message.chat.id)
+            }
+        }
+    }
 
     init(bot: TelegramBot) {
         self.bot = bot
@@ -29,8 +38,16 @@ class Controller {
             return
         }
         started = true
-        bot.respondToGroup("@\(bot.username) started. Please type some text.\n" +
-            "To stop, type /stop")
+        
+        var startText: String
+        if case .GroupChatType = message.chat {
+            startText = "@\(bot.username) started. Use '/reverse some text' to reverse the text.\n"
+        } else {
+            startText = "@\(bot.username) started. Please type some text to reverse.\n"
+        }
+        startText += "To stop, type /stop"
+        
+        bot.respondToGroup(startText)
     }
     
     func stop() {
