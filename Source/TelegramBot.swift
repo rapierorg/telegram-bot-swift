@@ -141,7 +141,16 @@ public class TelegramBot {
     /// - Parameter retryCount: Number of reconnect retries associated with `request`.
     /// - Returns: Seconds to wait before next reconnect attempt. Return `0.0` for instant reconnect.
     public var reconnectDelay: (retryCount: Int) -> Double = { retryCount in
-        return Double(retryCount) * 2.0
+        switch retryCount {
+        case 0: return 0.0
+        case 1: return 1.0
+        case 2: return 2.0
+        case 3: return 5.0
+        case 4: return 10.0
+        case 5: return 20.0
+        default: break
+        }
+        return 30.0
     }
     
     /// Implements the default error handling logic. Consult
@@ -176,6 +185,8 @@ public class TelegramBot {
         
         // Network error, reconnect:
         
+        print("Network error: \(networkError.localizedDescription)")
+
         let retryCount = taskAssociatedData.retryCount
         let reconnectDelay = actualSelf.reconnectDelay(retryCount: retryCount)
         ++taskAssociatedData.retryCount
@@ -371,7 +382,10 @@ public class TelegramBot {
         if let taskAssociatedData = task.associatedData {
             
             // Success
-            taskAssociatedData.retryCount = 0
+            if taskAssociatedData.retryCount != 0 {
+                taskAssociatedData.retryCount = 0
+                print("Reconnected to Telegram server")
+            }
 
             taskAssociatedData.completion?(result: result, error: nil)
         }
