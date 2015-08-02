@@ -10,28 +10,37 @@
 import Foundation
 
 extension String {
+    /// "/command@botname arguments" -> "/command arguments"
     public func extractBotCommand(botName: BotName) -> String? {
         let scanner = NSScanner(string: self)
         scanner.caseSensitive = false
         scanner.charactersToBeSkipped = nil
         
         let whitespaceAndNewline = NSCharacterSet.whitespaceAndNewlineCharacterSet()
-        
         scanner.skipCharactersFromSet(whitespaceAndNewline)
         
-        // "/command@botname arguments"
-        let usernameSeparator = "@"
-        
-        guard scanner.skipUpToString(usernameSeparator) && !scanner.atEnd else {
-            // No bot name specified, process the command.
+        guard scanner.skipString("/") else {
             return self
         }
         
+        let alphanumericCharacters = NSCharacterSet.alphanumericCharacterSet()
+        guard scanner.skipCharactersFromSet(alphanumericCharacters) else {
+            return self
+        }
+
         let usernameSeparatorIndex = scanner.scanLocation
-        
-        scanner.skipString(usernameSeparator)
-        
-        guard let username = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) else {
+
+        let usernameSeparator = "@"
+        guard scanner.skipString(usernameSeparator) else {
+            return self
+        }
+
+        // A set of characters allowed in bot names
+        let usernameCharacters = NSCharacterSet(charactersInString:
+            "abcdefghijklmnopqrstuvwxyz" +
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+            "1234567890_")
+        guard let username = scanner.scanCharactersFromSet(usernameCharacters) else {
             // Empty bot name. Treat as no bot name and process the comamnd.
             return self
         }
