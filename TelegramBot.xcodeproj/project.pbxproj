@@ -57,6 +57,7 @@
 		CEEF5D471B6C3F4C004D2881 /* String+ExtractBotCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D461B6C3F4C004D2881 /* String+ExtractBotCommand.swift */; };
 		CEEF5D491B6D0166004D2881 /* Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D481B6D0166004D2881 /* Argument.swift */; };
 		CEEF5D4B1B6D62C0004D2881 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D4A1B6D62C0004D2881 /* Command.swift */; };
+		CEEF5D4D1B6D8E15004D2881 /* TelegramBot+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEF5D4C1B6D8E15004D2881 /* TelegramBot+Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +159,7 @@
 		CEEF5D461B6C3F4C004D2881 /* String+ExtractBotCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+ExtractBotCommand.swift"; sourceTree = "<group>"; };
 		CEEF5D481B6D0166004D2881 /* Argument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Argument.swift; path = Router/Argument.swift; sourceTree = "<group>"; };
 		CEEF5D4A1B6D62C0004D2881 /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Command.swift; path = Router/Parameters/Command.swift; sourceTree = "<group>"; };
+		CEEF5D4C1B6D8E15004D2881 /* TelegramBot+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TelegramBot+Utils.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +267,7 @@
 				CE29DB911B584F6E00BCA03B /* ThirdParty */,
 				CE3B38251B584B3F00090037 /* TelegramBot.h */,
 				CE0ADC191B58585500FCA08C /* TelegramBot.swift */,
+				CEEF5D4C1B6D8E15004D2881 /* TelegramBot+Utils.swift */,
 				CEC40C141B5BC22B00F2F9D8 /* DataTaskError.swift */,
 				CEDC4A4D1B5C41200037545E /* TaskAssociatedData.swift */,
 				CE7DE02C1B613C7D00188093 /* HTTPUtils.swift */,
@@ -497,6 +500,7 @@
 				CEDFBF371B587B6000E8928E /* Update.swift in Sources */,
 				CEC40C0C1B5B29CD00F2F9D8 /* Response.swift in Sources */,
 				CEDFBF251B5862F700E8928E /* PhotoSize.swift in Sources */,
+				CEEF5D4D1B6D8E15004D2881 /* TelegramBot+Utils.swift in Sources */,
 				CE06203E1B616C22008CAFF2 /* TelegramBot+sendMessage.swift in Sources */,
 				CEEF5D241B6AD0BE004D2881 /* Parameter.swift in Sources */,
 				CE29DBA51B58541C00BCA03B /* User.swift in Sources */,

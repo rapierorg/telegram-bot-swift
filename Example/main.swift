@@ -18,25 +18,12 @@ class Controller {
     let bot: TelegramBot
     var message: Message { return bot.lastMessage }
 
-    func privateResponse(text: String, groupText: String? = nil) {
-        bot.sendMessage(chatId: message.from.id, text: text)
-        if let groupText = groupText {
-            if case .GroupChatType = message.chat {
-                bot.sendMessage(chatId: message.chat.id, text: groupText)
-            }
-        }
-    }
-    
-    func groupResponse(groupText: String) {
-        bot.sendMessage(chatId: message.chat.id, text: groupText)
-    }
-    
     init(bot: TelegramBot) {
         self.bot = bot
     }
     
     func start() {
-        groupResponse("Start")
+        bot.respondToGroup("Start")
     }
     
     func help() {
@@ -49,23 +36,23 @@ class Controller {
             "Send /start to begin shuffling letters.\n"
             "Tell the bot to /stop when you're done."
         
-        privateResponse(helpText,
+        bot.respondPrivately(helpText,
             groupText: "\(message.from.firstName), please find usage instructions in a personal message.")
     }
     
     func settings() {
-        privateResponse("Settings",
+        bot.respondPrivately("Settings",
             groupText: "\(message.from.firstName), please find a list of settings in a personal message.")
     }
 
     func partialMatchHandler(unmatched: String, args: Arguments, path: Path) {
-        groupResponse("❗ Part of your input was ignored: \(unmatched)")
+        bot.respondToGroup("❗ Part of your input was ignored: \(unmatched)")
     }
 
     func defaultHandler(args: Arguments) {
         let text = args["text"].stringValue
         
-        groupResponse("I guess I don't understand what this command means: \(text)")
+        bot.respondToGroup("I guess I don't understand what this command means: \(text)")
     }
 }
 
