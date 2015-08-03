@@ -12,8 +12,10 @@ import Foundation
 extension TelegramBot {
 
     func respondPrivately(text: String, groupText: String? = nil) {
-        sendMessage(chatId: lastMessage.from.id, text: text)
-        if let groupText = groupText {
+        if !text.isEmpty {
+            sendMessage(chatId: lastMessage.from.id, text: text)
+        }
+        if let groupText = groupText where !groupText.isEmpty {
             if case .GroupChatType = lastMessage.chat {
                 sendMessage(chatId: lastMessage.chat.id, text: groupText)
             }
@@ -21,6 +23,8 @@ extension TelegramBot {
     }
     
     func respondToGroup(groupText: String) {
-        sendMessage(chatId: lastMessage.chat.id, text: groupText)
+        if !groupText.isEmpty {
+            sendMessage(chatId: lastMessage.chat.id, text: groupText)
+        }
     }
 }
