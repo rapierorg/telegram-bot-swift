@@ -17,6 +17,11 @@ public struct Argument {
         return v
     }
 
+    var stringArrayValue: [String] {
+        guard let v = value as? [String] else { fatalError() }
+        return v
+    }
+
     init(value: Any?) {
         self.value = value
     }
