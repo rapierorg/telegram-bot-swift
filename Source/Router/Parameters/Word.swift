@@ -10,6 +10,13 @@
 import Foundation
 
 public class Word: Parameter {
+    enum Mode {
+        case SingleWord
+        case ZeroOrMore
+        case OneOrMore
+    }
+    
+    var mode = Mode.SingleWord
     
     init(_ parameterName: String? = nil, capture: Bool = true) {
         self.parameterName = parameterName
@@ -21,9 +28,35 @@ public class Word: Parameter {
     
     public func fetchFrom(scanner: NSScanner) -> Any? {
         let whitespaceAndNewline = NSCharacterSet.whitespaceAndNewlineCharacterSet()
-        guard let word = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) else {
-            return nil
+        switch mode {
+        case .SingleWord:
+            guard let word = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) else {
+                return nil
+            }
+            return word
+        case .ZeroOrMore, .OneOrMore:
+            var words = [String]()
+            while let word = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) {
+                words.append(word)
+            }
+            if mode == .OneOrMore && words.isEmpty {
+                return nil
+            }
+            return words
         }
-        return word
     }
+}
+
+postfix operator + { }
+
+postfix func + (word: Word) -> Word {
+    word.mode = .OneOrMore
+    return word
+}
+
+postfix operator * { }
+
+postfix func * (word: Word) -> Word {
+    word.mode = .ZeroOrMore
+    return word
 }

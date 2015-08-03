@@ -96,6 +96,16 @@ class Controller {
         
         bot.respondToGroup(String(text.characters.reverse()))
     }
+    
+    func reverseWords(args: Arguments) {
+        guard started else { return }
+        
+        let words = args["words"].stringArrayValue
+        switch words.isEmpty {
+        case true: bot.respondToGroup("Please specify some words to reverse.")
+        case false: bot.respondToGroup(" ".join(words.reverse()))
+        }
+    }
 }
 
 let controller = Controller(bot: bot)
@@ -107,6 +117,7 @@ router.addPath([Command("help")], controller.help)
 router.addPath([Command("settings")], controller.settings)
 router.addPath([Command("reverse", slash: .Required), RestOfString("text")],
     controller.reverseText)
+router.addPath([Command("word_reverse"), Word("words")*], controller.reverseWords)
 // Default handler
 router.addPath([RestOfString("text")], controller.reverseText)
 
