@@ -36,7 +36,7 @@ func main() -> Int32 {
 	var skipped = 0
 
 	while let element = enumerator.nextObject() as? String {
-		let filename = sourcePath.stringByAppendingPathComponent(element)
+		let filename = (sourcePath as NSString).stringByAppendingPathComponent(element)
 
 		guard element.hasSuffix(sourceExtension) else {
 			print("Skipping (ext): \(filename)")

@@ -12,7 +12,7 @@ import Foundation
 extension String {
     /// Indents every line with prefix.
     public func indent(prefix: String = "  ") -> String {
-        let lines = split(characters) { $0 == "\n" }
+        let lines = characters.split { $0 == "\n" }
         
         var result = String()
         result.reserveCapacity(characters.count + lines.count * prefix.characters.count)
