@@ -21,7 +21,27 @@ public struct Argument {
         guard let v = value as? [String] else { fatalError() }
         return v
     }
+    
+    var intValue: Int {
+        guard let v = value as? Int else { fatalError() }
+        return v
+    }
+    
+    var intArrayValue: [Int] {
+        guard let v = value as? [Int] else { fatalError() }
+        return v
+    }
 
+    var doubleValue: Double {
+        guard let v = value as? Double else { fatalError() }
+        return v
+    }
+    
+    var doubleArrayValue: [Double] {
+        guard let v = value as? [Double] else { fatalError() }
+        return v
+    }
+    
     init(value: Any?) {
         self.value = value
     }

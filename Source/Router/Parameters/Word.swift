@@ -38,25 +38,70 @@ public class Word: Parameter {
     public func fetchFrom(scanner: NSScanner) -> Any? {
         switch mode {
         case .SingleWord:
-            return fetchNextElement(scanner)
+            switch format {
+            case .Word: return fetchWord(scanner)
+            case .Int: return fetchInt(scanner)
+            case .Double: return fetchDouble(scanner)
+            }
         case .ZeroOrMore, .OneOrMore:
-            var elements = [Any]()
-            while let element = fetchNextElement(scanner) {
-                elements.append(element)
+            switch format {
+            case .Word:
+                var elements = [String]()
+                while let element = fetchWord(scanner) {
+                    elements.append(element)
+                }
+                if mode == .OneOrMore && elements.isEmpty {
+                    return nil
+                }
+                return elements
+            case .Int:
+                var elements = [Int]()
+                while let element = fetchInt(scanner) {
+                    elements.append(element)
+                }
+                if mode == .OneOrMore && elements.isEmpty {
+                    return nil
+                }
+                return elements
+            case .Double:
+                var elements = [Double]()
+                while let element = fetchDouble(scanner) {
+                    elements.append(element)
+                }
+                if mode == .OneOrMore && elements.isEmpty {
+                    return nil
+                }
+                return elements
             }
-            if mode == .OneOrMore && elements.isEmpty {
-                return nil
-            }
-            return elements
         }
     }
+
+    func fetchWord(scanner: NSScanner) -> String? {
+        return scanner.scanUpToCharactersFromSet(whitespaceAndNewline)
+    }
     
-    func fetchNextElement(scanner: NSScanner) -> Any? {
-        switch format {
-        case .Word: return scanner.scanUpToCharactersFromSet(whitespaceAndNewline)
-        case .Int: return scanner.scanInt()
-        case .Double: return scanner.scanDouble()
+    func fetchInt(scanner: NSScanner) -> Int? {
+        guard let word = fetchWord(scanner) else {
+            return nil
         }
+        let validator = NSScanner(string: word)
+        validator.charactersToBeSkipped = nil
+        guard let value = validator.scanInt() where validator.atEnd else {
+            return nil
+        }
+        return value
+    }
+    
+    func fetchDouble(scanner: NSScanner) -> Double? {
+        guard let word = fetchWord(scanner) else {
+            return nil
+        }
+        let validator = NSScanner(string: word)
+        validator.charactersToBeSkipped = nil
+        guard let value = validator.scanDouble() where validator.atEnd else {
+            return nil
+        }
+        return value
     }
 }
 
