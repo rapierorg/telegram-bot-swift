@@ -10,16 +10,25 @@
 import Foundation
 
 public class Word: Parameter {
+    enum Format {
+        case Word
+        case Int
+        case Double
+    }
+    
     enum Mode {
         case SingleWord
         case ZeroOrMore
         case OneOrMore
     }
     
+    var format = Format.Word
     var mode = Mode.SingleWord
-    
-    init(_ parameterName: String? = nil, capture: Bool = true) {
+    let whitespaceAndNewline = NSCharacterSet.whitespaceAndNewlineCharacterSet()
+
+    init(_ parameterName: String? = nil, _ format: Format = .Word, capture: Bool = true) {
         self.parameterName = parameterName
+        self.format = format
         self.shouldCaptureValue = capture
     }
     
@@ -27,22 +36,26 @@ public class Word: Parameter {
     public var parameterName: String?
     
     public func fetchFrom(scanner: NSScanner) -> Any? {
-        let whitespaceAndNewline = NSCharacterSet.whitespaceAndNewlineCharacterSet()
         switch mode {
         case .SingleWord:
-            guard let word = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) else {
-                return nil
-            }
-            return word
+            return fetchNextElement(scanner)
         case .ZeroOrMore, .OneOrMore:
-            var words = [String]()
-            while let word = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) {
-                words.append(word)
+            var elements = [Any]()
+            while let element = fetchNextElement(scanner) {
+                elements.append(element)
             }
-            if mode == .OneOrMore && words.isEmpty {
+            if mode == .OneOrMore && elements.isEmpty {
                 return nil
             }
-            return words
+            return elements
+        }
+    }
+    
+    func fetchNextElement(scanner: NSScanner) -> Any? {
+        switch format {
+        case .Word: return scanner.scanUpToCharactersFromSet(whitespaceAndNewline)
+        case .Int: return scanner.scanInt()
+        case .Double: return scanner.scanDouble()
         }
     }
 }
