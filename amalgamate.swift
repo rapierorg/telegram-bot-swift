@@ -96,6 +96,8 @@ func preprocess(fileContents: String, filename: String) -> String {
 
 	fileContents = fileContents.stringByReplacingOccurrencesOfString("extension SwiftyJSON.JSON", withString: "extension JSON")
 
+	fileContents = fileContents.stringByReplacingOccurrencesOfString("/*NS*/", withString: "TB")
+
 	fileContents = "\n" +
 		"//\n" +
 		"// \(filename)\n" +

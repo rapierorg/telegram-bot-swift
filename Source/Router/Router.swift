@@ -9,8 +9,8 @@
 
 import Foundation
 
-public class Router {
-    public typealias PartialMatchHandler = (unmatched: String, arguments: Arguments, path: Path)->()
+public class /*NS*/Router {
+    public typealias PartialMatchHandler = (unmatched: String, arguments: /*NS*/Arguments, path: /*NS*/Path)->()
     
     public var allowPartialMatch: Bool = true
     public var partialMatchHandler: PartialMatchHandler?
@@ -33,35 +33,35 @@ public class Router {
         self.init(allowPartialMatch: true, partialMatchHandler: partialMatchHandler)
     }
     
-    public func addPath(path: Path) {
+    public func addPath(path: /*NS*/Path) {
         paths.append(path)
     }
     
-    public func addPath(parameters: [Parameter], _ handler: Path.Handler) {
-        let path = Path(parameters: parameters, handler: handler)
+    public func addPath(parameters: [/*NS*/Parameter], _ handler: /*NS*/Path.Handler) {
+        let path = /*NS*/Path(parameters: parameters, handler: handler)
         paths.append(path)
     }
 
-    public func addPath(parameters: [Parameter], _ handler: ()->(Bool)) {
-        let path = Path(parameters: parameters,
+    public func addPath(parameters: [/*NS*/Parameter], _ handler: ()->(Bool)) {
+        let path = /*NS*/Path(parameters: parameters,
             handler: .CancellableHandlerWithoutArguments(handler))
         paths.append(path)
     }
 
-    public func addPath(parameters: [Parameter], _ handler: ()->()) {
-        let path = Path(parameters: parameters,
+    public func addPath(parameters: [/*NS*/Parameter], _ handler: ()->()) {
+        let path = /*NS*/Path(parameters: parameters,
             handler: .NonCancellableHandlerWithoutArguments(handler))
         paths.append(path)
     }
 
-    public func addPath(parameters: [Parameter], _ handler: (Arguments)->(Bool)) {
-        let path = Path(parameters: parameters,
+    public func addPath(parameters: [/*NS*/Parameter], _ handler: (/*NS*/Arguments)->(Bool)) {
+        let path = /*NS*/Path(parameters: parameters,
             handler: .CancellableHandlerWithArguments(handler))
         paths.append(path)
     }
 
-    public func addPath(parameters: [Parameter], _ handler: (Arguments)->()) {
-        let path = Path(parameters: parameters,
+    public func addPath(parameters: [/*NS*/Parameter], _ handler: (/*NS*/Arguments)->()) {
+        let path = /*NS*/Path(parameters: parameters,
             handler: .NonCancellableHandlerWithArguments(handler))
         paths.append(path)
     }
@@ -94,13 +94,13 @@ public class Router {
         return false
     }
     
-    func fetchArgumentsInPath(path: Path, withScanner scanner: NSScanner) -> Arguments? {
+    func fetchArgumentsInPath(path: /*NS*/Path, withScanner scanner: NSScanner) -> /*NS*/Arguments? {
         let originalScanLocation = scanner.scanLocation
         defer {
             scanner.scanLocation = originalScanLocation
         }
         
-        let arguments = Arguments()
+        let arguments = /*NS*/Arguments()
         
         for parameter in path.parameters {
             guard let argument = parameter.fetchFrom(scanner) else {
@@ -130,5 +130,5 @@ public class Router {
         return arguments
     }
     
-    var paths = [Path]()
+    var paths = [/*NS*/Path]()
 }

@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 /// Upon receiving a message with this object, Telegram clients will hide the current custom keyboard and display the default letter-keyboard.
-public class ReplyKeyboardHide {
+public class /*NS*/ReplyKeyboardHide {
 
     /// Requests clients to hide the custom keyboard.
     public let hideKeyboard = true
@@ -28,7 +28,7 @@ public class ReplyKeyboardHide {
     }
 }
 
-extension ReplyKeyboardHide: CustomStringConvertible {
+extension /*NS*/ReplyKeyboardHide: CustomStringConvertible {
     public var description: String {
         var json = JSON([:])
         
@@ -41,7 +41,7 @@ extension ReplyKeyboardHide: CustomStringConvertible {
     }
 }
 
-extension ReplyKeyboardHide: CustomDebugStringConvertible {
+extension /*NS*/ReplyKeyboardHide: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "ReplyKeyboardHide(hideKeyboard: \(hideKeyboard), " +

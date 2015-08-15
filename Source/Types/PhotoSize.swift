@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 /// Represents one size of a photo or a file / sticker thumbnail.
-public class PhotoSize {
+public class /*NS*/PhotoSize {
     
     /// Unique identifier for this file.
     public var fileId: String
@@ -65,7 +65,7 @@ public class PhotoSize {
     }
 }
 
-extension PhotoSize: CustomDebugStringConvertible {
+extension /*NS*/PhotoSize: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "PhotoSize(fileId: \(fileId), width: \(width), height: \(height), fileSize: \(fileSize.unwrapAndPrint))"

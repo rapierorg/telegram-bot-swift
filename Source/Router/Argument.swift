@@ -9,7 +9,7 @@
 
 import Foundation
 
-public struct Argument {
+public struct /*NS*/Argument {
     public let value: Any?
 
     var stringValue: String {

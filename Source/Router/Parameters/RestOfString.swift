@@ -9,7 +9,7 @@
 
 import Foundation
 
-public class RestOfString: Parameter {
+public class /*NS*/RestOfString: /*NS*/Parameter {
     
     init(_ parameterName: String? = nil, capture: Bool = true) {
         self.parameterName = parameterName

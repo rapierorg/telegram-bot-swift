@@ -9,7 +9,7 @@
 
 import Foundation
 
-public class Arguments {
+public class /*NS*/Arguments {
     func append(argument: Any, named name: String?) {
         ordered.append(argument)
         if let name = name {
@@ -21,12 +21,12 @@ public class Arguments {
         return ordered
     }
     
-    public subscript(name: String) -> Argument {
-        return Argument(value: byName[name])
+    public subscript(name: String) -> /*NS*/Argument {
+        return /*NS*/Argument(value: byName[name])
     }
     
-    public subscript(index: Int) -> Argument {
-        return Argument(value: ordered[index])
+    public subscript(index: Int) -> /*NS*/Argument {
+        return /*NS*/Argument(value: ordered[index])
     }
     
     var first: Any? { return ordered.first }
@@ -38,7 +38,7 @@ public class Arguments {
     var byName = [String: Any]()
 }
 
-extension Arguments: CustomDebugStringConvertible {
+extension /*NS*/Arguments: CustomDebugStringConvertible {
     public var debugDescription: String {
         var orderedString = ""
         for argument in ordered {

@@ -16,7 +16,7 @@ let bot = TelegramBot(token: token)
 
 class Controller {
     let bot: TelegramBot
-    var message: Message { return bot.lastMessage }
+    var message: TBMessage { return bot.lastMessage }
     var startedInChatId = Set<Int>()
     var started: Bool {
         get { return startedInChatId.contains(message.chat.id) }
@@ -85,11 +85,11 @@ class Controller {
             groupText: "\(message.from.firstName), please find a list of settings in a personal message.")
     }
 
-    func partialMatchHandler(unmatched: String, args: Arguments, path: Path) {
+    func partialMatchHandler(unmatched: String, args: TBArguments, path: TBPath) {
         bot.respondToGroup("❗ Part of your input was ignored: \(unmatched)")
     }
 
-    func reverseText(args: Arguments) {
+    func reverseText(args: TBArguments) {
         guard started else { return }
         
         let text = args["text"].stringValue
@@ -97,7 +97,7 @@ class Controller {
         bot.respondToGroup(String(text.characters.reverse()))
     }
     
-    func reverseWords(args: Arguments) {
+    func reverseWords(args: TBArguments) {
         guard started else { return }
         
         let words = args["words"].stringArrayValue
@@ -110,16 +110,16 @@ class Controller {
 
 let controller = Controller(bot: bot)
 
-let router = Router(partialMatchHandler: controller.partialMatchHandler)
-router.addPath([Command("start")], controller.start)
-router.addPath([Command("stop")], controller.stop)
-router.addPath([Command("help")], controller.help)
-router.addPath([Command("settings")], controller.settings)
-router.addPath([Command("reverse", slash: .Required), RestOfString("text")],
+let router = TBRouter(partialMatchHandler: controller.partialMatchHandler)
+router.addPath([TBCommand("start")], controller.start)
+router.addPath([TBCommand("stop")], controller.stop)
+router.addPath([TBCommand("help")], controller.help)
+router.addPath([TBCommand("settings")], controller.settings)
+router.addPath([TBCommand("reverse", slash: .Required), TBRestOfString("text")],
     controller.reverseText)
-router.addPath([Command("word_reverse"), Word("words")*], controller.reverseWords)
+router.addPath([TBCommand("word_reverse"), TBWord("words")*], controller.reverseWords)
 // Default handler
-router.addPath([RestOfString("text")], controller.reverseText)
+router.addPath([TBRestOfString("text")], controller.reverseText)
 
 print("Ready to accept commands")
 while let command = bot.nextCommand() {

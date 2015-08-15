@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a Telegram user or bot.
-public class User {
+public class /*NS*/User {
     
     /// Unique identifier for this user or bot.
     public var id: Int
@@ -64,7 +64,7 @@ public class User {
     }
 }
 
-extension User: CustomDebugStringConvertible {
+extension /*NS*/User: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "User(id: \(id), firstName: \(firstName), lastName: \(lastName.unwrapAndPrint), username: \(username.unwrapAndPrint))"

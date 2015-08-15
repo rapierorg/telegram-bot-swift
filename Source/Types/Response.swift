@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 /// Response to Bot API request.
-public class Response {
+public class /*NS*/Response {
     /// If `ok` equals true, the request was successful and the result of the query can be found in the `result` field. In case of an unsuccessful request, ‘ok’ equals false and the error is explained in the ‘errorDescription’.
     public var ok: Bool
     
@@ -65,7 +65,7 @@ public class Response {
     }
 }
 
-extension Response: CustomDebugStringConvertible {
+extension /*NS*/Response: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Response(ok: \(ok), errorDescription: \(errorDescription.unwrapAndPrint), " +

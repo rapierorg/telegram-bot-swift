@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a custom keyboard with reply options.
-public class ReplyKeyboardMarkup {
+public class /*NS*/ReplyKeyboardMarkup {
 
     /// Array of button rows, each represented by an Array of Strings.
     public var keyboard: [[String]]
@@ -35,7 +35,7 @@ public class ReplyKeyboardMarkup {
     }
 }
 
-extension ReplyKeyboardMarkup: CustomStringConvertible {
+extension /*NS*/ReplyKeyboardMarkup: CustomStringConvertible {
     public var description: String {
         var json = JSON([:])
         
@@ -60,7 +60,7 @@ extension ReplyKeyboardMarkup: CustomStringConvertible {
     }
 }
 
-extension ReplyKeyboardMarkup: CustomDebugStringConvertible {
+extension /*NS*/ReplyKeyboardMarkup: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "ReplyKeyboardMarkup(keyboard: \(keyboard), resizeKeyboard: \(resizeKeyboard.unwrapAndPrint), " +

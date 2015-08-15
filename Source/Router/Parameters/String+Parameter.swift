@@ -9,7 +9,7 @@
 
 import Foundation
 
-extension String: Parameter {
+extension String: /*NS*/Parameter {
     public var shouldCaptureValue: Bool { return false }
     
     public var parameterName: String? { return nil }

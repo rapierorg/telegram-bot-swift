@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a phone contact.
-public class Contact {
+public class /*NS*/Contact {
 
     /// Contact's phone number.
     public var phoneNumber: String
@@ -61,7 +61,7 @@ public class Contact {
     }
 }
 
-extension Contact: CustomDebugStringConvertible {
+extension /*NS*/Contact: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Contact(phoneNumber: \(phoneNumber), firstName: \(firstName), " +

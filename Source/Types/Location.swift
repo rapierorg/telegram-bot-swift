@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a point on the map.
-public class Location {
+public class /*NS*/Location {
 
     /// Longitude as defined by sender.
     public var longitude: Float
@@ -48,7 +48,7 @@ public class Location {
     }
 }
 
-extension Location: CustomDebugStringConvertible {
+extension /*NS*/Location: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Location(longitude: \(longitude), latitude: \(latitude))"
