@@ -174,19 +174,22 @@ public class TelegramBot {
             return
         }
         
-        // Report errors back to user except network ones
-        guard case let .GenericError(_, _, networkError) = error
+        // Report errors back to user except the ones we know how to handle
+        switch error {
+        case let .GenericError(_, _, networkError)
             where networkError.domain == NSURLErrorDomain &&
-                TelegramBot.autoReconnectCodes.contains(networkError.code)
-        else {
+                TelegramBot.autoReconnectCodes.contains(networkError.code):
+            print("Network error: \(networkError.localizedDescription)")
+            break
+        case let .InvalidStatusCode(statusCode, _, _) where statusCode == 502:
+            print("Error: \(error.debugDescription)")
+            break
+        default:
             taskAssociatedData.completion?(result: nil, error: error)
             return
         }
         
-        // Network error, reconnect:
-        
-        print("Network error: \(networkError.localizedDescription)")
-
+        // Known error, reconnect:
         let retryCount = taskAssociatedData.retryCount
         let reconnectDelay = actualSelf.reconnectDelay(retryCount: retryCount)
         ++taskAssociatedData.retryCount
