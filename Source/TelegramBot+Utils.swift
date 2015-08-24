@@ -27,4 +27,14 @@ extension TelegramBot {
             sendMessage(chatId: lastMessage.chat.id, text: groupText)
         }
     }
+    
+    func reportError(groupText: String, errorDescription: String) {
+        respondToGroup(groupText)
+        print("ERROR: \(errorDescription)")
+    }
+    
+    func reportError(errorDescription: String) {
+        respondToGroup("Unable to perform the operation. Please contact the developers.")
+        print("ERROR: \(errorDescription)")
+    }
 }
