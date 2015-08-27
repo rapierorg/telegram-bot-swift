@@ -48,9 +48,21 @@ public class /*NS*/Router {
         paths.append(path)
     }
 
+    public func addPath(parameters: [/*NS*/Parameter], _ handler: () throws->(Bool)) {
+        let path = /*NS*/Path(parameters: parameters,
+            handler: .CancellableHandlerWithoutArgumentsThrows(handler))
+        paths.append(path)
+    }
+
     public func addPath(parameters: [/*NS*/Parameter], _ handler: ()->()) {
         let path = /*NS*/Path(parameters: parameters,
             handler: .NonCancellableHandlerWithoutArguments(handler))
+        paths.append(path)
+    }
+
+    public func addPath(parameters: [/*NS*/Parameter], _ handler: () throws->()) {
+        let path = /*NS*/Path(parameters: parameters,
+            handler: .NonCancellableHandlerWithoutArgumentsThrows(handler))
         paths.append(path)
     }
 
@@ -60,13 +72,25 @@ public class /*NS*/Router {
         paths.append(path)
     }
 
+    public func addPath(parameters: [/*NS*/Parameter], _ handler: (/*NS*/Arguments) throws->(Bool)) {
+        let path = /*NS*/Path(parameters: parameters,
+            handler: .CancellableHandlerWithArgumentsThrows(handler))
+        paths.append(path)
+    }
+
     public func addPath(parameters: [/*NS*/Parameter], _ handler: (/*NS*/Arguments)->()) {
         let path = /*NS*/Path(parameters: parameters,
             handler: .NonCancellableHandlerWithArguments(handler))
         paths.append(path)
     }
 
-    public func processString(string: String) -> Bool {
+    public func addPath(parameters: [/*NS*/Parameter], _ handler: (/*NS*/Arguments) throws->()) {
+        let path = /*NS*/Path(parameters: parameters,
+            handler: .NonCancellableHandlerWithArgumentsThrows(handler))
+        paths.append(path)
+    }
+
+    public func processString(string: String) throws -> Bool {
         let scanner = NSScanner(string: string)
         scanner.caseSensitive = caseSensitive
         scanner.charactersToBeSkipped = charactersToBeSkipped
@@ -78,15 +102,29 @@ public class /*NS*/Router {
                     if handler() {
                         return true
                     }
+                case let .CancellableHandlerWithoutArgumentsThrows(handler):
+                    if try handler() {
+                        return true
+                    }
                 case let .NonCancellableHandlerWithoutArguments(handler):
                     handler()
+                    return true
+                case let .NonCancellableHandlerWithoutArgumentsThrows(handler):
+                    try handler()
                     return true
                 case let .CancellableHandlerWithArguments(handler):
                     if handler(arguments) {
                         return true
                     }
+                case let .CancellableHandlerWithArgumentsThrows(handler):
+                    if try handler(arguments) {
+                        return true
+                    }
                 case let .NonCancellableHandlerWithArguments(handler):
                     handler(arguments)
+                    return true
+                case let .NonCancellableHandlerWithArgumentsThrows(handler):
+                    try handler(arguments)
                     return true
                 }
             }

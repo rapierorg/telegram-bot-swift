@@ -12,9 +12,13 @@ import Foundation
 public class /*NS*/Path {
     public enum Handler {
         case CancellableHandlerWithoutArguments(()->(Bool))
+        case CancellableHandlerWithoutArgumentsThrows(() throws->(Bool))
         case NonCancellableHandlerWithoutArguments(()->())
+        case NonCancellableHandlerWithoutArgumentsThrows(() throws->())
         case CancellableHandlerWithArguments((/*NS*/Arguments)->(Bool))
+        case CancellableHandlerWithArgumentsThrows((/*NS*/Arguments) throws->(Bool))
         case NonCancellableHandlerWithArguments((/*NS*/Arguments)->())
+        case NonCancellableHandlerWithArgumentsThrows((/*NS*/Arguments) throws->())
     }
     
     public var parameters: [/*NS*/Parameter]
