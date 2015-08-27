@@ -148,11 +148,11 @@ public class /*NS*/Message {
     }
     
     public var prettyPrint: String {
-        var result = "Message(\n" +
-            "  messageId: \(messageId)\n" +
-            "  from: \(from.prettyPrint.indent().trim())\n" +
-            "  date: \(date)\n" +
-            "  chat: \(chat.prettyPrint.indent().trim())\n"
+        var result = "Message(\n"
+        result += "  messageId: \(messageId)\n"
+        result += "  from: \(from.prettyPrint.indent().trim())\n"
+        result += "  date: \(date)\n"
+        result += "  chat: \(chat.prettyPrint.indent().trim())\n"
         if let forwardFrom = forwardFrom {
             result += "  forwardFrom: \(forwardFrom.prettyPrint.indent().trim())\n"
         }

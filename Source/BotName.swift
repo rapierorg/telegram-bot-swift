@@ -18,12 +18,12 @@ public class /*NS*/BotName {
         let lowercase = username.lowercaseString
         if lowercase.hasSuffix(underscoreBotSuffix) {
             withoutSuffix = username.substringToIndex(
-                advance(username.endIndex,
+                username.endIndex.advancedBy(
                     -underscoreBotSuffix.characters.count))
             
         } else if lowercase.hasSuffix(botSuffix) {
             withoutSuffix = username.substringToIndex(
-                advance(username.endIndex,
+                username.endIndex.advancedBy(
                     -botSuffix.characters.count))
             
         } else {
