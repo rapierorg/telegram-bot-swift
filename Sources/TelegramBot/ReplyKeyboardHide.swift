@@ -37,7 +37,7 @@ extension /*NS*/ReplyKeyboardHide: CustomStringConvertible {
         if let selective = selective {
             json["selective"].boolValue = selective
         }
-        return json.rawString(NSUTF8StringEncoding, options: []) ?? ""
+        return json.rawString(encoding: NSUTF8StringEncoding, options: []) ?? ""
     }
 }
 

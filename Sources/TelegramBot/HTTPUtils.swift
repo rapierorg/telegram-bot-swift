@@ -19,7 +19,7 @@ public class /*NS*/HTTPUtils {
     ///
     /// - SeeAlso: Encoding is performed using String's `formUrlencode` method.
     /// - Returns: Encoded string.
-    public class func formUrlencode(dictionary: [String: Any?]) -> String {
+    public class func formUrlencode(_ dictionary: [String: Any?]) -> String {
         var result = ""
         for (key, valueOrNil) in dictionary {
             guard let value = valueOrNil else {
@@ -57,7 +57,7 @@ public class /*NS*/HTTPUtils {
     ///
     /// - SeeAlso: Encoding is performed using String's `formUrlencode` method.
     /// - Returns: Encoded string.
-    public class func formUrlencode(dictionary: [String: String]) -> String {
+    public class func formUrlencode(_ dictionary: [String: String]) -> String {
         var result = ""
         for (keyString, valueString) in dictionary {
             if !result.isEmpty {

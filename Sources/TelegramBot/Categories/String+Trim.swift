@@ -10,7 +10,7 @@
 import Foundation
 
 extension String {
-    public func trim(set: NSCharacterSet = NSCharacterSet.whitespaceAndNewlineCharacterSet()) -> String {
-        return stringByTrimmingCharactersInSet(set)
+    public func trim(set: NSCharacterSet = NSCharacterSet.whitespacesAndNewlines()) -> String {
+        return trimmingCharacters(in: set)
     }
 }

@@ -15,15 +15,15 @@ public class /*NS*/BotName {
     public var withoutSuffix: String
 
     public init(username: String) {
-        let lowercase = username.lowercaseString
+        let lowercase = username.lowercased()
         if lowercase.hasSuffix(underscoreBotSuffix) {
-            withoutSuffix = username.substringToIndex(
-                username.endIndex.advancedBy(
+			withoutSuffix = username.substring(to:
+				username.endIndex.advanced(by:
                     -underscoreBotSuffix.characters.count))
             
         } else if lowercase.hasSuffix(botSuffix) {
-            withoutSuffix = username.substringToIndex(
-                username.endIndex.advancedBy(
+			withoutSuffix = username.substring(to:
+				username.endIndex.advanced(by:
                     -botSuffix.characters.count))
             
         } else {

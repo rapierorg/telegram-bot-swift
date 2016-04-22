@@ -10,7 +10,7 @@
 import Foundation
 
 public class /*NS*/Word: /*NS*/Parameter {
-    enum Format {
+    public enum Format {
         case Word
         case Int
         case Double
@@ -24,9 +24,9 @@ public class /*NS*/Word: /*NS*/Parameter {
     
     var format = Format.Word
     var mode = Mode.SingleWord
-    let whitespaceAndNewline = NSCharacterSet.whitespaceAndNewlineCharacterSet()
+    let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
 
-    init(_ parameterName: String? = nil, _ format: Format = .Word, capture: Bool = true) {
+    public init(_ parameterName: String? = nil, _ format: Format = .Word, capture: Bool = true) {
         self.parameterName = parameterName
         self.format = format
         self.shouldCaptureValue = capture
@@ -35,7 +35,7 @@ public class /*NS*/Word: /*NS*/Parameter {
     public let shouldCaptureValue: Bool
     public var parameterName: String?
     
-    public func fetchFrom(scanner: NSScanner) -> Any? {
+    public func fetchFrom(_ scanner: NSScanner) -> Any? {
         switch mode {
         case .SingleWord:
             switch format {
@@ -76,29 +76,29 @@ public class /*NS*/Word: /*NS*/Parameter {
         }
     }
 
-    func fetchWord(scanner: NSScanner) -> String? {
+    func fetchWord(_ scanner: NSScanner) -> String? {
         return scanner.scanUpToCharactersFromSet(whitespaceAndNewline)
     }
     
-    func fetchInt(scanner: NSScanner) -> Int? {
+    func fetchInt(_ scanner: NSScanner) -> Int? {
         guard let word = fetchWord(scanner) else {
             return nil
         }
         let validator = NSScanner(string: word)
         validator.charactersToBeSkipped = nil
-        guard let value = validator.scanInt() where validator.atEnd else {
+        guard let value = validator.scanInt() where validator.isAtEnd else {
             return nil
         }
         return value
     }
     
-    func fetchDouble(scanner: NSScanner) -> Double? {
+    func fetchDouble(_ scanner: NSScanner) -> Double? {
         guard let word = fetchWord(scanner) else {
             return nil
         }
         let validator = NSScanner(string: word)
         validator.charactersToBeSkipped = nil
-        guard let value = validator.scanDouble() where validator.atEnd else {
+        guard let value = validator.scanDouble() where validator.isAtEnd else {
             return nil
         }
         return value
@@ -107,14 +107,14 @@ public class /*NS*/Word: /*NS*/Parameter {
 
 postfix operator + { }
 
-postfix func + (word: /*NS*/Word) -> /*NS*/Word {
+public postfix func + (word: /*NS*/Word) -> /*NS*/Word {
     word.mode = .OneOrMore
     return word
 }
 
 postfix operator * { }
 
-postfix func * (word: /*NS*/Word) -> /*NS*/Word {
+public postfix func * (word: /*NS*/Word) -> /*NS*/Word {
     word.mode = .ZeroOrMore
     return word
 }

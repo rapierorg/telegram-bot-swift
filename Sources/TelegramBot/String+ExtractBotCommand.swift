@@ -11,19 +11,19 @@ import Foundation
 
 extension String {
     /// "/command@botname arguments" -> "/command arguments"
-    public func extractBotCommand(botName: /*NS*/BotName) -> String? {
+    public func extractBotCommand(_ botName: /*NS*/BotName) -> String? {
         let scanner = NSScanner(string: self)
         scanner.caseSensitive = false
         scanner.charactersToBeSkipped = nil
         
-        let whitespaceAndNewline = NSCharacterSet.whitespaceAndNewlineCharacterSet()
+        let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
         scanner.skipCharactersFromSet(whitespaceAndNewline)
         
         guard scanner.skipString("/") else {
             return self
         }
         
-        let alphanumericCharacters = NSCharacterSet.alphanumericCharacterSet()
+        let alphanumericCharacters = NSCharacterSet.alphanumerics()
         guard scanner.skipCharactersFromSet(alphanumericCharacters) else {
             return self
         }
@@ -36,7 +36,7 @@ extension String {
         }
 
         // A set of characters allowed in bot names
-        let usernameCharacters = NSCharacterSet(charactersInString:
+        let usernameCharacters = NSCharacterSet(charactersIn:
             "abcdefghijklmnopqrstuvwxyz" +
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
             "1234567890_")
@@ -51,7 +51,7 @@ extension String {
         }
         
         let t = self as NSString
-        return t.substringToIndex(usernameSeparatorIndex) +
-            t.substringFromIndex(scanner.scanLocation)
+		return t.substring(to: usernameSeparatorIndex) +
+			t.substring(from: scanner.scanLocation)
     }
 }

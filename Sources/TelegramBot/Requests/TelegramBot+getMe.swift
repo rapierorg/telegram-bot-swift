@@ -49,9 +49,10 @@ extension TelegramBot {
         return result
     }
 
-    private func getMe(queue queue: dispatch_queue_t, completion: (user: /*NS*/User?, error: /*NS*/DataTaskError?)->()) {
+    private func getMe(queue: dispatch_queue_t, completion: (user: /*NS*/User?, error: /*NS*/DataTaskError?)->()) {
         startDataTaskForEndpoint("getMe") {
-                (result, var error) in
+                result, error in
+			var error = error
             var user: /*NS*/User?
             if error == nil {
                 user = /*NS*/User(json: result)

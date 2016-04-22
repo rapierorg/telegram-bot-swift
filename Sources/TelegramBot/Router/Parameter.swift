@@ -12,5 +12,5 @@ import Foundation
 public protocol /*NS*/Parameter {
     var shouldCaptureValue: Bool { get }
     var parameterName: String? { get }
-    func fetchFrom(scanner: NSScanner) -> Any?
+    func fetchFrom(_ scanner: NSScanner) -> Any?
 }

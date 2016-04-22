@@ -43,7 +43,7 @@ extension TelegramBot {
         if nextOffset == nil || nextUpdateId > nextOffset {
             nextOffset = nextUpdateId
         }
-        unprocessedUpdates.removeAtIndex(0)
+		unprocessedUpdates.remove(at: 0)
         lastUpdate = update
         return update
     }
@@ -67,7 +67,7 @@ extension TelegramBot {
     /// - Returns: Array of `Update` objects. Null on error, in which case `error`
     ///                    contains the details.
     /// - SeeAlso: `func getUpdatesWithLimit(timeout:) -> [Update]?`
-    public func getUpdates(offset offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil, completion: (updates: [/*NS*/Update]?, error: /*NS*/DataTaskError?)->()) {
+    public func getUpdates(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil, completion: (updates: [/*NS*/Update]?, error: /*NS*/DataTaskError?)->()) {
         getUpdates(offset: offset, limit: limit, timeout: timeout, queue: queue, completion: completion)
     }
     
@@ -87,7 +87,7 @@ extension TelegramBot {
     /// - Returns: Array of `Update` objects. Null on error, in which case details
     ///            can be obtained using `lastError` property.
     /// - SeeAlso: `func getUpdatesWithLimit(timeout:completion:)->()`
-    public func getUpdates(offset offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil) -> [/*NS*/Update]? {
+    public func getUpdates(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil) -> [/*NS*/Update]? {
         var result: [/*NS*/Update]!
         let sem = dispatch_semaphore_create(0)
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
@@ -101,14 +101,15 @@ extension TelegramBot {
         return result
     }
     
-    private func getUpdates(offset offset: Int?, limit: Int?, timeout: Int?, queue: dispatch_queue_t, completion: (updates: [/*NS*/Update]?, error: /*NS*/DataTaskError?)->()) {
+    private func getUpdates(offset: Int?, limit: Int?, timeout: Int?, queue: dispatch_queue_t, completion: (updates: [/*NS*/Update]?, error: /*NS*/DataTaskError?)->()) {
         let parameters: [String: Any?] = [
             "offset": offset,
             "limit": limit,
             "timeout": timeout
         ]
         startDataTaskForEndpoint("getUpdates", parameters: parameters) {
-                (result, var error) in
+                result, error in
+			var error = error
             var updates = [/*NS*/Update]()
             if error == nil {
                 updates.reserveCapacity(result.count)

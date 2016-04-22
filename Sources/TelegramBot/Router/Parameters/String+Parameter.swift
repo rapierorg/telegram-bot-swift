@@ -14,8 +14,8 @@ extension String: /*NS*/Parameter {
     
     public var parameterName: String? { return nil }
     
-    public func fetchFrom(scanner: NSScanner) -> Any? {
-        let whitespaceAndNewline = NSCharacterSet.whitespaceAndNewlineCharacterSet()
+    public func fetchFrom(_ scanner: NSScanner) -> Any? {
+        let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
         guard let word = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) else {
             return nil
         }

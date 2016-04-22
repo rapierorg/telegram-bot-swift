@@ -12,7 +12,7 @@ import Foundation
 extension NSScanner {
     func scanInt32() -> Int32? {
         var result: Int32 = 0
-        return scanInt(&result) ? result : nil
+        return scanInt32(&result) ? result : nil
     }
     
     func skipInt32() -> Bool {
@@ -21,20 +21,20 @@ extension NSScanner {
     
     func scanInt() -> Int? {
         var result: Int = 0
-        return scanInteger(&result) ? result : nil
+        return scanInt(&result) ? result : nil
     }
     
     func skipInt() -> Bool {
-        return scanInteger(nil)
+        return scanInt(nil)
     }
     
     func scanInt64() -> Int64? {
         var result: Int64 = 0
-        return scanLongLong(&result) ? result : nil
+        return scanInt64(&result) ? result : nil
     }
     
     func skipInt64() -> Bool {
-        return scanLongLong(nil)
+        return scanInt64(nil)
     }
     
     func scanUInt64() -> UInt64? {
@@ -66,20 +66,20 @@ extension NSScanner {
     
     func scanHexUInt32() -> UInt32? {
         var result: UInt32 = 0
-        return scanHexInt(&result) ? result : nil
+        return scanHexInt32(&result) ? result : nil
     }
     
     func skipHexUInt32() -> Bool {
-        return scanHexInt(nil)
+        return scanHexInt32(nil)
     }
     
     func scanHexUInt64() -> UInt64? {
         var result: UInt64 = 0
-        return scanHexLongLong(&result) ? result : nil
+        return scanHexInt64(&result) ? result : nil
     }
     
     func skipHexUInt64() -> Bool {
-        return scanHexLongLong(nil)
+        return scanHexInt64(nil)
     }
     
     func scanHexFloat() -> Float? {
@@ -100,51 +100,43 @@ extension NSScanner {
         return scanHexDouble(nil)
     }
     
-    func scanString(string: String) -> String? {
+    func skipString(_ string: String) -> Bool {
+        return scanString(string, into: nil)
+    }
+    
+    func scanCharactersFromSet(_ set: NSCharacterSet) -> String? {
         var result: NSString? = nil
-        if scanString(string, intoString: &result) {
+		if scanCharacters(from: set, into: &result) {
             return result as? String
         }
         return nil
     }
     
-    func skipString(string: String) -> Bool {
-        return scanString(string, intoString: nil)
+    func skipCharactersFromSet(_ set: NSCharacterSet) -> Bool {
+		return scanCharacters(from: set, into: nil)
     }
     
-    func scanCharactersFromSet(set: NSCharacterSet) -> String? {
+    func scanUpToString(_ string: String) -> String? {
         var result: NSString? = nil
-        if scanCharactersFromSet(set, intoString: &result) {
+		if scanUpTo(string, into: &result) {
             return result as? String
         }
         return nil
     }
     
-    func skipCharactersFromSet(set: NSCharacterSet) -> Bool {
-        return scanCharactersFromSet(set, intoString: nil)
+    func skipUpToString(_ string: String) -> Bool {
+        return scanUpTo(string, into: nil)
     }
     
-    func scanUpToString(string: String) -> String? {
+    func scanUpToCharactersFromSet(_ set: NSCharacterSet) -> String? {
         var result: NSString? = nil
-        if scanUpToString(string, intoString: &result) {
+		if scanUpToCharacters(from: set, into: &result) {
             return result as? String
         }
         return nil
     }
     
-    func skipUpToString(string: String) -> Bool {
-        return scanUpToString(string, intoString: nil)
-    }
-    
-    func scanUpToCharactersFromSet(set: NSCharacterSet) -> String? {
-        var result: NSString? = nil
-        if scanUpToCharactersFromSet(set, intoString: &result) {
-            return result as? String
-        }
-        return nil
-    }
-    
-    func skipUpToCharactersFromSet(set: NSCharacterSet) -> Bool {
-        return scanUpToCharactersFromSet(set, intoString: nil)
+    func skipUpToCharactersFromSet(_ set: NSCharacterSet) -> Bool {
+		return scanUpToCharacters(from: set, into: nil)
     }
 }
