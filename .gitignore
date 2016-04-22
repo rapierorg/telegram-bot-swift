@@ -1,3 +1,5 @@
+.build/
+telegram-bot-swift.xcodeproj
 # Xcode
 #
 build/

@@ -192,7 +192,7 @@ public class TelegramBot {
         // Known error, reconnect:
         let retryCount = taskAssociatedData.retryCount
         let reconnectDelay = actualSelf.reconnectDelay(retryCount: retryCount)
-        ++taskAssociatedData.retryCount
+        taskAssociatedData.retryCount += 1
         
         // This closure will be called from dataTask queue,
         // but startDataTaskForRequest will start the new
@@ -217,7 +217,7 @@ public class TelegramBot {
     
     /// Default handling of network and parse errors.
     public static let defaultSession: NSURLSession = {
-        let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+        let configuration = NSURLSessionConfiguration.ephemeral()
         return NSURLSession(configuration: configuration)
     }()
     
@@ -290,20 +290,20 @@ public class TelegramBot {
     
     /// Initiates a request to the server. Used for implementing
     /// specific requests (getMe, getStatus etc).
-    public func startDataTaskForEndpoint(endpoint: String, completion: DataTaskCompletion) {
+    public func startDataTaskForEndpoint(_ endpoint: String, completion: DataTaskCompletion) {
         startDataTaskForEndpoint(endpoint, parameters: [:], completion: completion)
     }
     
     /// Initiates a request to the server. Used for implementing
     /// specific requests.
-    public func startDataTaskForEndpoint(endpoint: String, parameters: [String: Any?], completion: DataTaskCompletion) {
+    public func startDataTaskForEndpoint(_ endpoint: String, parameters: [String: Any?], completion: DataTaskCompletion) {
         let endpointUrl = urlForEndpoint(endpoint)
         let data = /*NS*/HTTPUtils.formUrlencode(parameters)
         
-        let request = NSMutableURLRequest(URL: endpointUrl)
-        request.cachePolicy = .ReloadIgnoringLocalAndRemoteCacheData
-        request.HTTPMethod = "POST"
-        request.HTTPBody = data.dataUsingEncoding(NSUTF8StringEncoding)
+        let request = NSMutableURLRequest(url: endpointUrl)
+        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        request.httpMethod = "POST"
+		request.httpBody = data.data(using: NSUTF8StringEncoding)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
         let taskAssociatedData = /*NS*/TaskAssociatedData(completion)
@@ -314,15 +314,15 @@ public class TelegramBot {
     /// custom `errorHandler`.
     ///
     /// See `defaultErrorHandler` implementation for an example.
-    public func startDataTaskForRequest(request: NSURLRequest, associateTaskWithData taskAssociatedData: /*NS*/TaskAssociatedData) {
+    public func startDataTaskForRequest(_ request: NSURLRequest, associateTaskWithData taskAssociatedData: /*NS*/TaskAssociatedData) {
         // This function can be called from main queue (when
         // call is initiated by user) or from dataTask queue (when
         // automatically retrying).
         // Dispatch calls to serial workQueue.
         dispatch_async(self.workQueue) {
             var task: NSURLSessionDataTask?
-            task = self.session.dataTaskWithRequest(request) { dataOrNil, responseOrNil, errorOrNil in
-                self.urlSessionDataTaskCompletion(task!, dataOrNil, responseOrNil, errorOrNil)
+			task = self.session.dataTask(with: request) { dataOrNil, responseOrNil, errorOrNil in
+				self.urlSessionDataTaskCompletion(task: task!, dataOrNil, responseOrNil, errorOrNil)
             }
             if let t = task {
                 t.associatedData = taskAssociatedData
@@ -394,7 +394,7 @@ public class TelegramBot {
         }
     }
 
-    private func urlForEndpoint(endpoint: String) -> NSURL {
+    private func urlForEndpoint(_ endpoint: String) -> NSURL {
         let tokenUrlencoded = token.urlQueryEncode()
         let endpointUrlencoded = endpoint.urlQueryEncode()
         let urlString = "\(url)/bot\(tokenUrlencoded)/\(endpointUrlencoded)"

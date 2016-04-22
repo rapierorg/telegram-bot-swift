@@ -11,7 +11,7 @@ import Foundation
 
 extension TelegramBot {
 
-    func respondPrivately(text: String, groupText: String? = nil) {
+    public func respondPrivately(_ text: String, groupText: String? = nil) {
         if !text.isEmpty {
             sendMessage(chatId: lastMessage.from.id, text: text)
         }
@@ -22,18 +22,18 @@ extension TelegramBot {
         }
     }
     
-    func respondToGroup(groupText: String) {
+    public func respondToGroup(_ groupText: String) {
         if !groupText.isEmpty {
             sendMessage(chatId: lastMessage.chat.id, text: groupText)
         }
     }
     
-    func reportError(groupText: String, errorDescription: String) {
+    public func reportError(groupText: String, errorDescription: String) {
         respondToGroup(groupText)
         print("ERROR: \(errorDescription)")
     }
     
-    func reportError(errorDescription: String) {
+    public func reportError(_ errorDescription: String) {
         respondToGroup("Unable to perform the operation. Please contact the developers.")
         print("ERROR: \(errorDescription)")
     }

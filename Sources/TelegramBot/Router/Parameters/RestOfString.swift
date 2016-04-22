@@ -11,7 +11,7 @@ import Foundation
 
 public class /*NS*/RestOfString: /*NS*/Parameter {
     
-    init(_ parameterName: String? = nil, capture: Bool = true) {
+    public init(_ parameterName: String? = nil, capture: Bool = true) {
         self.parameterName = parameterName
         self.shouldCaptureValue = capture
     }
@@ -19,7 +19,7 @@ public class /*NS*/RestOfString: /*NS*/Parameter {
     public let shouldCaptureValue: Bool
     public var parameterName: String?
     
-    public func fetchFrom(scanner: NSScanner) -> Any? {
+    public func fetchFrom(_ scanner: NSScanner) -> Any? {
         guard let restOfString = scanner.scanUpToString("") else {
             return nil
         }

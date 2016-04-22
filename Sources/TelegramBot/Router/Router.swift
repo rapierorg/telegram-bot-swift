@@ -15,11 +15,11 @@ public class /*NS*/Router {
     public var allowPartialMatch: Bool = true
     public var partialMatchHandler: PartialMatchHandler?
     public var caseSensitive: Bool = false
-    public var charactersToBeSkipped: NSCharacterSet? = NSCharacterSet.whitespaceAndNewlineCharacterSet()
+    public var charactersToBeSkipped: NSCharacterSet? = NSCharacterSet.whitespacesAndNewlines()
     
     public var defaultHandler: (()->())? = nil
 
-    init(allowPartialMatch: Bool, partialMatchHandler: PartialMatchHandler? = nil) {
+    public init(allowPartialMatch: Bool, partialMatchHandler: PartialMatchHandler? = nil) {
         
         self.allowPartialMatch = allowPartialMatch
         self.partialMatchHandler = partialMatchHandler
@@ -29,68 +29,68 @@ public class /*NS*/Router {
         }
     }
 
-    convenience init(partialMatchHandler: PartialMatchHandler? = nil) {
+    public convenience init(partialMatchHandler: PartialMatchHandler? = nil) {
         self.init(allowPartialMatch: true, partialMatchHandler: partialMatchHandler)
     }
     
-    public func addPath(path: /*NS*/Path) {
+    public func addPath(_ path: /*NS*/Path) {
         paths.append(path)
     }
     
-    public func addPath(parameters: [/*NS*/Parameter], _ handler: /*NS*/Path.Handler) {
+    public func addPath(_ parameters: [/*NS*/Parameter], _ handler: /*NS*/Path.Handler) {
         let path = /*NS*/Path(parameters: parameters, handler: handler)
         paths.append(path)
     }
 
-    public func addPath(parameters: [/*NS*/Parameter], _ handler: ()->(Bool)) {
+    public func addPath(_ parameters: [/*NS*/Parameter], _ handler: ()->(Bool)) {
         let path = /*NS*/Path(parameters: parameters,
             handler: .CancellableHandlerWithoutArguments(handler))
         paths.append(path)
     }
 
-    public func addPath(parameters: [/*NS*/Parameter], _ handler: () throws->(Bool)) {
+    public func addPath(_ parameters: [/*NS*/Parameter], _ handler: () throws->(Bool)) {
         let path = /*NS*/Path(parameters: parameters,
             handler: .CancellableHandlerWithoutArgumentsThrows(handler))
         paths.append(path)
     }
 
-    public func addPath(parameters: [/*NS*/Parameter], _ handler: ()->()) {
+    public func addPath(_ parameters: [/*NS*/Parameter], _ handler: ()->()) {
         let path = /*NS*/Path(parameters: parameters,
             handler: .NonCancellableHandlerWithoutArguments(handler))
         paths.append(path)
     }
 
-    public func addPath(parameters: [/*NS*/Parameter], _ handler: () throws->()) {
+    public func addPath(_ parameters: [/*NS*/Parameter], _ handler: () throws->()) {
         let path = /*NS*/Path(parameters: parameters,
             handler: .NonCancellableHandlerWithoutArgumentsThrows(handler))
         paths.append(path)
     }
 
-    public func addPath(parameters: [/*NS*/Parameter], _ handler: (/*NS*/Arguments)->(Bool)) {
+    public func addPath(_ parameters: [/*NS*/Parameter], _ handler: (/*NS*/Arguments)->(Bool)) {
         let path = /*NS*/Path(parameters: parameters,
             handler: .CancellableHandlerWithArguments(handler))
         paths.append(path)
     }
 
-    public func addPath(parameters: [/*NS*/Parameter], _ handler: (/*NS*/Arguments) throws->(Bool)) {
+    public func addPath(_ parameters: [/*NS*/Parameter], _ handler: (/*NS*/Arguments) throws->(Bool)) {
         let path = /*NS*/Path(parameters: parameters,
             handler: .CancellableHandlerWithArgumentsThrows(handler))
         paths.append(path)
     }
 
-    public func addPath(parameters: [/*NS*/Parameter], _ handler: (/*NS*/Arguments)->()) {
+    public func addPath(_ parameters: [/*NS*/Parameter], _ handler: (/*NS*/Arguments)->()) {
         let path = /*NS*/Path(parameters: parameters,
             handler: .NonCancellableHandlerWithArguments(handler))
         paths.append(path)
     }
 
-    public func addPath(parameters: [/*NS*/Parameter], _ handler: (/*NS*/Arguments) throws->()) {
+    public func addPath(_ parameters: [/*NS*/Parameter], _ handler: (/*NS*/Arguments) throws->()) {
         let path = /*NS*/Path(parameters: parameters,
             handler: .NonCancellableHandlerWithArgumentsThrows(handler))
         paths.append(path)
     }
 
-    public func processString(string: String) throws -> Bool {
+    public func processString(_ string: String) throws -> Bool {
         let scanner = NSScanner(string: string)
         scanner.caseSensitive = caseSensitive
         scanner.charactersToBeSkipped = charactersToBeSkipped
@@ -132,7 +132,7 @@ public class /*NS*/Router {
         return false
     }
     
-    func fetchArgumentsInPath(path: /*NS*/Path, withScanner scanner: NSScanner) -> /*NS*/Arguments? {
+    func fetchArgumentsInPath(_ path: /*NS*/Path, withScanner scanner: NSScanner) -> /*NS*/Arguments? {
         let originalScanLocation = scanner.scanLocation
         defer {
             scanner.scanLocation = originalScanLocation
@@ -151,7 +151,7 @@ public class /*NS*/Router {
         
         // Note that scanner.atEnd automatically
         // ignores charactersToBeSkipped
-        if !scanner.atEnd {
+        if !scanner.isAtEnd {
             // Partial match
             guard allowPartialMatch else {
                 return nil

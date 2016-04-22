@@ -10,7 +10,7 @@
 import Foundation
 
 public class /*NS*/Arguments {
-    func append(argument: Any, named name: String?) {
+    func append(_ argument: Any, named name: String?) {
         ordered.append(argument)
         if let name = name {
             byName[name] = argument

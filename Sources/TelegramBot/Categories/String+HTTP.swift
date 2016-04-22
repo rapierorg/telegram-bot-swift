@@ -12,14 +12,14 @@ import Foundation
 extension String {
     struct HTTPData {
         static let formUrlencodedAllowedCharacters: NSMutableCharacterSet = {
-            let cs = NSMutableCharacterSet.alphanumericCharacterSet()
-            cs.addCharactersInString("-._* ")
+            let cs = NSMutableCharacterSet.alphanumerics()
+			cs.addCharacters(in: "-._* ")
             return cs
         }()
         
         static let urlQueryAllowedCharacters: NSMutableCharacterSet = {
-            let cs = NSMutableCharacterSet.alphanumericCharacterSet()
-            cs.addCharactersInString("-._~")
+            let cs = NSMutableCharacterSet.alphanumerics()
+			cs.addCharacters(in: "-._~")
             return cs
         }()
     }
@@ -33,7 +33,7 @@ extension String {
     /// - SeeAlso: `func urlQueryEncode() -> String`
     /// - Returns: Encoded string
     func formUrlencode() -> String {
-        return stringByAddingPercentEncodingWithAllowedCharacters(HTTPData.formUrlencodedAllowedCharacters)?.stringByReplacingOccurrencesOfString(" ", withString: "+") ?? ""
+        return addingPercentEncoding(withAllowedCharacters: HTTPData.formUrlencodedAllowedCharacters)?.replacingOccurrences(of: " ", with: "+") ?? ""
     }
     
     /// Percent-encodes everything except alphanumerics
@@ -44,6 +44,6 @@ extension String {
     /// - Returns: Encoded string
     /// - SeeAlso: `func formUrlencode() -> String`
     func urlQueryEncode() -> String {
-        return stringByAddingPercentEncodingWithAllowedCharacters(HTTPData.urlQueryAllowedCharacters) ?? ""
+		return addingPercentEncoding(withAllowedCharacters: HTTPData.urlQueryAllowedCharacters) ?? ""
     }
 }
