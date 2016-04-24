@@ -225,7 +225,7 @@ public class TelegramBot {
     ///
     /// This function will block until the request is finished.
     public lazy var user: /*NS*/User = {
-        guard let me = self.getMe() else {
+        guard let me = self.getMeSync() else {
             fatalError("Unable to fetch bot information")
         }
         return me
@@ -299,6 +299,7 @@ public class TelegramBot {
     public func startDataTaskForEndpoint(_ endpoint: String, parameters: [String: Any?], completion: DataTaskCompletion) {
         let endpointUrl = urlForEndpoint(endpoint)
         let data = /*NS*/HTTPUtils.formUrlencode(parameters)
+		print("endpoint: \(endpoint), data: \(data)")
         
         let request = NSMutableURLRequest(url: endpointUrl)
         request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData

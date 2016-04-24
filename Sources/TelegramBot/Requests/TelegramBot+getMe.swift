@@ -22,8 +22,8 @@ extension TelegramBot {
     /// - Returns: Basic information about the bot in form of a `User` object.
     ///            Null on error, in which case `error` contains the details.
     /// - SeeAlso: `func getMe() -> User?`
-    public func getMe(completion: (user: /*NS*/User?, error: /*NS*/DataTaskError?)->()) {
-        getMe(queue: queue, completion: completion)
+    public func getMeAsync(completion: (user: /*NS*/User?, error: /*NS*/DataTaskError?)->()) {
+        getMeAsync(queue: queue, completion: completion)
     }
     
     /// A simple method for testing your bot's auth token. Requires no parameters.
@@ -35,11 +35,11 @@ extension TelegramBot {
     ///            Null on error, in which case details can be obtained using
     ///            `lastError` property.
     /// - SeeAlso: `func getMe(completion:)->()`
-    public func getMe() -> /*NS*/User? {
+    public func getMeSync() -> /*NS*/User? {
         var result: /*NS*/User!
         let sem = dispatch_semaphore_create(0)
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-        getMe(queue: queue) {
+        getMeAsync(queue: queue) {
                 user, error in
             result = user
             self.lastError = error
@@ -49,7 +49,7 @@ extension TelegramBot {
         return result
     }
 
-    private func getMe(queue: dispatch_queue_t, completion: (user: /*NS*/User?, error: /*NS*/DataTaskError?)->()) {
+    private func getMeAsync(queue: dispatch_queue_t, completion: (user: /*NS*/User?, error: /*NS*/DataTaskError?)->()) {
         startDataTaskForEndpoint("getMe") {
                 result, error in
 			var error = error

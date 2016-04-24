@@ -41,12 +41,19 @@ public class /*NS*/Command: /*NS*/Parameter {
         guard let word = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) else {
             return nil
         }
+		let matchAnyCommand = name.isEmpty
         switch slash {
         case .Required:
+			if matchAnyCommand && word.hasPrefix("/") {
+				return word
+			}
             if nameWithSlash.hasPrefix(word) {
                 return word
             }
         case .Optional:
+			if matchAnyCommand {
+				return word
+			}
             if name.hasPrefix(word) || nameWithSlash.hasPrefix(word) {
                 return word
             }
