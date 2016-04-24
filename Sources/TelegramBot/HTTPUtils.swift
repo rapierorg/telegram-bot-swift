@@ -36,7 +36,7 @@ public class /*NS*/HTTPUtils {
                     continue
                 }
                 // If true, add "key=" to encoded string
-                valueString = ""
+                valueString = "true"
             } else {
                 valueString = String(value)
             }
