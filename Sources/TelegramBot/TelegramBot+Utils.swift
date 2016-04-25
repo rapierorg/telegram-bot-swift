@@ -28,13 +28,13 @@ extension TelegramBot {
         }
     }
 	
-//    public func reportError(groupText: String, errorDescription: String) {
-//        respondToGroup(groupText)
-//        print("ERROR: \(errorDescription)")
-//    }
-//    
-//    public func reportError(_ errorDescription: String) {
-//        respondToGroup("Unable to perform the operation. Please contact the developers.")
-//        print("ERROR: \(errorDescription)")
-//    }
+    public func reportErrorSync(_ text: String, errorDescription: String) {
+		respondSync(text)
+        print("ERROR: \(errorDescription)")
+    }
+	
+    public func reportErrorSync(errorDescription: String) {
+        respondSync("❗ Ошибка при выполнении операции. Приносим свои извинения. Разработчики бота будут проинформированы об ошибке.")
+        print("ERROR: \(errorDescription)")
+    }
 }
