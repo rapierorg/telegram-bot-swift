@@ -1,7 +1,7 @@
 //
 // TelegramBot+sendMessage.swift
 //
-// Copyright (c) 2015 Andrey Fidrya
+// Copyright (c) 2016 Andrey Fidrya
 //
 // Licensed under the MIT license. For full copyright and license information,
 // please see the LICENSE file.
@@ -15,7 +15,7 @@ public extension TelegramBot {
 	typealias SendMessageCompletion = (message: /*NS*/Message?, error: /*NS*/DataTaskError?)->()
 	
 	/// Send text message. Blocking version.
-	/// - Returns: Sent message on success. Null on error, in which case `lastError` contains the details.
+	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: https://core.telegram.org/bots/api#sendmessage
 	public func sendMessageSync(chatId: Int, text: String,
 	                        parameters: [String: Any?] = [:]) -> Message? {
@@ -28,12 +28,13 @@ public extension TelegramBot {
 			self.lastError = error
 			dispatch_semaphore_signal(sem)
 		}
-		dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
+		NSRunLoop.current().waitForSemaphore(sem)
+		//dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
 		return result
 	}
 	
     /// Send text messages. Asynchronous version.
-	/// - Returns: Sent message on success. Null on error, in which case `error` contains the details.
+	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: https://core.telegram.org/bots/api#sendmessage
 	public func sendMessageAsync(chatId: Int, text: String,
 	                        parameters: [String: Any?] = [:],

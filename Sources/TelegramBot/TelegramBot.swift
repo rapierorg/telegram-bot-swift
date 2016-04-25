@@ -275,8 +275,8 @@ public class TelegramBot {
     /// - Returns: A `String` containing the preprocessed command.
     /// Nil on error, in which case details can be obtained
     /// from `lastError` property.
-    public func nextCommand() -> String? {
-        while let update = nextUpdate() {
+    public func nextCommandSync() -> String? {
+        while let update = nextUpdateSync() {
             guard let message = update.message else { continue }
             guard let text = message.text else { continue }
             guard let command = text.extractBotCommand(name) else { continue }

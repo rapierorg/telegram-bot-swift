@@ -45,7 +45,8 @@ extension TelegramBot {
             self.lastError = error
             dispatch_semaphore_signal(sem)
         }
-        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
+		NSRunLoop.current().waitForSemaphore(sem)
+        //dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
         return result
     }
 
