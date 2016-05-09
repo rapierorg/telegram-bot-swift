@@ -63,15 +63,18 @@ class Controller {
     func help() {
         let helpText = "What can this bot do?\n" +
             "\n" +
-            "This is a sample bot which reverses sentences. " +
+            "This is a sample bot which reverses sentences or words. " +
             "If you want to invite friends, simply open the bot's profile " +
             "and use the 'Add to group' button to invite them.\n" +
             "\n" +
             "Send /start to begin reversing sentences.\n" +
             "Tell the bot to /stop when you're done.\n" +
+            "\n" +
             "In private chat simply type some text and it will be reversed.\n" +
             "In group chats use this command:\n" +
-            "/reverse Sentence"
+            "/reverse Sentence\n" +
+            "\n" +
+            "To reverse words, use /word_reverse word1 word2 word3..."
         
         bot.respondPrivatelySync(helpText,
             groupText: "\(message.from.firstName), please find usage instructions in a personal message.")
