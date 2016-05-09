@@ -27,7 +27,7 @@ fatalError("Server stopped due to error: \(bot.lastError)")
 
 Check `Examples/` for sample bot projects.
 
-Build instructions and general information is available on [Telegram Bots Swift SDK Wiki](https://github.com/zmeyc/telegram-bot-swift/wiki).
+Build instructions and general information is available on [Telegram Bot Swift SDK Wiki](https://github.com/zmeyc/telegram-bot-swift/wiki).
 
 This SDK is a work in progress, expect the API to change very often.
 
