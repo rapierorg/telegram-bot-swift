@@ -9,8 +9,8 @@ import Foundation
 import TelegramBot
 
 let environment = NSProcessInfo.processInfo().environment
-guard let token = environment["TELEGRAM_EXAMPLE_BOT_TOKEN"] else {
-    fatalError("Please set TELEGRAM_EXAMPLE_BOT_TOKEN environment variable")
+guard let token = environment["WORD_REVERSE_BOT_TOKEN"] else {
+    fatalError("Please set WORD_REVERSE_BOT_TOKEN environment variable")
 }
 
 let bot = TelegramBot(token: token)
