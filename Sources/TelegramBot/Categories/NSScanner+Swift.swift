@@ -16,7 +16,7 @@ extension NSScanner {
     }
     
     func skipInt32() -> Bool {
-        return scanInt(nil)
+        return scanInt32(nil)
     }
     
     func scanInt() -> Int? {
