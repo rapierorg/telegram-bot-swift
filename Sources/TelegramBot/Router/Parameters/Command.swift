@@ -9,7 +9,7 @@
 
 import Foundation
 
-public class /*NS*/Command: /*NS*/Parameter {
+public class Command: Parameter {
     public enum SlashMode {
         /// Both 'command' and '/command' allowed
         case Optional

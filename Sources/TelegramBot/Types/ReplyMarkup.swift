@@ -9,17 +9,17 @@
 
 import Foundation
 
-public enum /*NS*/ReplyMarkup {
-    case ReplyKeyboardMarkupType(/*NS*/ReplyKeyboardMarkup)
-    case ReplyKeyboardHideType(/*NS*/ReplyKeyboardHide)
-    case ForceReplyType(/*NS*/ForceReply)
+public enum ReplyMarkup {
+    case ReplyKeyboardMarkupType(ReplyKeyboardMarkup)
+    case ReplyKeyboardHideType(ReplyKeyboardHide)
+    case ForceReplyType(ForceReply)
     
     public var prettyPrint: String {
         return debugDescription
     }
 }
 
-extension /*NS*/ReplyMarkup: CustomStringConvertible {
+extension ReplyMarkup: CustomStringConvertible {
     public var description: String {
         switch self {
         case let .ReplyKeyboardMarkupType(v):
@@ -32,7 +32,7 @@ extension /*NS*/ReplyMarkup: CustomStringConvertible {
     }
 }
 
-extension /*NS*/ReplyMarkup: CustomDebugStringConvertible {
+extension ReplyMarkup: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         var s = "ReplyMarkup("

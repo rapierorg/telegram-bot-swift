@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 // Represents a video file.
-public class /*NS*/Video {
+public class Video {
 
     /// Unique identifier for this file.
     public var fileId: String
@@ -26,7 +26,7 @@ public class /*NS*/Video {
     public var duration: Int
     
     /// Video thumbnail.
-    public var thumb: /*NS*/PhotoSize
+    public var thumb: PhotoSize
     
     /// *Optional.* Mime type of a file as defined by sender.
     public var mimeType: String?
@@ -43,7 +43,7 @@ public class /*NS*/Video {
         width = 0
         height = 0
         duration = 0
-        thumb = /*NS*/PhotoSize()
+        thumb = PhotoSize()
     }
     
     /// Create an instance from JSON data.
@@ -66,7 +66,7 @@ public class /*NS*/Video {
         guard let duration = json["duration"].int else { return nil }
         self.duration = duration
         
-        guard let thumb = /*NS*/PhotoSize(json: json["thumb"]) else { return nil }
+        guard let thumb = PhotoSize(json: json["thumb"]) else { return nil }
         self.thumb = thumb
         
         mimeType = json["mime_type"].string
@@ -95,7 +95,7 @@ public class /*NS*/Video {
     }
 }
 
-extension /*NS*/Video: CustomDebugStringConvertible {
+extension Video: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Sticker(fileId: \(fileId), width: \(width), height: \(height), duration: \(duration), " +

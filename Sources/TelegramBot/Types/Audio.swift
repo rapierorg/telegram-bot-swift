@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 // Represents an audio file (voice note).
-public class /*NS*/Audio {
+public class Audio {
     
     /// Unique identifier for this file.
     public var fileId: String
@@ -64,7 +64,7 @@ public class /*NS*/Audio {
     }
 }
 
-extension /*NS*/Audio: CustomDebugStringConvertible {
+extension Audio: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Audio(fileId: \(fileId), duration: \(duration), " +

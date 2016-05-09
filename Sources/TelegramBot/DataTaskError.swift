@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 /// Telegram DataTask errors
-public enum /*NS*/DataTaskError {
+public enum DataTaskError {
     /// NSDataTask returned an error
     case GenericError(
         data: NSData?, response: NSURLResponse?, error: NSError)
@@ -32,18 +32,18 @@ public enum /*NS*/DataTaskError {
         data: NSData, response: NSHTTPURLResponse)
     
     /// Server error (server returned "ok: false")
-    case ServerError(telegramResponse: /*NS*/Response,
+    case ServerError(telegramResponse: Response,
         data: NSData, response: NSHTTPURLResponse)
     
     /// No `result` in Telegram response
-    case NoResult(telegramResponse: /*NS*/Response,
+    case NoResult(telegramResponse: Response,
         data: NSData, response: NSHTTPURLResponse)
     
     /// `Result` couldn't be parsed
     case ResultParseError(json: JSON)
 }
 
-extension /*NS*/DataTaskError: CustomDebugStringConvertible {
+extension DataTaskError: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         switch self {

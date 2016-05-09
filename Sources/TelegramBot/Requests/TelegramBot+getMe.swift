@@ -22,7 +22,7 @@ extension TelegramBot {
     /// - Returns: Basic information about the bot in form of a `User` object.
     ///            Null on error, in which case `error` contains the details.
     /// - SeeAlso: `func getMe() -> User?`
-    public func getMeAsync(completion: (user: /*NS*/User?, error: /*NS*/DataTaskError?)->()) {
+    public func getMeAsync(completion: (user: User?, error: DataTaskError?)->()) {
         getMeAsync(queue: queue, completion: completion)
     }
     
@@ -35,8 +35,8 @@ extension TelegramBot {
     ///            Null on error, in which case details can be obtained using
     ///            `lastError` property.
     /// - SeeAlso: `func getMe(completion:)->()`
-    public func getMeSync() -> /*NS*/User? {
-        var result: /*NS*/User!
+    public func getMeSync() -> User? {
+        var result: User!
         let sem = dispatch_semaphore_create(0)
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         getMeAsync(queue: queue) {
@@ -50,13 +50,13 @@ extension TelegramBot {
         return result
     }
 
-    private func getMeAsync(queue: dispatch_queue_t, completion: (user: /*NS*/User?, error: /*NS*/DataTaskError?)->()) {
+    private func getMeAsync(queue: dispatch_queue_t, completion: (user: User?, error: DataTaskError?)->()) {
         startDataTaskForEndpoint("getMe") {
                 result, error in
 			var error = error
-            var user: /*NS*/User?
+            var user: User?
             if error == nil {
-                user = /*NS*/User(json: result)
+                user = User(json: result)
                 if user == nil {
                     error = .ResultParseError(json: result)
                 }

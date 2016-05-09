@@ -11,13 +11,13 @@ import Foundation
 import SwiftyJSON
 
 /// Represents an incoming update.
-public class /*NS*/Update {
+public class Update {
 
     /// The update‘s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order.
     public var updateId: Int
     
     /// *Optional.* New incoming message of any kind — text, photo, sticker, etc.
-    public var message: /*NS*/Message?
+    public var message: Message?
     
     /// Create an empty instance.
     public init() {
@@ -35,7 +35,7 @@ public class /*NS*/Update {
         guard let updateId = json["update_id"].int else { return nil }
         self.updateId = updateId
         
-        message = /*NS*/Message(json: json["message"])
+        message = Message(json: json["message"])
     }
     
     public var prettyPrint: String {
@@ -49,7 +49,7 @@ public class /*NS*/Update {
     }
 }
 
-extension /*NS*/Update: CustomDebugStringConvertible {
+extension Update: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Update(updateId: \(updateId), message: \(message.unwrapAndPrint))"

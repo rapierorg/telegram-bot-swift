@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a group chat.
-public class /*NS*/GroupChat {
+public class GroupChat {
     
     /// Unique identifier for this group chat.
     public var id: Int
@@ -48,7 +48,7 @@ public class /*NS*/GroupChat {
     }
 }
 
-extension /*NS*/GroupChat: CustomDebugStringConvertible {
+extension GroupChat: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "GroupChat(id: \(id), title: \(title))"

@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 // Represents a sticker.
-public class /*NS*/Sticker {
+public class Sticker {
     
     /// Unique identifier for this file.
     public var fileId: String
@@ -23,7 +23,7 @@ public class /*NS*/Sticker {
     public var height: Int
     
     /// Sticker thumbnail in .webp or .jpg format.
-    public var thumb: /*NS*/PhotoSize
+    public var thumb: PhotoSize
     
     /// *Optional.* File size.
     public var fileSize: Int?
@@ -33,7 +33,7 @@ public class /*NS*/Sticker {
         fileId = ""
         width = 0
         height = 0
-        thumb = /*NS*/PhotoSize()
+        thumb = PhotoSize()
     }
     
     /// Create an instance from JSON data.
@@ -53,7 +53,7 @@ public class /*NS*/Sticker {
         guard let height = json["height"].int else { return nil }
         self.height = height
         
-        guard let thumb = /*NS*/PhotoSize(json: json["thumb"]) else { return nil }
+        guard let thumb = PhotoSize(json: json["thumb"]) else { return nil }
         self.thumb = thumb
         
         fileSize = json["file_size"].int
@@ -73,7 +73,7 @@ public class /*NS*/Sticker {
     }
 }
 
-extension /*NS*/Sticker: CustomDebugStringConvertible {
+extension Sticker: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Sticker(fileId: \(fileId), width: \(width), height: \(height), thumb: \(thumb), " +

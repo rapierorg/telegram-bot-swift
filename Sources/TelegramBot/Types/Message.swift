@@ -11,64 +11,64 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a message.
-public class /*NS*/Message {
+public class Message {
 
     /// Unique message identifier.
     public var messageId: Int
     
     /// Sender.
-    public var from: /*NS*/User
+    public var from: User
     
     /// Date the message was sent in Unix time.
     public var date: Int
     
     /// Conversation the message belongs to — user in case of a private message, GroupChat in case of a group.
-    public var chat: /*NS*/UserOrGroupChat
+    public var chat: UserOrGroupChat
     
     /// *Optional.* For forwarded messages, sender of the original message.
-    public var forwardFrom: /*NS*/User?
+    public var forwardFrom: User?
     
     /// *Optional.* For forwarded messages, date the original message was sent in Unix time.
     public var forwardDate: Int?
     
     /// *Optional.* For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
-    public var replyToMessage: /*NS*/Message?
+    public var replyToMessage: Message?
     
     /// *Optional.* For text messages, the actual UTF-8 text of the message.
     public var text: String?
     
     /// *Optional.* Message is an audio file, information about the file.
-    public var audio: /*NS*/Audio?
+    public var audio: Audio?
     
     /// *Optional.* Message is a general file, information about the file.
-    public var document: /*NS*/Document?
+    public var document: Document?
     
     /// *Optional.* Message is a photo, available sizes of the photo.
-    public var photo: [/*NS*/PhotoSize]
+    public var photo: [PhotoSize]
     
     /// *Optional.* Message is a sticker, information about the sticker.
-    public var sticker: /*NS*/Sticker?
+    public var sticker: Sticker?
     
     /// *Optional.* Message is a video, information about the video.
-    public var video: /*NS*/Video?
+    public var video: Video?
     
     /// *Optional.* Message is a shared contact, information about the contact.
-    public var contact: /*NS*/Contact?
+    public var contact: Contact?
     
     /// *Optional.* Message is a shared location, information about the location.
-    public var location: /*NS*/Location?
+    public var location: Location?
     
     /// *Optional.* A new member was added to the group, information about them (this member may be bot itself).
-    public var newChatParticipant: /*NS*/User?
+    public var newChatParticipant: User?
     
     /// *Optional.* A member was removed from the group, information about them (this member may be bot itself).
-    public var leftChatParticipant: /*NS*/User?
+    public var leftChatParticipant: User?
     
     /// *Optional.* A group title was changed to this value.
     public var newChatTitle: String?
     
     /// *Optional.* A group photo was changed to this value.
-    public var newChatPhoto: [/*NS*/PhotoSize]
+    public var newChatPhoto: [PhotoSize]
     
     /// *Optional.* Informs that the group photo was deleted.
     public var deleteChatPhoto: Bool
@@ -79,9 +79,9 @@ public class /*NS*/Message {
     /// Create an empty instance.
     public init() {
         messageId = 0
-        from = /*NS*/User()
+        from = User()
         date = 0
-        chat = .UserType(/*NS*/User())
+        chat = .UserType(User())
         photo = []
         newChatPhoto = []
         deleteChatPhoto = false
@@ -99,47 +99,47 @@ public class /*NS*/Message {
         guard let messageId = json["message_id"].int else { return nil }
         self.messageId = messageId
         
-        guard let from = /*NS*/User(json: json["from"]) else { return nil }
+        guard let from = User(json: json["from"]) else { return nil }
         self.from = from
         
         guard let date = json["date"].int else { return nil }
         self.date = date
         
         let jsonChat = json["chat"]
-        if let user = /*NS*/User(json: jsonChat) {
+        if let user = User(json: jsonChat) {
             chat = .UserType(user)
-        } else if let groupChat = /*NS*/GroupChat(json: jsonChat) {
+        } else if let groupChat = GroupChat(json: jsonChat) {
             chat = .GroupChatType(groupChat)
         }
         
-        forwardFrom = /*NS*/User(json: json["forward_from"])
+        forwardFrom = User(json: json["forward_from"])
         forwardDate = json["forward_date"].int
-        replyToMessage = /*NS*/Message(json: json["reply_to_message"])
+        replyToMessage = Message(json: json["reply_to_message"])
         text = json["text"].string
-        audio = /*NS*/Audio(json: json["audio"])
-        document = /*NS*/Document(json: json["document"])
+        audio = Audio(json: json["audio"])
+        document = Document(json: json["document"])
         
         let photo = json["photo"].arrayValue
-        self.photo = [/*NS*/PhotoSize]()
+        self.photo = [PhotoSize]()
         self.photo.reserveCapacity(photo.count)
         for jsonPhotoSize in photo {
-            guard let photoSize = /*NS*/PhotoSize(json: jsonPhotoSize) else { return nil }
+            guard let photoSize = PhotoSize(json: jsonPhotoSize) else { return nil }
             self.photo.append(photoSize)
         }
         
-        sticker = /*NS*/Sticker(json: json["sticker"])
-        video = /*NS*/Video(json: json["video"])
-        contact = /*NS*/Contact(json: json["contact"])
-        location = /*NS*/Location(json: json["location"])
-        newChatParticipant = /*NS*/User(json: json["new_chat_participant"])
-        leftChatParticipant = /*NS*/User(json: json["left_chat_participant"])
+        sticker = Sticker(json: json["sticker"])
+        video = Video(json: json["video"])
+        contact = Contact(json: json["contact"])
+        location = Location(json: json["location"])
+        newChatParticipant = User(json: json["new_chat_participant"])
+        leftChatParticipant = User(json: json["left_chat_participant"])
         newChatTitle = json["new_chat_title"].string
         
         let newChatPhoto = json["new_chat_photo"].arrayValue
-        self.newChatPhoto = [/*NS*/PhotoSize]()
+        self.newChatPhoto = [PhotoSize]()
         self.newChatPhoto.reserveCapacity(newChatPhoto.count)
         for jsonPhotoSize in newChatPhoto {
-            guard let photoSize = /*NS*/PhotoSize(json: jsonPhotoSize) else { return nil }
+            guard let photoSize = PhotoSize(json: jsonPhotoSize) else { return nil }
             self.newChatPhoto.append(photoSize)
         }
         
@@ -199,7 +199,7 @@ public class /*NS*/Message {
     }
 }
 
-extension /*NS*/Message: CustomDebugStringConvertible {
+extension Message: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Message(messageId: \(messageId), from: \(from), date: \(date), chat: \(chat), " +

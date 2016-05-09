@@ -11,7 +11,7 @@ import Foundation
 
 extension String {
     /// "/command@botname arguments" -> "/command arguments"
-    public func extractBotCommand(_ botName: /*NS*/BotName) -> String? {
+    public func extractBotCommand(_ botName: BotName) -> String? {
         let scanner = NSScanner(string: self)
         scanner.caseSensitive = false
         scanner.charactersToBeSkipped = nil
@@ -45,7 +45,7 @@ extension String {
             return self
         }
         
-        guard /*NS*/BotName(username: username) == botName else {
+        guard BotName(username: username) == botName else {
             // Another bot's message, skip it.
             return nil
         }

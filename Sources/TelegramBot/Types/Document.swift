@@ -11,13 +11,13 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a general file (as opposed to photos and audio files).
-public class /*NS*/Document {
+public class Document {
     
     /// Unique file identifier.
     public var fileId: String
     
     /// Document thumbnail as defined by sender.
-    public var thumb: /*NS*/PhotoSize
+    public var thumb: PhotoSize
     
     /// *Optional.* Original filename as defined by sender.
     public var fileName: String?
@@ -31,7 +31,7 @@ public class /*NS*/Document {
     /// Create an empty instance.
     public init() {
         fileId = ""
-        thumb = /*NS*/PhotoSize()
+        thumb = PhotoSize()
     }
     
     /// Create an instance from JSON data.
@@ -45,7 +45,7 @@ public class /*NS*/Document {
         guard let fileId = json["file_id"].string else { return nil }
         self.fileId = fileId
         
-        guard let thumb = /*NS*/PhotoSize(json: json["thumb"]) else { return nil }
+        guard let thumb = PhotoSize(json: json["thumb"]) else { return nil }
         self.thumb = thumb
         
         fileName = json["file_name"].string
@@ -71,7 +71,7 @@ public class /*NS*/Document {
     }
 }
 
-extension /*NS*/Document: CustomDebugStringConvertible {
+extension Document: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Document(fileId: \(fileId), thumb: \(thumb), fileName: \(fileName.unwrapAndPrint), " +

@@ -9,9 +9,9 @@
 
 import Foundation
 
-public enum /*NS*/UserOrGroupChat {
-    case UserType(/*NS*/User)
-    case GroupChatType(/*NS*/GroupChat)
+public enum UserOrGroupChat {
+    case UserType(User)
+    case GroupChatType(GroupChat)
     
     /// Unique identifier for this user or group chat.
     public var id: Int {
@@ -33,7 +33,7 @@ public enum /*NS*/UserOrGroupChat {
     }
 }
 
-extension /*NS*/UserOrGroupChat: CustomDebugStringConvertible {
+extension UserOrGroupChat: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         var s = "UserOrGroupChat("

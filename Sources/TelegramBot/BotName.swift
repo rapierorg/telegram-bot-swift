@@ -9,7 +9,7 @@
 
 import Foundation
 
-public class /*NS*/BotName {
+public class BotName {
     let underscoreBotSuffix = "_bot"
     let botSuffix = "bot"
     public var withoutSuffix: String
@@ -34,16 +34,16 @@ public class /*NS*/BotName {
 
 }
 
-extension /*NS*/BotName: Equatable {
+extension BotName: Equatable {
 }
 
-public func ==(lhs: /*NS*/BotName, rhs: /*NS*/BotName) -> Bool {
+public func ==(lhs: BotName, rhs: BotName) -> Bool {
     return lhs.withoutSuffix == rhs.withoutSuffix
 }
 
-extension /*NS*/BotName: Comparable {
+extension BotName: Comparable {
 }
 
-public func <(lhs: /*NS*/BotName, rhs: /*NS*/BotName) -> Bool {
+public func <(lhs: BotName, rhs: BotName) -> Bool {
     return lhs.withoutSuffix < rhs.withoutSuffix
 }

@@ -9,7 +9,7 @@
 
 import Foundation
 
-public class /*NS*/Word: /*NS*/Parameter {
+public class Word: Parameter {
     public enum Format {
         case Word
         case Int
@@ -107,14 +107,14 @@ public class /*NS*/Word: /*NS*/Parameter {
 
 postfix operator + { }
 
-public postfix func + (word: /*NS*/Word) -> /*NS*/Word {
+public postfix func + (word: Word) -> Word {
     word.mode = .OneOrMore
     return word
 }
 
 postfix operator * { }
 
-public postfix func * (word: /*NS*/Word) -> /*NS*/Word {
+public postfix func * (word: Word) -> Word {
     word.mode = .ZeroOrMore
     return word
 }

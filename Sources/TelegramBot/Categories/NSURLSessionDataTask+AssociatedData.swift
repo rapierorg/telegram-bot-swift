@@ -14,10 +14,10 @@ public extension NSURLSessionDataTask {
     private static var taskAssociatedDataKey = "taskAssociatedData"
     
     /// Returns data associated with task if any.
-    var associatedData: /*NS*/TaskAssociatedData? {
+    var associatedData: TaskAssociatedData? {
         get {
             return objc_getAssociatedObject(self,
-                &NSURLSessionDataTask.taskAssociatedDataKey) as? /*NS*/TaskAssociatedData
+                &NSURLSessionDataTask.taskAssociatedDataKey) as? TaskAssociatedData
         }
         set {
             objc_setAssociatedObject(self, &NSURLSessionDataTask.taskAssociatedDataKey,

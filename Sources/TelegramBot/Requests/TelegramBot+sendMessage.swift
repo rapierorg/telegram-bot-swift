@@ -12,14 +12,14 @@ import Foundation
 public extension TelegramBot {
 	public static var sendMessageDefaultParameters: [String: Any?] = [:]
 	
-	typealias SendMessageCompletion = (message: /*NS*/Message?, error: /*NS*/DataTaskError?)->()
+	typealias SendMessageCompletion = (message: Message?, error: DataTaskError?)->()
 	
 	/// Send text message. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: https://core.telegram.org/bots/api#sendmessage
 	public func sendMessageSync(chatId: Int, text: String,
 	                        parameters: [String: Any?] = [:]) -> Message? {
-		var result: /*NS*/Message!
+		var result: Message!
 		let sem = dispatch_semaphore_create(0)
 		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 		sendMessageAsync(chatId: chatId, text: text, parameters:  parameters, queue: queue) {
@@ -49,9 +49,9 @@ public extension TelegramBot {
         startDataTaskForEndpoint("sendMessage", parameters: allParameters) {
             result, error in
 			var error = error
-            var message: /*NS*/Message?
+            var message: Message?
             if error == nil {
-                message = /*NS*/Message(json: result)
+                message = Message(json: result)
                 if message == nil {
                     error = .ResultParseError(json: result)
                 }

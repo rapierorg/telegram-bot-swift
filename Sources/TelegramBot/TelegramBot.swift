@@ -13,9 +13,9 @@ import SwiftyJSON
 public class TelegramBot {
     /// `errorHandler`'s completion block type
     /// - SeeAlso: `public var errorHandler: ErrorHandler?`
-    public typealias ErrorHandler = (NSURLSessionDataTask, /*NS*/DataTaskError) -> ()
+    public typealias ErrorHandler = (NSURLSessionDataTask, DataTaskError) -> ()
     
-    public typealias DataTaskCompletion = (result: JSON, error: /*NS*/DataTaskError?)->()
+    public typealias DataTaskCompletion = (result: JSON, error: DataTaskError?)->()
 
     /// Telegram server URL.
     public var url = "https://api.telegram.org"
@@ -105,19 +105,19 @@ public class TelegramBot {
     
     // Should probably be a LinkedList, but it won't be longer than
     // 100 elements anyway.
-    var unprocessedUpdates: [/*NS*/Update]
+    var unprocessedUpdates: [Update]
     
     /// Queue for callbacks in asynchronous versions of requests.
     public var queue = dispatch_get_main_queue()
     
     /// Last error for use with synchronous requests
-    public var lastError: /*NS*/DataTaskError?
+    public var lastError: DataTaskError?
     
     /// Last update from the call to `nextUpdate` function.
-    public var lastUpdate: /*NS*/Update?
+    public var lastUpdate: Update?
 
     /// Last message from the call to `nextCommand` function.
-    public lazy var lastMessage: /*NS*/Message = /*NS*/Message()
+    public lazy var lastMessage: Message = Message()
 
     private let workQueue = dispatch_queue_create("com.zabiyaka.TelegramBot", DISPATCH_QUEUE_SERIAL)
     
@@ -224,7 +224,7 @@ public class TelegramBot {
     /// Equivalent of calling `getMe()`
     ///
     /// This function will block until the request is finished.
-    public lazy var user: /*NS*/User = {
+    public lazy var user: User = {
         guard let me = self.getMeSync() else {
             fatalError("Unable to fetch bot information")
         }
@@ -244,7 +244,7 @@ public class TelegramBot {
     /// Equivalent of calling `BotName(username: username)`
     ///
     /// This function will block until the request is finished.
-    public lazy var name: /*NS*/BotName = /*NS*/BotName(username: self.username)
+    public lazy var name: BotName = BotName(username: self.username)
     
     /// Creates an instance of Telegram Bot.
     /// - Parameter token: A unique authentication token.
@@ -284,7 +284,7 @@ public class TelegramBot {
             lastMessage = message
             return command
         }
-        lastMessage = /*NS*/Message()
+        lastMessage = Message()
         return nil
     }
     
@@ -298,7 +298,7 @@ public class TelegramBot {
     /// specific requests.
     public func startDataTaskForEndpoint(_ endpoint: String, parameters: [String: Any?], completion: DataTaskCompletion) {
         let endpointUrl = urlForEndpoint(endpoint)
-        let data = /*NS*/HTTPUtils.formUrlencode(parameters)
+        let data = HTTPUtils.formUrlencode(parameters)
 		print("endpoint: \(endpoint), data: \(data)")
         
         let request = NSMutableURLRequest(url: endpointUrl)
@@ -307,7 +307,7 @@ public class TelegramBot {
 		request.httpBody = data.data(using: NSUTF8StringEncoding)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
-        let taskAssociatedData = /*NS*/TaskAssociatedData(completion)
+        let taskAssociatedData = TaskAssociatedData(completion)
         startDataTaskForRequest(request, associateTaskWithData: taskAssociatedData)
     }
     
@@ -315,7 +315,7 @@ public class TelegramBot {
     /// custom `errorHandler`.
     ///
     /// See `defaultErrorHandler` implementation for an example.
-    public func startDataTaskForRequest(_ request: NSURLRequest, associateTaskWithData taskAssociatedData: /*NS*/TaskAssociatedData) {
+    public func startDataTaskForRequest(_ request: NSURLRequest, associateTaskWithData taskAssociatedData: TaskAssociatedData) {
         // This function can be called from main queue (when
         // call is initiated by user) or from dataTask queue (when
         // automatically retrying).
@@ -361,7 +361,7 @@ public class TelegramBot {
         
         let json = JSON(data: data)
         
-        guard let telegramResponse = /*NS*/Response(json: json) else {
+        guard let telegramResponse = Response(json: json) else {
             errorHandler?(task, .ResponseParseError(
                 json: json, data: data, response: response))
             return

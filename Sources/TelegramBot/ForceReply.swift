@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 /// Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply').
-public class /*NS*/ForceReply {
+public class ForceReply {
     
     /// Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'.
     public let forceReply = true
@@ -28,7 +28,7 @@ public class /*NS*/ForceReply {
     }
 }
 
-extension /*NS*/ForceReply: CustomStringConvertible {
+extension ForceReply: CustomStringConvertible {
     public var description: String {
         var json = JSON([:])
         
@@ -41,7 +41,7 @@ extension /*NS*/ForceReply: CustomStringConvertible {
     }
 }
 
-extension /*NS*/ForceReply: CustomDebugStringConvertible {
+extension ForceReply: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "ForceReply(forceReply: \(forceReply), " +

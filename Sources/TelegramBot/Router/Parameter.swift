@@ -9,7 +9,7 @@
 
 import Foundation
 
-public protocol /*NS*/Parameter {
+public protocol Parameter {
     var shouldCaptureValue: Bool { get }
     var parameterName: String? { get }
     func fetchFrom(_ scanner: NSScanner) -> Any?

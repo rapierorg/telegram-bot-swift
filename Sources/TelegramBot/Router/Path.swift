@@ -9,22 +9,22 @@
 
 import Foundation
 
-public class /*NS*/Path {
+public class Path {
     public enum Handler {
         case CancellableHandlerWithoutArguments(()->(Bool))
         case CancellableHandlerWithoutArgumentsThrows(() throws->(Bool))
         case NonCancellableHandlerWithoutArguments(()->())
         case NonCancellableHandlerWithoutArgumentsThrows(() throws->())
-        case CancellableHandlerWithArguments((/*NS*/Arguments)->(Bool))
-        case CancellableHandlerWithArgumentsThrows((/*NS*/Arguments) throws->(Bool))
-        case NonCancellableHandlerWithArguments((/*NS*/Arguments)->())
-        case NonCancellableHandlerWithArgumentsThrows((/*NS*/Arguments) throws->())
+        case CancellableHandlerWithArguments((Arguments)->(Bool))
+        case CancellableHandlerWithArgumentsThrows((Arguments) throws->(Bool))
+        case NonCancellableHandlerWithArguments((Arguments)->())
+        case NonCancellableHandlerWithArgumentsThrows((Arguments) throws->())
     }
     
-    public var parameters: [/*NS*/Parameter]
+    public var parameters: [Parameter]
     public var handler: Handler
     
-    init (parameters: [/*NS*/Parameter], handler: /*NS*/Path.Handler) {
+    init (parameters: [Parameter], handler: Path.Handler) {
         self.parameters = parameters
         self.handler = handler
     }

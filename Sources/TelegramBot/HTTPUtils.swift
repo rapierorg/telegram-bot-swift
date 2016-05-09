@@ -9,7 +9,7 @@
 
 import Foundation
 
-public class /*NS*/HTTPUtils {
+public class HTTPUtils {
     /// Encodes keys and values in a dictionary for using with
     /// `application/x-www-form-urlencoded` Content-Type and
     /// joins them into a single string.
