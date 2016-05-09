@@ -10,7 +10,7 @@
 import Foundation
 
 extension TelegramBot {
-	typealias GetUpdatesCompletion = (updates: [Update]?, error: DataTaskError?)->()
+	public typealias GetUpdatesCompletion = (updates: [Update]?, error: DataTaskError?)->()
 
     /// Returns next unprocessed update from Telegram.
     ///
@@ -70,7 +70,7 @@ extension TelegramBot {
 	/// Receive incoming updates using long polling. Asynchronous version.
 	/// - Returns: Array of updates on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: https://core.telegram.org/bots/api#getupdates
-    private func getUpdatesAsync(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: GetUpdatesCompletion? = nil) {
+    public func getUpdatesAsync(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: GetUpdatesCompletion? = nil) {
         let parameters: [String: Any?] = [
             "offset": offset,
             "limit": limit,

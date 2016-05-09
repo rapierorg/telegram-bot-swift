@@ -24,15 +24,15 @@ class BlockingServerTests: XCTestCase {
         super.tearDown()
     }
     
-    func testServer() {
+    func disable_testServer() {
         let bot = TelegramBot(token: token)
 
-        while let update = bot.nextUpdate() {
+        while let update = bot.nextUpdateSync() {
             print("--- updateId: \(update.updateId)")
             print("update: \(update.prettyPrint)")
             if let message = update.message, text = message.text {
                 if text == "Hello" {
-                    bot.sendMessage(chatId: message.from.id, text: "How are you?")
+                    bot.sendMessageAsync(chatId: message.from.id, text: "How are you?")
                 }
             }
         }

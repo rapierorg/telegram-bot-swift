@@ -41,7 +41,7 @@ class UrlencodeTests: XCTestCase {
             "key3": "value3"
         ]
         let encoded = HTTPUtils.formUrlencode(parameters)
-        XCTAssert(encoded == "key1=value1&key3=value3&key2=value2")
+        XCTAssert(encoded.contains("key1=value1") && encoded.contains("key2=value2") && encoded.contains("key3=value3"))
     }
     
     func testFormUrlencodePercentEscaping() {
@@ -51,7 +51,7 @@ class UrlencodeTests: XCTestCase {
             "key3": "!@#$%^&*()-=+_"
         ]
         let encoded = HTTPUtils.formUrlencode(parameters)
-        XCTAssert(encoded == "key1=value+1&key3=%21%40%23%24%25%5E%26*%28%29-%3D%2B_&key2=%D0%B2%D0%B0%D0%BB%D1%8E%D0%B5%092")
+        XCTAssert(encoded.contains("key1=value+1") && encoded.contains("key2=%D0%B2%D0%B0%D0%BB%D1%8E%D0%B5%092") && encoded.contains("key3=%21%40%23%24%25%5E%26*%28%29-%3D%2B_"))
         
     }
     
@@ -63,7 +63,7 @@ class UrlencodeTests: XCTestCase {
             "key3": value3
         ]
         let encoded = HTTPUtils.formUrlencode(parameters)
-        XCTAssert(encoded == "key1=value1&key2=123")
+        XCTAssert(encoded.contains("key1=value1") && encoded.contains("key2=123") && !encoded.contains("key3"))
     }
     
     func testFormUrlencodeNilValue() {
@@ -118,7 +118,7 @@ class UrlencodeTests: XCTestCase {
             "key5": "text"
         ]
         let encoded = HTTPUtils.formUrlencode(parameters)
-        XCTAssert(encoded == "key1=123&key5=text&key2=123.456&key3=")
+        XCTAssert(encoded.contains("key1=123") && encoded.contains("key2=123.456") && encoded.contains("key3=true") && !encoded.contains("key4") && encoded.contains("key5=text"))
     }
     
     func testFormUrlencodeReplyMarkup() {

@@ -1,5 +1,7 @@
 .build/
 telegram-bot-swift.xcodeproj
+test_bot_token.txt
+
 # Xcode
 #
 build/

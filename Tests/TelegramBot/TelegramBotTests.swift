@@ -11,24 +11,25 @@ import XCTest
 @testable import TelegramBot
 
 class TelegramBotTests: XCTestCase {
-    var testDataPath: String!
     var token: String!
     let connectionTimeout = 10.0
     let invalidUrl = "https://localhost:7777/doesNotExist"
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        if let path = NSBundle(forClass: self.dynamicType).resourcePath {
-            testDataPath = path
-        } else {
-            fatalError("Unable to get resourcePath")
-        }
-        
+		
         let environment = NSProcessInfo.processInfo().environment
-        token = environment["TelegramTestBotToken"]
+        token = environment["TEST_BOT_TOKEN"]
         if token == nil {
-            fatalError("Please create a bot for testing and add it's token to environment variable TelegramTestBotToken in Scheme settings")
+            do {
+                token = try String(contentsOfFile: "test_bot_token.txt", encoding: NSUTF8StringEncoding)
+                token.trim()
+            } catch {
+            }
+        }
+
+        if token == nil {
+            fatalError("Please create a bot for testing and add it's token to environment variable TEST_BOT_TOKEN in Scheme settings")
             // -------------------
             // How to create a bot
             // -------------------
@@ -38,7 +39,7 @@ class TelegramBotTests: XCTestCase {
             // apitest_bot
             // BotFather will return a token.
             // * In Xcode, click on project scheme, Edit Scheme -> Run. Add to Environment Variables:
-            // TelegramTestBotToken yourToken
+            // TEST_BOT_TOKEN yourToken
         }
     }
     
@@ -58,61 +59,59 @@ class TelegramBotTests: XCTestCase {
 //            // Put the code you want to measure the time of here.
 //        }
 //    }
-
-
     
     func testGetMeSynchronous() {
-        let bot = TelegramBot(token: token)
-        let user = bot.getMe()
+        let bot = TelegramBot(token: token, fetchBotInfo: false)
+        let user = bot.getMeSync()
         let error = bot.lastError
-        print("getMe: user: \(user), error: \(error)")
+        print("getMeSync: user: \(user), error: \(error)")
     }
     
     func testGetMeAsynchronous() {
-        let bot = TelegramBot(token: token)
+        let bot = TelegramBot(token: token, fetchBotInfo: false)
         
-        let expectGetMe = expectationWithDescription("getMe")
-        bot.getMe { user, error in
-            print("getMe: user: \(user), error: \(error)")
+        let expectGetMe = expectation(withDescription: "getMe")
+        bot.getMeAsync { user, error in
+            print("getMeAsync: user: \(user), error: \(error)")
             expectGetMe.fulfill()
         }
-        waitForExpectationsWithTimeout(connectionTimeout) { error in
-            print("getMe: \(error)")
+        waitForExpectations(withTimeout: connectionTimeout) { error in
+            print("getMeAsync: \(error)")
         }
     }
 
     func testGetUpdatesSynchronous() {
-        let bot = TelegramBot(token: token)
-        let updates = bot.getUpdates()
+        let bot = TelegramBot(token: token, fetchBotInfo: false)
+        let updates = bot.getUpdatesSync()
         let error = bot.lastError
-        print("getUpdates: \(updates), error: \(error)")
+        print("getUpdatesSync: \(updates), error: \(error)")
     }
     
     func testGetUpdatesAsynchronous() {
-        let bot = TelegramBot(token: token)
+        let bot = TelegramBot(token: token, fetchBotInfo: false)
         
-        let expectGetUpdates = expectationWithDescription("getUpdates")
-        bot.getUpdates { updates, error in
-            print("getUpdates: updates: \(updates), error: \(error)")
+        let expectGetUpdates = expectation(withDescription: "getUpdates")
+        bot.getUpdatesAsync { updates, error in
+            print("getUpdatesAsync: updates: \(updates), error: \(error)")
             expectGetUpdates.fulfill()
         }
-        waitForExpectationsWithTimeout(connectionTimeout) { error in
-            print("getUpdates: \(error)")
+        waitForExpectations(withTimeout: connectionTimeout) { error in
+            print("getUpdatesAsync: \(error)")
         }
     }
 
     func testBadToken() {
-        let badBot = TelegramBot(token: "badToken")
-        let user = badBot.getMe()
+        let badBot = TelegramBot(token: "badToken", fetchBotInfo: false)
+        let user = badBot.getMeSync()
         let error = badBot.lastError
-        print("getMe: user: \(user), error: \(error)")
+        print("getMeSync: user: \(user), error: \(error)")
     }
     
     func testErrorHandlingAsynchronous() {
-        let bot = TelegramBot(token: token)
+        let bot = TelegramBot(token: token, fetchBotInfo: false)
         bot.url = invalidUrl
 
-        let expectGetMe = expectationWithDescription("getMe")
+        let expectGetMe = expectation(withDescription: "getMe")
 
         // Comment out custom errorHandler to see
         // autoreconnects in action (but the test
@@ -124,12 +123,12 @@ class TelegramBotTests: XCTestCase {
         }
 #endif
 
-        bot.getMe { user in
+        bot.getMeAsync { user in
             XCTFail("Expected error handler to run")
         }
         
-        waitForExpectationsWithTimeout(connectionTimeout) { error in
-            print("getMe: \(error)")
+        waitForExpectations(withTimeout: connectionTimeout) { error in
+            print("getMeAsync: \(error)")
         }
         
     }

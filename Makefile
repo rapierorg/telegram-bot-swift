@@ -1,5 +1,8 @@
 all: build
 
+test:
+	swift test
+
 build:
 	swift build -Xswiftc -j1
 
