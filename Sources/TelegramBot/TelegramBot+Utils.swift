@@ -10,6 +10,7 @@
 import Foundation
 
 extension TelegramBot {
+	static let unhandledErrorText = "❗Error while performing the operation."
 
     public func respondPrivatelySync(_ userText: String, groupText: String? = nil) {
         if !userText.isEmpty {
@@ -21,6 +22,19 @@ extension TelegramBot {
             }
         }
     }
+
+	public func respondPrivatelyAsync(_ userText: String, groupText: String? = nil,
+			onDidSendToUser userCompletion: SendMessageCompletion? = nil,
+			onDidSendToGroup groupCompletion: SendMessageCompletion? = nil) {
+		if !userText.isEmpty {
+			sendMessageAsync(chatId: lastMessage.from.id, text: userText, completion: userCompletion)
+		}
+		if let groupText = groupText where !groupText.isEmpty {
+			if case .GroupChatType = lastMessage.chat {
+				sendMessageAsync(chatId: lastMessage.chat.id, text: groupText, completion: groupCompletion)
+			}
+		}
+	}
     
 	public func respondSync(_ text: String, parameters: [String: Any?] = [:]) {
         if !text.isEmpty {
@@ -28,13 +42,29 @@ extension TelegramBot {
         }
     }
 	
+	public func respondAsync(_ text: String, parameters: [String: Any?] = [:], completion: SendMessageCompletion? = nil) {
+		if !text.isEmpty {
+			sendMessageAsync(chatId: lastMessage.chat.id, text: text, parameters: parameters, completion: completion)
+		}
+	}
+	
     public func reportErrorSync(_ text: String, errorDescription: String) {
+		print("ERROR: \(errorDescription)")
 		respondSync(text)
-        print("ERROR: \(errorDescription)")
     }
 	
+	public func reportErrorAsync(_ text: String, errorDescription: String, completion: SendMessageCompletion? = nil) {
+		print("ERROR: \(errorDescription)")
+		respondAsync(text, completion: completion)
+	}
+	
     public func reportErrorSync(errorDescription: String) {
-        respondSync("❗ Ошибка при выполнении операции. Приносим свои извинения. Разработчики бота будут проинформированы об ошибке.")
-        print("ERROR: \(errorDescription)")
+		print("ERROR: \(errorDescription)")
+        respondSync(TelegramBot.unhandledErrorText)
     }
+	
+	public func reportErrorAsync(errorDescription: String, completion: SendMessageCompletion? = nil) {
+		print("ERROR: \(errorDescription)")
+		respondAsync(TelegramBot.unhandledErrorText, completion: completion)
+	}
 }
