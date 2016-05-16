@@ -273,16 +273,20 @@ public class TelegramBot {
     /// This function blocks while fetching updates from the server.
     ///
     /// - Returns: A `String` containing the preprocessed command.
+	/// Empty string in case this is not a command, but a file attachment etc.
     /// Nil on error, in which case details can be obtained
     /// from `lastError` property.
     public func nextCommandSync() -> String? {
         while let update = nextUpdateSync() {
             guard let message = update.message else { continue }
-            guard let text = message.text else { continue }
-            guard let command = text.extractBotCommand(name) else { continue }
-            
-            lastMessage = message
-            return command
+			lastMessage = message
+			
+			if let text = message.text {
+				if let command = text.extractBotCommand(name) {
+					return command
+				}
+			}
+            return ""
         }
         lastMessage = Message()
         return nil
