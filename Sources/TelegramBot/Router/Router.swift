@@ -91,6 +91,10 @@ public class Router {
     }
 
     public func processString(_ string: String) throws -> Bool {
+		if string.isEmpty {
+			return true
+		}
+		
         let scanner = NSScanner(string: string)
         scanner.caseSensitive = caseSensitive
         scanner.charactersToBeSkipped = charactersToBeSkipped
