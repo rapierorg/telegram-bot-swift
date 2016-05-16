@@ -4,7 +4,8 @@
 import Foundation
 import SwiftyJSON
 
-/// Represents a message.
+/// Represzents a message.
+/// - SeeAlso: <https://core.telegram.org/bots/api#message>
 public class Message: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON

@@ -4,8 +4,9 @@
 import Foundation
 
 extension String {
-    /// "/command@botname arguments" -> "/command arguments"
-    public func extractBotCommand(_ botName: BotName) -> String? {
+	/// - Parameter botName: bot name to remove.
+    /// - Returns: "/command@botName arguments" -> "/command arguments". Nil if bot name does not match `botName` parameter.
+    public func removeBotName(_ botName: BotName) -> String? {
         let scanner = NSScanner(string: self)
         scanner.caseSensitive = false
         scanner.charactersToBeSkipped = nil

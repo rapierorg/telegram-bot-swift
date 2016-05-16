@@ -10,7 +10,7 @@ public extension TelegramBot {
 	
 	/// Send text message. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
-	/// - SeeAlso: https://core.telegram.org/bots/api#sendmessage
+	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
 	public func sendMessageSync(chatId: Int, text: String,
 	                        parameters: [String: Any?] = [:]) -> Message? {
 		var result: Message!
@@ -29,7 +29,7 @@ public extension TelegramBot {
 	
     /// Send text messages. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
-	/// - SeeAlso: https://core.telegram.org/bots/api#sendmessage
+	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
 	public func sendMessageAsync(chatId: Int, text: String,
 	                        parameters: [String: Any?] = [:],
 	                        queue: dispatch_queue_t = dispatch_get_main_queue(),

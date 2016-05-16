@@ -110,8 +110,11 @@ public class TelegramBot {
     /// Last update from the call to `nextUpdate` function.
     public var lastUpdate: Update?
 
-    /// Last message from the call to `nextCommand` function.
+    /// Last message from the call to `nextMessage` function.
     public lazy var lastMessage: Message = Message()
+
+	/// Last command from the call to `nextMessage` function.
+	public var lastCommand: String?
 
     private let workQueue = dispatch_queue_create("com.zabiyaka.TelegramBot", DISPATCH_QUEUE_SERIAL)
     
@@ -258,7 +261,7 @@ public class TelegramBot {
         //print("Deinit")
     }
     
-    /// Returns a next command addressed to this bot.
+    /// Returns a next message addressed to this bot.
     ///
     /// Associated message can be retrieved using `lastMessage` property.
     ///
@@ -266,21 +269,22 @@ public class TelegramBot {
     ///
     /// This function blocks while fetching updates from the server.
     ///
-    /// - Returns: A `String` containing the preprocessed command.
-	/// Empty string in case this is not a command, but a file attachment etc.
-    /// Nil on error, in which case details can be obtained
-    /// from `lastError` property.
-    public func nextCommandSync() -> String? {
+	/// - Parameter mineOnly: Ignore commands not addressed to me.
+    /// - Returns: Message. Nil on error, in which case details
+    ///   can be obtained from `lastError` property.
+	public func nextMessageSync(onlyMyMessages: Bool = true) -> Message? {
         while let update = nextUpdateSync() {
             guard let message = update.message else { continue }
 			lastMessage = message
 			
 			if let text = message.text {
-				if let command = text.extractBotCommand(name) {
-					return command
+				lastCommand = text.removeBotName(name)
+				if onlyMyMessages && lastCommand == nil {
+					continue
 				}
 			}
-            return ""
+			
+            return message
         }
         lastMessage = Message()
         return nil

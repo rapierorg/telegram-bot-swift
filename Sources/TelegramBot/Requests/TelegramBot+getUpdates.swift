@@ -45,7 +45,7 @@ extension TelegramBot {
     
 	/// Receive incoming updates using long polling. Blocking version.
 	/// - Returns: Array of updates on success. Nil on error, in which case `lastError` contains the details.
-	/// - SeeAlso: https://core.telegram.org/bots/api#getupdates
+	/// - SeeAlso: <https://core.telegram.org/bots/api#getupdates>
     public func getUpdatesSync(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil) -> [Update]? {
         var result: [Update]!
         let sem = dispatch_semaphore_create(0)
@@ -63,7 +63,7 @@ extension TelegramBot {
     
 	/// Receive incoming updates using long polling. Asynchronous version.
 	/// - Returns: Array of updates on success. Nil on error, in which case `error` contains the details.
-	/// - SeeAlso: https://core.telegram.org/bots/api#getupdates
+	/// - SeeAlso: <https://core.telegram.org/bots/api#getupdates>
     public func getUpdatesAsync(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: GetUpdatesCompletion? = nil) {
         let parameters: [String: Any?] = [
             "offset": offset,
