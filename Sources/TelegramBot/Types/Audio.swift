@@ -11,7 +11,9 @@ import Foundation
 import SwiftyJSON
 
 // Represents an audio file (voice note).
-public class Audio {
+public class Audio: JsonObject {
+	/// Original JSON for fields not yet added to Swift structures
+	public var json: JSON
     
     /// Unique identifier for this file.
     public var fileId: String
@@ -27,6 +29,7 @@ public class Audio {
     
     /// Create an empty instance.
     public init() {
+		self.json = nil
         fileId = ""
         duration = 0
     }
@@ -36,7 +39,8 @@ public class Audio {
     /// Will return nil if `json` is empty or invalid.
     public convenience init?(json: JSON) {
         self.init()
-        
+		self.json = json
+
         if json.isNullOrUnknown { return nil }
 
         guard let fileId = json["file_id"].string else { return nil }
@@ -48,26 +52,5 @@ public class Audio {
         mimeType = json["mime_type"].string
         fileSize = json["file_size"].int
     }
-    
-    public var prettyPrint: String {
-        var result = "Audio(\n" +
-            "  fileId: \(fileId)\n" +
-            "  duration: \(duration)\n"
-        if let mimeType = mimeType {
-            result += "  mimeType: \(mimeType)\n"
-        }
-        if let fileSize = fileSize {
-            result += "  fileSize: \(fileSize)\n"
-        }
-        result += ")"
-        return result
-    }
 }
 
-extension Audio: CustomDebugStringConvertible {
-    // MARK: CustomDebugStringConvertible
-    public var debugDescription: String {
-        return "Audio(fileId: \(fileId), duration: \(duration), " +
-            "mimeType: \(mimeType.unwrapAndPrint), fileSize: \(fileSize.unwrapAndPrint))"
-    }
-}

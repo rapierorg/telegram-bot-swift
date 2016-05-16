@@ -83,7 +83,7 @@ extension TelegramBot {
             if error == nil {
                 updates.reserveCapacity(result.count)
                 for updateJson in result.arrayValue {
-                    if let update = Update(json: updateJson) {
+                    if let update = Update(updateJson) {
                         updates.append(update)
                     } else {
                         error = .ResultParseError(json: result)

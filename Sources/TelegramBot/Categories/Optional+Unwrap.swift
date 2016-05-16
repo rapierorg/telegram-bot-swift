@@ -22,7 +22,7 @@ extension Optional {
     /// Optional("text"), nil
     /// text, nil
     /// ```
-    var unwrapAndPrint: String {
+    var unwrapOptional: String {
         if let v = self {
             return "\(v)"
         }

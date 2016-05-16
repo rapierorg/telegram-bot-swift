@@ -45,6 +45,6 @@ extension ForceReply: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "ForceReply(forceReply: \(forceReply), " +
-        "selective: \(selective.unwrapAndPrint))"
+        "selective: \(selective.unwrapOptional))"
     }
 }

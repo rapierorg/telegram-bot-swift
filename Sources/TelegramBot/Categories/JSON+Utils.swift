@@ -15,4 +15,9 @@ extension SwiftyJSON.JSON {
     public var isNullOrUnknown: Bool {
         return type == .Null || type == .Unknown
     }
+	
+	/// Print with indentation.
+	public func prettyPrint() {
+		print(debugDescription)
+	}
 }

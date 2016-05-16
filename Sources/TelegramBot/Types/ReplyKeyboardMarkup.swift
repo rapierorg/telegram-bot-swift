@@ -63,7 +63,7 @@ extension ReplyKeyboardMarkup: CustomStringConvertible {
 extension ReplyKeyboardMarkup: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        return "ReplyKeyboardMarkup(keyboard: \(keyboard), resizeKeyboard: \(resizeKeyboard.unwrapAndPrint), " +
-            "oneTimeKeyboard: \(oneTimeKeyboard.unwrapAndPrint), selective: \(selective.unwrapAndPrint))"
+        return "ReplyKeyboardMarkup(keyboard: \(keyboard), resizeKeyboard: \(resizeKeyboard.unwrapOptional), " +
+            "oneTimeKeyboard: \(oneTimeKeyboard.unwrapOptional), selective: \(selective.unwrapOptional))"
     }
 }

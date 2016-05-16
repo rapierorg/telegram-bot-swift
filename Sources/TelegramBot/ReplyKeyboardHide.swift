@@ -45,6 +45,6 @@ extension ReplyKeyboardHide: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "ReplyKeyboardHide(hideKeyboard: \(hideKeyboard), " +
-            "selective: \(selective.unwrapAndPrint))"
+            "selective: \(selective.unwrapOptional))"
     }
 }

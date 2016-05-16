@@ -20,28 +20,5 @@ public enum UserOrGroupChat {
         case let .GroupChatType(groupChat): return groupChat.id
         }
     }
-    
-    public var prettyPrint: String {
-        var s = "UserOrGroupChat(\n"
-        switch self {
-        case let .UserType(user): s += "  user: \(user.prettyPrint.indent().trim())\n"
-        case let .GroupChatType(groupChat): s += "  groupChat: \(groupChat.prettyPrint.indent().trim())\n"
-        }
-        s += ")"
-        return s
-        
-    }
 }
 
-extension UserOrGroupChat: CustomDebugStringConvertible {
-    // MARK: CustomDebugStringConvertible
-    public var debugDescription: String {
-        var s = "UserOrGroupChat("
-        switch self {
-        case let .UserType(user): s += "user: \(user)"
-        case let .GroupChatType(groupChat): s += "groupChat: \(groupChat)"
-        }
-        s += ")"
-        return s
-    }
-}

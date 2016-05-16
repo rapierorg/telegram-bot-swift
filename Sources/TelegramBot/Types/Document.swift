@@ -11,8 +11,10 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a general file (as opposed to photos and audio files).
-public class Document {
-    
+public class Document: JsonObject {
+	/// Original JSON for fields not yet added to Swift structures
+	public var json: JSON
+	
     /// Unique file identifier.
     public var fileId: String
     
@@ -30,6 +32,7 @@ public class Document {
     
     /// Create an empty instance.
     public init() {
+		self.json = nil
         fileId = ""
         thumb = PhotoSize()
     }
@@ -39,7 +42,8 @@ public class Document {
     /// Will return nil if `json` is empty or invalid.
     public convenience init?(json: JSON) {
         self.init()
-        
+		self.json = json
+
         if json.isNullOrUnknown { return nil }
         
         guard let fileId = json["file_id"].string else { return nil }
@@ -51,30 +55,5 @@ public class Document {
         fileName = json["file_name"].string
         mimeType = json["mime_type"].string
         fileSize = json["file_size"].int
-    }
-    
-    public var prettyPrint: String {
-        var result = "Document(" +
-            "  fileId: \(fileId)\n" +
-            "  thumb: \(thumb.prettyPrint.indent().trim())\n"
-        if let fileName = fileName {
-            result += "  fileName=\(fileName)\n"
-        }
-        if let mimeType = mimeType {
-            result += "  mimeType=\(mimeType)\n"
-        }
-        if let fileSize = fileSize {
-            result += "  fileSize=\(fileSize)\n"
-        }
-        result += ")"
-        return result
-    }
-}
-
-extension Document: CustomDebugStringConvertible {
-    // MARK: CustomDebugStringConvertible
-    public var debugDescription: String {
-        return "Document(fileId: \(fileId), thumb: \(thumb), fileName: \(fileName.unwrapAndPrint), " +
-            "mimeType: \(mimeType.unwrapAndPrint), fileSize: \(fileSize.unwrapAndPrint))"
     }
 }

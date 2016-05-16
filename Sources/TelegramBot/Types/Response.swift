@@ -68,8 +68,8 @@ public class Response {
 extension Response: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
-        return "Response(ok: \(ok), errorDescription: \(errorDescription.unwrapAndPrint), " +
-            "errorCode: \(errorCode.unwrapAndPrint), result: \(result.unwrapAndPrint))"
+        return "Response(ok: \(ok), errorDescription: \(errorDescription.unwrapOptional), " +
+            "errorCode: \(errorCode.unwrapOptional), result: \(result.unwrapOptional))"
     }
 }
 

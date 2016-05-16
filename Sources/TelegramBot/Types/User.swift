@@ -11,8 +11,10 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a Telegram user or bot.
-public class User {
-    
+public class User: JsonObject {
+	/// Original JSON for fields not yet added to Swift structures
+	public var json: JSON
+
     /// Unique identifier for this user or bot.
     public var id: Int
     
@@ -27,6 +29,7 @@ public class User {
     
     /// Create an empty instance.
     public init() {
+		self.json = nil
         id = 0
         firstName = ""
     }
@@ -36,6 +39,7 @@ public class User {
     /// Will return nil if `json` is empty or invalid.
     public convenience init?(json: JSON) {
         self.init()
+		self.json = json
         
         if json.isNullOrUnknown { return nil }
         
@@ -47,27 +51,6 @@ public class User {
         
         lastName = json["last_name"].string
         username = json["username"].string
-    }
-    
-    public var prettyPrint: String {
-        var result = "User(\n"
-        result += "  id: \(id)\n"
-        result += "  firstName: \(firstName)\n"
-        if let lastName = lastName {
-            result += "  lastName: \(lastName)\n"
-        }
-        if let username = username {
-            result += "  username: \(username)\n"
-        }
-        result += ")"
-        return result
-    }
-}
-
-extension User: CustomDebugStringConvertible {
-    // MARK: CustomDebugStringConvertible
-    public var debugDescription: String {
-        return "User(id: \(id), firstName: \(firstName), lastName: \(lastName.unwrapAndPrint), username: \(username.unwrapAndPrint))"
     }
 }
 

@@ -11,7 +11,9 @@ import Foundation
 import SwiftyJSON
 
 /// Represents an incoming update.
-public class Update {
+public class Update: JsonObject {
+	/// Original JSON for fields not yet added to Swift structures
+	public var json: JSON
 
     /// The update‘s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order.
     public var updateId: Int
@@ -21,14 +23,16 @@ public class Update {
     
     /// Create an empty instance.
     public init() {
+		self.json = nil
         updateId = 0
     }
     
     /// Create an instance from JSON data.
     ///
     /// Will return nil if `json` is empty or invalid.
-    public convenience init?(json: JSON) {
+    public convenience init?(_ json: JSON) {
         self.init()
+		self.json = json
         
         if json.isNullOrUnknown { return nil }
         
@@ -37,21 +41,5 @@ public class Update {
         
         message = Message(json: json["message"])
     }
-    
-    public var prettyPrint: String {
-        var result = "Update(\n" +
-            "  updateId: \(updateId)\n"
-        if let message = message {
-            result += "  message: \(message.prettyPrint.indent().trim())\n"
-        }
-        result += ")"
-        return result
-    }
 }
 
-extension Update: CustomDebugStringConvertible {
-    // MARK: CustomDebugStringConvertible
-    public var debugDescription: String {
-        return "Update(updateId: \(updateId), message: \(message.unwrapAndPrint))"
-    }
-}

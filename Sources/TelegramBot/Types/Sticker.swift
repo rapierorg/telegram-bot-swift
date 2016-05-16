@@ -11,8 +11,10 @@ import Foundation
 import SwiftyJSON
 
 // Represents a sticker.
-public class Sticker {
-    
+public class Sticker: JsonObject {
+	/// Original JSON for fields not yet added to Swift structures
+	public var json: JSON
+
     /// Unique identifier for this file.
     public var fileId: String
     
@@ -30,6 +32,7 @@ public class Sticker {
     
     /// Create an empty instance.
     public init() {
+		self.json = nil
         fileId = ""
         width = 0
         height = 0
@@ -41,6 +44,7 @@ public class Sticker {
     /// Will return nil if `json` is empty or invalid.
     public convenience init?(json: JSON) {
         self.init()
+		self.json = json
         
         if json.isNullOrUnknown { return nil }
         
@@ -57,27 +61,6 @@ public class Sticker {
         self.thumb = thumb
         
         fileSize = json["file_size"].int
-    }
-    
-    public var prettyPrint: String {
-        var result = "Sticker(" +
-            "  fileId: \(fileId)\n" +
-            "  width: \(width)\n" +
-            "  height: \(height)\n" +
-            "  thumb: \(thumb.prettyPrint.indent().trim())\n"
-        if let fileSize = fileSize {
-            result += "  fileSize=\(fileSize)\n"
-        }
-        result += ")"
-        return result
-    }
-}
-
-extension Sticker: CustomDebugStringConvertible {
-    // MARK: CustomDebugStringConvertible
-    public var debugDescription: String {
-        return "Sticker(fileId: \(fileId), width: \(width), height: \(height), thumb: \(thumb), " +
-            "fileSize: \(fileSize.unwrapAndPrint))"
     }
 }
 

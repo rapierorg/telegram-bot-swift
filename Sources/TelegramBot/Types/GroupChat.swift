@@ -11,8 +11,10 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a group chat.
-public class GroupChat {
-    
+public class GroupChat: JsonObject {
+	/// Original JSON for fields not yet added to Swift structures
+	public var json: JSON
+	
     /// Unique identifier for this group chat.
     public var id: Int
     
@@ -21,6 +23,7 @@ public class GroupChat {
     
     /// Create an empty instance.
     public init() {
+		self.json = nil
         id = 0
         title = ""
     }
@@ -30,7 +33,8 @@ public class GroupChat {
     /// Will return nil if `json` is empty or invalid.
     public convenience init?(json: JSON) {
         self.init()
-        
+		self.json = json
+
         if json.isNullOrUnknown { return nil }
         
         guard let id = json["id"].int else { return nil }
@@ -39,18 +43,5 @@ public class GroupChat {
         guard let title = json["title"].string else { return nil }
         self.title = title
     }
-    
-    public var prettyPrint: String {
-        return "GroupChat(\n" +
-            "  id: \(id)\n" +
-            "  title: \(title)\n" +
-        ")"
-    }
 }
 
-extension GroupChat: CustomDebugStringConvertible {
-    // MARK: CustomDebugStringConvertible
-    public var debugDescription: String {
-        return "GroupChat(id: \(id), title: \(title))"
-    }
-}

@@ -11,7 +11,9 @@ import Foundation
 import SwiftyJSON
 
 // Represents a video file.
-public class Video {
+public class Video: JsonObject {
+	/// Original JSON for fields not yet added to Swift structures
+	public var json: JSON
 
     /// Unique identifier for this file.
     public var fileId: String
@@ -39,6 +41,7 @@ public class Video {
     
     /// Create an empty instance.
     public init() {
+		self.json = nil
         fileId = ""
         width = 0
         height = 0
@@ -51,6 +54,7 @@ public class Video {
     /// Will return nil if `json` is empty or invalid.
     public convenience init?(json: JSON) {
         self.init()
+		self.json = json
         
         if json.isNullOrUnknown { return nil }
         
@@ -73,33 +77,5 @@ public class Video {
         fileSize = json["file_size"].int
         caption = json["caption"].string
     }
-    
-    public var prettyPrint: String {
-        var result = "Video(" +
-            "  fileId: \(fileId)\n" +
-            "  width: \(width)\n" +
-            "  height: \(height)\n" +
-            "  duration: \(duration)\n" +
-            "  thumb: \(thumb.prettyPrint.indent().trim())\n"
-        if let mimeType = mimeType {
-            result += "  mimeType: \(mimeType)\n"
-        }
-        if let fileSize = fileSize {
-            result += "  fileSize: \(fileSize)\n"
-        }
-        if let caption = caption {
-            result += "  caption: \(caption)\n"
-        }
-        result += ")"
-        return result
-    }
 }
 
-extension Video: CustomDebugStringConvertible {
-    // MARK: CustomDebugStringConvertible
-    public var debugDescription: String {
-        return "Sticker(fileId: \(fileId), width: \(width), height: \(height), duration: \(duration), " +
-            "thumb: \(thumb), mimeType: \(mimeType.unwrapAndPrint), fileSize: \(fileSize.unwrapAndPrint), " +
-            "caption: \(caption.unwrapAndPrint))"
-    }
-}

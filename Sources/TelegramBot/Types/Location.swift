@@ -11,8 +11,10 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a point on the map.
-public class Location {
-
+public class Location: JsonObject {
+	/// Original JSON for fields not yet added to Swift structures
+	public var json: JSON
+	
     /// Longitude as defined by sender.
     public var longitude: Float
     
@@ -21,6 +23,7 @@ public class Location {
     
     /// Create an empty instance.
     public init() {
+		self.json = nil
         longitude = 0.0
         latitude = 0.0
     }
@@ -30,7 +33,8 @@ public class Location {
     /// Will return nil if `json` is empty or invalid.
     public convenience init?(json: JSON) {
         self.init()
-        
+		self.json = json
+
         if json.isNullOrUnknown { return nil }
         
         guard let longitude = json["longitude"].float else { return nil }

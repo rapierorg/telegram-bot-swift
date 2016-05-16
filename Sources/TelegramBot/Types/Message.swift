@@ -11,7 +11,9 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a message.
-public class Message {
+public class Message: JsonObject {
+	/// Original JSON for fields not yet added to Swift structures
+	public var json: JSON
 
     /// Unique message identifier.
     public var messageId: Int
@@ -78,6 +80,7 @@ public class Message {
     
     /// Create an empty instance.
     public init() {
+		self.json = nil
         messageId = 0
         from = User()
         date = 0
@@ -93,6 +96,7 @@ public class Message {
     /// Will return nil if `json` is empty or invalid.
     public convenience init?(json: JSON) {
         self.init()
+		self.json = json
         
         if json.isNullOrUnknown { return nil }
         
@@ -145,72 +149,5 @@ public class Message {
         
         deleteChatPhoto = json["delete_chat_photo"].boolValue
         groupChatCreated = json["group_chat_created"].boolValue
-    }
-    
-    public var prettyPrint: String {
-        var result = "Message(\n"
-        result += "  messageId: \(messageId)\n"
-        result += "  from: \(from.prettyPrint.indent().trim())\n"
-        result += "  date: \(date)\n"
-        result += "  chat: \(chat.prettyPrint.indent().trim())\n"
-        if let forwardFrom = forwardFrom {
-            result += "  forwardFrom: \(forwardFrom.prettyPrint.indent().trim())\n"
-        }
-        if let forwardDate = forwardDate {
-            result += "  forwardDate: \(forwardDate)\n"
-        }
-        if let replyToMessage = replyToMessage {
-            result += "  replyToMessage: \(replyToMessage.prettyPrint.indent().trim())\n"
-        }
-        if let text = text {
-            result += "  text: \(text)\n"
-        }
-        if let audio = audio {
-            result += "  audio: \(audio.prettyPrint.indent().trim())\n"
-        }
-        if let document = document {
-            result += "  document: \(document.prettyPrint.indent().trim())\n"
-        }
-        result += "  photo: \(photo)\n"
-        if let sticker = sticker {
-            result += "  sticker: \(sticker.prettyPrint.indent().trim())\n"
-        }
-        if let video = video {
-            result += "  video: \(video.prettyPrint.indent().trim())\n"
-        }
-        if let contact = contact {
-            result += "  contact: \(contact.prettyPrint.indent().trim())\n"
-        }
-        if let location = location {
-            result += "  location: \(location.prettyPrint.indent().trim())\n"
-        }
-        if let newChatParticipant = newChatParticipant {
-            result += "  newChatParticipant: \(newChatParticipant.prettyPrint.indent().trim())\n"
-        }
-        if let leftChatParticipant = leftChatParticipant {
-            result += "  leftChatParticipant: \(leftChatParticipant.prettyPrint.indent().trim())\n"
-        }
-        if let newChatTitle = newChatTitle {
-            result += "  newChatTitle: \(newChatTitle)\n"
-        }
-        result += "  deleteChatPhoto: \(deleteChatPhoto)\n"
-        result += ")"
-        return result
-    }
-}
-
-extension Message: CustomDebugStringConvertible {
-    // MARK: CustomDebugStringConvertible
-    public var debugDescription: String {
-        return "Message(messageId: \(messageId), from: \(from), date: \(date), chat: \(chat), " +
-            "forwardFrom: \(forwardFrom.unwrapAndPrint), forwardDate: \(forwardDate.unwrapAndPrint), " +
-            "replyToMessage: \(replyToMessage.unwrapAndPrint), text: \(text.unwrapAndPrint), " +
-            "audio: \(audio.unwrapAndPrint), document: \(document.unwrapAndPrint), photo: \(photo), " +
-            "sticker: \(sticker.unwrapAndPrint), video: \(video.unwrapAndPrint), " +
-            "contact: \(contact.unwrapAndPrint), location: \(location.unwrapAndPrint), " +
-            "newChatParticipant: \(newChatParticipant.unwrapAndPrint), " +
-            "leftChatParticipant: \(leftChatParticipant.unwrapAndPrint), " +
-            "newChatTitle: \(newChatTitle.unwrapAndPrint), newChatPhoto: \(newChatPhoto), " +
-            "deleteChatPhoto: \(deleteChatPhoto), groupChatCreated: \(groupChatCreated))"
     }
 }

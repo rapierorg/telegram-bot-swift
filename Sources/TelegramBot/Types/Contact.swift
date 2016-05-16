@@ -11,7 +11,9 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a phone contact.
-public class Contact {
+public class Contact: JsonObject {
+	/// Original JSON for fields not yet added to Swift structures
+	public var json: JSON
 
     /// Contact's phone number.
     public var phoneNumber: String
@@ -27,13 +29,15 @@ public class Contact {
     
     /// Create an empty instance.
     public init() {
+		self.json = nil
         phoneNumber = ""
         firstName = ""
     }
     
     public convenience init?(json: JSON) {
         self.init()
-        
+		self.json = json
+
         if json.isNullOrUnknown { return nil }
         
         guard let phoneNumber = json["phone_number"].string else { return nil }
@@ -65,7 +69,7 @@ extension Contact: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "Contact(phoneNumber: \(phoneNumber), firstName: \(firstName), " +
-            "lastName: \(lastName.unwrapAndPrint), userId: \(userId.unwrapAndPrint))"
+            "lastName: \(lastName.unwrapOptional), userId: \(userId.unwrapOptional))"
     }
 }
 
