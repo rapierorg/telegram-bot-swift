@@ -6,6 +6,14 @@ import SwiftyJSON
 
 /// Represents a chat.
 public class Chat: JsonObject {
+	public enum ChatType: String {
+		case privateChat = "private"
+		case group = "group"
+		case superGroup = "superGroup"
+		case channel = "channel"
+		case unknown = ""
+	}
+	
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
@@ -19,6 +27,12 @@ public class Chat: JsonObject {
 	public var typeString: String {
 		get { return json["type"].stringValue }
 		set { json["type"].stringValue = newValue }
+	}
+
+	/// Type of chat, can be either “private”, “group”, “supergroup” or “channel”
+	public var type: ChatType {
+		get { return ChatType(rawValue: typeString) ?? .unknown }
+		set { typeString = newValue.rawValue }
 	}
 
 	/// *Optional.* Title, for channels and group chats
