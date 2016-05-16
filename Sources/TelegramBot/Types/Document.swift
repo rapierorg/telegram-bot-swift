@@ -40,7 +40,7 @@ public class Document: JsonObject {
     /// Create an instance from JSON data.
     ///
     /// Will return nil if `json` is empty or invalid.
-    public convenience init?(json: JSON) {
+    public convenience init?(_ json: JSON) {
         self.init()
 		self.json = json
 
@@ -49,7 +49,7 @@ public class Document: JsonObject {
         guard let fileId = json["file_id"].string else { return nil }
         self.fileId = fileId
         
-        guard let thumb = PhotoSize(json: json["thumb"]) else { return nil }
+        guard let thumb = PhotoSize(json["thumb"]) else { return nil }
         self.thumb = thumb
         
         fileName = json["file_name"].string

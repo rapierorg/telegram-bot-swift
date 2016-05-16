@@ -365,7 +365,7 @@ public class TelegramBot {
         
         let json = JSON(data: data)
         
-        guard let telegramResponse = Response(json: json) else {
+        guard let telegramResponse = Response(json) else {
             errorHandler?(task, .ResponseParseError(
                 json: json, data: data, response: response))
             return

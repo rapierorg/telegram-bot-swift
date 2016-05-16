@@ -34,7 +34,7 @@ public class Contact: JsonObject {
         firstName = ""
     }
     
-    public convenience init?(json: JSON) {
+    public convenience init?(_ json: JSON) {
         self.init()
 		self.json = json
 

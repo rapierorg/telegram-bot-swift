@@ -56,7 +56,7 @@ extension TelegramBot {
 			var error = error
             var user: User?
             if error == nil {
-                user = User(json: result)
+                user = User(result)
                 if user == nil {
                     error = .ResultParseError(json: result)
                 }

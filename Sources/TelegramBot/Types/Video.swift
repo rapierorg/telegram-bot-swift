@@ -52,7 +52,7 @@ public class Video: JsonObject {
     /// Create an instance from JSON data.
     ///
     /// Will return nil if `json` is empty or invalid.
-    public convenience init?(json: JSON) {
+    public convenience init?(_ json: JSON) {
         self.init()
 		self.json = json
         
@@ -70,7 +70,7 @@ public class Video: JsonObject {
         guard let duration = json["duration"].int else { return nil }
         self.duration = duration
         
-        guard let thumb = PhotoSize(json: json["thumb"]) else { return nil }
+        guard let thumb = PhotoSize(json["thumb"]) else { return nil }
         self.thumb = thumb
         
         mimeType = json["mime_type"].string

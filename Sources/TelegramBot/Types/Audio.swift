@@ -37,7 +37,7 @@ public class Audio: JsonObject {
     /// Create an instance from JSON data.
     ///
     /// Will return nil if `json` is empty or invalid.
-    public convenience init?(json: JSON) {
+    public convenience init?(_ json: JSON) {
         self.init()
 		self.json = json
 

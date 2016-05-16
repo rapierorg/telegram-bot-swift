@@ -39,7 +39,7 @@ public class Update: JsonObject {
         guard let updateId = json["update_id"].int else { return nil }
         self.updateId = updateId
         
-        message = Message(json: json["message"])
+        message = Message(json["message"])
     }
 }
 

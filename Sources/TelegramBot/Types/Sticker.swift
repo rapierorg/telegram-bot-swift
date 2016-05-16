@@ -42,7 +42,7 @@ public class Sticker: JsonObject {
     /// Create an instance from JSON data.
     ///
     /// Will return nil if `json` is empty or invalid.
-    public convenience init?(json: JSON) {
+    public convenience init?(_ json: JSON) {
         self.init()
 		self.json = json
         
@@ -57,7 +57,7 @@ public class Sticker: JsonObject {
         guard let height = json["height"].int else { return nil }
         self.height = height
         
-        guard let thumb = PhotoSize(json: json["thumb"]) else { return nil }
+        guard let thumb = PhotoSize(json["thumb"]) else { return nil }
         self.thumb = thumb
         
         fileSize = json["file_size"].int

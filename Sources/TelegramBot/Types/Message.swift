@@ -94,7 +94,7 @@ public class Message: JsonObject {
     /// Create an instance from JSON data.
     ///
     /// Will return nil if `json` is empty or invalid.
-    public convenience init?(json: JSON) {
+    public convenience init?(_ json: JSON) {
         self.init()
 		self.json = json
         
@@ -103,47 +103,47 @@ public class Message: JsonObject {
         guard let messageId = json["message_id"].int else { return nil }
         self.messageId = messageId
         
-        guard let from = User(json: json["from"]) else { return nil }
+        guard let from = User(json["from"]) else { return nil }
         self.from = from
         
         guard let date = json["date"].int else { return nil }
         self.date = date
         
         let jsonChat = json["chat"]
-        if let user = User(json: jsonChat) {
+        if let user = User(jsonChat) {
             chat = .UserType(user)
-        } else if let groupChat = GroupChat(json: jsonChat) {
+        } else if let groupChat = GroupChat(jsonChat) {
             chat = .GroupChatType(groupChat)
         }
         
-        forwardFrom = User(json: json["forward_from"])
+        forwardFrom = User(json["forward_from"])
         forwardDate = json["forward_date"].int
-        replyToMessage = Message(json: json["reply_to_message"])
+        replyToMessage = Message(json["reply_to_message"])
         text = json["text"].string
-        audio = Audio(json: json["audio"])
-        document = Document(json: json["document"])
+        audio = Audio(json["audio"])
+        document = Document(json["document"])
         
         let photo = json["photo"].arrayValue
         self.photo = [PhotoSize]()
         self.photo.reserveCapacity(photo.count)
         for jsonPhotoSize in photo {
-            guard let photoSize = PhotoSize(json: jsonPhotoSize) else { return nil }
+            guard let photoSize = PhotoSize(jsonPhotoSize) else { return nil }
             self.photo.append(photoSize)
         }
         
-        sticker = Sticker(json: json["sticker"])
-        video = Video(json: json["video"])
-        contact = Contact(json: json["contact"])
-        location = Location(json: json["location"])
-        newChatParticipant = User(json: json["new_chat_participant"])
-        leftChatParticipant = User(json: json["left_chat_participant"])
+        sticker = Sticker(json["sticker"])
+        video = Video(json["video"])
+        contact = Contact(json["contact"])
+        location = Location(json["location"])
+        newChatParticipant = User(json["new_chat_participant"])
+        leftChatParticipant = User(json["left_chat_participant"])
         newChatTitle = json["new_chat_title"].string
         
         let newChatPhoto = json["new_chat_photo"].arrayValue
         self.newChatPhoto = [PhotoSize]()
         self.newChatPhoto.reserveCapacity(newChatPhoto.count)
         for jsonPhotoSize in newChatPhoto {
-            guard let photoSize = PhotoSize(json: jsonPhotoSize) else { return nil }
+            guard let photoSize = PhotoSize(jsonPhotoSize) else { return nil }
             self.newChatPhoto.append(photoSize)
         }
         
