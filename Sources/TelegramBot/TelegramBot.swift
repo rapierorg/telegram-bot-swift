@@ -365,11 +365,11 @@ public class TelegramBot {
         
         let json = JSON(data: data)
         
-        guard let telegramResponse = Response(json) else {
+        /*guard*/ let telegramResponse = Response(json) /*else {
             errorHandler?(task, .ResponseParseError(
                 json: json, data: data, response: response))
             return
-        }
+        }*/
         
         if !telegramResponse.ok {
             errorHandler?(task, .ServerError(
@@ -377,11 +377,11 @@ public class TelegramBot {
             return
         }
         
-        guard let result = telegramResponse.result else {
+        /*guard*/ let result = telegramResponse.result /*else {
             errorHandler?(task, .NoResult(
                 telegramResponse: telegramResponse, data: data, response: response))
             return
-        }
+        }*/
 
         // If user completion handler is attached to this
         // task, call it. Completion handler is stored as

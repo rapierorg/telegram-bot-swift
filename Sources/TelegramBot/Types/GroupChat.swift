@@ -16,32 +16,19 @@ public class GroupChat: JsonObject {
 	public var json: JSON
 	
     /// Unique identifier for this group chat.
-    public var id: Int
-    
+	public var id: Int {
+		get { return json["id"].intValue }
+		set { json["id"].intValue = newValue }
+	}
+		
     /// Group name.
-    public var title: String
-    
-    /// Create an empty instance.
-    public init() {
-		self.json = nil
-        id = 0
-        title = ""
-    }
-    
-    /// Create an instance from JSON data.
-    ///
-    /// Will return nil if `json` is empty or invalid.
-    public convenience init?(_ json: JSON) {
-        self.init()
+	public var title: String {
+		get { return json["title"].stringValue }
+		set { json["title"].stringValue = newValue }
+	}
+		
+	public init(_ json: JSON = [:]) {
 		self.json = json
-
-        if json.isNullOrUnknown { return nil }
-        
-        guard let id = json["id"].int else { return nil }
-        self.id = id
-        
-        guard let title = json["title"].string else { return nil }
-        self.title = title
-    }
+	}
 }
 

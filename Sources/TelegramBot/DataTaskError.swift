@@ -28,19 +28,19 @@ public enum DataTaskError {
     case NoDataReceived(response: NSHTTPURLResponse)
     
     /// Response couldn't be parsed
-    case ResponseParseError(json: JSON,
-        data: NSData, response: NSHTTPURLResponse)
+    //case ResponseParseError(json: JSON,
+    //    data: NSData, response: NSHTTPURLResponse)
     
     /// Server error (server returned "ok: false")
     case ServerError(telegramResponse: Response,
         data: NSData, response: NSHTTPURLResponse)
     
     /// No `result` in Telegram response
-    case NoResult(telegramResponse: Response,
-        data: NSData, response: NSHTTPURLResponse)
+    //case NoResult(telegramResponse: Response,
+    //    data: NSData, response: NSHTTPURLResponse)
     
     /// `Result` couldn't be parsed
-    case ResultParseError(json: JSON)
+    //case ResultParseError(json: JSON)
 }
 
 extension DataTaskError: CustomDebugStringConvertible {
@@ -55,14 +55,14 @@ extension DataTaskError: CustomDebugStringConvertible {
             return "Expected status code 200, got \(statusCode)"
         case .NoDataReceived(_):
             return "No data received"
-        case .ResponseParseError(_, _, _):
-            return "Error while parsing response"
+        //case .ResponseParseError(_, _, _):
+        //    return "Error while parsing response"
         case .ServerError(_, _, _):
             "Telegram server returned an error"
-        case .NoResult(_, _, _):
-            return "No result in Telegram response"
-        case .ResultParseError:
-            return "Result couldn't be parsed"
+        //case .NoResult(_, _, _):
+        //    return "No result in Telegram response"
+        //case .ResultParseError:
+        //    return "Result couldn't be parsed"
         }
         return "Unknown error"
     }

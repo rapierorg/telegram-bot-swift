@@ -16,44 +16,36 @@ public class Document: JsonObject {
 	public var json: JSON
 	
     /// Unique file identifier.
-    public var fileId: String
-    
+	public var file_id: String {
+		get { return json["file_id"].stringValue }
+		set { json["file_id"].stringValue = newValue }
+	}
+		
     /// Document thumbnail as defined by sender.
-    public var thumb: PhotoSize
-    
+	public var thumb: PhotoSize {
+		get { return PhotoSize(json["thumb"]) }
+		set { json["thumb"] = newValue.json }
+	}
+		
     /// *Optional.* Original filename as defined by sender.
-    public var fileName: String?
-    
+	public var file_name: String? {
+		get { return json["file_name"].string }
+		set { json["file_name"].string = newValue }
+	}
+		
     /// *Optional.* MIME type of the file as defined by sender.
-    public var mimeType: String?
-    
+	public var mime_type: String? {
+		get { return json["mime_type"].string }
+		set { json["mime_type"].string = newValue }
+	}
+		
     /// *Optional.* File size.
-    public var fileSize: Int?
-    
-    /// Create an empty instance.
-    public init() {
-		self.json = nil
-        fileId = ""
-        thumb = PhotoSize()
-    }
-    
-    /// Create an instance from JSON data.
-    ///
-    /// Will return nil if `json` is empty or invalid.
-    public convenience init?(_ json: JSON) {
-        self.init()
+	public var file_size: Int? {
+		get { return json["file_size"].int }
+		set { json["file_size"].int = newValue }
+	}
+		
+	public init(_ json: JSON = [:]) {
 		self.json = json
-
-        if json.isNullOrUnknown { return nil }
-        
-        guard let fileId = json["file_id"].string else { return nil }
-        self.fileId = fileId
-        
-        guard let thumb = PhotoSize(json["thumb"]) else { return nil }
-        self.thumb = thumb
-        
-        fileName = json["file_name"].string
-        mimeType = json["mime_type"].string
-        fileSize = json["file_size"].int
-    }
+	}
 }

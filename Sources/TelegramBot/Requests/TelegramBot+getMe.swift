@@ -53,13 +53,9 @@ extension TelegramBot {
     private func getMeAsync(queue: dispatch_queue_t, completion: (user: User?, error: DataTaskError?)->()) {
         startDataTaskForEndpoint("getMe") {
                 result, error in
-			var error = error
             var user: User?
             if error == nil {
                 user = User(result)
-                if user == nil {
-                    error = .ResultParseError(json: result)
-                }
             }
             dispatch_async(queue) {
                 completion(user: user, error: error)

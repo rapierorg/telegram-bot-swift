@@ -16,30 +16,23 @@ public class Update: JsonObject {
 	public var json: JSON
 
     /// The update‘s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order.
-    public var updateId: Int
-    
+	public var update_id: Int {
+		get { return json["update_id"].intValue }
+		set { json["update_id"].intValue = newValue }
+	}
+		
     /// *Optional.* New incoming message of any kind — text, photo, sticker, etc.
-    public var message: Message?
-    
-    /// Create an empty instance.
-    public init() {
-		self.json = nil
-        updateId = 0
-    }
-    
-    /// Create an instance from JSON data.
-    ///
-    /// Will return nil if `json` is empty or invalid.
-    public convenience init?(_ json: JSON) {
-        self.init()
+	public var message: Message? {
+		get {
+			let value = json["message"]
+			return value.isNullOrUnknown ? nil : Message(value)
+		}
+		set {
+			json["message"] = newValue?.json ?? nil
+		}
+	}
+	
+	public init(_ json: JSON = [:]) {
 		self.json = json
-        
-        if json.isNullOrUnknown { return nil }
-        
-        guard let updateId = json["update_id"].int else { return nil }
-        self.updateId = updateId
-        
-        message = Message(json["message"])
-    }
+	}
 }
-

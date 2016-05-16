@@ -16,51 +16,38 @@ public class Sticker: JsonObject {
 	public var json: JSON
 
     /// Unique identifier for this file.
-    public var fileId: String
-    
+	public var file_id: String {
+		get { return json["file_id"].stringValue }
+		set { json["file_id"].stringValue = newValue }
+	}
+		
     /// Sticker width.
-    public var width: Int
-    
+	public var width: Int {
+		get { return json["width"].intValue }
+		set { json["width"].intValue = newValue }
+	}
+		
     /// Sticker height.
-    public var height: Int
-    
+	public var height: Int {
+		get { return json["height"].intValue }
+		set { json["height"].intValue = newValue }
+	}
+		
     /// Sticker thumbnail in .webp or .jpg format.
-    public var thumb: PhotoSize
-    
+	public var thumb: PhotoSize {
+		get { return PhotoSize(json["thumb"]) }
+		set { json["thumb"] = newValue.json }
+	}
+		
     /// *Optional.* File size.
-    public var fileSize: Int?
-    
-    /// Create an empty instance.
-    public init() {
-		self.json = nil
-        fileId = ""
-        width = 0
-        height = 0
-        thumb = PhotoSize()
-    }
-    
-    /// Create an instance from JSON data.
-    ///
-    /// Will return nil if `json` is empty or invalid.
-    public convenience init?(_ json: JSON) {
-        self.init()
+	public var file_size: Int? {
+		get { return json["file_size"].int }
+		set { json["file_size"].int = newValue }
+	}
+		
+	
+	public init(_ json: JSON = [:]) {
 		self.json = json
-        
-        if json.isNullOrUnknown { return nil }
-        
-        guard let fileId = json["file_id"].string else { return nil }
-        self.fileId = fileId
-        
-        guard let width = json["width"].int else { return nil }
-        self.width = width
-        
-        guard let height = json["height"].int else { return nil }
-        self.height = height
-        
-        guard let thumb = PhotoSize(json["thumb"]) else { return nil }
-        self.thumb = thumb
-        
-        fileSize = json["file_size"].int
-    }
+	}
 }
 

@@ -48,13 +48,9 @@ public extension TelegramBot {
 		allParameters += parameters
         startDataTaskForEndpoint("sendMessage", parameters: allParameters) {
             result, error in
-			var error = error
             var message: Message?
             if error == nil {
                 message = Message(result)
-                if message == nil {
-                    error = .ResultParseError(json: result)
-                }
             }
             dispatch_async(queue) {
                 completion?(message: message, error: error)

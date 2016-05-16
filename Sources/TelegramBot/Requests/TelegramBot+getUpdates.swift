@@ -40,7 +40,7 @@ extension TelegramBot {
             return nil
         }
         
-        let nextUpdateId = update.updateId + 1
+        let nextUpdateId = update.update_id + 1
         if nextOffset == nil || nextUpdateId > nextOffset {
             nextOffset = nextUpdateId
         }
@@ -78,17 +78,12 @@ extension TelegramBot {
         ]
         startDataTaskForEndpoint("getUpdates", parameters: parameters) {
                 result, error in
-			var error = error
             var updates = [Update]()
             if error == nil {
                 updates.reserveCapacity(result.count)
                 for updateJson in result.arrayValue {
-                    if let update = Update(updateJson) {
-                        updates.append(update)
-                    } else {
-                        error = .ResultParseError(json: result)
-                        break
-                    }
+                    let update = Update(updateJson)
+					updates.append(update)
                 }
             }
             dispatch_async(queue) {

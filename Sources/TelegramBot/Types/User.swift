@@ -16,41 +16,31 @@ public class User: JsonObject {
 	public var json: JSON
 
     /// Unique identifier for this user or bot.
-    public var id: Int
-    
+	public var id: Int {
+		get { return json["id"].intValue }
+		set { json["id"].intValue = newValue }
+	}
+		
     /// User‘s or bot’s first name.
-    public var firstName: String
-    
+	public var first_name: String {
+		get { return json["first_name"].stringValue }
+		set { json["first_name"].stringValue = newValue }
+	}
+		
     /// *Optional.* User‘s or bot’s last name.
-    public var lastName: String?
-    
+	public var last_name: String? {
+		get { return json["last_name"].string }
+		set { json["last_name"].string = newValue }
+	}
+		
     /// *Optional.* User‘s or bot’s username.
-    public var username: String?
-    
-    /// Create an empty instance.
-    public init() {
-		self.json = nil
-        id = 0
-        firstName = ""
-    }
-    
-    /// Create an instance from JSON data.
-    ///
-    /// Will return nil if `json` is empty or invalid.
-    public convenience init?(_ json: JSON) {
-        self.init()
+	public var username: String? {
+		get { return json["username"].string }
+		set { json["username"].string = newValue }
+	}
+	
+	public init(_ json: JSON = [:]) {
 		self.json = json
-        
-        if json.isNullOrUnknown { return nil }
-        
-        guard let id = json["id"].int else { return nil }
-        self.id = id
-        
-        guard let firstName = json["first_name"].string else { return nil }
-        self.firstName = firstName
-        
-        lastName = json["last_name"].string
-        username = json["username"].string
-    }
+	}
 }
 

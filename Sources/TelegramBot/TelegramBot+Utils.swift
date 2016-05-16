@@ -17,7 +17,7 @@ extension TelegramBot {
             sendMessageSync(chatId: lastMessage.from.id, text: userText)
         }
         if let groupText = groupText where !groupText.isEmpty {
-            if case .GroupChatType = lastMessage.chat {
+            if lastMessage.chat.typeString == "group" {
                 sendMessageSync(chatId: lastMessage.chat.id, text: groupText)
             }
         }
@@ -30,7 +30,7 @@ extension TelegramBot {
 			sendMessageAsync(chatId: lastMessage.from.id, text: userText, completion: userCompletion)
 		}
 		if let groupText = groupText where !groupText.isEmpty {
-			if case .GroupChatType = lastMessage.chat {
+			if lastMessage.chat.typeString == "group" {
 				sendMessageAsync(chatId: lastMessage.chat.id, text: groupText, completion: groupCompletion)
 			}
 		}

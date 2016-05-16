@@ -16,66 +16,54 @@ public class Video: JsonObject {
 	public var json: JSON
 
     /// Unique identifier for this file.
-    public var fileId: String
-    
+	public var file_id: String {
+		get { return json["file_id"].stringValue }
+		set { json["file_id"].stringValue = newValue }
+	}
+		
     /// Video width as defined by sender.
-    public var width: Int
-    
+	public var width: Int {
+		get { return json["width"].intValue }
+		set { json["width"].intValue = newValue }
+	}
+		
     /// Video height as defined by sender.
-    public var height: Int
-    
+	public var height: Int {
+		get { return json["height"].intValue }
+		set { json["height"].intValue = newValue }
+	}
+	
     /// Duration of the video in seconds as defined by sender.
-    public var duration: Int
-    
+	public var duration: Int {
+		get { return json["duration"].intValue }
+		set { json["duration"].intValue = newValue }
+	}
     /// Video thumbnail.
-    public var thumb: PhotoSize
-    
+	public var thumb: PhotoSize {
+		get { return PhotoSize(json["thumb"]) }
+		set { json["thumb"] = newValue.json }
+	}
+	
     /// *Optional.* Mime type of a file as defined by sender.
-    public var mimeType: String?
-    
+	public var mime_type: String? {
+		get { return json["mime_type"].string }
+		set { json["mime_type"].string = newValue }
+	}
+	
     /// *Optional.* File size.
-    public var fileSize: Int?
-    
+	public var file_size: Int? {
+		get { return json["file_size"].int }
+		set { json["file_size"].int = newValue }
+	}
+	
     /// *Optional.* Text description of the video (usually empty).
-    public var caption: String?
-    
-    /// Create an empty instance.
-    public init() {
-		self.json = nil
-        fileId = ""
-        width = 0
-        height = 0
-        duration = 0
-        thumb = PhotoSize()
-    }
-    
-    /// Create an instance from JSON data.
-    ///
-    /// Will return nil if `json` is empty or invalid.
-    public convenience init?(_ json: JSON) {
-        self.init()
+	public var caption: String? {
+		get { return json["caption"].string }
+		set { json["caption"].string = newValue }
+	}
+	
+	public init(_ json: JSON = [:]) {
 		self.json = json
-        
-        if json.isNullOrUnknown { return nil }
-        
-        guard let fileId = json["file_id"].string else { return nil }
-        self.fileId = fileId
-        
-        guard let width = json["width"].int else { return nil }
-        self.width = width
-        
-        guard let height = json["height"].int else { return nil }
-        self.height = height
-        
-        guard let duration = json["duration"].int else { return nil }
-        self.duration = duration
-        
-        guard let thumb = PhotoSize(json["thumb"]) else { return nil }
-        self.thumb = thumb
-        
-        mimeType = json["mime_type"].string
-        fileSize = json["file_size"].int
-        caption = json["caption"].string
-    }
+	}
 }
 
