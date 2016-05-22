@@ -3,10 +3,11 @@
 
 import Foundation
 
-public class Command: Parameter {
+public class Command {
     public enum SlashMode {
         /// Both 'command' and '/command' allowed
         case Optional
+		
         /// Only '/command' allowed
         case Required
     }
@@ -20,17 +21,14 @@ public class Command: Parameter {
         if name.hasPrefix("/") {
             self.nameWithSlash = name
 			self.name = name.substring(from: name.startIndex.successor())
-            print("WARNING: Command() parameter shouldn't start with '/', the slash is added automatically if needed")
+            print("WARNING: Command name shouldn't start with '/', the slash is added automatically if needed")
         } else {
             self.nameWithSlash = "/" + name
             self.name = name
         }
     }
-    
-    public let shouldCaptureValue = false
-    public var parameterName: String? = nil
-    
-    public func fetchFrom(_ scanner: NSScanner) -> Any? {
+    	
+    public func fetchFrom(_ scanner: NSScanner) -> String? {
         let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
         guard let word = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) else {
             return nil

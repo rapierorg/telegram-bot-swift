@@ -9,14 +9,14 @@ extension Optional {
     /// var x: String? = "text"
     /// var y: String?
     /// print("\(x), \(y)")
-    /// print("\(x.prettyPrint), \(y.prettyPrint")
+    /// print("\(x.unwrapOptional), \(y.unwrapOptional")
     /// ```
     /// Results in:
     /// ```
     /// Optional("text"), nil
     /// text, nil
     /// ```
-    var unwrapOptional: String {
+    public var unwrapOptional: String {
         if let v = self {
             return "\(v)"
         }
