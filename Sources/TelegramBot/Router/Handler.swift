@@ -4,12 +4,8 @@
 import Foundation
 
 public enum Handler {
-	case CancellableHandlerWithoutArguments(()->(Bool))
-	case CancellableHandlerWithoutArgumentsThrows(() throws->(Bool))
-	case NonCancellableHandlerWithoutArguments(()->())
-	case NonCancellableHandlerWithoutArgumentsThrows(() throws->())
-	case CancellableHandlerWithArguments((ArgumentScanner)->(Bool))
-	case CancellableHandlerWithArgumentsThrows((ArgumentScanner) throws->(Bool))
-	case NonCancellableHandlerWithArguments((ArgumentScanner)->())
-	case NonCancellableHandlerWithArgumentsThrows((ArgumentScanner) throws->())
+	case CancellableHandlerWithoutArguments(() throws->(Bool))
+	case NonCancellableHandlerWithoutArguments(() throws->())
+	case CancellableHandlerWithArguments((ArgumentScanner) throws->(Bool))
+	case NonCancellableHandlerWithArguments((ArgumentScanner) throws->())
 }

@@ -32,36 +32,20 @@ public class Router {
 		paths.append(Path(command, handler))
 	}
 	
-	public func add(_ command: Command, _ handler: ()->(Bool)) {
+    public func add(_ command: Command, _ handler: () throws->(Bool)) {
         paths.append(Path(command, .CancellableHandlerWithoutArguments(handler)))
     }
 
-    public func add(_ command: Command, _ handler: () throws->(Bool)) {
-        paths.append(Path(command, .CancellableHandlerWithoutArgumentsThrows(handler)))
-    }
-
-    public func add(_ command: Command, _ handler: ()->()) {
+	public func add(_ command: Command, _ handler: () throws->()) {
         paths.append(Path(command, .NonCancellableHandlerWithoutArguments(handler)))
     }
 
-	public func add(_ command: Command, _ handler: () throws->()) {
-        paths.append(Path(command, .NonCancellableHandlerWithoutArgumentsThrows(handler)))
-    }
-
-	public func add(_ command: Command, _ handler: (ArgumentScanner)->(Bool)) {
+	public func add(_ command: Command, _ handler: (ArgumentScanner) throws->(Bool)) {
         paths.append(Path(command, .CancellableHandlerWithArguments(handler)))
     }
 
-	public func add(_ command: Command, _ handler: (ArgumentScanner) throws->(Bool)) {
-        paths.append(Path(command, .CancellableHandlerWithArgumentsThrows(handler)))
-    }
-
-	public func add(_ command: Command, _ handler: (ArgumentScanner)->()) {
-        paths.append(Path(command, .NonCancellableHandlerWithArguments(handler)))
-    }
-
     public func add(_ command: Command, _ handler: (ArgumentScanner) throws->()) {
-        paths.append(Path(command, .NonCancellableHandlerWithArgumentsThrows(handler)))
+        paths.append(Path(command, .NonCancellableHandlerWithArguments(handler)))
     }
 	
     public func process(_ string: String) throws -> Bool {
@@ -119,31 +103,17 @@ public class Router {
 	func runHandler(_ handler: Handler, arguments: ArgumentScanner) throws -> Bool {
 		switch handler {
 		case let .CancellableHandlerWithoutArguments(handler):
-			if handler() {
-				return true
-			}
-		case let .CancellableHandlerWithoutArgumentsThrows(handler):
 			if try handler() {
 				return true
 			}
 		case let .NonCancellableHandlerWithoutArguments(handler):
-			handler()
-			return true
-		case let .NonCancellableHandlerWithoutArgumentsThrows(handler):
 			try handler()
 			return true
 		case let .CancellableHandlerWithArguments(handler):
-			if handler(arguments) {
-				return true
-			}
-		case let .CancellableHandlerWithArgumentsThrows(handler):
 			if try handler(arguments) {
 				return true
 			}
 		case let .NonCancellableHandlerWithArguments(handler):
-			handler(arguments)
-			return true
-		case let .NonCancellableHandlerWithArgumentsThrows(handler):
 			try handler(arguments)
 			return true
 		}
