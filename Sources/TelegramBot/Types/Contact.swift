@@ -1,71 +1,39 @@
-//
-// Contact.swift
-//
-// Copyright (c) 2015 Andrey Fidrya
-//
-// Licensed under the MIT license. For full copyright and license information,
-// please see the LICENSE file.
-//
+// Telegram Bot SDK for Swift (unofficial).
+// (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import Foundation
 import SwiftyJSON
 
 /// Represents a phone contact.
-public class Contact {
+public class Contact: JsonObject {
+	/// Original JSON for fields not yet added to Swift structures
+	public var json: JSON
 
     /// Contact's phone number.
-    public var phoneNumber: String
-    
+	public var phone_number: String {
+		get { return json["phone_number"].stringValue }
+		set { json["phone_number"].stringValue = newValue }
+	}
+		
     /// Contact's first name.
-    public var firstName: String
-    
+	public var first_name: String {
+		get { return json["first_name"].stringValue }
+		set { json["first_name"].stringValue = newValue }
+	}
+		
     /// *Optional.* Contact's last name.
-    public var lastName: String?
-    
+	public var last_name: String? {
+		get { return json["last_name"].string }
+		set { json["last_name"].string = newValue }
+	}
+		
     /// *Optional.* Contact's user identifier in Telegram.
-    public var userId: String?
-    
-    /// Create an empty instance.
-    public init() {
-        phoneNumber = ""
-        firstName = ""
-    }
-    
-    public convenience init?(json: JSON) {
-        self.init()
-        
-        if json.isNullOrUnknown { return nil }
-        
-        guard let phoneNumber = json["phone_number"].string else { return nil }
-        self.phoneNumber = phoneNumber
-        
-        guard let firstName = json["first_name"].string else { return nil }
-        self.firstName = firstName
-        
-        lastName = json["last_name"].string
-        userId = json["user_id"].string
-    }
-    
-    public var prettyPrint: String {
-        var result = "Contact(" +
-            "  phoneNumber: \(phoneNumber)" +
-            "  firstName: \(firstName)"
-        if let lastName = lastName {
-            result += "  lastName: \(lastName)"
-        }
-        if let userId = userId {
-            result += "  userId: \(userId)"
-        }
-        result += ")"
-        return result
+    public var user_id: String? {
+		get { return json["user_id"].string }
+		set { json["user_id"].string = newValue }
+	}
+	
+	public init(_ json: JSON = [:]) {
+		self.json = json
     }
 }
-
-extension Contact: CustomDebugStringConvertible {
-    // MARK: CustomDebugStringConvertible
-    public var debugDescription: String {
-        return "Contact(phoneNumber: \(phoneNumber), firstName: \(firstName), " +
-            "lastName: \(lastName.unwrapAndPrint), userId: \(userId.unwrapAndPrint))"
-    }
-}
-

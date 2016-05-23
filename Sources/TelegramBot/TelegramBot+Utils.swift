@@ -1,11 +1,5 @@
-//
-// TelegramBot+Utils.swift
-//
-// Copyright (c) 2015 Andrey Fidrya
-//
-// Licensed under the MIT license. For full copyright and license information,
-// please see the LICENSE file.
-//
+// Telegram Bot SDK for Swift (unofficial).
+// (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import Foundation
 
@@ -17,7 +11,7 @@ extension TelegramBot {
             sendMessageSync(chatId: lastMessage.from.id, text: userText)
         }
         if let groupText = groupText where !groupText.isEmpty {
-            if case .GroupChatType = lastMessage.chat {
+            if lastMessage.chat.typeString == "group" {
                 sendMessageSync(chatId: lastMessage.chat.id, text: groupText)
             }
         }
@@ -30,7 +24,7 @@ extension TelegramBot {
 			sendMessageAsync(chatId: lastMessage.from.id, text: userText, completion: userCompletion)
 		}
 		if let groupText = groupText where !groupText.isEmpty {
-			if case .GroupChatType = lastMessage.chat {
+			if lastMessage.chat.typeString == "group" {
 				sendMessageAsync(chatId: lastMessage.chat.id, text: groupText, completion: groupCompletion)
 			}
 		}

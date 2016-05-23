@@ -1,11 +1,5 @@
-//
-// JSON+Utils.swift
-//
-// Copyright (c) 2015 Andrey Fidrya
-//
-// Licensed under the MIT license. For full copyright and license information,
-// please see the LICENSE file.
-//
+// Telegram Bot SDK for Swift (unofficial).
+// (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import Foundation
 import SwiftyJSON
@@ -15,4 +9,9 @@ extension SwiftyJSON.JSON {
     public var isNullOrUnknown: Bool {
         return type == .Null || type == .Unknown
     }
+	
+	/// Print with indentation.
+	public func prettyPrint() {
+		print(debugDescription)
+	}
 }

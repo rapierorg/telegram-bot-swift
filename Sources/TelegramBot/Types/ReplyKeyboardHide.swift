@@ -1,11 +1,5 @@
-//
-// ReplyKeyboardHide.swift
-//
-// Copyright (c) 2015 Andrey Fidrya
-//
-// Licensed under the MIT license. For full copyright and license information,
-// please see the LICENSE file.
-//
+// Telegram Bot SDK for Swift (unofficial).
+// (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import Foundation
 import SwiftyJSON
@@ -45,6 +39,6 @@ extension ReplyKeyboardHide: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         return "ReplyKeyboardHide(hideKeyboard: \(hideKeyboard), " +
-            "selective: \(selective.unwrapAndPrint))"
+            "selective: \(selective.unwrapOptional))"
     }
 }

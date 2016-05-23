@@ -1,11 +1,5 @@
-//
-// Optional+PrettyPrint.swift
-//
-// Copyright (c) 2015 Andrey Fidrya
-//
-// Licensed under the MIT license. For full copyright and license information,
-// please see the LICENSE file.
-//
+// Telegram Bot SDK for Swift (unofficial).
+// (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import Foundation
 
@@ -15,14 +9,14 @@ extension Optional {
     /// var x: String? = "text"
     /// var y: String?
     /// print("\(x), \(y)")
-    /// print("\(x.prettyPrint), \(y.prettyPrint")
+    /// print("\(x.unwrapOptional), \(y.unwrapOptional")
     /// ```
     /// Results in:
     /// ```
     /// Optional("text"), nil
     /// text, nil
     /// ```
-    var unwrapAndPrint: String {
+    public var unwrapOptional: String {
         if let v = self {
             return "\(v)"
         }

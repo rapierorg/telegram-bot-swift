@@ -1,57 +1,27 @@
-//
-// Location.swift
-//
-// Copyright (c) 2015 Andrey Fidrya
-//
-// Licensed under the MIT license. For full copyright and license information,
-// please see the LICENSE file.
-//
+// Telegram Bot SDK for Swift (unofficial).
+// (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import Foundation
 import SwiftyJSON
 
 /// Represents a point on the map.
-public class Location {
-
+public class Location: JsonObject {
+	/// Original JSON for fields not yet added to Swift structures
+	public var json: JSON
+	
     /// Longitude as defined by sender.
-    public var longitude: Float
-    
+	public var longitude: Float {
+		get { return json["longitude"].floatValue }
+		set { json["longitude"].floatValue = newValue }
+	}
+		
     /// Latitude as defined by sender.
-    public var latitude: Float
-    
-    /// Create an empty instance.
-    public init() {
-        longitude = 0.0
-        latitude = 0.0
-    }
-    
-    /// Create an instance from JSON data.
-    ///
-    /// Will return nil if `json` is empty or invalid.
-    public convenience init?(json: JSON) {
-        self.init()
-        
-        if json.isNullOrUnknown { return nil }
-        
-        guard let longitude = json["longitude"].float else { return nil }
-        self.longitude = longitude
-        
-        guard let latitude = json["latitude"].float else { return nil }
-        self.latitude = latitude
-    }
-    
-    public var prettyPrint: String {
-        return "Location(" +
-            "  longitude: \(longitude)\n" +
-            "  latitude: \(latitude)\n" +
-        ")"
-    }
+	public var latitude: Float {
+		get { return json["latitude"].floatValue }
+		set { json["latitude"].floatValue = newValue }
+	}
+		
+	public init(_ json: JSON = [:]) {
+		self.json = json
+	}
 }
-
-extension Location: CustomDebugStringConvertible {
-    // MARK: CustomDebugStringConvertible
-    public var debugDescription: String {
-        return "Location(longitude: \(longitude), latitude: \(latitude))"
-    }
-}
-

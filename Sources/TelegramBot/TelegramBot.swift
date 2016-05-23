@@ -1,11 +1,5 @@
-//
-// TelegramBot.swift
-//
-// Copyright (c) 2015 Andrey Fidrya
-//
-// Licensed under the MIT license. For full copyright and license information,
-// please see the LICENSE file.
-//
+// Telegram Bot SDK for Swift (unofficial).
+// (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import Foundation
 import SwiftyJSON
@@ -116,8 +110,11 @@ public class TelegramBot {
     /// Last update from the call to `nextUpdate` function.
     public var lastUpdate: Update?
 
-    /// Last message from the call to `nextCommand` function.
+    /// Last message from the call to `nextMessage` function.
     public lazy var lastMessage: Message = Message()
+
+	/// Last command from the call to `nextMessage` function.
+	public var lastCommand: String?
 
     private let workQueue = dispatch_queue_create("com.zabiyaka.TelegramBot", DISPATCH_QUEUE_SERIAL)
     
@@ -264,7 +261,7 @@ public class TelegramBot {
         //print("Deinit")
     }
     
-    /// Returns a next command addressed to this bot.
+    /// Returns a next message addressed to this bot.
     ///
     /// Associated message can be retrieved using `lastMessage` property.
     ///
@@ -272,17 +269,22 @@ public class TelegramBot {
     ///
     /// This function blocks while fetching updates from the server.
     ///
-    /// - Returns: A `String` containing the preprocessed command.
-    /// Nil on error, in which case details can be obtained
-    /// from `lastError` property.
-    public func nextCommandSync() -> String? {
+	/// - Parameter mineOnly: Ignore commands not addressed to me.
+    /// - Returns: Message. Nil on error, in which case details
+    ///   can be obtained from `lastError` property.
+	public func nextMessageSync(onlyMyMessages: Bool = true) -> Message? {
         while let update = nextUpdateSync() {
             guard let message = update.message else { continue }
-            guard let text = message.text else { continue }
-            guard let command = text.extractBotCommand(name) else { continue }
-            
-            lastMessage = message
-            return command
+			lastMessage = message
+			
+			if let text = message.text {
+				lastCommand = text.removeBotName(name)
+				if onlyMyMessages && lastCommand == nil {
+					continue
+				}
+			}
+			
+            return message
         }
         lastMessage = Message()
         return nil
@@ -361,11 +363,11 @@ public class TelegramBot {
         
         let json = JSON(data: data)
         
-        guard let telegramResponse = Response(json: json) else {
+        /*guard*/ let telegramResponse = Response(json) /*else {
             errorHandler?(task, .ResponseParseError(
                 json: json, data: data, response: response))
             return
-        }
+        }*/
         
         if !telegramResponse.ok {
             errorHandler?(task, .ServerError(
@@ -373,11 +375,11 @@ public class TelegramBot {
             return
         }
         
-        guard let result = telegramResponse.result else {
+        /*guard*/ let result = telegramResponse.result /*else {
             errorHandler?(task, .NoResult(
                 telegramResponse: telegramResponse, data: data, response: response))
             return
-        }
+        }*/
 
         // If user completion handler is attached to this
         // task, call it. Completion handler is stored as

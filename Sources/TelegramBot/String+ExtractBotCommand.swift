@@ -1,17 +1,12 @@
-//
-// String+ExtractBotCommand.swift
-//
-// Copyright (c) 2015 Andrey Fidrya
-//
-// Licensed under the MIT license. For full copyright and license information,
-// please see the LICENSE file.
-//
+// Telegram Bot SDK for Swift (unofficial).
+// (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import Foundation
 
 extension String {
-    /// "/command@botname arguments" -> "/command arguments"
-    public func extractBotCommand(_ botName: BotName) -> String? {
+	/// - Parameter botName: bot name to remove.
+    /// - Returns: "/command@botName arguments" -> "/command arguments". Nil if bot name does not match `botName` parameter.
+    public func removeBotName(_ botName: BotName) -> String? {
         let scanner = NSScanner(string: self)
         scanner.caseSensitive = false
         scanner.charactersToBeSkipped = nil

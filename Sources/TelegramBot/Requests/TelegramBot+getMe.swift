@@ -1,11 +1,5 @@
-//
-// TelegramBot+getMe.swift
-//
-// Copyright (c) 2015 Andrey Fidrya
-//
-// Licensed under the MIT license. For full copyright and license information,
-// please see the LICENSE file.
-//
+// Telegram Bot SDK for Swift (unofficial).
+// (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import Foundation
 
@@ -53,13 +47,9 @@ extension TelegramBot {
     private func getMeAsync(queue: dispatch_queue_t, completion: (user: User?, error: DataTaskError?)->()) {
         startDataTaskForEndpoint("getMe") {
                 result, error in
-			var error = error
             var user: User?
             if error == nil {
-                user = User(json: result)
-                if user == nil {
-                    error = .ResultParseError(json: result)
-                }
+                user = User(result)
             }
             dispatch_async(queue) {
                 completion(user: user, error: error)

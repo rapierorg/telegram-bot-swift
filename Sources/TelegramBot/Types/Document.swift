@@ -1,80 +1,45 @@
-//
-// Document.swift
-//
-// Copyright (c) 2015 Andrey Fidrya
-//
-// Licensed under the MIT license. For full copyright and license information,
-// please see the LICENSE file.
-//
+// Telegram Bot SDK for Swift (unofficial).
+// (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import Foundation
 import SwiftyJSON
 
 /// Represents a general file (as opposed to photos and audio files).
-public class Document {
-    
+public class Document: JsonObject {
+	/// Original JSON for fields not yet added to Swift structures
+	public var json: JSON
+	
     /// Unique file identifier.
-    public var fileId: String
-    
+	public var file_id: String {
+		get { return json["file_id"].stringValue }
+		set { json["file_id"].stringValue = newValue }
+	}
+		
     /// Document thumbnail as defined by sender.
-    public var thumb: PhotoSize
-    
+	public var thumb: PhotoSize {
+		get { return PhotoSize(json["thumb"]) }
+		set { json["thumb"] = newValue.json }
+	}
+		
     /// *Optional.* Original filename as defined by sender.
-    public var fileName: String?
-    
+	public var file_name: String? {
+		get { return json["file_name"].string }
+		set { json["file_name"].string = newValue }
+	}
+		
     /// *Optional.* MIME type of the file as defined by sender.
-    public var mimeType: String?
-    
+	public var mime_type: String? {
+		get { return json["mime_type"].string }
+		set { json["mime_type"].string = newValue }
+	}
+		
     /// *Optional.* File size.
-    public var fileSize: Int?
-    
-    /// Create an empty instance.
-    public init() {
-        fileId = ""
-        thumb = PhotoSize()
-    }
-    
-    /// Create an instance from JSON data.
-    ///
-    /// Will return nil if `json` is empty or invalid.
-    public convenience init?(json: JSON) {
-        self.init()
-        
-        if json.isNullOrUnknown { return nil }
-        
-        guard let fileId = json["file_id"].string else { return nil }
-        self.fileId = fileId
-        
-        guard let thumb = PhotoSize(json: json["thumb"]) else { return nil }
-        self.thumb = thumb
-        
-        fileName = json["file_name"].string
-        mimeType = json["mime_type"].string
-        fileSize = json["file_size"].int
-    }
-    
-    public var prettyPrint: String {
-        var result = "Document(" +
-            "  fileId: \(fileId)\n" +
-            "  thumb: \(thumb.prettyPrint.indent().trim())\n"
-        if let fileName = fileName {
-            result += "  fileName=\(fileName)\n"
-        }
-        if let mimeType = mimeType {
-            result += "  mimeType=\(mimeType)\n"
-        }
-        if let fileSize = fileSize {
-            result += "  fileSize=\(fileSize)\n"
-        }
-        result += ")"
-        return result
-    }
-}
-
-extension Document: CustomDebugStringConvertible {
-    // MARK: CustomDebugStringConvertible
-    public var debugDescription: String {
-        return "Document(fileId: \(fileId), thumb: \(thumb), fileName: \(fileName.unwrapAndPrint), " +
-            "mimeType: \(mimeType.unwrapAndPrint), fileSize: \(fileSize.unwrapAndPrint))"
-    }
+	public var file_size: Int? {
+		get { return json["file_size"].int }
+		set { json["file_size"].int = newValue }
+	}
+		
+	public init(_ json: JSON = [:]) {
+		self.json = json
+	}
 }

@@ -1,11 +1,5 @@
-//
-// TelegramBot+getStatus.swift
-//
-// Copyright (c) 2016 Andrey Fidrya
-//
-// Licensed under the MIT license. For full copyright and license information,
-// please see the LICENSE file.
-//
+// Telegram Bot SDK for Swift (unofficial).
+// (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import Foundation
 
@@ -40,7 +34,7 @@ extension TelegramBot {
             return nil
         }
         
-        let nextUpdateId = update.updateId + 1
+        let nextUpdateId = update.update_id + 1
         if nextOffset == nil || nextUpdateId > nextOffset {
             nextOffset = nextUpdateId
         }
@@ -51,7 +45,7 @@ extension TelegramBot {
     
 	/// Receive incoming updates using long polling. Blocking version.
 	/// - Returns: Array of updates on success. Nil on error, in which case `lastError` contains the details.
-	/// - SeeAlso: https://core.telegram.org/bots/api#getupdates
+	/// - SeeAlso: <https://core.telegram.org/bots/api#getupdates>
     public func getUpdatesSync(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil) -> [Update]? {
         var result: [Update]!
         let sem = dispatch_semaphore_create(0)
@@ -69,7 +63,7 @@ extension TelegramBot {
     
 	/// Receive incoming updates using long polling. Asynchronous version.
 	/// - Returns: Array of updates on success. Nil on error, in which case `error` contains the details.
-	/// - SeeAlso: https://core.telegram.org/bots/api#getupdates
+	/// - SeeAlso: <https://core.telegram.org/bots/api#getupdates>
     public func getUpdatesAsync(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: GetUpdatesCompletion? = nil) {
         let parameters: [String: Any?] = [
             "offset": offset,
@@ -78,17 +72,12 @@ extension TelegramBot {
         ]
         startDataTaskForEndpoint("getUpdates", parameters: parameters) {
                 result, error in
-			var error = error
             var updates = [Update]()
             if error == nil {
                 updates.reserveCapacity(result.count)
                 for updateJson in result.arrayValue {
-                    if let update = Update(json: updateJson) {
-                        updates.append(update)
-                    } else {
-                        error = .ResultParseError(json: result)
-                        break
-                    }
+                    let update = Update(updateJson)
+					updates.append(update)
                 }
             }
             dispatch_async(queue) {

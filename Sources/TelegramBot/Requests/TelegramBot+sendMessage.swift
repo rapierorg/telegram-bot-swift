@@ -1,11 +1,5 @@
-//
-// TelegramBot+sendMessage.swift
-//
-// Copyright (c) 2016 Andrey Fidrya
-//
-// Licensed under the MIT license. For full copyright and license information,
-// please see the LICENSE file.
-//
+// Telegram Bot SDK for Swift (unofficial).
+// (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import Foundation
 
@@ -16,7 +10,7 @@ public extension TelegramBot {
 	
 	/// Send text message. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
-	/// - SeeAlso: https://core.telegram.org/bots/api#sendmessage
+	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
 	public func sendMessageSync(chatId: Int, text: String,
 	                        parameters: [String: Any?] = [:]) -> Message? {
 		var result: Message!
@@ -35,7 +29,7 @@ public extension TelegramBot {
 	
     /// Send text messages. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
-	/// - SeeAlso: https://core.telegram.org/bots/api#sendmessage
+	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
 	public func sendMessageAsync(chatId: Int, text: String,
 	                        parameters: [String: Any?] = [:],
 	                        queue: dispatch_queue_t = dispatch_get_main_queue(),
@@ -48,13 +42,9 @@ public extension TelegramBot {
 		allParameters += parameters
         startDataTaskForEndpoint("sendMessage", parameters: allParameters) {
             result, error in
-			var error = error
             var message: Message?
             if error == nil {
-                message = Message(json: result)
-                if message == nil {
-                    error = .ResultParseError(json: result)
-                }
+                message = Message(result)
             }
             dispatch_async(queue) {
                 completion?(message: message, error: error)
