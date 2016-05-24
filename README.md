@@ -10,14 +10,16 @@ Trivial bot:
 import TelegramBot
 
 let bot = TelegramBot(token: "my token")
-let router = Router()
+let router = Router(bot)
 
-router.addPath([Command("greet")]) { () -> () in
-    bot.respondAsync("Hello, \(bot.lastMessage.from.firstName)!")
+router["greet"] = { () -> () in
+    bot.respondAsync("Hello, \(bot.lastMessage.from.first_name)!")
 }
 
-while let command = bot.nextCommandSync() {
-    try router.processString(command)
+while let message = bot.nextMessageSync() {
+    if let command = bot.lastCommand {
+        try router.process(command)
+    }
 }
 
 fatalError("Server stopped due to error: \(bot.lastError)")
