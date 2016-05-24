@@ -160,24 +160,24 @@ public class Message: JsonObject {
 	}
 		
     /// *Optional.* A new member was added to the group, information about them (this member may be bot itself).
-	public var new_chat_participant: User? {
+	public var new_chat_member: User? {
 		get {
-			let value = json["new_chat_participant"]
+			let value = json["new_chat_member"]
 			return value.isNullOrUnknown ? nil : User(value)
 		}
 		set {
-			json["new_chat_participant"] = newValue?.json ?? nil
+			json["new_chat_member"] = newValue?.json ?? nil
 		}
 	}
 		
     /// *Optional.* A member was removed from the group, information about them (this member may be bot itself).
-	public var left_chat_participant: User? {
+	public var left_chat_member: User? {
 		get {
-			let value = json["left_chat_participant"]
+			let value = json["left_chat_member"]
 			return value.isNullOrUnknown ? nil : User(value)
 		}
 		set {
-			json["left_chat_participant"] = newValue?.json ?? nil
+			json["left_chat_member"] = newValue?.json ?? nil
 		}
 	}
 		

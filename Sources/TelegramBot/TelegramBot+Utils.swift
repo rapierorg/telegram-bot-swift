@@ -4,7 +4,7 @@
 import Foundation
 
 extension TelegramBot {
-	static let unhandledErrorText = "❗Error while performing the operation."
+	public static var unhandledErrorText = "❗Error while performing the operation."
 
     public func respondPrivatelySync(_ userText: String, groupText: String? = nil) {
         if !userText.isEmpty {

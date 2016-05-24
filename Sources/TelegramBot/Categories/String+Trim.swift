@@ -4,7 +4,7 @@
 import Foundation
 
 extension String {
-    public func trim(set: NSCharacterSet = NSCharacterSet.whitespacesAndNewlines()) -> String {
+    @warn_unused_result public func trimmed(set: NSCharacterSet = NSCharacterSet.whitespacesAndNewlines()) -> String {
         return trimmingCharacters(in: set)
     }
 }

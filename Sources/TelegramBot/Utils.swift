@@ -11,8 +11,8 @@ public func readToken(_ name: String) -> String {
 	var token = environment[name]
 	if token == nil {
 		do {
-			token = try String(contentsOfFile: "test_bot_token.txt", encoding: NSUTF8StringEncoding)
-			token?.trim()
+			token = try String(contentsOfFile: name, encoding: NSUTF8StringEncoding)
+			token = token?.trimmed()
 		} catch {
 		}
 	}
