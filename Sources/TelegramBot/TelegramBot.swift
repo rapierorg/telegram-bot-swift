@@ -261,7 +261,7 @@ public class TelegramBot {
         //print("Deinit")
     }
     
-    /// Returns a next message addressed to this bot.
+    /// Returns next message addressed to this bot.
     ///
     /// Associated message can be retrieved using `lastMessage` property.
     ///
@@ -269,24 +269,29 @@ public class TelegramBot {
     ///
     /// This function blocks while fetching updates from the server.
     ///
-	/// - Parameter mineOnly: Ignore commands not addressed to me.
+	/// - Parameter mineOnly: Ignore commands not addressed to me, i.e. `/command@another_bot`.
     /// - Returns: Message. Nil on error, in which case details
     ///   can be obtained from `lastError` property.
 	public func nextMessageSync(onlyMyMessages: Bool = true) -> Message? {
         while let update = nextUpdateSync() {
             guard let message = update.message else { continue }
-			lastMessage = message
 			
 			if let text = message.text {
 				lastCommand = text.removeBotName(name)
 				if onlyMyMessages && lastCommand == nil {
 					continue
 				}
+			} else {
+				lastCommand = nil
 			}
 			
+			lastUpdate = update
+			lastMessage = message
             return message
         }
-        lastMessage = Message()
+		lastUpdate = nil
+		lastMessage = Message()
+		lastCommand = nil
         return nil
     }
     
