@@ -8,6 +8,10 @@ public class ArgumentScanner {
 	
 	public let scanner: NSScanner
 	public let command: String
+
+	public var isAtEnd: Bool {
+		return scanner.isAtEnd
+	}
 	
 	static let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
 
@@ -16,11 +20,11 @@ public class ArgumentScanner {
 		self.command = command
 	}
 	
-	func scanWord() -> String? {
+	public func scanWord() -> String? {
 		return scanner.scanUpToCharactersFromSet(T.whitespaceAndNewline)
 	}
 
-	func scanInt() -> Int? {
+	public func scanInt() -> Int? {
 		guard let word = scanWord() else {
 			return nil
 		}
@@ -32,7 +36,7 @@ public class ArgumentScanner {
 		return value
 	}
 
-	func scanDouble() -> Double? {
+	public func scanDouble() -> Double? {
 		guard let word = scanWord() else {
 			return nil
 		}
@@ -44,10 +48,14 @@ public class ArgumentScanner {
 		return value
 	}
 	
-	func scanRestOfString() -> String {
+	public func scanRestOfString() -> String {
 		guard let restOfString = scanner.scanUpToString("") else {
 			return ""
 		}
 		return restOfString
+	}
+	
+	public func skipRestOfString() {
+		scanner.skipUpToString("")
 	}
 }
