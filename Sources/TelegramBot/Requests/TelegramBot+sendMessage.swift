@@ -3,9 +3,7 @@
 
 import Foundation
 
-public extension TelegramBot {
-	public static var sendMessageDefaultParameters: [String: Any?] = [:]
-	
+public extension TelegramBot {	
 	typealias SendMessageCompletion = (message: Message?, error: DataTaskError?)->()
 	
 	/// Send text message. Blocking version.
@@ -38,7 +36,7 @@ public extension TelegramBot {
             "chat_id": chatId,
             "text": text
         ]
-		allParameters += TelegramBot.sendMessageDefaultParameters
+		allParameters += defaultParameters["sendMessage"]
 		allParameters += parameters
         startDataTaskForEndpoint("sendMessage", parameters: allParameters) {
             result, error in

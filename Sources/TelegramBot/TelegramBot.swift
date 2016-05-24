@@ -11,12 +11,17 @@ public class TelegramBot {
     
     public typealias DataTaskCompletion = (result: JSON, error: DataTaskError?)->()
 
+	public typealias RequestParameters = [String: Any?]
+	
     /// Telegram server URL.
     public var url = "https://api.telegram.org"
     
     /// Unique authentication token obtained from BotFather.
     public var token: String
-    
+	
+	/// Default request parameters
+	public var defaultParameters = [String: RequestParameters]()
+	
     /// In case of network errors or server problems,
     /// do not report the errors and try to reconnect
     /// automatically.
