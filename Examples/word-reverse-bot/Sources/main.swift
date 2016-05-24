@@ -8,10 +8,7 @@
 import Foundation
 import TelegramBot
 
-let environment = NSProcessInfo.processInfo().environment
-guard let token = environment["WORD_REVERSE_BOT_TOKEN"] else {
-    fatalError("Please set WORD_REVERSE_BOT_TOKEN environment variable")
-}
+let token = readToken("WORD_REVERSE_BOT_TOKEN")
 
 let bot = TelegramBot(token: token)
 
@@ -35,25 +32,25 @@ class Controller {
     
     func start() {
         guard !started else {
-            bot.respondSync("@\(bot.username) already started.")
+            bot.respondAsync("@\(bot.username) already started.")
             return
         }
         started = true
         
         var startText: String
-        if case .GroupChatType = message.chat {
+        if message.chat.type != .privateChat {
             startText = "@\(bot.username) started. Use '/reverse some text' to reverse the text.\n"
         } else {
             startText = "@\(bot.username) started. Please type some text to reverse.\n"
         }
         startText += "To stop, type /stop"
         
-        bot.respondSync(startText)
+        bot.respondAsync(startText)
     }
     
     func stop() {
         guard started else {
-            bot.respondSync("@\(bot.username) already stopped.")
+            bot.respondAsync("@\(bot.username) already stopped.")
             return
         }
         started = false
@@ -76,8 +73,8 @@ class Controller {
             "\n" +
             "To reverse words, use /word_reverse word1 word2 word3..."
         
-        bot.respondPrivatelySync(helpText,
-            groupText: "\(message.from.firstName), please find usage instructions in a personal message.")
+        bot.respondPrivatelyAsync(helpText,
+            groupText: "\(message.from.first_name), please find usage instructions in a personal message.")
     }
     
     func settings() {
@@ -85,50 +82,55 @@ class Controller {
             "\n" +
             "No settings are available for this bot."
         
-        bot.respondPrivatelySync(settingsText,
-            groupText: "\(message.from.firstName), please find a list of settings in a personal message.")
+        bot.respondPrivatelyAsync(settingsText,
+            groupText: "\(message.from.first_name), please find a list of settings in a personal message.")
     }
 
-    func partialMatchHandler(unmatched: String, args: Arguments, path: Path) {
-        bot.respondSync("❗ Part of your input was ignored: \(unmatched)")
+    func partialMatchHandler(args: Arguments) {
+        bot.respondSync("❗ Part of your input was ignored: \(args.scanRestOfString())")
     }
 
-    func reverseText(args: Arguments) {
-        guard started else { return }
+    func reverseText(args: Arguments) -> Bool {
+        guard started else { return false }
         
-        let text = args["text"].stringValue
-        
-        bot.respondSync(String(text.characters.reversed()))
+        let text = args.scanRestOfString()
+	
+        bot.respondAsync(String(text.characters.reversed()))
+		return true
     }
     
-    func reverseWords(args: Arguments) {
-        guard started else { return }
+    func reverseWords(args: Arguments) -> Bool {
+        guard started else { return false }
         
-        let words = args["words"].stringArrayValue
+        let words = args.scanWords()
         switch words.isEmpty {
-        case true: bot.respondSync("Please specify some words to reverse.")
-		case false: bot.respondSync(words.reversed().joined(separator: " "))
+        case true: bot.respondAsync("Please specify some words to reverse.")
+		case false: bot.respondAsync(words.reversed().joined(separator: " "))
         }
+		return true
     }
 }
 
 let controller = Controller(bot: bot)
 
-let router = Router(partialMatchHandler: controller.partialMatchHandler)
-router.addPath([Command("start")], controller.start)
-router.addPath([Command("stop")], controller.stop)
-router.addPath([Command("help")], controller.help)
-router.addPath([Command("settings")], controller.settings)
-router.addPath([Command("reverse", slash: .Required), RestOfString("text")],
-    controller.reverseText)
-router.addPath([Command("word_reverse"), Word("words")*], controller.reverseWords)
+let router = Router(bot: bot)
+router["start"] = controller.start
+router["stop"] = controller.stop
+router["help"] = controller.help
+router["settings"] = controller.settings
+router["reverse", slash: .Required] = controller.reverseText
+router["word_reverse"] = controller.reverseWords
 // Default handler
-router.addPath([RestOfString("text")], controller.reverseText)
+router.unknownCommand = controller.reverseText
 
 print("Ready to accept commands")
-while let command = bot.nextCommandSync() {
-    print("--- updateId: \(bot.lastUpdate!.updateId)")
-    print("message: \(bot.lastMessage.prettyPrint)")
-    try router.processString(command)
+while let message = bot.nextMessageSync() {
+	print("--- update_id: \(bot.lastUpdate!.update_id)")
+	print("message: \(message.debugDescription)")
+	print("command: \(bot.lastCommand.unwrapOptional)")
+	
+	if let command = bot.lastCommand {
+		try router.process(command)
+	}
 }
 fatalError("Server stopped due to error: \(bot.lastError)")
