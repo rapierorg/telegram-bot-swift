@@ -6,26 +6,24 @@ import Foundation
 public class Router {
 	public typealias Handler = (args: ArgumentScanner) throws -> Bool
 	public typealias Path = (command: Command, handler: Handler)
-    
-    public var allowPartialMatch: Bool = true
-    public var partialMatchHandler: Handler?
+	
     public var caseSensitive: Bool = false
     public var charactersToBeSkipped: NSCharacterSet? = NSCharacterSet.whitespacesAndNewlines()
 
-	public var fallback: Handler?
+	public var bot: TelegramBot
 
-    public init(allowPartialMatch: Bool, partialMatchHandler: Handler? = nil) {
-        
-        self.allowPartialMatch = allowPartialMatch
-        self.partialMatchHandler = partialMatchHandler
+	public lazy var partialMatch: Handler? = { args in
+		self.bot.respondAsync("❗ Part of your input was ignored: \(args.scanRestOfString())")
+		return true
+	}
+	
+	public lazy var unknownCommand: Handler? = { args in
+		self.bot.respondAsync("Unrecognized command: \(args.command). Type /help for help.")
+		return true
+	}
 
-        if allowPartialMatch && partialMatchHandler == nil {
-            print("WARNING: partialMatchHandler not set. Part of user input will be ignored silently.")
-        }
-    }
-
-    public convenience init(partialMatchHandler: Handler? = nil) {
-        self.init(allowPartialMatch: true, partialMatchHandler: partialMatchHandler)
+	public init(bot: TelegramBot) {
+		self.bot = bot
     }
 	
 	public func add(_ command: Command, _ handler: (ArgumentScanner) throws -> Bool) {
@@ -64,21 +62,23 @@ public class Router {
 				continue
 			}
 			
-			let arguments = ArgumentScanner(scanner: scanner, command: command)
+			let args = ArgumentScanner(scanner: scanner, command: command)
 			let handler = path.handler
 
-			if try handler(args: arguments) {
-				return try checkPartialMatch(args: arguments)
+			if try handler(args: args) {
+				return try checkPartialMatch(args: args)
 			}
 			
 			
 			scanner.scanLocation = originalScanLocation
 		}
 
-		if let fallback = fallback {
-			let arguments = ArgumentScanner(scanner: scanner, command: "")
-			if try fallback(args: arguments) {
-				return try checkPartialMatch(args: arguments)
+		if let unknownCommand = unknownCommand {
+			let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
+			let command = scanner.scanUpToCharactersFromSet(whitespaceAndNewline)
+			let args = ArgumentScanner(scanner: scanner, command: command ?? "")
+			if try unknownCommand(args: args) {
+				return try checkPartialMatch(args: args)
 			}
 		}
 		
@@ -91,10 +91,8 @@ public class Router {
 		// Note that scanner.atEnd automatically ignores charactersToBeSkipped
 		if !args.isAtEnd {
 			// Partial match
-			if !allowPartialMatch {
-				if let handler = partialMatchHandler {
-					return try handler(args: args)
-				}
+			if let handler = partialMatch {
+				return try handler(args: args)
 			}
 		}
 		
