@@ -3,8 +3,8 @@
 
 import Foundation
 
-public class ArgumentScanner {
-	typealias T = ArgumentScanner
+public class Arguments {
+	typealias T = Arguments
 	
 	public let scanner: NSScanner
 	public let command: String
@@ -22,6 +22,14 @@ public class ArgumentScanner {
 	
 	public func scanWord() -> String? {
 		return scanner.scanUpToCharactersFromSet(T.whitespaceAndNewline)
+	}
+	
+	public func scanWords() -> [String] {
+		var words = [String]()
+		while let word = scanWord() {
+			words.append(word)
+		}
+		return words
 	}
 
 	public func scanInt() -> Int? {

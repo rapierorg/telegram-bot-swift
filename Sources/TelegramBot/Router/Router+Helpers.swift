@@ -4,55 +4,85 @@
 import Foundation
 
 extension Router {
-	public func add(_ commandString: String, _ handler: (ArgumentScanner) throws -> Bool) {
-		add(Command(commandString), handler)
+	// add() taking string
+	
+	public func add(_ commandString: String, slash: Command.SlashMode = .Optional, _ handler: (Arguments) throws -> Bool) {
+		add(Command(commandString, slash: slash), handler)
 	}
 	
-	public func add(_ commandString: String, _ handler: (ArgumentScanner) throws->()) {
-		add(Command(commandString), handler)
+	public func add(_ commandString: String, slash: Command.SlashMode = .Optional, _ handler: (Arguments) throws->()) {
+		add(Command(commandString, slash: slash), handler)
 	}
 
-	public func add(_ commandString: String, _ handler: () throws->(Bool)) {
-		add(Command(commandString), handler)
+	public func add(_ commandString: String, slash: Command.SlashMode = .Optional, _ handler: () throws->(Bool)) {
+		add(Command(commandString, slash: slash), handler)
 	}
 
-	public func add(_ commandString: String, _ handler: () throws->()) {
-		add(Command(commandString), handler)
+	public func add(_ commandString: String, slash: Command.SlashMode = .Optional, _ handler: () throws->()) {
+		add(Command(commandString, slash: slash), handler)
 	}
 	
-	public subscript(commandString: String) -> (ArgumentScanner) throws -> Bool {
-		get {
-			fatalError("Not implemented")
-		}
-		set {
-			add(Command(commandString), newValue)
-		}
+	// Subscripts taking Command
+	
+	public subscript(command: Command) -> (Arguments) throws->Bool {
+		get { fatalError("Not implemented") }
+		set { add(command, newValue) }
+	}
+	
+	public subscript(command: Command) -> (Arguments) throws->() {
+		get { fatalError("Not implemented") }
+		set { add(command, newValue) }
+	}
+	
+	public subscript(command: Command) -> () throws->Bool {
+		get { fatalError("Not implemented") }
+		set { add(command, newValue) }
+	}
+	
+	public subscript(command: Command) -> () throws->() {
+		get { fatalError("Not implemented") }
+		set { add(command, newValue) }
+	}
+	
+	// Subscripts taking String
+	
+	public subscript(commandString: String) -> (Arguments) throws -> Bool {
+		get { fatalError("Not implemented") }
+		set { add(Command(commandString), newValue) }
 	}
 
-	public subscript(commandString: String) -> (ArgumentScanner) throws->() {
-		get {
-			fatalError("Not implemented")
-		}
-		set {
-			add(Command(commandString), newValue)
-		}
+	public subscript(commandString: String, slash slash: Command.SlashMode) -> (Arguments) throws -> Bool {
+		get { fatalError("Not implemented") }
+		set { add(Command(commandString, slash: slash), newValue) }
+	}
+
+	public subscript(commandString: String) -> (Arguments) throws->() {
+		get { fatalError("Not implemented") }
+		set { add(Command(commandString), newValue) }
+	}
+
+	public subscript(commandString: String, slash slash: Command.SlashMode) -> (Arguments) throws->() {
+		get { fatalError("Not implemented") }
+		set { add(Command(commandString, slash: slash), newValue) }
 	}
 
 	public subscript(commandString: String) -> () throws->(Bool) {
-		get {
-			fatalError("Not implemented")
-		}
-		set {
-			add(Command(commandString), newValue)
-		}
+		get { fatalError("Not implemented") }
+		set { add(Command(commandString), newValue) }
+	}
+
+	public subscript(commandString: String, slash slash: Command.SlashMode) -> () throws->(Bool) {
+		get { fatalError("Not implemented") }
+		set { add(Command(commandString, slash: slash), newValue) }
 	}
 
 	public subscript(commandString: String) -> () throws->() {
-		get {
-			fatalError("Not implemented")
-		}
-		set {
-			add(Command(commandString), newValue)
-		}
+		get { fatalError("Not implemented") }
+		set { add(Command(commandString), newValue) }
+	}
+
+	public subscript(commandString: String, slash slash: Command.SlashMode) -> () throws->() {
+		get { fatalError("Not implemented") }
+		set { add(Command(commandString, slash: slash), newValue) }
 	}
 }
