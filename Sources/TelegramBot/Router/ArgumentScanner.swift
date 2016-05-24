@@ -8,6 +8,10 @@ public class ArgumentScanner {
 	
 	public let scanner: NSScanner
 	public let command: String
+
+	public var isAtEnd: Bool {
+		return scanner.isAtEnd
+	}
 	
 	static let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
 
@@ -49,5 +53,9 @@ public class ArgumentScanner {
 			return ""
 		}
 		return restOfString
+	}
+	
+	public func skipRestOfString() {
+		scanner.skipUpToString("")
 	}
 }

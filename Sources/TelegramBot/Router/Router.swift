@@ -4,17 +4,17 @@
 import Foundation
 
 public class Router {
-	public typealias PartialMatchHandler = (unmatched: String, path: Path)->()
+	public typealias Handler = (args: ArgumentScanner) throws -> Bool
 	public typealias Path = (command: Command, handler: Handler)
     
     public var allowPartialMatch: Bool = true
-    public var partialMatchHandler: PartialMatchHandler?
+    public var partialMatchHandler: Handler?
     public var caseSensitive: Bool = false
     public var charactersToBeSkipped: NSCharacterSet? = NSCharacterSet.whitespacesAndNewlines()
 
-	public var fallbackHandler: Handler?
+	public var fallback: Handler?
 
-    public init(allowPartialMatch: Bool, partialMatchHandler: PartialMatchHandler? = nil) {
+    public init(allowPartialMatch: Bool, partialMatchHandler: Handler? = nil) {
         
         self.allowPartialMatch = allowPartialMatch
         self.partialMatchHandler = partialMatchHandler
@@ -24,28 +24,32 @@ public class Router {
         }
     }
 
-    public convenience init(partialMatchHandler: PartialMatchHandler? = nil) {
+    public convenience init(partialMatchHandler: Handler? = nil) {
         self.init(allowPartialMatch: true, partialMatchHandler: partialMatchHandler)
     }
 	
-	public func add(_ command: Command, _ handler: Handler) {
+	public func add(_ command: Command, _ handler: (ArgumentScanner) throws -> Bool) {
 		paths.append(Path(command, handler))
 	}
-	
+
+	public func add(_ command: Command, _ handler: (ArgumentScanner) throws->()) {
+		add(command) { (args: ArgumentScanner) -> Bool in
+			try handler(args)
+			return true
+		}
+	}
+
     public func add(_ command: Command, _ handler: () throws->(Bool)) {
-        paths.append(Path(command, .CancellableHandlerWithoutArguments(handler)))
+		add(command) {  (_: ArgumentScanner) -> Bool in
+			return try handler()
+		}
     }
 
 	public func add(_ command: Command, _ handler: () throws->()) {
-        paths.append(Path(command, .NonCancellableHandlerWithoutArguments(handler)))
-    }
-
-	public func add(_ command: Command, _ handler: (ArgumentScanner) throws->(Bool)) {
-        paths.append(Path(command, .CancellableHandlerWithArguments(handler)))
-    }
-
-    public func add(_ command: Command, _ handler: (ArgumentScanner) throws->()) {
-        paths.append(Path(command, .NonCancellableHandlerWithArguments(handler)))
+		add(command) {  (args: ArgumentScanner) -> Bool in
+			try handler()
+			return true
+		}
     }
 	
     public func process(_ string: String) throws -> Bool {
@@ -54,28 +58,7 @@ public class Router {
         scanner.charactersToBeSkipped = charactersToBeSkipped
 		let originalScanLocation = scanner.scanLocation
 		
-		var lastPath: Path?
-		
-		// After processing the command, check that no unprocessed text is left
-		defer {
-			// Note that scanner.atEnd automatically ignores charactersToBeSkipped
-			if !scanner.isAtEnd {
-				// Partial match
-				if !allowPartialMatch {
-					if let handler = partialMatchHandler {
-						if let unmatched = scanner.scanUpToString("") {
-							handler(unmatched: unmatched, path: lastPath!)
-						} else {
-							print("Inconsistent scanner state: expected data, got empty string")
-						}
-					}
-				}
-			}
-
-		}
-		
 		for path in paths {
-			lastPath = path
 			guard let command = path.command.fetchFrom(scanner) else {
 				scanner.scanLocation = originalScanLocation
 				continue
@@ -84,41 +67,38 @@ public class Router {
 			let arguments = ArgumentScanner(scanner: scanner, command: command)
 			let handler = path.handler
 
-			if try runHandler(handler, arguments: arguments) {
-				return true
+			if try handler(args: arguments) {
+				return try checkPartialMatch(args: arguments)
 			}
 			
 			
 			scanner.scanLocation = originalScanLocation
 		}
 
-		if let fallbackHandler = fallbackHandler {
+		if let fallback = fallback {
 			let arguments = ArgumentScanner(scanner: scanner, command: "")
-			return try runHandler(fallbackHandler, arguments: arguments)
+			if try fallback(args: arguments) {
+				return try checkPartialMatch(args: arguments)
+			}
 		}
 		
 		return false
     }
 	
-	func runHandler(_ handler: Handler, arguments: ArgumentScanner) throws -> Bool {
-		switch handler {
-		case let .CancellableHandlerWithoutArguments(handler):
-			if try handler() {
-				return true
+	// After processing the command, check that no unprocessed text is left
+	func checkPartialMatch(args: ArgumentScanner) throws -> Bool {
+
+		// Note that scanner.atEnd automatically ignores charactersToBeSkipped
+		if !args.isAtEnd {
+			// Partial match
+			if !allowPartialMatch {
+				if let handler = partialMatchHandler {
+					return try handler(args: args)
+				}
 			}
-		case let .NonCancellableHandlerWithoutArguments(handler):
-			try handler()
-			return true
-		case let .CancellableHandlerWithArguments(handler):
-			if try handler(arguments) {
-				return true
-			}
-		case let .NonCancellableHandlerWithArguments(handler):
-			try handler(arguments)
-			return true
 		}
 		
-		return false
+		return true
 	}
 	
 	var paths = [Path]()
