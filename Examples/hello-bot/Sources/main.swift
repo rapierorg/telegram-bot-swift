@@ -8,31 +8,21 @@
 import Foundation
 import TelegramBot
 
-let environment = NSProcessInfo.processInfo().environment
-guard let token = environment["HELLO_BOT_TOKEN"] else {
-    fatalError("Please set HELLO_BOT_TOKEN environment variable")
-}
+let token = readToken("HELLO_BOT_TOKEN")
 
 let bot = TelegramBot(token: token)
 
-let router = Router()
+let router = Router(bot: bot)
 
-router.add(Command("help")) { () -> () in
+router["help"] = { ()->() in
     let helpText = "Usage: /greet"
     bot.respondPrivatelyAsync(helpText,
         groupText: "\(bot.lastMessage.from.first_name), please find usage instructions in a personal message.")
 }
 
-router.add(Command("greet")) { () -> () in
+router["greet"] = { ()->() in
     bot.respondAsync("Hello, \(bot.lastMessage.from.first_name)!")
 }
-
-// Default handler
-router.fallbackHandler = .NonCancellableHandlerWithArguments({ (args: ArgumentScanner) -> () in
-    let text = args.scanRestOfString()
-    bot.respondAsync("I don't understand \(text).\n" +
-        "Usage: /greet")
-})
 
 print("Ready to accept commands")
 while let message = bot.nextMessageSync() {
