@@ -77,9 +77,10 @@ public class Router {
 			let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
 			let command = scanner.scanUpToCharactersFromSet(whitespaceAndNewline)
 			let args = Arguments(scanner: scanner, command: command ?? "")
-			if try unknownCommand(args: args) {
+			if try !unknownCommand(args: args) {
 				return try checkPartialMatch(args: args)
 			}
+			return true
 		}
 		
 		return false
