@@ -25,7 +25,7 @@ public extension TelegramBot {
 	}
 	
 	/// Get basic info about a file and prepare it for downloading. Asynchronous version.
-	/// - Returns: File object on success. Nil on error, in which case `lastError` contains the details.
+	/// - Returns: File object on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getfile>
 	public func getFileAsync(fileId: String,
 	                             parameters: [String: Any?] = [:],
