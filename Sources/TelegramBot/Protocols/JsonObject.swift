@@ -11,11 +11,6 @@ public protocol JsonObject: CustomDebugStringConvertible {
 }
 
 extension JsonObject {
-	public init(json: JSON = [:]) {
-		self.init()
-		self.json = json
-	}
-	
 	public var debugDescription: String {
 		return json.debugDescription
 	}

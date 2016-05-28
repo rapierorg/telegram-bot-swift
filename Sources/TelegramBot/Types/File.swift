@@ -28,7 +28,7 @@ public class File: JsonObject {
 		set { json["file_path"].string = newValue }
 	}
 
-	public init(_ json: JSON = [:]) {
+	public required init(json: JSON = [:]) {
 		self.json = json
 	}
 }

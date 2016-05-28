@@ -34,7 +34,7 @@ public class Video: JsonObject {
 	}
     /// Video thumbnail.
 	public var thumb: PhotoSize {
-		get { return PhotoSize(json["thumb"]) }
+		get { return PhotoSize(json: json["thumb"]) }
 		set { json["thumb"] = newValue.json }
 	}
 	
@@ -56,7 +56,7 @@ public class Video: JsonObject {
 		set { json["caption"].string = newValue }
 	}
 	
-	public init(_ json: JSON = [:]) {
+	public required init(json: JSON = [:]) {
 		self.json = json
 	}
 }

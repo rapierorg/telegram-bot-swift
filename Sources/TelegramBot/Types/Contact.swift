@@ -33,7 +33,7 @@ public class Contact: JsonObject {
 		set { json["user_id"].string = newValue }
 	}
 	
-	public init(_ json: JSON = [:]) {
+	public required init(json: JSON = [:]) {
 		self.json = json
     }
 }

@@ -17,7 +17,7 @@ public class Document: JsonObject {
 		
     /// Document thumbnail as defined by sender.
 	public var thumb: PhotoSize {
-		get { return PhotoSize(json["thumb"]) }
+		get { return PhotoSize(json: json["thumb"]) }
 		set { json["thumb"] = newValue.json }
 	}
 		
@@ -39,7 +39,7 @@ public class Document: JsonObject {
 		set { json["file_size"].int = newValue }
 	}
 		
-	public init(_ json: JSON = [:]) {
+	public required init(json: JSON = [:]) {
 		self.json = json
 	}
 }

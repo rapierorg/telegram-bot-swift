@@ -19,14 +19,14 @@ public class Update: JsonObject {
 	public var message: Message? {
 		get {
 			let value = json["message"]
-			return value.isNullOrUnknown ? nil : Message(value)
+			return value.isNullOrUnknown ? nil : Message(json: value)
 		}
 		set {
 			json["message"] = newValue?.json ?? nil
 		}
 	}
 	
-	public init(_ json: JSON = [:]) {
+	public required init(json: JSON = [:]) {
 		self.json = json
 	}
 }

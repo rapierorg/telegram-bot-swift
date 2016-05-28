@@ -18,7 +18,7 @@ public class Message: JsonObject {
 		
     /// Sender.
 	public var from: User {
-		get { return User(json["from"]) }
+		get { return User(json: json["from"]) }
 		set { json["from"] = newValue.json }
 	}
 		
@@ -30,7 +30,7 @@ public class Message: JsonObject {
 		
     /// Conversation the message belongs to.
 	public var chat: Chat {
-		get { return Chat(json["chat"]) }
+		get { return Chat(json: json["chat"]) }
 		set { json["chat"] = newValue.json }
 	}
 		
@@ -38,7 +38,7 @@ public class Message: JsonObject {
 	public var forward_from: User? {
 		get {
 			let value = json["forward_from"]
-			return value.isNullOrUnknown ? nil : User(value)
+			return value.isNullOrUnknown ? nil : User(json: value)
 		}
 		set {
 			json["forward_from"] = newValue?.json ?? nil
@@ -55,7 +55,7 @@ public class Message: JsonObject {
 	public var reply_to_message: Message? {
 		get {
 			let value = json["reply_to_message"]
-			return value.isNullOrUnknown ? nil : Message(value)
+			return value.isNullOrUnknown ? nil : Message(json: value)
 		}
 		set {
 			json["reply_to_message"] = newValue?.json ?? nil
@@ -72,7 +72,7 @@ public class Message: JsonObject {
 	public var audio: Audio? {
 		get {
 			let value = json["audio"]
-			return value.isNullOrUnknown ? nil : Audio(value)
+			return value.isNullOrUnknown ? nil : Audio(json: value)
 		}
 		set {
 			json["audio"] = newValue?.json ?? nil
@@ -83,7 +83,7 @@ public class Message: JsonObject {
 	public var document: Document? {
 		get {
 			let value = json["document"]
-			return value.isNullOrUnknown ? nil : Document(value)
+			return value.isNullOrUnknown ? nil : Document(json: value)
 		}
 		set {
 			json["document"] = newValue?.json ?? nil
@@ -97,7 +97,7 @@ public class Message: JsonObject {
 			guard let jsonPhoto = json["photo"].array else { return result }
 			result.reserveCapacity(jsonPhoto.count)
 			for jsonPhotoSize in jsonPhoto {
-				result.append(PhotoSize(jsonPhotoSize))
+				result.append(PhotoSize(json: jsonPhotoSize))
 			}
 			return result
 		}
@@ -119,7 +119,7 @@ public class Message: JsonObject {
 	public var sticker: Sticker? {
 		get {
 			let value = json["sticker"]
-			return value.isNullOrUnknown ? nil : Sticker(value)
+			return value.isNullOrUnknown ? nil : Sticker(json: value)
 		}
 		set {
 			json["sticker"] = newValue?.json ?? nil
@@ -130,7 +130,7 @@ public class Message: JsonObject {
 	public var video: Video? {
 		get {
 			let value = json["video"]
-			return value.isNullOrUnknown ? nil : Video(value)
+			return value.isNullOrUnknown ? nil : Video(json: value)
 		}
 		set {
 			json["video"] = newValue?.json ?? nil
@@ -141,7 +141,7 @@ public class Message: JsonObject {
 	public var contact: Contact? {
 		get {
 			let value = json["contact"]
-			return value.isNullOrUnknown ? nil : Contact(value)
+			return value.isNullOrUnknown ? nil : Contact(json: value)
 		}
 		set {
 			json["contact"] = newValue?.json ?? nil
@@ -152,7 +152,7 @@ public class Message: JsonObject {
 	public var location: Location? {
 		get {
 			let value = json["location"]
-			return value.isNullOrUnknown ? nil : Location(value)
+			return value.isNullOrUnknown ? nil : Location(json: value)
 		}
 		set {
 			json["location"] = newValue?.json ?? nil
@@ -163,7 +163,7 @@ public class Message: JsonObject {
 	public var new_chat_member: User? {
 		get {
 			let value = json["new_chat_member"]
-			return value.isNullOrUnknown ? nil : User(value)
+			return value.isNullOrUnknown ? nil : User(json: value)
 		}
 		set {
 			json["new_chat_member"] = newValue?.json ?? nil
@@ -174,7 +174,7 @@ public class Message: JsonObject {
 	public var left_chat_member: User? {
 		get {
 			let value = json["left_chat_member"]
-			return value.isNullOrUnknown ? nil : User(value)
+			return value.isNullOrUnknown ? nil : User(json: value)
 		}
 		set {
 			json["left_chat_member"] = newValue?.json ?? nil
@@ -194,7 +194,7 @@ public class Message: JsonObject {
 			guard let jsonPhoto = json["new_chat_photo"].array else { return result }
 			result.reserveCapacity(jsonPhoto.count)
 			for jsonPhotoSize in jsonPhoto {
-				result.append(PhotoSize(jsonPhotoSize))
+				result.append(PhotoSize(json: jsonPhotoSize))
 			}
 			return result
 		}
@@ -224,7 +224,7 @@ public class Message: JsonObject {
 		set { json["group_chat_created"].boolValue = newValue }
 	}
 	
-	public init(_ json: JSON = [:]) {
+	public required init(json: JSON = [:]) {
 		self.json = json
 	}
 }

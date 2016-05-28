@@ -42,7 +42,7 @@ public extension TelegramBot {
             result, error in
             var message: Message?
             if error == nil {
-                message = Message(result)
+                message = Message(json: result)
             }
             dispatch_async(queue) {
                 completion?(message: message, error: error)

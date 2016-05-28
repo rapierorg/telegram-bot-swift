@@ -29,7 +29,7 @@ public class Sticker: JsonObject {
 		
     /// Sticker thumbnail in .webp or .jpg format.
 	public var thumb: PhotoSize {
-		get { return PhotoSize(json["thumb"]) }
+		get { return PhotoSize(json: json["thumb"]) }
 		set { json["thumb"] = newValue.json }
 	}
 		
@@ -40,7 +40,7 @@ public class Sticker: JsonObject {
 	}
 		
 	
-	public init(_ json: JSON = [:]) {
+	public required init(json: JSON = [:]) {
 		self.json = json
 	}
 }

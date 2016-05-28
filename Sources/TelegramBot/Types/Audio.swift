@@ -33,7 +33,7 @@ public class Audio: JsonObject {
 		set { json["file_size"].int = newValue }
 	}
 		
-	public init(_ json: JSON = [:]) {
+	public required init(json: JSON = [:]) {
 		self.json = json
     }
 }

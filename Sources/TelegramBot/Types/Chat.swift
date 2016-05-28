@@ -59,7 +59,7 @@ public class Chat: JsonObject {
 		set { json["last_name"].string = newValue }
 	}
 	
-	public init(_ json: JSON = [:]) {
+	public required init(json: JSON = [:]) {
 		self.json = json
 	}
 }

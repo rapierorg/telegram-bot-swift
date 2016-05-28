@@ -33,7 +33,7 @@ public class Response: JsonObject {
 		set { json["result"] = newValue }
 	}
 	
-	public init(_ json: JSON = [:]) {
+	public required init(json: JSON = [:]) {
 		self.json = json
 	}
 }

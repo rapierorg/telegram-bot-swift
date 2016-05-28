@@ -21,7 +21,7 @@ public class Location: JsonObject {
 		set { json["latitude"].floatValue = newValue }
 	}
 		
-	public init(_ json: JSON = [:]) {
+	public required init(json: JSON = [:]) {
 		self.json = json
 	}
 }
