@@ -9,7 +9,7 @@ public class TelegramBot {
     /// - SeeAlso: `public var errorHandler: ErrorHandler?`
     public typealias ErrorHandler = (NSURLSessionDataTask, DataTaskError) -> ()
     
-    public typealias DataTaskCompletion = (result: JSON, error: DataTaskError?)->()
+    public typealias DataTaskCompletion = (json: JSON, error: DataTaskError?)->()
 
 	public typealias RequestParameters = [String: Any?]
 	
@@ -172,7 +172,7 @@ public class TelegramBot {
         guard let actualSelf = self else { return }
 
         if !actualSelf.autoReconnect {
-            taskAssociatedData.completion?(result: nil, error: error)
+            taskAssociatedData.completion?(json: nil, error: error)
             return
         }
         
@@ -187,7 +187,7 @@ public class TelegramBot {
             print("Error: \(error.debugDescription)")
             break
         default:
-            taskAssociatedData.completion?(result: nil, error: error)
+            taskAssociatedData.completion?(json: nil, error: error)
             return
         }
         
@@ -343,7 +343,40 @@ public class TelegramBot {
             }
         }
     }
-    
+	
+	/// Perform synchronous request.
+	/// - Returns: JsonObject on success. Nil on error, in which case `lastError` contains the details.
+	public func syncRequest<Result where Result: JsonObject>(_ endpoint: String, _ parameters: [String: Any?]) -> Result? {
+		
+		var retval: Result!
+		let sem = dispatch_semaphore_create(0)
+		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+		asyncRequest(endpoint, parameters, queue: queue) {
+				(result: Result?, error: DataTaskError?) in
+			retval = result
+			self.lastError = error
+			dispatch_semaphore_signal(sem)
+		}
+		NSRunLoop.current().waitForSemaphore(sem)
+		return retval
+	}
+	
+	/// Perform asynchronous request.
+	/// - Returns: JsonObject on success. Nil on error, in which case `error` contains the details.
+	public func asyncRequest<Result where Result: JsonObject>(_ endpoint: String, _ parameters: [String: Any?], queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Result?, error: DataTaskError?) -> ())?) {
+		
+		startDataTaskForEndpoint(endpoint, parameters: parameters) {
+				json, error in
+			var result: Result?
+			if error == nil {
+				result = Result(json: json)
+			}
+			dispatch_async(queue) {
+				completion?(result: result, error: error)
+			}
+		}
+	}
+	
     private func urlSessionDataTaskCompletion(task: NSURLSessionDataTask, _ dataOrNil: NSData?, _ responseOrNil: NSURLResponse?, _ errorOrNil: NSError?) {
         
         if let error = errorOrNil {
@@ -403,7 +436,7 @@ public class TelegramBot {
                 print("Reconnected to Telegram server")
             }
 
-            taskAssociatedData.completion?(result: result, error: nil)
+            taskAssociatedData.completion?(json: result, error: nil)
         }
     }
 

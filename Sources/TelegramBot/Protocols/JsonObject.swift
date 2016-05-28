@@ -5,11 +5,17 @@ import Foundation
 import SwiftyJSON
 
 public protocol JsonObject: CustomDebugStringConvertible {
-	var json: JSON { get }
+	init(json: JSON)
+	var json: JSON { get set }
 	func prettyPrint()
 }
 
 extension JsonObject {
+	public init(json: JSON = [:]) {
+		self.init()
+		self.json = json
+	}
+	
 	public var debugDescription: String {
 		return json.debugDescription
 	}
