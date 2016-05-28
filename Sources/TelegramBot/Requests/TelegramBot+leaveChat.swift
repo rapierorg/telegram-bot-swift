@@ -4,24 +4,17 @@
 import Foundation
 
 public extension TelegramBot {
-	typealias LeaveChatCompletion = (success: Bool, error: DataTaskError?)->()
+	typealias LeaveChatCompletion = (result: Bool?, error: DataTaskError?)->()
 	
 	/// Leave a group, supergroup or channel. Blocking version.
 	/// - Returns: true on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#leavechat>
 	public func leaveChatSync(chatId: Int,
-	                        parameters: [String: Any?] = [:]) -> Bool? {
-		var result: Bool!
-		let sem = dispatch_semaphore_create(0)
-		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-		leaveChatAsync(chatId: chatId, parameters: parameters, queue: queue) {
-			success, error in
-			result = success
-			self.lastError = error
-			dispatch_semaphore_signal(sem)
-		}
-		NSRunLoop.current().waitForSemaphore(sem)
-		return result
+	                          parameters: [String: Any?] = [:]) -> Bool? {
+		let allParameters: [String: Any?] =
+			defaultParameters["leaveChat"] ?? [:] + parameters +
+			["chat_id": chatId]
+		return syncRequest("leaveChat", allParameters)
 	}
 	
 	/// Leave a group, supergroup or channel. Blocking version.
@@ -29,17 +22,10 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#leavechat>
 	public func leaveChatSync(channelUserName: String,
 	                          parameters: [String: Any?] = [:]) -> Bool? {
-		var result: Bool!
-		let sem = dispatch_semaphore_create(0)
-		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-		leaveChatAsync(channelUserName: channelUserName, parameters: parameters, queue: queue) {
-			success, error in
-			result = success
-			self.lastError = error
-			dispatch_semaphore_signal(sem)
-		}
-		NSRunLoop.current().waitForSemaphore(sem)
-		return result
+		let allParameters: [String: Any?] =
+			defaultParameters["leaveChat"] ?? [:] + parameters +
+			["chat_id": channelUserName]
+		return syncRequest("leaveChat", allParameters)
 	}
 	
 	/// Leave a group, supergroup or channel. Asynchronous version.
@@ -49,21 +35,10 @@ public extension TelegramBot {
 	                         parameters: [String: Any?] = [:],
 	                         queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                         completion: LeaveChatCompletion? = nil) {
-		var allParameters: [String: Any?] = [
-			"chat_id": chatId
-		]
-		allParameters += defaultParameters["leaveChat"]
-		allParameters += parameters
-		startDataTaskForEndpoint("leaveChat", parameters: allParameters) {
-			success, error in
-			var result = false
-			if error == nil {
-				result = result.boolValue
-			}
-			dispatch_async(queue) {
-				completion?(success: result, error: error)
-			}
-		}
+		let allParameters: [String: Any?] =
+			defaultParameters["leaveChat"] ?? [:] + parameters +
+			["chat_id": chatId]
+		asyncRequest("leaveChat", allParameters, queue: queue, completion: completion)
 	}
 	
 	/// Leave a group, supergroup or channel. Asynchronous version.
@@ -73,20 +48,9 @@ public extension TelegramBot {
 	                           parameters: [String: Any?] = [:],
 	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                           completion: LeaveChatCompletion? = nil) {
-		var allParameters: [String: Any?] = [
-			"chat_id": channelUserName
-		]
-		allParameters += defaultParameters["leaveChat"]
-		allParameters += parameters
-		startDataTaskForEndpoint("leaveChat", parameters: allParameters) {
-			success, error in
-			var result = false
-			if error == nil {
-				result = result.boolValue
-			}
-			dispatch_async(queue) {
-				completion?(success: result, error: error)
-			}
-		}
+		let allParameters: [String: Any?] =
+			defaultParameters["leaveChat"] ?? [:] + parameters +
+			["chat_id": channelUserName]
+		asyncRequest("leaveChat", allParameters, queue: queue, completion: completion)
 	}
 }
