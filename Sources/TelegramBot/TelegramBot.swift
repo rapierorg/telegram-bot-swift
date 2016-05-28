@@ -118,9 +118,6 @@ public class TelegramBot {
     /// Last message from the call to `nextMessage` function.
     public lazy var lastMessage: Message = Message()
 
-	/// Last command from the call to `nextMessage` function.
-	public var lastCommand: String?
-
     private let workQueue = dispatch_queue_create("com.zabiyaka.TelegramBot", DISPATCH_QUEUE_SERIAL)
     
     /// To handle network or parse errors,
@@ -281,14 +278,7 @@ public class TelegramBot {
         while let update = nextUpdateSync() {
             guard let message = update.message else { continue }
 			
-			if let text = message.text {
-				lastCommand = text.removeBotName(name)
-				if onlyMyMessages && lastCommand == nil {
-					continue
-				}
-			} else {
-				lastCommand = nil
-			}
+			if onlyMyMessages && !message.addressed(to: self) { continue }
 			
 			lastUpdate = update
 			lastMessage = message
@@ -296,7 +286,6 @@ public class TelegramBot {
         }
 		lastUpdate = nil
 		lastMessage = Message()
-		lastCommand = nil
         return nil
     }
     
