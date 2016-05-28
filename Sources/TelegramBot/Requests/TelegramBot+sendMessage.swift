@@ -4,25 +4,17 @@
 import Foundation
 
 public extension TelegramBot {	
-	typealias SendMessageCompletion = (message: Message?, error: DataTaskError?)->()
+	typealias SendMessageCompletion = (result: Message?, error: DataTaskError?)->()
 	
 	/// Send text message. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
 	public func sendMessageSync(chatId: Int, text: String,
 	                        parameters: [String: Any?] = [:]) -> Message? {
-		var result: Message!
-		let sem = dispatch_semaphore_create(0)
-		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-		sendMessageAsync(chatId: chatId, text: text, parameters:  parameters, queue: queue) {
-			message, error in
-			result = message
-			self.lastError = error
-			dispatch_semaphore_signal(sem)
-		}
-		NSRunLoop.current().waitForSemaphore(sem)
-		//dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
-		return result
+		let allParameters: [String: Any?] =
+			defaultParameters["sendMessage"] ?? [:] + parameters +
+			["chat_id": chatId, "text": text]
+		return syncRequest("sendMessage", allParameters)
 	}
 	
     /// Send text messages. Asynchronous version.
@@ -32,21 +24,9 @@ public extension TelegramBot {
 	                        parameters: [String: Any?] = [:],
 	                        queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                        completion: SendMessageCompletion? = nil) {
-        var allParameters: [String: Any?] = [
-            "chat_id": chatId,
-            "text": text
-        ]
-		allParameters += defaultParameters["sendMessage"]
-		allParameters += parameters
-        startDataTaskForEndpoint("sendMessage", parameters: allParameters) {
-            result, error in
-            var message: Message?
-            if error == nil {
-                message = Message(json: result)
-            }
-            dispatch_async(queue) {
-                completion?(message: message, error: error)
-            }
-        }
+		let allParameters: [String: Any?] =
+			defaultParameters["sendMessage"] ?? [:] + parameters +
+			["chat_id": chatId, "text": text]
+		asyncRequest("sendMessage", allParameters, queue: queue, completion: completion)
     }
 }
