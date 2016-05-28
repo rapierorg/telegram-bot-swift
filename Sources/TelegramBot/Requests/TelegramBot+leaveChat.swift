@@ -14,7 +14,7 @@ public extension TelegramBot {
 		let allParameters: [String: Any?] =
 			defaultParameters["leaveChat"] ?? [:] + parameters +
 			["chat_id": chatId]
-		return syncRequest("leaveChat", allParameters)
+		return requestSync("leaveChat", allParameters)
 	}
 	
 	/// Leave a group, supergroup or channel. Blocking version.
@@ -25,7 +25,7 @@ public extension TelegramBot {
 		let allParameters: [String: Any?] =
 			defaultParameters["leaveChat"] ?? [:] + parameters +
 			["chat_id": channelUserName]
-		return syncRequest("leaveChat", allParameters)
+		return requestSync("leaveChat", allParameters)
 	}
 	
 	/// Leave a group, supergroup or channel. Asynchronous version.
@@ -38,7 +38,7 @@ public extension TelegramBot {
 		let allParameters: [String: Any?] =
 			defaultParameters["leaveChat"] ?? [:] + parameters +
 			["chat_id": chatId]
-		asyncRequest("leaveChat", allParameters, queue: queue, completion: completion)
+		requestAsync("leaveChat", allParameters, queue: queue, completion: completion)
 	}
 	
 	/// Leave a group, supergroup or channel. Asynchronous version.
@@ -51,6 +51,6 @@ public extension TelegramBot {
 		let allParameters: [String: Any?] =
 			defaultParameters["leaveChat"] ?? [:] + parameters +
 			["chat_id": channelUserName]
-		asyncRequest("leaveChat", allParameters, queue: queue, completion: completion)
+		requestAsync("leaveChat", allParameters, queue: queue, completion: completion)
 	}
 }

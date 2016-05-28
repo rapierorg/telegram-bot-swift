@@ -14,7 +14,7 @@ public extension TelegramBot {
 		let allParameters: [String: Any?] =
 			defaultParameters["getFile"] ?? [:] + parameters +
 			["file_id": fileId]
-		return syncRequest("getFile", allParameters)
+		return requestSync("getFile", allParameters)
 	}
 	
 	/// Get basic info about a file and prepare it for downloading. Asynchronous version.
@@ -27,6 +27,6 @@ public extension TelegramBot {
 		let allParameters: [String: Any?] =
 			defaultParameters["getFile"] ?? [:] + parameters +
 			["file_id": fileId]
-		asyncRequest("getFile", allParameters, queue: queue, completion: completion)
+		requestAsync("getFile", allParameters, queue: queue, completion: completion)
 	}
 }

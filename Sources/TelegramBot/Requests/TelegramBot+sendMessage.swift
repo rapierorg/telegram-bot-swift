@@ -14,7 +14,7 @@ public extension TelegramBot {
 		let allParameters: [String: Any?] =
 			defaultParameters["sendMessage"] ?? [:] + parameters +
 			["chat_id": chatId, "text": text]
-		return syncRequest("sendMessage", allParameters)
+		return requestSync("sendMessage", allParameters)
 	}
 	
     /// Send text messages. Asynchronous version.
@@ -27,6 +27,6 @@ public extension TelegramBot {
 		let allParameters: [String: Any?] =
 			defaultParameters["sendMessage"] ?? [:] + parameters +
 			["chat_id": chatId, "text": text]
-		asyncRequest("sendMessage", allParameters, queue: queue, completion: completion)
+		requestAsync("sendMessage", allParameters, queue: queue, completion: completion)
     }
 }

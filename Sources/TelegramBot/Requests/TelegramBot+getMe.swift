@@ -11,7 +11,7 @@ extension TelegramBot {
 	///            Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getme>
 	public func getMeSync() -> User? {
-		return syncRequest("getMe")
+		return requestSync("getMe")
 	}
 	
     /// A simple method for testing your bot's auth token. Requires no parameters. Asynchronous version.
@@ -20,6 +20,6 @@ extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getme>
 	private func getMeAsync(queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                        completion: GetMeCompletion? = nil) {
-		asyncRequest("getMe", completion: completion)
+		requestAsync("getMe", completion: completion)
     }
 }

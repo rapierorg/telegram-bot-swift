@@ -52,7 +52,7 @@ extension TelegramBot {
 		    "limit": limit,
 		    "timeout": timeout
 		]
-		return syncRequest("getUpdates", allParameters)
+		return requestSync("getUpdates", allParameters)
     }
     
 	/// Receive incoming updates using long polling. Asynchronous version.
@@ -64,6 +64,6 @@ extension TelegramBot {
             "limit": limit,
             "timeout": timeout
         ]
-		asyncRequest("getUpdates", allParameters, queue: queue, completion: completion)
+		requestAsync("getUpdates", allParameters, queue: queue, completion: completion)
     }
 }

@@ -6,12 +6,12 @@ import Foundation
 extension TelegramBot {
 	/// Perform synchronous request.
 	/// - Returns: JsonObject on success. Nil on error, in which case `lastError` contains the details.
-	public func syncRequest<Result where Result: JsonObject>(_ endpoint: String, _ parameters: [String: Any?] = [:]) -> Result? {
+	public func requestSync<Result where Result: JsonObject>(_ endpoint: String, _ parameters: [String: Any?] = [:]) -> Result? {
 		
 		var retval: Result!
 		let sem = dispatch_semaphore_create(0)
 		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-		asyncRequest(endpoint, parameters, queue: queue) {
+		requestAsync(endpoint, parameters, queue: queue) {
 			(result: Result?, error: DataTaskError?) in
 			retval = result
 			self.lastError = error
@@ -23,12 +23,12 @@ extension TelegramBot {
 	
 	/// Perform synchronous request.
 	/// - Returns: array of JsonObjects on success. Nil on error, in which case `lastError` contains the details.
-	public func syncRequest<Result where Result: JsonObject>(_ endpoint: String, _ parameters: [String: Any?] = [:]) -> [Result]? {
+	public func requestSync<Result where Result: JsonObject>(_ endpoint: String, _ parameters: [String: Any?] = [:]) -> [Result]? {
 		
 		var retval: [Result]!
 		let sem = dispatch_semaphore_create(0)
 		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-		asyncRequest(endpoint, parameters, queue: queue) {
+		requestAsync(endpoint, parameters, queue: queue) {
 			(result: [Result]?, error: DataTaskError?) in
 			retval = result
 			self.lastError = error
@@ -40,7 +40,7 @@ extension TelegramBot {
 	
 	/// Perform asynchronous request.
 	/// - Returns: JsonObject on success. Nil on error, in which case `error` contains the details.
-	public func asyncRequest<Result where Result: JsonObject>(_ endpoint: String, _ parameters: [String: Any?] = [:], queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Result?, error: DataTaskError?) -> ())?) {
+	public func requestAsync<Result where Result: JsonObject>(_ endpoint: String, _ parameters: [String: Any?] = [:], queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Result?, error: DataTaskError?) -> ())?) {
 		
 		startDataTaskForEndpoint(endpoint, parameters: parameters) {
 			json, error in
@@ -56,7 +56,7 @@ extension TelegramBot {
 	
 	/// Perform asynchronous request.
 	/// - Returns: array of JsonObjects on success. Nil on error, in which case `error` contains the details.
-	public func asyncRequest<Result where Result: JsonObject>(_ endpoint: String, _ parameters: [String: Any?] = [:], queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Result]?, error: DataTaskError?) -> ())?) {
+	public func requestAsync<Result where Result: JsonObject>(_ endpoint: String, _ parameters: [String: Any?] = [:], queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Result]?, error: DataTaskError?) -> ())?) {
 		
 		startDataTaskForEndpoint(endpoint, parameters: parameters) {
 			json, error in
