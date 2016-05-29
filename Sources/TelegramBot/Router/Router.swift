@@ -5,7 +5,7 @@ import Foundation
 
 public class Router {
 	public typealias Handler = (args: Arguments) throws -> Bool
-	public typealias Path = (content: MessageContent, handler: Handler)
+	public typealias Path = (contentType: ContentType, handler: Handler)
 	
     public var caseSensitive: Bool = false
     public var charactersToBeSkipped: NSCharacterSet? = NSCharacterSet.whitespacesAndNewlines()
@@ -22,9 +22,38 @@ public class Router {
 		return true
 	}
 
+	public lazy var unsupportedContentType: Handler? = { args in
+		self.bot.respondAsync("Unsupported content type.")
+		return true
+	}
+
 	public init(bot: TelegramBot) {
 		self.bot = bot
     }
+	
+	public func add(_ contentType: ContentType, _ handler: (Arguments) throws -> Bool) {
+		paths.append(Path(contentType, handler))
+	}
+	
+	public func add(_ contentType: ContentType, _ handler: (Arguments) throws->()) {
+		add(contentType) { (args: Arguments) -> Bool in
+			try handler(args)
+			return true
+		}
+	}
+	
+	public func add(_ contentType: ContentType, _ handler: () throws->(Bool)) {
+		add(contentType) {  (_: Arguments) -> Bool in
+			return try handler()
+		}
+	}
+	
+	public func add(_ contentType: ContentType, _ handler: () throws->()) {
+		add(contentType) {  (args: Arguments) -> Bool in
+			try handler()
+			return true
+		}
+	}
 	
 	public func add(_ command: Command, _ handler: (Arguments) throws -> Bool) {
 		paths.append(Path(.command(command), handler))
@@ -58,10 +87,9 @@ public class Router {
 		let originalScanLocation = scanner.scanLocation
 		
 		for path in paths {
-			scanner.scanLocation = originalScanLocation
-			
 			var command = ""
-			if !match(content: path.content, message: message, commandScanner: scanner, userCommand: &command) {
+			if !match(contentType: path.contentType, message: message, commandScanner: scanner, userCommand: &command) {
+				scanner.scanLocation = originalScanLocation
 				continue;
 			}
 			
@@ -71,23 +99,32 @@ public class Router {
 			if try handler(args: args) {
 				return try checkPartialMatch(args: args)
 			}
+
+			scanner.scanLocation = originalScanLocation
 		}
 
-		if let unknownCommand = unknownCommand {
-			let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
-			let command = scanner.scanUpToCharactersFromSet(whitespaceAndNewline)
-			let args = Arguments(scanner: scanner, command: command ?? "")
-			if try !unknownCommand(args: args) {
-				return try checkPartialMatch(args: args)
+		if !string.isEmpty {
+			if let unknownCommand = unknownCommand {
+				let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
+				let command = scanner.scanUpToCharactersFromSet(whitespaceAndNewline)
+				let args = Arguments(scanner: scanner, command: command ?? "")
+				if try !unknownCommand(args: args) {
+					return try checkPartialMatch(args: args)
+				}
+				return true
 			}
-			return true
+		} else {
+			if let unsupportedContentType = unsupportedContentType {
+				let args = Arguments(scanner: scanner, command: "")
+				return try !unsupportedContentType(args: args)
+			}
 		}
 		
 		return false
     }
 	
-	func match(content: MessageContent, message: Message, commandScanner: NSScanner, userCommand: inout String) -> Bool {
-		switch content {
+	func match(contentType: ContentType, message: Message, commandScanner: NSScanner, userCommand: inout String) -> Bool {
+		switch contentType {
 		case .command(let command):
 			guard let command = command.fetchFrom(commandScanner) else {
 				return false // Does not match path command

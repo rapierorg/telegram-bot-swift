@@ -22,6 +22,28 @@ extension Router {
 		add(Command(commandString, slash: slash), handler)
 	}
 	
+	// Subscripts taking ContentType
+	
+	public subscript(contentType: ContentType) -> (Arguments) throws->Bool {
+		get { fatalError("Not implemented") }
+		set { add(contentType, newValue) }
+	}
+	
+	public subscript(contentType: ContentType) -> (Arguments) throws->() {
+		get { fatalError("Not implemented") }
+		set { add(contentType, newValue) }
+	}
+	
+	public subscript(contentType: ContentType) -> () throws->Bool {
+		get { fatalError("Not implemented") }
+		set { add(contentType, newValue) }
+	}
+	
+	public subscript(contentType: ContentType) -> () throws->() {
+		get { fatalError("Not implemented") }
+		set { add(contentType, newValue) }
+	}
+	
 	// Subscripts taking Command
 	
 	public subscript(command: Command) -> (Arguments) throws->Bool {

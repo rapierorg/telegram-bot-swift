@@ -3,7 +3,7 @@
 
 import Foundation
 
-public enum MessageContent {
+public enum ContentType {
 	case command(Command)
 	case audio
 	case document
