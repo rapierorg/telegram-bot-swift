@@ -6,11 +6,11 @@ import Foundation
 extension Router {
 	// add() taking string
 	
-	public func add(_ commandString: String, slash: Command.SlashMode = .Optional, _ handler: (Arguments) throws -> Bool) {
+	public func add(_ commandString: String, slash: Command.SlashMode = .Optional, _ handler: (Context) throws -> Bool) {
 		add(Command(commandString, slash: slash), handler)
 	}
 	
-	public func add(_ commandString: String, slash: Command.SlashMode = .Optional, _ handler: (Arguments) throws->()) {
+	public func add(_ commandString: String, slash: Command.SlashMode = .Optional, _ handler: (Context) throws->()) {
 		add(Command(commandString, slash: slash), handler)
 	}
 
@@ -24,12 +24,12 @@ extension Router {
 	
 	// Subscripts taking ContentType
 	
-	public subscript(contentType: ContentType) -> (Arguments) throws->Bool {
+	public subscript(contentType: ContentType) -> (Context) throws->Bool {
 		get { fatalError("Not implemented") }
 		set { add(contentType, newValue) }
 	}
 	
-	public subscript(contentType: ContentType) -> (Arguments) throws->() {
+	public subscript(contentType: ContentType) -> (Context) throws->() {
 		get { fatalError("Not implemented") }
 		set { add(contentType, newValue) }
 	}
@@ -46,12 +46,12 @@ extension Router {
 	
 	// Subscripts taking Command
 	
-	public subscript(command: Command) -> (Arguments) throws->Bool {
+	public subscript(command: Command) -> (Context) throws->Bool {
 		get { fatalError("Not implemented") }
 		set { add(command, newValue) }
 	}
 	
-	public subscript(command: Command) -> (Arguments) throws->() {
+	public subscript(command: Command) -> (Context) throws->() {
 		get { fatalError("Not implemented") }
 		set { add(command, newValue) }
 	}
@@ -68,22 +68,22 @@ extension Router {
 	
 	// Subscripts taking String
 	
-	public subscript(commandString: String) -> (Arguments) throws -> Bool {
+	public subscript(commandString: String) -> (Context) throws -> Bool {
 		get { fatalError("Not implemented") }
 		set { add(Command(commandString), newValue) }
 	}
 
-	public subscript(commandString: String, slash slash: Command.SlashMode) -> (Arguments) throws -> Bool {
+	public subscript(commandString: String, slash slash: Command.SlashMode) -> (Context) throws -> Bool {
 		get { fatalError("Not implemented") }
 		set { add(Command(commandString, slash: slash), newValue) }
 	}
 
-	public subscript(commandString: String) -> (Arguments) throws->() {
+	public subscript(commandString: String) -> (Context) throws->() {
 		get { fatalError("Not implemented") }
 		set { add(Command(commandString), newValue) }
 	}
 
-	public subscript(commandString: String, slash slash: Command.SlashMode) -> (Arguments) throws->() {
+	public subscript(commandString: String, slash slash: Command.SlashMode) -> (Context) throws->() {
 		get { fatalError("Not implemented") }
 		set { add(Command(commandString, slash: slash), newValue) }
 	}

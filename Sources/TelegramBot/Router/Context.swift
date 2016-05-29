@@ -3,8 +3,8 @@
 
 import Foundation
 
-public class Arguments {
-	typealias T = Arguments
+public class Context {
+	typealias T = Context
 	
 	public let bot: TelegramBot
 	public let message: Message

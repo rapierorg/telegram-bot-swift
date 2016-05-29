@@ -4,7 +4,7 @@
 import Foundation
 
 public class Router {
-	public typealias Handler = (args: Arguments) throws -> Bool
+	public typealias Handler = (context: Context) throws -> Bool
 	public typealias Path = (contentType: ContentType, handler: Handler)
 	
     public var caseSensitive: Bool = false
@@ -31,49 +31,49 @@ public class Router {
 		self.bot = bot
     }
 	
-	public func add(_ contentType: ContentType, _ handler: (Arguments) throws -> Bool) {
+	public func add(_ contentType: ContentType, _ handler: (Context) throws -> Bool) {
 		paths.append(Path(contentType, handler))
 	}
 	
-	public func add(_ contentType: ContentType, _ handler: (Arguments) throws->()) {
-		add(contentType) { (args: Arguments) -> Bool in
-			try handler(args)
+	public func add(_ contentType: ContentType, _ handler: (Context) throws->()) {
+		add(contentType) { (context: Context) -> Bool in
+			try handler(context)
 			return true
 		}
 	}
 	
 	public func add(_ contentType: ContentType, _ handler: () throws->(Bool)) {
-		add(contentType) {  (_: Arguments) -> Bool in
+		add(contentType) {  (_: Context) -> Bool in
 			return try handler()
 		}
 	}
 	
 	public func add(_ contentType: ContentType, _ handler: () throws->()) {
-		add(contentType) {  (args: Arguments) -> Bool in
+		add(contentType) {  (context: Context) -> Bool in
 			try handler()
 			return true
 		}
 	}
 	
-	public func add(_ command: Command, _ handler: (Arguments) throws -> Bool) {
+	public func add(_ command: Command, _ handler: (Context) throws -> Bool) {
 		paths.append(Path(.command(command), handler))
 	}
 
-	public func add(_ command: Command, _ handler: (Arguments) throws->()) {
-		add(command) { (args: Arguments) -> Bool in
-			try handler(args)
+	public func add(_ command: Command, _ handler: (Context) throws->()) {
+		add(command) { (context: Context) -> Bool in
+			try handler(context)
 			return true
 		}
 	}
 
     public func add(_ command: Command, _ handler: () throws->(Bool)) {
-		add(command) {  (_: Arguments) -> Bool in
+		add(command) {  (_: Context) -> Bool in
 			return try handler()
 		}
     }
 
 	public func add(_ command: Command, _ handler: () throws->()) {
-		add(command) {  (args: Arguments) -> Bool in
+		add(command) {  (context: Context) -> Bool in
 			try handler()
 			return true
 		}
@@ -93,11 +93,11 @@ public class Router {
 				continue;
 			}
 			
-			let args = Arguments(bot: bot, message: message, scanner: scanner, command: command)
+			let context = Context(bot: bot, message: message, scanner: scanner, command: command)
 			let handler = path.handler
 
-			if try handler(args: args) {
-				return try checkPartialMatch(args: args)
+			if try handler(context: context) {
+				return try checkPartialMatch(context: context)
 			}
 
 			scanner.scanLocation = originalScanLocation
@@ -107,16 +107,16 @@ public class Router {
 			if let unknownCommand = unknownCommand {
 				let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
 				let command = scanner.scanUpToCharactersFromSet(whitespaceAndNewline)
-				let args = Arguments(bot: bot, message: message, scanner: scanner, command: command ?? "")
-				if try !unknownCommand(args: args) {
-					return try checkPartialMatch(args: args)
+				let context = Context(bot: bot, message: message, scanner: scanner, command: command ?? "")
+				if try !unknownCommand(context: context) {
+					return try checkPartialMatch(context: context)
 				}
 				return true
 			}
 		} else {
 			if let unsupportedContentType = unsupportedContentType {
-				let args = Arguments(bot: bot, message: message, scanner: scanner, command: "")
-				return try !unsupportedContentType(args: args)
+				let context = Context(bot: bot, message: message, scanner: scanner, command: "")
+				return try !unsupportedContentType(context: context)
 			}
 		}
 		
@@ -157,13 +157,13 @@ public class Router {
 	}
 	
 	// After processing the command, check that no unprocessed text is left
-	func checkPartialMatch(args: Arguments) throws -> Bool {
+	func checkPartialMatch(context: Context) throws -> Bool {
 
 		// Note that scanner.atEnd automatically ignores charactersToBeSkipped
-		if !args.isAtEnd {
+		if !context.isAtEnd {
 			// Partial match
 			if let handler = partialMatch {
-				return try handler(args: args)
+				return try handler(context: context)
 			}
 		}
 		
