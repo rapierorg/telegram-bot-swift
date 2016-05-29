@@ -13,17 +13,17 @@ public class Router {
 	public var bot: TelegramBot
 
 	public lazy var partialMatch: Handler? = { args in
-		self.bot.respondAsync("❗ Part of your input was ignored: \(args.scanRestOfString())")
+		args.bot.sendMessageAsync(chatId: args.message.chat.id, text: "❗ Part of your input was ignored: \(args.scanRestOfString())")
 		return true
 	}
 	
 	public lazy var unknownCommand: Handler? = { args in
-		self.bot.respondAsync("Unrecognized command: \(args.command). Type /help for help.")
+		args.bot.sendMessageAsync(chatId: args.message.chat.id, text: "Unrecognized command: \(args.command). Type /help for help.")
 		return true
 	}
 
 	public lazy var unsupportedContentType: Handler? = { args in
-		self.bot.respondAsync("Unsupported content type.")
+		args.bot.sendMessageAsync(chatId: args.message.chat.id, text: "Unsupported content type.")
 		return true
 	}
 
@@ -93,7 +93,7 @@ public class Router {
 				continue;
 			}
 			
-			let args = Arguments(scanner: scanner, command: command)
+			let args = Arguments(bot: bot, message: message, scanner: scanner, command: command)
 			let handler = path.handler
 
 			if try handler(args: args) {
@@ -107,7 +107,7 @@ public class Router {
 			if let unknownCommand = unknownCommand {
 				let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
 				let command = scanner.scanUpToCharactersFromSet(whitespaceAndNewline)
-				let args = Arguments(scanner: scanner, command: command ?? "")
+				let args = Arguments(bot: bot, message: message, scanner: scanner, command: command ?? "")
 				if try !unknownCommand(args: args) {
 					return try checkPartialMatch(args: args)
 				}
@@ -115,7 +115,7 @@ public class Router {
 			}
 		} else {
 			if let unsupportedContentType = unsupportedContentType {
-				let args = Arguments(scanner: scanner, command: "")
+				let args = Arguments(bot: bot, message: message, scanner: scanner, command: "")
 				return try !unsupportedContentType(args: args)
 			}
 		}

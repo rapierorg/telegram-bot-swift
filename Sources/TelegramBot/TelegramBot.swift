@@ -121,9 +121,6 @@ public class TelegramBot {
 		return update.update_id
 	}
 
-    /// Last message from the call to `nextMessage` function.
-    public lazy var lastMessage: Message = Message()
-
     private let workQueue = dispatch_queue_create("com.zabiyaka.TelegramBot", DISPATCH_QUEUE_SERIAL)
     
     /// To handle network or parse errors,
@@ -287,11 +284,9 @@ public class TelegramBot {
 			if onlyMyMessages && !message.addressed(to: self) { continue }
 			
 			lastUpdate = update
-			lastMessage = message
             return message
         }
 		lastUpdate = nil
-		lastMessage = Message()
         return nil
     }
     

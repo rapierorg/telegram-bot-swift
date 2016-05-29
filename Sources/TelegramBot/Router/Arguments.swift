@@ -6,6 +6,8 @@ import Foundation
 public class Arguments {
 	typealias T = Arguments
 	
+	public let bot: TelegramBot
+	public let message: Message
 	public let scanner: NSScanner
 	public let command: String
 
@@ -15,7 +17,9 @@ public class Arguments {
 	
 	static let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
 
-	init(scanner: NSScanner, command: String) {
+	init(bot: TelegramBot, message: Message, scanner: NSScanner, command: String) {
+		self.bot = bot
+		self.message = message
 		self.scanner = scanner
 		self.command = command
 	}

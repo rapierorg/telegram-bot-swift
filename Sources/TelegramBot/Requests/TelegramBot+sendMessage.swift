@@ -16,7 +16,15 @@ public extension TelegramBot {
 			["chat_id": chatId, "text": text]
 		return requestSync("sendMessage", allParameters)
 	}
-	
+
+	/// Send text message. Blocking version.
+	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
+	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
+	public func sendMessageSync(_ chatId: Int, _ text: String,
+	                            parameters: [String: Any?] = [:]) -> Message? {
+		return sendMessageSync(chatId: chatId, text: text, parameters: parameters)
+	}
+
     /// Send text messages. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
@@ -29,4 +37,14 @@ public extension TelegramBot {
 			["chat_id": chatId, "text": text]
 		requestAsync("sendMessage", allParameters, queue: queue, completion: completion)
     }
+	
+	/// Send text messages. Asynchronous version.
+	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
+	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
+	public func sendMessageAsync(_ chatId: Int, _ text: String,
+	                             parameters: [String: Any?] = [:],
+	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                             completion: SendMessageCompletion? = nil) {
+		sendMessageAsync(chatId: chatId, text: text, parameters: parameters, queue: queue, completion: completion)
+	}
 }
