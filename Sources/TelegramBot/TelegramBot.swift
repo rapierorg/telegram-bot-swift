@@ -109,11 +109,17 @@ public class TelegramBot {
     /// Queue for callbacks in asynchronous versions of requests.
     public var queue = dispatch_get_main_queue()
     
-    /// Last error for use with synchronous requests
+    /// Last error for use with synchronous requests.
     public var lastError: DataTaskError?
     
-    /// Last update from the call to `nextUpdate` function.
-    public var lastUpdate: Update?
+    /// Last update from the call to `nextUpdateSync` or `nextMessageSync` functions.  Do not use in asynchronous method handlers!
+    var lastUpdate: Update?
+	
+	/// Last update from the call to `nextUpdateSync` or `nextMessageSync` functions. Do not use in asynchronous method handlers!
+	public var lastUpdateId: Int {
+		guard let update = lastUpdate else { return 0 }
+		return update.update_id
+	}
 
     /// Last message from the call to `nextMessage` function.
     public lazy var lastMessage: Message = Message()
