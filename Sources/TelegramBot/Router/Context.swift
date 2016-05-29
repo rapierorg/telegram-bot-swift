@@ -8,66 +8,11 @@ public class Context {
 	
 	public let bot: TelegramBot
 	public let message: Message
-	public let scanner: NSScanner
-	public let command: String
-
-	public var isAtEnd: Bool {
-		return scanner.isAtEnd
-	}
-	
-	static let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
+	public let args: Arguments
 
 	init(bot: TelegramBot, message: Message, scanner: NSScanner, command: String) {
 		self.bot = bot
 		self.message = message
-		self.scanner = scanner
-		self.command = command
-	}
-	
-	public func scanWord() -> String? {
-		return scanner.scanUpToCharactersFromSet(T.whitespaceAndNewline)
-	}
-	
-	public func scanWords() -> [String] {
-		var words = [String]()
-		while let word = scanWord() {
-			words.append(word)
-		}
-		return words
-	}
-
-	public func scanInt() -> Int? {
-		guard let word = scanWord() else {
-			return nil
-		}
-		let validator = NSScanner(string: word)
-		validator.charactersToBeSkipped = nil
-		guard let value = validator.scanInt() where validator.isAtEnd else {
-			return nil
-		}
-		return value
-	}
-
-	public func scanDouble() -> Double? {
-		guard let word = scanWord() else {
-			return nil
-		}
-		let validator = NSScanner(string: word)
-		validator.charactersToBeSkipped = nil
-		guard let value = validator.scanDouble() where validator.isAtEnd else {
-			return nil
-		}
-		return value
-	}
-	
-	public func scanRestOfString() -> String {
-		guard let restOfString = scanner.scanUpToString("") else {
-			return ""
-		}
-		return restOfString
-	}
-	
-	public func skipRestOfString() {
-		scanner.skipUpToString("")
+		self.args = Arguments(scanner: scanner, command: command)
 	}
 }

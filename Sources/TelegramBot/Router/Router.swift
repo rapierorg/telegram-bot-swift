@@ -12,18 +12,18 @@ public class Router {
 
 	public var bot: TelegramBot
 
-	public lazy var partialMatch: Handler? = { args in
-		args.bot.sendMessageAsync(chatId: args.message.chat.id, text: "❗ Part of your input was ignored: \(args.scanRestOfString())")
+	public lazy var partialMatch: Handler? = { context in
+		context.bot.sendMessageAsync(chatId: context.message.chat.id, text: "❗ Part of your input was ignored: \(context.args.scanRestOfString())")
 		return true
 	}
 	
-	public lazy var unknownCommand: Handler? = { args in
-		args.bot.sendMessageAsync(chatId: args.message.chat.id, text: "Unrecognized command: \(args.command). Type /help for help.")
+	public lazy var unknownCommand: Handler? = { context in
+		context.bot.sendMessageAsync(chatId: context.message.chat.id, text: "Unrecognized command: \(context.args.command). Type /help for help.")
 		return true
 	}
 
-	public lazy var unsupportedContentType: Handler? = { args in
-		args.bot.sendMessageAsync(chatId: args.message.chat.id, text: "Unsupported content type.")
+	public lazy var unsupportedContentType: Handler? = { context in
+		context.bot.sendMessageAsync(chatId: context.message.chat.id, text: "Unsupported content type.")
 		return true
 	}
 
@@ -160,7 +160,7 @@ public class Router {
 	func checkPartialMatch(context: Context) throws -> Bool {
 
 		// Note that scanner.atEnd automatically ignores charactersToBeSkipped
-		if !context.isAtEnd {
+		if !context.args.isAtEnd {
 			// Partial match
 			if let handler = partialMatch {
 				return try handler(context: context)
