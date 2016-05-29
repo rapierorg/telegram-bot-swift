@@ -11,7 +11,7 @@ extension TelegramBot {
             sendMessageSync(chatId: lastMessage.from.id, text: userText)
         }
         if let groupText = groupText where !groupText.isEmpty {
-            if lastMessage.chat.typeString == "group" {
+            if lastMessage.chat.type != .privateChat {
                 sendMessageSync(chatId: lastMessage.chat.id, text: groupText)
             }
         }
@@ -24,7 +24,7 @@ extension TelegramBot {
 			sendMessageAsync(chatId: lastMessage.from.id, text: userText, completion: userCompletion)
 		}
 		if let groupText = groupText where !groupText.isEmpty {
-			if lastMessage.chat.typeString == "group" {
+			if lastMessage.chat.type != .privateChat {
 				sendMessageAsync(chatId: lastMessage.chat.id, text: groupText, completion: groupCompletion)
 			}
 		}
