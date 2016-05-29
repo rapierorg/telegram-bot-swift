@@ -4,7 +4,7 @@
 import Foundation
 
 extension Message {
-	public func extractCommand(of bot: TelegramBot) -> String? {
+	public func extractCommand(for bot: TelegramBot) -> String? {
 		return text?.without(botName: bot.name) ?? nil
 	}
 	

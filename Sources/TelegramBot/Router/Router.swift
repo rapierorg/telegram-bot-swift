@@ -5,7 +5,7 @@ import Foundation
 
 public class Router {
 	public typealias Handler = (args: Arguments) throws -> Bool
-	public typealias Path = (command: Command, handler: Handler)
+	public typealias Path = (content: MessageContent, handler: Handler)
 	
     public var caseSensitive: Bool = false
     public var charactersToBeSkipped: NSCharacterSet? = NSCharacterSet.whitespacesAndNewlines()
@@ -27,7 +27,7 @@ public class Router {
     }
 	
 	public func add(_ command: Command, _ handler: (Arguments) throws -> Bool) {
-		paths.append(Path(command, handler))
+		paths.append(Path(.command(command), handler))
 	}
 
 	public func add(_ command: Command, _ handler: (Arguments) throws->()) {
@@ -50,16 +50,19 @@ public class Router {
 		}
     }
 	
-    public func process(_ string: String) throws -> Bool {
+    public func process(message: Message) throws -> Bool {
+		let string = message.extractCommand(for: bot) ?? ""
         let scanner = NSScanner(string: string)
         scanner.caseSensitive = caseSensitive
         scanner.charactersToBeSkipped = charactersToBeSkipped
 		let originalScanLocation = scanner.scanLocation
 		
 		for path in paths {
-			guard let command = path.command.fetchFrom(scanner) else {
-				scanner.scanLocation = originalScanLocation
-				continue
+			scanner.scanLocation = originalScanLocation
+			
+			var command = ""
+			if !match(content: path.content, message: message, commandScanner: scanner, userCommand: &command) {
+				continue;
 			}
 			
 			let args = Arguments(scanner: scanner, command: command)
@@ -68,9 +71,6 @@ public class Router {
 			if try handler(args: args) {
 				return try checkPartialMatch(args: args)
 			}
-			
-			
-			scanner.scanLocation = originalScanLocation
 		}
 
 		if let unknownCommand = unknownCommand {
@@ -85,6 +85,39 @@ public class Router {
 		
 		return false
     }
+	
+	func match(content: MessageContent, message: Message, commandScanner: NSScanner, userCommand: inout String) -> Bool {
+		switch content {
+		case .command(let command):
+			guard let command = command.fetchFrom(commandScanner) else {
+				return false // Does not match path command
+			}
+			userCommand = command
+			return true
+		case .audio: return message.audio != nil
+		case .document: return message.document != nil
+		case .photo: return !message.photo.isEmpty
+		case .sticker: return message.sticker != nil
+		case .video: return message.video != nil
+		//case .voice: return message.voice != nil
+		case .contact: return message.contact != nil
+		case .location: return message.location != nil
+		//case .venue: return message.venue != nil
+		case .newChatMember: return message.new_chat_member != nil
+		case .leftChatMember: return message.left_chat_member != nil
+		case .newChatTitle: return message.new_chat_title != nil
+		//case .newChatPhoto: return message.new_chat_photo != nil
+		//case .deleteChatPhoto: return message.delete_chat_photo != nil
+		//case .groupChatCreated: return message.group_chat_created != nil
+		//case .supergroupChatCreated: return message.supergroup_chat_created != nil
+		//case .channelChatCreated: return message.channel_chat_created != nil
+		//case .migrateToChatId: return message.migrate_to_chat_id != nil
+		//case .migrateFromChatId: return message.migrate_from_chat_id != nil
+		//case .pinnedMessage: return message.pinned_message != nil
+		default: break
+		}
+		return false
+	}
 	
 	// After processing the command, check that no unprocessed text is left
 	func checkPartialMatch(args: Arguments) throws -> Bool {
