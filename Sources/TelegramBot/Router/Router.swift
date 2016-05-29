@@ -13,17 +13,17 @@ public class Router {
 	public var bot: TelegramBot
 
 	public lazy var partialMatch: Handler? = { context in
-		context.bot.sendMessageAsync(chatId: context.message.chat.id, text: "❗ Part of your input was ignored: \(context.args.scanRestOfString())")
+		context.respondAsync("❗ Part of your input was ignored: \(context.args.scanRestOfString())")
 		return true
 	}
 	
 	public lazy var unknownCommand: Handler? = { context in
-		context.bot.sendMessageAsync(chatId: context.message.chat.id, text: "Unrecognized command: \(context.args.command). Type /help for help.")
+		context.respondAsync("Unrecognized command: \(context.args.command). Type /help for help.")
 		return true
 	}
 
 	public lazy var unsupportedContentType: Handler? = { context in
-		context.bot.sendMessageAsync(chatId: context.message.chat.id, text: "Unsupported content type.")
+		context.respondAsync("Unsupported content type.")
 		return true
 	}
 
