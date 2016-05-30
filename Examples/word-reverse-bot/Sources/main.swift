@@ -10,54 +10,47 @@ import TelegramBot
 
 let token = readToken("WORD_REVERSE_BOT_TOKEN")
 
-let bot = TelegramBot(token: token)
-
 class Controller {
     let bot: TelegramBot
-    var message: Message { return bot.lastMessage }
     var startedInChatId = Set<Int>()
-    var started: Bool {
-        get { return startedInChatId.contains(message.chat.id) }
-        set {
-            switch newValue {
-            case true: startedInChatId.insert(message.chat.id)
-            case false: startedInChatId.remove(message.chat.id)
-            }
-        }
-    }
+	
+	func started(in chatId: Int) -> Bool {
+		return startedInChatId.contains(chatId)
+ 	}
 
     init(bot: TelegramBot) {
         self.bot = bot
     }
     
-    func start() {
-        guard !started else {
-            bot.respondAsync("@\(bot.username) already started.")
+	func start(context: Context) {
+		guard !started(in: context.chatId) else {
+            context.respondAsync("@\(bot.username) already started.")
             return
         }
-        started = true
+        startedInChatId.insert(context.chatId)
         
         var startText: String
-        if message.chat.type != .privateChat {
+        if !context.privateChat {
             startText = "@\(bot.username) started. Use '/reverse some text' to reverse the text.\n"
         } else {
             startText = "@\(bot.username) started. Please type some text to reverse.\n"
         }
         startText += "To stop, type /stop"
         
-        bot.respondAsync(startText)
+        context.respondAsync(startText)
     }
     
-    func stop() {
-        guard started else {
-            bot.respondAsync("@\(bot.username) already stopped.")
+	func stop(context: Context) {
+		guard started(in: context.chatId) else {
+            context.respondAsync("@\(bot.username) already stopped.")
             return
         }
-        started = false
-        bot.respondSync("@\(bot.username) stopped. To restart, type /start")
+		startedInChatId.remove(context.chatId)
+		
+        context.respondSync("@\(bot.username) stopped. To restart, type /start")
     }
     
-    func help() {
+	func help(context: Context) {
         let helpText = "What can this bot do?\n" +
             "\n" +
             "This is a sample bot which reverses sentences or words. " +
@@ -73,44 +66,46 @@ class Controller {
             "\n" +
             "To reverse words, use /word_reverse word1 word2 word3..."
         
-        bot.respondPrivatelyAsync(helpText,
-            groupText: "\(message.from.first_name), please find usage instructions in a personal message.")
+        context.respondPrivatelyAsync(helpText,
+            groupText: "\(context.message.from.first_name), please find usage instructions in a personal message.")
     }
     
-    func settings() {
+	func settings(context: Context) {
         let settingsText = "Settings\n" +
             "\n" +
             "No settings are available for this bot."
         
-        bot.respondPrivatelyAsync(settingsText,
-            groupText: "\(message.from.first_name), please find a list of settings in a personal message.")
+        context.respondPrivatelyAsync(settingsText,
+            groupText: "\(context.message.from.first_name), please find a list of settings in a personal message.")
     }
 
-    func partialMatchHandler(args: Arguments) {
-        bot.respondSync("❗ Part of your input was ignored: \(args.scanRestOfString())")
+    func partialMatchHandler(context: Context) -> Bool {
+        context.respondAsync("❗ Part of your input was ignored: \(context.args.scanRestOfString())")
+		return true
     }
 
-    func reverseText(args: Arguments) -> Bool {
-        guard started else { return false }
-        
-        let text = args.scanRestOfString()
+    func reverseText(context: Context) -> Bool {
+		guard started(in: context.chatId) else { return false }
+		
+        let text = context.args.scanRestOfString()
 	
-        bot.respondAsync(String(text.characters.reversed()))
+        context.respondAsync(String(text.characters.reversed()))
 		return true
     }
     
-    func reverseWords(args: Arguments) -> Bool {
-        guard started else { return false }
-        
-        let words = args.scanWords()
+    func reverseWords(context: Context) -> Bool {
+		guard started(in: context.chatId) else { return false }
+		
+        let words = context.args.scanWords()
         switch words.isEmpty {
-        case true: bot.respondAsync("Please specify some words to reverse.")
-		case false: bot.respondAsync(words.reversed().joined(separator: " "))
+        case true: context.respondAsync("Please specify some words to reverse.")
+		case false: context.respondAsync(words.reversed().joined(separator: " "))
         }
 		return true
     }
 }
 
+let bot = TelegramBot(token: token)
 let controller = Controller(bot: bot)
 
 let router = Router(bot: bot)
@@ -122,15 +117,15 @@ router["reverse", slash: .Required] = controller.reverseText
 router["word_reverse"] = controller.reverseWords
 // Default handler
 router.unknownCommand = controller.reverseText
+// If command has unprocessed arguments, report them:
+router.partialMatch = controller.partialMatchHandler
 
 print("Ready to accept commands")
 while let message = bot.nextMessageSync() {
-	print("--- update_id: \(bot.lastUpdate!.update_id)")
+	print("--- update_id: \(bot.lastUpdateId)")
 	print("message: \(message.debugDescription)")
-	print("command: \(bot.lastCommand.unwrapOptional)")
 	
-	if let command = bot.lastCommand {
-		try router.process(command)
-	}
+	try router.process(message: message)
 }
 fatalError("Server stopped due to error: \(bot.lastError)")
+
