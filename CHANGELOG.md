@@ -1,5 +1,31 @@
 # telegram-bot-swift changelog
 
+## 0.5.1 (2016-05-31)
+
+Added `ReplyKeyboardMarkup` which can be used with `Strings`:
+
+```swift
+        let markup = ReplyKeyboardMarkup()
+        markup.keyboardStrings = [["/a", "/b"], ["/c", "/d"]]
+        context.respondAsync("Simple keyboard", parameters: ["reply_markup": markup])
+```
+
+Or with `KeyboardButtons`:
+
+```swift
+        let button1 = KeyboardButton()
+        button1.text = "Request contact"
+        button1.request_contact = true
+        
+        let button2 = KeyboardButton()
+        button2.text = "Request location"
+        button2.request_location = true
+
+        markup.keyboardButtons = [ [ button1, button2 ] ]
+
+        context.respondAsync("Another keyboard", parameters: ["reply_markup": markup])
+```
+
 ## 0.5.0 (2016-05-30)
 
 ### Message context
