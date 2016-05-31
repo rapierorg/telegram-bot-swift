@@ -12,38 +12,34 @@ public class ReplyKeyboardMarkup: JsonObject {
     /// Array of button rows, each represented by an Array of Strings.
 	public var keyboardStrings: [[String]] {
 		get {
-			let keyboardJson = json["keyboard"].arrayValue
-			var result = [[String]]()
-			result.reserveCapacity(keyboardJson.count)
-			for rowJson in keyboardJson {
-				var row = [String]()
-				row.reserveCapacity(rowJson.count)
-				for columnJson in rowJson.arrayValue {
-					row.append(columnJson.stringValue)
-				}
-				result.append(row)
-			}
-			return result
+			return json["keyboard"].twoDArrayValue()
 		}
 		set {
+			json["keyboard"] = JSON(newValue)
+		}
+	}
+	
+    /// Array of button rows, each represented by an Array of KeyboardButton.
+	public var keyboardButtons: [[KeyboardButton]] {
+		get {
+			return json["keyboard"].twoDArrayValue()
+		}
+		set {
+			//json["keyboard"] = JSON(newValue)
 			var rowsJson = [JSON]()
 			rowsJson.reserveCapacity(newValue.count)
 			for row in newValue {
-				let rowJson = JSON(row)
-				rowsJson.append(rowJson)
+				var colsJson = [JSON]()
+				colsJson.reserveCapacity(row.count)
+				for col in row {
+					let json = col.json
+					colsJson.append(json)
+				}
+				rowsJson.append(JSON(colsJson))
 			}
 			json["keyboard"] = JSON(rowsJson)
 		}
 	}
-	
-//	public var keyboardButtons: [[KeyboardButton]] {
-//		get {
-//			
-//		}
-//		set {
-//			
-//		}
-//	}
 
     /// *Optional.* Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to false, in which case the custom keyboard is always of the same height as the app's standard keyboard.
 	public var resize_keyboard: Bool? {
