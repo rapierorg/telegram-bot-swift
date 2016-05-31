@@ -11,6 +11,10 @@ public protocol JsonObject: CustomDebugStringConvertible {
 }
 
 extension JsonObject {
+	public var description: String {
+		return json.rawString(encoding: NSUTF8StringEncoding, options: []) ?? ""
+	}
+	
 	public var debugDescription: String {
 		return json.debugDescription
 	}
