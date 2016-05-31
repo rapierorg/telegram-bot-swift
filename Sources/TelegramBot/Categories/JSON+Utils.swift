@@ -14,4 +14,22 @@ extension SwiftyJSON.JSON {
 	public func prettyPrint() {
 		print(debugDescription)
 	}
+	
+	func twoDArrayValue<T>() -> [[T]] {
+		let json = arrayValue
+		var result = [[T]]()
+		result.reserveCapacity(json.count)
+		for rowJson in json {
+			var row = [T]()
+			row.reserveCapacity(rowJson.count)
+			for columnJson in rowJson.arrayValue {
+				guard let value = columnJson.rawValue as? T else {
+					continue
+				}
+				row.append(value)
+			}
+			result.append(row)
+		}
+		return result
+	}
 }
