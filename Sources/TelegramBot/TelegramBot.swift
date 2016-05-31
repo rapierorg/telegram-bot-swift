@@ -112,15 +112,6 @@ public class TelegramBot {
     /// Last error for use with synchronous requests.
     public var lastError: DataTaskError?
     
-    /// Last update from the call to `nextUpdateSync` or `nextMessageSync` functions.  Do not use in asynchronous method handlers!
-    var lastUpdate: Update?
-	
-	/// Last update from the call to `nextUpdateSync` or `nextMessageSync` functions. Do not use in asynchronous method handlers!
-	public var lastUpdateId: Int {
-		guard let update = lastUpdate else { return 0 }
-		return update.update_id
-	}
-
     private let workQueue = dispatch_queue_create("com.zabiyaka.TelegramBot", DISPATCH_QUEUE_SERIAL)
     
     /// To handle network or parse errors,
@@ -266,27 +257,23 @@ public class TelegramBot {
         //print("Deinit")
     }
     
-    /// Returns next message addressed to this bot.
+    /// Returns next update for this bot.
     ///
-    /// Associated message can be retrieved using `lastMessage` property.
-    ///
-    /// Associated update can be retrieved using `lastUpdate` property.
-    ///
-    /// This function blocks while fetching updates from the server.
+    /// Blocks while fetching updates from the server.
     ///
 	/// - Parameter mineOnly: Ignore commands not addressed to me, i.e. `/command@another_bot`.
-    /// - Returns: Message. Nil on error, in which case details
+    /// - Returns: `Update`. `Nil` on error, in which case details
     ///   can be obtained from `lastError` property.
-	public func nextMessageSync(onlyMyMessages: Bool = true) -> Message? {
+	public func nextUpdateSync(onlyMine: Bool = true) -> Update? {
         while let update = nextUpdateSync() {
-            guard let message = update.message else { continue }
+			if onlyMine {
+	            if let message = update.message where !message.addressed(to: self) {
+					continue
+				}
+			}
 			
-			if onlyMyMessages && !message.addressed(to: self) { continue }
-			
-			lastUpdate = update
-            return message
+            return update
         }
-		lastUpdate = nil
         return nil
     }
     

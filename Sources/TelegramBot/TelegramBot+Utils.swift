@@ -16,13 +16,15 @@ extension TelegramBot {
 		sendMessageSync(chatId: chatId, text: TelegramBot.unhandledErrorText)
 	}
 	
-	public func reportErrorAsync(chatId: Int, text: String, errorDescription: String, completion: SendMessageCompletion? = nil) {
+	public func reportErrorAsync(chatId: Int?, text: String, errorDescription: String, completion: SendMessageCompletion? = nil) {
 		print("ERROR: \(errorDescription)")
+		guard let chatId = chatId else { return }
 		sendMessageAsync(chatId: chatId, text: text, completion: completion)
 	}
 	
-	public func reportErrorAsync(chatId: Int, errorDescription: String, completion: SendMessageCompletion? = nil) {
+	public func reportErrorAsync(chatId: Int?, errorDescription: String, completion: SendMessageCompletion? = nil) {
 		print("ERROR: \(errorDescription)")
+		guard let chatId = chatId else { return }
 		sendMessageAsync(chatId: chatId, text: TelegramBot.unhandledErrorText, completion: completion)
 	}
 }

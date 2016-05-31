@@ -7,6 +7,7 @@ public class Context {
 	typealias T = Context
 	
 	public let bot: TelegramBot
+	public let update: Update
 	public let message: Message
 	public let args: Arguments
 
@@ -14,9 +15,10 @@ public class Context {
 	public var chatId: Int { return message.chat.id }
 	public var fromId: Int { return message.from.id }
 	
-	init(bot: TelegramBot, message: Message, scanner: NSScanner, command: String) {
+	init(bot: TelegramBot, update: Update, scanner: NSScanner, command: String) {
 		self.bot = bot
-		self.message = message
+		self.update = update
+		self.message = update.message ?? Message()
 		self.args = Arguments(scanner: scanner, command: command)
 	}
 	

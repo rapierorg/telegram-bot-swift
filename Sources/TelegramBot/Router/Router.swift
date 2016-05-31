@@ -79,8 +79,8 @@ public class Router {
 		}
     }
 	
-    public func process(message: Message) throws -> Bool {
-		let string = message.extractCommand(for: bot) ?? ""
+    public func process(update: Update) throws -> Bool {
+		let string = update.message?.extractCommand(for: bot) ?? ""
         let scanner = NSScanner(string: string)
         scanner.caseSensitive = caseSensitive
         scanner.charactersToBeSkipped = charactersToBeSkipped
@@ -88,12 +88,12 @@ public class Router {
 		
 		for path in paths {
 			var command = ""
-			if !match(contentType: path.contentType, message: message, commandScanner: scanner, userCommand: &command) {
+			if !match(contentType: path.contentType, update: update, commandScanner: scanner, userCommand: &command) {
 				scanner.scanLocation = originalScanLocation
 				continue;
 			}
 			
-			let context = Context(bot: bot, message: message, scanner: scanner, command: command)
+			let context = Context(bot: bot, update: update, scanner: scanner, command: command)
 			let handler = path.handler
 
 			if try handler(context: context) {
@@ -107,7 +107,7 @@ public class Router {
 			if let unknownCommand = unknownCommand {
 				let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
 				let command = scanner.scanUpToCharactersFromSet(whitespaceAndNewline)
-				let context = Context(bot: bot, message: message, scanner: scanner, command: command ?? "")
+				let context = Context(bot: bot, update: update, scanner: scanner, command: command ?? "")
 				if try !unknownCommand(context: context) {
 					return try checkPartialMatch(context: context)
 				}
@@ -115,7 +115,7 @@ public class Router {
 			}
 		} else {
 			if let unsupportedContentType = unsupportedContentType {
-				let context = Context(bot: bot, message: message, scanner: scanner, command: "")
+				let context = Context(bot: bot, update: update, scanner: scanner, command: "")
 				return try !unsupportedContentType(context: context)
 			}
 		}
@@ -123,7 +123,10 @@ public class Router {
 		return false
     }
 	
-	func match(contentType: ContentType, message: Message, commandScanner: NSScanner, userCommand: inout String) -> Bool {
+	func match(contentType: ContentType, update: Update, commandScanner: NSScanner, userCommand: inout String) -> Bool {
+		
+		guard let message = update.message else { return false }
+		
 		switch contentType {
 		case .command(let command):
 			guard let command = command.fetchFrom(commandScanner) else {
