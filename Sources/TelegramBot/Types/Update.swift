@@ -26,6 +26,17 @@ public class Update: JsonObject {
 		}
 	}
 	
+	/// *Optional.* New version of a message that is known to the bot and was edited.
+	public var edited_message: Message? {
+		get {
+			let value = json["edited_message"]
+			return value.isNullOrUnknown ? nil : Message(json: value)
+		}
+		set {
+			json["edited_message"] = newValue?.json ?? nil
+		}
+	}
+	
 	public required init(json: JSON = [:]) {
 		self.json = json
 	}
