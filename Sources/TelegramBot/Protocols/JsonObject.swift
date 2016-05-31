@@ -4,7 +4,7 @@
 import Foundation
 import SwiftyJSON
 
-public protocol JsonObject: CustomDebugStringConvertible {
+public protocol JsonObject: CustomStringConvertible, CustomDebugStringConvertible {
 	init(json: JSON)
 	var json: JSON { get set }
 	func prettyPrint()
