@@ -4,7 +4,8 @@
 import Foundation
 import SwiftyJSON
 
-// Represents a video file.
+/// Represents a video file.
+/// - SeeAlso: <https://core.telegram.org/bots/api#video>
 public class Video: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON

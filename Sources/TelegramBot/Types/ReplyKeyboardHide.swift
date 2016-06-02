@@ -5,40 +5,24 @@ import Foundation
 import SwiftyJSON
 
 /// Upon receiving a message with this object, Telegram clients will hide the current custom keyboard and display the default letter-keyboard.
+/// - SeeAlso: <https://core.telegram.org/bots/api#replykeyboardhide>
 public class ReplyKeyboardHide {
-
-    /// Requests clients to hide the custom keyboard.
-    public let hideKeyboard = true
-    
+	/// Original JSON for fields not yet added to Swift structures.
+	public var json: JSON
+	
+	/// *Optional.* Requests clients to hide the custom keyboard.
+	public var hide_keyboard: Bool {
+		get { return json["hide_keyboard"].boolValue }
+		set { json["hide_keyboard"].boolValue = newValue }
+	}
+	
     /// *Optional.* Use this parameter if you want to hide keyboard for specific users only.
-    public var selective: Bool?
-    
-    /// Create an empty instance.
-    public init() {
-    }
-    
-    public var prettyPrint: String {
-        return debugDescription
-    }
-}
-
-extension ReplyKeyboardHide: CustomStringConvertible {
-    public var description: String {
-        var json = JSON([:])
-        
-        json["hide_keyboard"].boolValue = hideKeyboard
-
-        if let selective = selective {
-            json["selective"].boolValue = selective
-        }
-        return json.rawString(encoding: NSUTF8StringEncoding, options: []) ?? ""
-    }
-}
-
-extension ReplyKeyboardHide: CustomDebugStringConvertible {
-    // MARK: CustomDebugStringConvertible
-    public var debugDescription: String {
-        return "ReplyKeyboardHide(hideKeyboard: \(hideKeyboard), " +
-            "selective: \(selective.unwrapOptional))"
-    }
+	public var selective: Bool {
+		get { return json["selective"].boolValue }
+		set { json["selective"].boolValue = newValue }
+	}
+	
+	public required init(json: JSON = [:]) {
+		self.json = json
+	}
 }

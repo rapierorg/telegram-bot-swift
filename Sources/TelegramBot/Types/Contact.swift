@@ -5,6 +5,7 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a phone contact.
+/// - SeeAlso: <https://core.telegram.org/bots/api#contact>
 public class Contact: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON

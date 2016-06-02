@@ -5,11 +5,12 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a chat.
+/// - SeeAlso: <https://core.telegram.org/bots/api#chat>
 public class Chat: JsonObject {
 	public enum ChatType: String {
 		case privateChat = "private"
 		case group = "group"
-		case superGroup = "superGroup"
+		case superGroup = "supergroup"
 		case channel = "channel"
 		case unknown = ""
 	}
@@ -17,10 +18,10 @@ public class Chat: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
-	/// Unique identifier for this chat, not exceeding 1e13 by absolute value
-	public var id: Int {
-		get { return json["id"].intValue }
-		set { json["id"].intValue = newValue }
+	/// Unique identifier for this chat (52 bits are used)
+	public var id: Int64 {
+		get { return json["id"].int64Value }
+		set { json["id"].int64Value = newValue }
 	}
 	
 	/// Type of chat, can be either “private”, “group”, “supergroup” or “channel”

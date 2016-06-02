@@ -4,7 +4,8 @@
 import Foundation
 import SwiftyJSON
 
-// Represents an audio file (voice note).
+/// Represents an audio file to be treated as music by the Telegram clients.
+/// - SeeAlso: <https://core.telegram.org/bots/api#audio>
 public class Audio: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
@@ -20,7 +21,19 @@ public class Audio: JsonObject {
 		get { return json["duration"].intValue }
 		set { json["duration"].intValue = newValue }
 	}
-		
+	
+	/// *Optional.* Performer of the audio as defined by sender or by audio tags.
+	public var performer: String? {
+		get { return json["performer"].string }
+		set { json["performer"].string = newValue }
+	}
+	
+	/// *Optional.* Title of the audio as defined by sender or by audio tags.
+	public var title: String? {
+		get { return json["title"].string }
+		set { json["title"].string = newValue }
+	}
+	
     /// *Optional.* MIME type of the file as defined by sender.
 	public var mime_type: String? {
 		get { return json["mime_type"].string }

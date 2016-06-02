@@ -4,10 +4,10 @@
 import Foundation
 import SwiftyJSON
 
-/// Represzents a message.
+/// Represents a message.
 /// - SeeAlso: <https://core.telegram.org/bots/api#message>
 public class Message: JsonObject {
-	/// Original JSON for fields not yet added to Swift structures
+	/// Original JSON for fields not yet added to Swift structures.
 	public var json: JSON
 
     /// Unique message identifier.
@@ -44,11 +44,22 @@ public class Message: JsonObject {
 			json["forward_from"] = newValue?.json ?? nil
 		}
 	}
-		
+
+	/// *Optional.* For messages forwarded from a channel, information about the original channel.
+	public var forward_from_chat: Chat? {
+		get {
+			let value = json["forward_from_chat"]
+			return value.isNullOrUnknown ? nil : Chat(json: value)
+		}
+		set {
+			json["forward_from_chat"] = newValue?.json ?? nil
+		}
+	}
+
     /// *Optional.* For forwarded messages, date the original message was sent in Unix time.
 	public var forward_date: Int? {
 		get { return json["forward_date"].int }
-		set {json["forward_date"].int = newValue }
+		set { json["forward_date"].int = newValue }
 	}
 		
     /// *Optional.* For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
@@ -61,11 +72,27 @@ public class Message: JsonObject {
 			json["reply_to_message"] = newValue?.json ?? nil
 		}
 	}
-		
-    /// *Optional.* For text messages, the actual UTF-8 text of the message.
+	
+	/// *Optional.* Date the message was last edited in Unix time.
+	public var edit_date: Int? {
+		get { return json["edit_date"].int }
+		set { json["edit_date"].int = newValue }
+	}
+	
+    /// *Optional.* For text messages, the actual UTF-8 text of the message, 0-4096 characters.
 	public var text: String? {
 		get { return json["text"].string }
 		set { json["text"].string = newValue }
+	}
+	
+	/// *Optional.* For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
+	public var entities: [MessageEntity] {
+		get {
+			return json["entities"].arrayValue()
+		}
+		set {
+			json["entities"] = newValue.isEmpty ? nil : JSON(newValue)
+		}
 	}
 		
     /// *Optional.* Message is an audio file, information about the file.
@@ -93,25 +120,10 @@ public class Message: JsonObject {
     /// *Optional.* Message is a photo, available sizes of the photo.
 	public var photo: [PhotoSize] {
 		get {
-			var result = [PhotoSize]()
-			guard let jsonPhoto = json["photo"].array else { return result }
-			result.reserveCapacity(jsonPhoto.count)
-			for jsonPhotoSize in jsonPhoto {
-				result.append(PhotoSize(json: jsonPhotoSize))
-			}
-			return result
+			return json["photo"].arrayValue()
 		}
 		set {
-			guard !newValue.isEmpty else {
-				json["photo"] = nil
-				return
-			}
-			var jsonPhoto = [JSON]()
-			jsonPhoto.reserveCapacity(newValue.count)
-			for photoSize in photo {
-				jsonPhoto.append(photoSize.json)
-			}
-			json["photo"] = JSON(jsonPhoto)
+			json["photo"] = newValue.isEmpty ? nil : JSON(newValue)
 		}
 	}
 	
@@ -136,7 +148,24 @@ public class Message: JsonObject {
 			json["video"] = newValue?.json ?? nil
 		}
 	}
-		
+	
+	/// *Optional.* Message is a voice message, information about the file.
+	public var voice: Voice? {
+		get {
+			let value = json["voice"]
+			return value.isNullOrUnknown ? nil : Voice(json: value)
+		}
+		set {
+			json["voice"] = newValue?.json ?? nil
+		}
+	}
+	
+	/// *Optional.* Caption for the document, photo or video, 0-200 characters.
+	public var caption: String? {
+		get { return json["caption"].string }
+		set { json["caption"].string = newValue }
+	}
+	
     /// *Optional.* Message is a shared contact, information about the contact.
 	public var contact: Contact? {
 		get {
@@ -158,7 +187,18 @@ public class Message: JsonObject {
 			json["location"] = newValue?.json ?? nil
 		}
 	}
-		
+
+	/// *Optional.* Message is a venue, information about the venue.
+	public var venue: Venue? {
+		get {
+			let value = json["venue"]
+			return value.isNullOrUnknown ? nil : Venue(json: value)
+		}
+		set {
+			json["venue"] = newValue?.json ?? nil
+		}
+	}
+	
     /// *Optional.* A new member was added to the group, information about them (this member may be bot itself).
 	public var new_chat_member: User? {
 		get {
@@ -190,38 +230,58 @@ public class Message: JsonObject {
     /// *Optional.* A group photo was changed to this value.
 	public var new_chat_photo: [PhotoSize] {
 		get {
-			var result = [PhotoSize]()
-			guard let jsonPhoto = json["new_chat_photo"].array else { return result }
-			result.reserveCapacity(jsonPhoto.count)
-			for jsonPhotoSize in jsonPhoto {
-				result.append(PhotoSize(json: jsonPhotoSize))
-			}
-			return result
+			return json["new_chat_photo"].arrayValue()
 		}
 		set {
-			guard !newValue.isEmpty else {
-				json["new_chat_photo"] = nil
-				return
-			}
-			var jsonPhoto = [JSON]()
-			jsonPhoto.reserveCapacity(newValue.count)
-			for photoSize in photo {
-				jsonPhoto.append(photoSize.json)
-			}
-			json["new_chat_photo"] = JSON(jsonPhoto)
+			json["new_chat_photo"] = newValue.isEmpty ? nil : JSON(newValue)
 		}
 	}
 		
-    /// *Optional.* Informs that the group photo was deleted.
+    /// *Optional.* Service message: the chat photo was deleted.
 	public var delete_chat_photo: Bool {
 		get { return json["delete_chat_photo"].boolValue }
 		set { json["delete_chat_photo"].boolValue = newValue }
 	}
 		
-    /// *Optional.* Informs that the group has been created.
+    /// *Optional.* Service message: the group has been created.
 	public var group_chat_created: Bool {
 		get { return json["group_chat_created"].boolValue }
 		set { json["group_chat_created"].boolValue = newValue }
+	}
+	
+	/// *Optional.* Service message: the supergroup has been created. This field can‘t be received in a message coming through updates, because bot can’t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.
+	public var supergroup_chat_created: Bool {
+		get { return json["supergroup_chat_created"].boolValue }
+		set { json["supergroup_chat_created"].boolValue = newValue }
+	}
+	
+	/// *Optional.* Service message: the channel has been created. This field can‘t be received in a message coming through updates, because bot can’t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.
+	public var channel_chat_created: Bool {
+		get { return json["channel_chat_created"].boolValue }
+		set { json["channel_chat_created"].boolValue = newValue }
+	}
+	
+	/// The group has been migrated to a supergroup with the specified identifier (52 bits are used).
+	public var migrate_to_chat_id: Int64 {
+		get { return json["migrate_to_chat_id"].int64Value }
+		set { json["migrate_to_chat_id"].int64Value = newValue }
+	}
+	
+	/// The supergroup has been migrated from a group with the specified identifier (52 bits are used).
+	public var migrate_from_chat_id: Int64 {
+		get { return json["migrate_from_chat_id"].int64Value }
+		set { json["migrate_from_chat_id"].int64Value = newValue }
+	}
+	
+	/// *Optional.* Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
+	public var pinned_message: Message? {
+		get {
+			let value = json["pinned_message"]
+			return value.isNullOrUnknown ? nil : Message(json: value)
+		}
+		set {
+			json["pinned_message"] = newValue?.json ?? nil
+		}
 	}
 	
 	public required init(json: JSON = [:]) {

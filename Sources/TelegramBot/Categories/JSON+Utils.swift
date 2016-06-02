@@ -15,6 +15,25 @@ extension SwiftyJSON.JSON {
 		print(debugDescription)
 	}
 	
+	init<T where T: JsonObject>(_ from: [T]) {
+		var jsonArray = [JSON]()
+		jsonArray.reserveCapacity(from.count)
+		for item in from {
+			jsonArray.append(item.json)
+		}
+		self = JSON(jsonArray)
+	}
+	
+	func arrayValue<T where T: JsonObject>() -> [T] {
+		let jsonArray: [JSON] = arrayValue
+		var result = [T]()
+		result.reserveCapacity(jsonArray.count)
+		for jsonItem in jsonArray {
+			result.append(T(json: jsonItem))
+		}
+		return result
+	}
+	
 	func twoDArrayValue<T>() -> [[T]] {
 		let json = arrayValue
 		var result = [[T]]()

@@ -5,6 +5,7 @@ import Foundation
 import SwiftyJSON
 
 /// Represents an incoming update.
+/// - SeeAlso: <https://core.telegram.org/bots/api#update>
 public class Update: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
@@ -34,6 +35,39 @@ public class Update: JsonObject {
 		}
 		set {
 			json["edited_message"] = newValue?.json ?? nil
+		}
+	}
+	
+	/// *Optional.* New incoming inline query.
+	public var inline_query: InlineQuery? {
+		get {
+			let value = json["inline_query"]
+			return value.isNullOrUnknown ? nil : InlineQuery(json: value)
+		}
+		set {
+			json["inline_query"] = newValue?.json ?? nil
+		}
+	}
+	
+	/// *Optional.* The result of an inline query that was chosen by a user and sent to their chat partner.
+	public var chosen_inline_result: ChosenInlineResult? {
+		get {
+			let value = json["chosen_inline_result"]
+			return value.isNullOrUnknown ? nil : ChosenInlineResult(json: value)
+		}
+		set {
+			json["chosen_inline_result"] = newValue?.json ?? nil
+		}
+	}
+	
+	/// *Optional.* New incoming callback query.
+	public var callback_query: CallbackQuery? {
+		get {
+			let value = json["callback_query"]
+			return value.isNullOrUnknown ? nil : CallbackQuery(json: value)
+		}
+		set {
+			json["callback_query"] = newValue?.json ?? nil
 		}
 	}
 	

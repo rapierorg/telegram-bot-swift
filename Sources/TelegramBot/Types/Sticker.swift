@@ -4,7 +4,8 @@
 import Foundation
 import SwiftyJSON
 
-// Represents a sticker.
+/// Represents a sticker.
+/// - SeeAlso: <https://core.telegram.org/bots/api#sticker>
 public class Sticker: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
@@ -32,13 +33,18 @@ public class Sticker: JsonObject {
 		get { return PhotoSize(json: json["thumb"]) }
 		set { json["thumb"] = newValue.json }
 	}
-		
+	
+	/// *Optional.* Emoji associated with the sticker.
+	public var emoji: String? {
+		get { return json["emoji"].string }
+		set { json["emoji"].string = newValue }
+	}
+
     /// *Optional.* File size.
 	public var file_size: Int? {
 		get { return json["file_size"].int }
 		set { json["file_size"].int = newValue }
 	}
-		
 	
 	public required init(json: JSON = [:]) {
 		self.json = json

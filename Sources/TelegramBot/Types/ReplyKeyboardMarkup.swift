@@ -5,6 +5,7 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a custom keyboard with reply options.
+/// - SeeAlso: <https://core.telegram.org/bots/api#replykeyboardmarkup>
 public class ReplyKeyboardMarkup: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON

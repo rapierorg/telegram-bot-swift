@@ -5,6 +5,7 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a Telegram user or bot.
+/// - SeeAlso: <https://core.telegram.org/bots/api#user>
 public class User: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
