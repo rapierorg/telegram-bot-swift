@@ -12,8 +12,8 @@ public class Context {
 	public let args: Arguments
 
 	public var privateChat: Bool { return message.chat.type == .privateChat }
-	public var chatId: Int { return message.chat.id }
-	public var fromId: Int { return message.from.id }
+	public var chatId: Int64 { return message.chat.id }
+	public var fromId: Int64 { return message.from.id }
 	
 	init(bot: TelegramBot, update: Update, scanner: NSScanner, command: String) {
 		self.bot = bot

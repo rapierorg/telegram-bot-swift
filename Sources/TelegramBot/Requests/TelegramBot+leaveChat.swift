@@ -9,7 +9,7 @@ public extension TelegramBot {
 	/// Leave a group, supergroup or channel. Blocking version.
 	/// - Returns: true on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#leavechat>
-	public func leaveChatSync(chatId: Int,
+	public func leaveChatSync(chatId: Int64,
 	                          parameters: [String: Any?] = [:]) -> Bool? {
 		let allParameters: [String: Any?] =
 			defaultParameters["leaveChat"] ?? [:] + parameters +
@@ -31,7 +31,7 @@ public extension TelegramBot {
 	/// Leave a group, supergroup or channel. Asynchronous version.
 	/// - Returns: true on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#leavechat>
-	public func leaveChatAsync(chatId: Int,
+	public func leaveChatAsync(chatId: Int64,
 	                         parameters: [String: Any?] = [:],
 	                         queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                         completion: LeaveChatCompletion? = nil) {

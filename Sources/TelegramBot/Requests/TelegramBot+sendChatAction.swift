@@ -10,7 +10,7 @@ public extension TelegramBot {
 	/// Tells the user that something is happening on the bot's side. Blocking version.
 	/// - Returns: true on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
-	public func sendChatActionSync(chatId: Int, action: String,
+	public func sendChatActionSync(chatId: Int64, action: String,
 	                           parameters: [String: Any?] = [:]) -> Bool? {
 		let allParameters: [String: Any?] =
 			defaultParameters["sendChatAction"] ?? [:] + parameters +
@@ -32,7 +32,7 @@ public extension TelegramBot {
 	/// Tells the user that something is happening on the bot's side. Asynchronous version.
 	/// - Returns: true on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
-	public func sendChatActionAsync(chatId: Int, action: String,
+	public func sendChatActionAsync(chatId: Int64, action: String,
 	                           parameters: [String: Any?] = [:],
 	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                           completion: SendChatActionCompletion? = nil) {

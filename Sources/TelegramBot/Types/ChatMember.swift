@@ -37,6 +37,10 @@ public class ChatMember: JsonObject {
 		get { return Status(rawValue: statusString) ?? .unknown }
 		set { statusString = newValue.rawValue }
 	}
+	
+	public required init(json: JSON = [:]) {
+		self.json = json
+	}
 }
 
 	

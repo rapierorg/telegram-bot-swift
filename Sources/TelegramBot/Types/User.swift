@@ -11,9 +11,9 @@ public class User: JsonObject {
 	public var json: JSON
 
     /// Unique identifier for this user or bot.
-	public var id: Int {
-		get { return json["id"].intValue }
-		set { json["id"].intValue = newValue }
+	public var id: Int64 {
+		get { return json["id"].int64Value }
+		set { json["id"].int64Value = newValue }
 	}
 		
     /// User‘s or bot’s first name.

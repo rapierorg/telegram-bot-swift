@@ -9,7 +9,7 @@ public extension TelegramBot {
 	/// Send text message. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
-	public func sendMessageSync(chatId: Int, text: String,
+	public func sendMessageSync(chatId: Int64, text: String,
 	                        parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =
 			defaultParameters["sendMessage"] ?? [:] + parameters +
@@ -20,7 +20,7 @@ public extension TelegramBot {
 	/// Send text message. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
-	public func sendMessageSync(_ chatId: Int, _ text: String,
+	public func sendMessageSync(_ chatId: Int64, _ text: String,
 	                            parameters: [String: Any?] = [:]) -> Message? {
 		return sendMessageSync(chatId: chatId, text: text, parameters: parameters)
 	}
@@ -28,7 +28,7 @@ public extension TelegramBot {
     /// Send text messages. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
-	public func sendMessageAsync(chatId: Int, text: String,
+	public func sendMessageAsync(chatId: Int64, text: String,
 	                        parameters: [String: Any?] = [:],
 	                        queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                        completion: SendMessageCompletion? = nil) {
@@ -41,7 +41,7 @@ public extension TelegramBot {
 	/// Send text messages. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
-	public func sendMessageAsync(_ chatId: Int, _ text: String,
+	public func sendMessageAsync(_ chatId: Int64, _ text: String,
 	                             parameters: [String: Any?] = [:],
 	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                             completion: SendMessageCompletion? = nil) {
