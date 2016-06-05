@@ -33,7 +33,7 @@ public extension TelegramBot {
 	/// Send text messages. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendphoto>
-	public func sendMessageAsync(chatId: Int64, photo: String,
+	public func sendPhotoAsync(chatId: Int64, photo: String,
 	                             parameters: [String: Any?] = [:],
 	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                             completion: SendMessageCompletion? = nil) {
@@ -46,7 +46,7 @@ public extension TelegramBot {
 	/// Send text messages. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendphoto>
-	public func sendMessageAsync(channelUserName: String, photo: String,
+	public func sendPhotoAsync(channelUserName: String, photo: String,
 	                             parameters: [String: Any?] = [:],
 	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                             completion: SendMessageCompletion? = nil) {
