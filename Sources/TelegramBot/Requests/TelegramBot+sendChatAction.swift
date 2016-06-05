@@ -4,6 +4,8 @@
 import Foundation
 import SwiftyJSON
 
+// TODO: add enum for action
+
 public extension TelegramBot {
 	typealias SendChatActionCompletion = (result: Bool?, error: DataTaskError?)->()
 	
