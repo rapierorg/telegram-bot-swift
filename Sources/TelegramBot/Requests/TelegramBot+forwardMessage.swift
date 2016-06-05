@@ -19,7 +19,7 @@ public extension TelegramBot {
 	
 	/// Forward messages of any kind. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
-	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
+	/// - SeeAlso: <https://core.telegram.org/bots/api#forwardmessage>
 	public func forwardMessageAsync(chatId: Int64, fromChatId: Int64, messageId: Int,
 	                             parameters: [String: Any?] = [:],
 	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
