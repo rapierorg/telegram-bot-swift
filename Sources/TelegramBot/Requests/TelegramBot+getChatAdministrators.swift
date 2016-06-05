@@ -9,24 +9,24 @@ public extension TelegramBot {
 	/// Get a list of administrators in a chat. Blocking version.
 	/// - Returns: Array of ChatMember objects that contains information about all chat administrators except other bots on success. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchatadministrators>
-	public func getChatAdministratorsSync(chatId: Int64,
+	public func getChatAdministratorsSync(chat_id: Int64,
 	                                      parameters: [String: Any?] = [:]) -> [ChatMember]? {
 		let allParameters: [String: Any?] =
 			defaultParameters["getChatAdministrators"] ?? [:] + parameters +
-				["chat_id": chatId]
+				["chat_id": chat_id]
 		return requestSync("getChatAdministrators", allParameters)
 	}
 	
 	/// Get a list of administrators in a chat. Asynchronous version.
 	/// - Returns: Array of ChatMember objects that contains information about all chat administrators except other bots on success. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchatadministrators>
-	public func getChatAdministratorsAsync(chatId: Int64,
+	public func getChatAdministratorsAsync(chat_id: Int64,
 	                                       parameters: [String: Any?] = [:],
 	                                       queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                                       completion: GetChatCompletion? = nil) {
 		let allParameters: [String: Any?] =
 			defaultParameters["getChatAdministrators"] ?? [:] + parameters +
-				["chat_id": chatId]
+				["chat_id": chat_id]
 		requestAsync("getChatAdministrators", allParameters, queue: queue, completion: completion)
 	}
 }

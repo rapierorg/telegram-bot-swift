@@ -9,24 +9,24 @@ public extension TelegramBot {
 	/// Get basic info about a file and prepare it for downloading. Blocking version.
 	/// - Returns: File object on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getfile>
-	public func getFileSync(fileId: String,
+	public func getFileSync(file_id: String,
 	                        parameters: [String: Any?] = [:]) -> File? {
 		let allParameters: [String: Any?] =
 			defaultParameters["getFile"] ?? [:] + parameters +
-			["file_id": fileId]
+			["file_id": file_id]
 		return requestSync("getFile", allParameters)
 	}
 	
 	/// Get basic info about a file and prepare it for downloading. Asynchronous version.
 	/// - Returns: File object on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getfile>
-	public func getFileAsync(fileId: String,
+	public func getFileAsync(file_id: String,
 	                         parameters: [String: Any?] = [:],
 	                         queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                         completion: GetFileCompletion? = nil) {
 		let allParameters: [String: Any?] =
 			defaultParameters["getFile"] ?? [:] + parameters +
-			["file_id": fileId]
+			["file_id": file_id]
 		requestAsync("getFile", allParameters, queue: queue, completion: completion)
 	}
 }

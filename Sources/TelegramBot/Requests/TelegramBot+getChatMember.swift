@@ -9,48 +9,48 @@ public extension TelegramBot {
 	/// Get information about a member of a chat. Blocking version.
 	/// - Returns: true on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchatmember>
-	public func getChatMemberSync(chatId: Int64, userId: Int64,
+	public func getChatMemberSync(chat_id: Int64, user_id: Int64,
 	                               parameters: [String: Any?] = [:]) -> ChatMember? {
 		let allParameters: [String: Any?] =
 			defaultParameters["getChatMember"] ?? [:] + parameters +
-				["chat_id": chatId, "user_id": userId]
+				["chat_id": chat_id, "user_id": user_id]
 		return requestSync("getChatMember", allParameters)
 	}
 	
 	/// Get information about a member of a chat. Blocking version.
 	/// - Returns: true on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchatmember>
-	public func getChatMemberSync(channelUserName: String, userId: Int64,
+	public func getChatMemberSync(chat_id: String, user_id: Int64,
 	                               parameters: [String: Any?] = [:]) -> Bool? {
 		let allParameters: [String: Any?] =
 			defaultParameters["getChatMember"] ?? [:] + parameters +
-				["chat_id": channelUserName, "user_id": userId]
+				["chat_id": chat_id, "user_id": user_id]
 		return requestSync("getChatMember", allParameters)
 	}
 	
 	/// Get information about a member of a chat. Asynchronous version.
 	/// - Returns: true on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchatmember>
-	public func getChatMemberAsync(chatId: Int64, userId: Int64,
+	public func getChatMemberAsync(chat_id: Int64, user_id: Int64,
 	                                parameters: [String: Any?] = [:],
 	                                queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                                completion: GetChatMemberCompletion? = nil) {
 		let allParameters: [String: Any?] =
 			defaultParameters["getChatMember"] ?? [:] + parameters +
-				["chat_id": chatId, "user_id": userId]
+				["chat_id": chat_id, "user_id": user_id]
 		requestAsync("getChatMember", allParameters, queue: queue, completion: completion)
 	}
 	
 	/// Get information about a member of a chat. Asynchronous version.
 	/// - Returns: true on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchatmember>
-	public func getChatMemberAsync(channelUserName: String, userId: Int64,
+	public func getChatMemberAsync(chat_id: String, user_id: Int64,
 	                                parameters: [String: Any?] = [:],
 	                                queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                                completion: GetChatMemberCompletion? = nil) {
 		let allParameters: [String: Any?] =
 			defaultParameters["getChatMember"] ?? [:] + parameters +
-				["chat_id": channelUserName, "user_id": userId]
+				["chat_id": chat_id, "user_id": user_id]
 		requestAsync("getChatMember", allParameters, queue: queue, completion: completion)
 	}
 }

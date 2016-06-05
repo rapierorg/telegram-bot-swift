@@ -26,19 +26,19 @@ public class Context {
 	                         parameters: [String: Any?] = [:],
 	                         queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                         completion: TelegramBot.SendMessageCompletion? = nil) {
-		bot.sendMessageAsync(chatId: chatId, text: text, parameters: parameters, queue: queue, completion: completion)
+		bot.sendMessageAsync(chat_id: chatId, text: text, parameters: parameters, queue: queue, completion: completion)
 	}
 	
 	public func respondSync(_ text: String,
 	                        parameters: [String: Any?] = [:]) -> Message? {
-		return bot.sendMessageSync(chatId: chatId, text: text, parameters: parameters)
+		return bot.sendMessageSync(chat_id: chatId, text: text, parameters: parameters)
 	}
 	
 	public func respondPrivatelySync(_ userText: String, groupText: String) -> (userMessage: Message?, groupMessage: Message?) {
-		let userMessage = bot.sendMessageSync(chatId: fromId, text: userText)
+		let userMessage = bot.sendMessageSync(chat_id: fromId, text: userText)
 		let groupMessage: Message?
 		if !privateChat {
-			groupMessage = bot.sendMessageSync(chatId: chatId, text: groupText)
+			groupMessage = bot.sendMessageSync(chat_id: chatId, text: groupText)
 		} else {
 			groupMessage = nil
 		}
@@ -48,9 +48,9 @@ public class Context {
 	public func respondPrivatelyAsync(_ userText: String, groupText: String,
 	                                  onDidSendToUser userCompletion: TelegramBot.SendMessageCompletion? = nil,
 	                                  onDidSendToGroup groupCompletion: TelegramBot.SendMessageCompletion? = nil) {
-		bot.sendMessageAsync(chatId: fromId, text: userText, completion: userCompletion)
+		bot.sendMessageAsync(chat_id: fromId, text: userText, completion: userCompletion)
 		if !privateChat {
-			bot.sendMessageAsync(chatId: chatId, text: groupText, completion: groupCompletion)
+			bot.sendMessageAsync(chat_id: chatId, text: groupText, completion: groupCompletion)
 		}
 	}
 	

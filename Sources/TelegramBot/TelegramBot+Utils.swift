@@ -8,23 +8,23 @@ extension TelegramBot {
 
     public func reportErrorSync(chatId: Int64, text: String, errorDescription: String) {
 		print("ERROR: \(errorDescription)")
-		sendMessageSync(chatId: chatId, text: text)
+		sendMessageSync(chat_id: chatId, text: text)
     }
 	
 	public func reportErrorSync(chatId: Int64, errorDescription: String) {
 		print("ERROR: \(errorDescription)")
-		sendMessageSync(chatId: chatId, text: TelegramBot.unhandledErrorText)
+		sendMessageSync(chat_id: chatId, text: TelegramBot.unhandledErrorText)
 	}
 	
 	public func reportErrorAsync(chatId: Int64?, text: String, errorDescription: String, completion: SendMessageCompletion? = nil) {
 		print("ERROR: \(errorDescription)")
 		guard let chatId = chatId else { return }
-		sendMessageAsync(chatId: chatId, text: text, completion: completion)
+		sendMessageAsync(chat_id: chatId, text: text, completion: completion)
 	}
 	
 	public func reportErrorAsync(chatId: Int64?, errorDescription: String, completion: SendMessageCompletion? = nil) {
 		print("ERROR: \(errorDescription)")
 		guard let chatId = chatId else { return }
-		sendMessageAsync(chatId: chatId, text: TelegramBot.unhandledErrorText, completion: completion)
+		sendMessageAsync(chat_id: chatId, text: TelegramBot.unhandledErrorText, completion: completion)
 	}
 }

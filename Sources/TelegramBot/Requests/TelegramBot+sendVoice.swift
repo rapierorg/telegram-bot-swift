@@ -11,48 +11,48 @@ public extension TelegramBot {
 	/// Send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvoice>
-	public func sendVoiceSync(chatId: Int64, voice: String,
+	public func sendVoiceSync(chat_id: Int64, voice: String,
 	                            parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =
 			defaultParameters["sendVoice"] ?? [:] + parameters +
-				["chat_id": chatId, "voice": voice]
+				["chat_id": chat_id, "voice": voice]
 		return requestSync("sendVoice", allParameters)
 	}
 	
 	/// Send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvoice>
-	public func sendVoiceSync(channelUserName: String, voice: String,
+	public func sendVoiceSync(chat_id: String, voice: String,
 	                            parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =
 			defaultParameters["sendVoice"] ?? [:] + parameters +
-				["chat_id": channelUserName, "voice": voice]
+				["chat_id": chat_id, "voice": voice]
 		return requestSync("sendVoice", allParameters)
 	}
 	
 	/// Send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvoice>
-	public func sendVoiceAsync(chatId: Int64, voice: String,
+	public func sendVoiceAsync(chat_id: Int64, voice: String,
 	                             parameters: [String: Any?] = [:],
 	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                             completion: SendMessageCompletion? = nil) {
 		let allParameters: [String: Any?] =
 			defaultParameters["sendVoice"] ?? [:] + parameters +
-				["chat_id": chatId, "voice": voice]
+				["chat_id": chat_id, "voice": voice]
 		requestAsync("sendVoice", allParameters, queue: queue, completion: completion)
 	}
 	
 	/// Send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvoice>
-	public func sendVoiceAsync(channelUserName: String, voice: String,
+	public func sendVoiceAsync(chat_id: String, voice: String,
 	                             parameters: [String: Any?] = [:],
 	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                             completion: SendMessageCompletion? = nil) {
 		let allParameters: [String: Any?] =
 			defaultParameters["sendVoice"] ?? [:] + parameters +
-				["chat_id": channelUserName, "voice": voice]
+				["chat_id": chat_id, "voice": voice]
 		requestAsync("sendVoice", allParameters, queue: queue, completion: completion)
 	}
 }
