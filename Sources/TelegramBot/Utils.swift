@@ -7,26 +7,44 @@ import Foundation
 ///
 /// - Returns: token.
 public func readToken(_ name: String) -> String {
+	guard let token: String = readConfigurationValue(name) else {
+		print("\n" +
+			"-----\n" +
+			"ERROR\n" +
+			"-----\n" +
+			"Please create either:\n" +
+			"  - an environment variable named \(name)\n" +
+			"  - a file named \(name)\n" +
+			"containing your bot's token.\n\n")
+		exit(1)
+	}
+	return token
+}
+
+/// Reads value from environment variable or from a file.
+///
+/// - Returns: `String`.
+public func readConfigurationValue(_ name: String) -> String? {
 	let environment = NSProcessInfo.processInfo().environment
-	var token = environment[name]
-	if token == nil {
+	var value = environment[name]
+	if value == nil {
 		do {
-			token = try String(contentsOfFile: name, encoding: NSUTF8StringEncoding)
-			token = token?.trimmed()
+			value = try String(contentsOfFile: name, encoding: NSUTF8StringEncoding)
 		} catch {
 		}
 	}
-	if let token = token {
-		return token
+	if let value = value {
+		return value.trimmed()
 	}
-	print("\n" +
-		"-----\n" +
-		"ERROR\n" +
-		"-----\n" +
-	  	"Please create either:\n" +
-	  	"  - an environment variable named \(name)\n" +
-	  	"  - a file named \(name)\n" +
-	  	"containing your bot's token.\n\n")
-	exit(1)
+	return nil
 }
 
+/// Reads value from environment variable or from a file.
+///
+/// - Returns: `Int64`.
+public func readConfigurationValue(_ name: String) -> Int64? {
+	if let v: String = readConfigurationValue(name) {
+		return Int64(v)
+	}
+	return nil
+}
