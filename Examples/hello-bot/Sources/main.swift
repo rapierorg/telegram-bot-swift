@@ -14,22 +14,23 @@ let bot = TelegramBot(token: token)
 
 let router = Router(bot: bot)
 
-router["help"] = { (context: Context) -> () in
+router["help"] = { context in
     let helpText = "Usage: /greet"
     context.respondPrivatelyAsync(helpText,
         groupText: "\(context.message.from.first_name), please find usage instructions in a personal message.")
+	return true
 }
 
-router["greet"] = { (context: Context) -> () in
+router["greet"] = { context in
     context.respondAsync("Hello, \(context.message.from.first_name)!")
+	return true
 }
 
 print("Ready to accept commands")
-while let message = bot.nextMessageSync() {
-	print("--- update_id: \(bot.lastUpdateId)")
-	print("message: \(message.debugDescription)")
+while let update = bot.nextUpdateSync() {
+	print("--- update: \(update)")
 
-	try router.process(message: message)
+	try router.process(update: update)
 }
 
 fatalError("Server stopped due to error: \(bot.lastError)")

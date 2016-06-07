@@ -12,9 +12,9 @@ let token = readToken("WORD_REVERSE_BOT_TOKEN")
 
 class Controller {
     let bot: TelegramBot
-    var startedInChatId = Set<Int>()
+    var startedInChatId = Set<Int64>()
 	
-	func started(in chatId: Int) -> Bool {
+	func started(in chatId: Int64) -> Bool {
 		return startedInChatId.contains(chatId)
  	}
 
@@ -22,10 +22,10 @@ class Controller {
         self.bot = bot
     }
     
-	func start(context: Context) {
+	func start(context: Context) -> Bool {
 		guard !started(in: context.chatId) else {
             context.respondAsync("@\(bot.username) already started.")
-            return
+            return true
         }
         startedInChatId.insert(context.chatId)
         
@@ -38,19 +38,21 @@ class Controller {
         startText += "To stop, type /stop"
         
         context.respondAsync(startText)
+		return true
     }
     
-	func stop(context: Context) {
+	func stop(context: Context) -> Bool {
 		guard started(in: context.chatId) else {
             context.respondAsync("@\(bot.username) already stopped.")
-            return
+            return true
         }
 		startedInChatId.remove(context.chatId)
 		
         context.respondSync("@\(bot.username) stopped. To restart, type /start")
+		return true
     }
     
-	func help(context: Context) {
+	func help(context: Context) -> Bool {
         let helpText = "What can this bot do?\n" +
             "\n" +
             "This is a sample bot which reverses sentences or words. " +
@@ -68,15 +70,17 @@ class Controller {
         
         context.respondPrivatelyAsync(helpText,
             groupText: "\(context.message.from.first_name), please find usage instructions in a personal message.")
+		return true
     }
     
-	func settings(context: Context) {
+	func settings(context: Context) -> Bool {
         let settingsText = "Settings\n" +
             "\n" +
             "No settings are available for this bot."
         
         context.respondPrivatelyAsync(settingsText,
             groupText: "\(context.message.from.first_name), please find a list of settings in a personal message.")
+		return true
     }
 
     func partialMatchHandler(context: Context) -> Bool {
@@ -121,11 +125,10 @@ router.unknownCommand = controller.reverseText
 router.partialMatch = controller.partialMatchHandler
 
 print("Ready to accept commands")
-while let message = bot.nextMessageSync() {
-	print("--- update_id: \(bot.lastUpdateId)")
-	print("message: \(message.debugDescription)")
+while let update = bot.nextUpdateSync() {
+	print("--- update: \(update)")
 	
-	try router.process(message: message)
+	try router.process(update: update)
 }
 fatalError("Server stopped due to error: \(bot.lastError)")
 
