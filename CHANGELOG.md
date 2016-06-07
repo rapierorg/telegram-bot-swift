@@ -1,5 +1,18 @@
 # telegram-bot-swift changelog
 
+## 0.6.0 (2016-06-08)
+
+- Router handlers now take Context and return Bool. Other overloads were removed. This was done to simplify Router usage with closures. Closure signatures had to be specified explicitly, but now they can be inferred automatically.
+- Message.from is now Optional.
+- Add readConfigurationValue helper function which tries to read a single value from environment variable or from a file.
+- Request methods are now snake case like structure fields to match Telegram Bot API docs.
+- Examples updated to use the new API.
+- Added all types and requests except inline types.
+- Added missing fields which appeared in API 2.0 to all types.
+- Router now works with Updates instead of Messages.
+- Allow using raw JSON in requestAsync / requestSync.
+- Chat and user ids are now Int64.
+
 ## 0.5.1 (2016-05-31)
 
 Added `ReplyKeyboardMarkup` which can be used with `Strings`:
