@@ -29,39 +29,9 @@ extension Router {
 		set { add(contentType, newValue) }
 	}
 	
-	public subscript(contentType: ContentType) -> (Context) throws->() {
-		get { fatalError("Not implemented") }
-		set { add(contentType, newValue) }
-	}
-	
-	public subscript(contentType: ContentType) -> () throws->Bool {
-		get { fatalError("Not implemented") }
-		set { add(contentType, newValue) }
-	}
-	
-	public subscript(contentType: ContentType) -> () throws->() {
-		get { fatalError("Not implemented") }
-		set { add(contentType, newValue) }
-	}
-	
 	// Subscripts taking Command
 	
 	public subscript(command: Command) -> (Context) throws->Bool {
-		get { fatalError("Not implemented") }
-		set { add(command, newValue) }
-	}
-	
-	public subscript(command: Command) -> (Context) throws->() {
-		get { fatalError("Not implemented") }
-		set { add(command, newValue) }
-	}
-	
-	public subscript(command: Command) -> () throws->Bool {
-		get { fatalError("Not implemented") }
-		set { add(command, newValue) }
-	}
-	
-	public subscript(command: Command) -> () throws->() {
 		get { fatalError("Not implemented") }
 		set { add(command, newValue) }
 	}
@@ -74,36 +44,6 @@ extension Router {
 	}
 
 	public subscript(commandString: String, slash slash: Command.SlashMode) -> (Context) throws -> Bool {
-		get { fatalError("Not implemented") }
-		set { add(Command(commandString, slash: slash), newValue) }
-	}
-
-	public subscript(commandString: String) -> (Context) throws->() {
-		get { fatalError("Not implemented") }
-		set { add(Command(commandString), newValue) }
-	}
-
-	public subscript(commandString: String, slash slash: Command.SlashMode) -> (Context) throws->() {
-		get { fatalError("Not implemented") }
-		set { add(Command(commandString, slash: slash), newValue) }
-	}
-
-	public subscript(commandString: String) -> () throws->(Bool) {
-		get { fatalError("Not implemented") }
-		set { add(Command(commandString), newValue) }
-	}
-
-	public subscript(commandString: String, slash slash: Command.SlashMode) -> () throws->(Bool) {
-		get { fatalError("Not implemented") }
-		set { add(Command(commandString, slash: slash), newValue) }
-	}
-
-	public subscript(commandString: String) -> () throws->() {
-		get { fatalError("Not implemented") }
-		set { add(Command(commandString), newValue) }
-	}
-
-	public subscript(commandString: String, slash slash: Command.SlashMode) -> () throws->() {
 		get { fatalError("Not implemented") }
 		set { add(Command(commandString, slash: slash), newValue) }
 	}
