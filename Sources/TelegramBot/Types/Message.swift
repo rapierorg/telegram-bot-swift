@@ -16,10 +16,13 @@ public class Message: JsonObject {
 		set { json["message_id"].intValue = newValue }
 	}
 		
-    /// Sender.
-	public var from: User {
-		get { return User(json: json["from"]) }
-		set { json["from"] = newValue.json }
+    /// Optional. Sender, can be empty for messages sent to channels.
+	public var from: User? {
+		get {
+			let value = json["from"]
+			return value.isNullOrUnknown ? nil : User(json: value)
+		}
+		set { json["from"] = newValue?.json ?? nil }
 	}
 		
     /// Date the message was sent in Unix time.
@@ -261,16 +264,16 @@ public class Message: JsonObject {
 		set { json["channel_chat_created"].boolValue = newValue }
 	}
 	
-	/// The group has been migrated to a supergroup with the specified identifier (52 bits are used).
-	public var migrate_to_chat_id: Int64 {
-		get { return json["migrate_to_chat_id"].int64Value }
-		set { json["migrate_to_chat_id"].int64Value = newValue }
+	/// *Optional.* The group has been migrated to a supergroup with the specified identifier (52 bits are used).
+	public var migrate_to_chat_id: Int64? {
+		get { return json["migrate_to_chat_id"].int64 }
+		set { json["migrate_to_chat_id"].int64 = newValue }
 	}
 	
-	/// The supergroup has been migrated from a group with the specified identifier (52 bits are used).
-	public var migrate_from_chat_id: Int64 {
-		get { return json["migrate_from_chat_id"].int64Value }
-		set { json["migrate_from_chat_id"].int64Value = newValue }
+	/// *Optional.* The supergroup has been migrated from a group with the specified identifier (52 bits are used).
+	public var migrate_from_chat_id: Int64? {
+		get { return json["migrate_from_chat_id"].int64 }
+		set { json["migrate_from_chat_id"].int64 = newValue }
 	}
 	
 	/// *Optional.* Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.

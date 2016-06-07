@@ -1,6 +1,6 @@
 # telegram-bot-swift
 
-SDK for creating Telegram Bots (unofficial).
+SDK for creating Telegram Bots in Swift.
 
 <img src="https://github.com/zmeyc/telegram-bot-swift/wiki/img/word_reverse_bot.jpg" width=300>
 
@@ -12,8 +12,9 @@ import TelegramBot
 let bot = TelegramBot(token: "my token")
 let router = Router(bot)
 
-router["greet"] = { () -> () in
-    bot.respondAsync("Hello, \(bot.lastMessage.from.first_name)!")
+router["greet"] = { context in
+    context.respondAsync("Hello, \(context.message.from.first_name)!")
+    return true
 }
 
 while let message = bot.nextMessageSync() {

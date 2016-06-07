@@ -134,29 +134,36 @@ public class Router {
 			}
 			userCommand = command
 			return true
+		case .from: return message.from != nil
+		case .forward_from: return message.forward_from != nil
+		case .forward_from_chat: return message.forward_from_chat != nil
+		case .forward_date: return message.forward_date != nil
+		case .reply_to_message: return message.reply_to_message != nil
+		case .edit_date: return message.edit_date != nil
+		case .text: return message.text != nil
+		case .entities: return !message.entities.isEmpty
 		case .audio: return message.audio != nil
 		case .document: return message.document != nil
 		case .photo: return !message.photo.isEmpty
 		case .sticker: return message.sticker != nil
 		case .video: return message.video != nil
-		//case .voice: return message.voice != nil
+		case .voice: return message.voice != nil
+		case .caption: return message.caption != nil
 		case .contact: return message.contact != nil
 		case .location: return message.location != nil
-		//case .venue: return message.venue != nil
-		case .newChatMember: return message.new_chat_member != nil
-		case .leftChatMember: return message.left_chat_member != nil
-		case .newChatTitle: return message.new_chat_title != nil
-		//case .newChatPhoto: return message.new_chat_photo != nil
-		//case .deleteChatPhoto: return message.delete_chat_photo != nil
-		//case .groupChatCreated: return message.group_chat_created != nil
-		//case .supergroupChatCreated: return message.supergroup_chat_created != nil
-		//case .channelChatCreated: return message.channel_chat_created != nil
-		//case .migrateToChatId: return message.migrate_to_chat_id != nil
-		//case .migrateFromChatId: return message.migrate_from_chat_id != nil
-		//case .pinnedMessage: return message.pinned_message != nil
-		default: break
+		case .venue: return message.venue != nil
+		case .new_chat_member: return message.new_chat_member != nil
+		case .left_chat_member: return message.left_chat_member != nil
+		case .new_chat_title: return message.new_chat_title != nil
+		case .new_chat_photo: return !message.new_chat_photo.isEmpty
+		case .delete_chat_photo: return message.delete_chat_photo
+		case .group_chat_created: return message.group_chat_created
+		case .supergroup_chat_created: return message.supergroup_chat_created
+		case .channel_chat_created: return message.channel_chat_created
+		case .migrate_to_chat_id: return message.migrate_to_chat_id != nil
+		case .migrate_from_chat_id: return message.migrate_from_chat_id != nil
+		case .pinned_message: return message.pinned_message != nil
 		}
-		return false
 	}
 	
 	// After processing the command, check that no unprocessed text is left
