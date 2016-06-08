@@ -11,6 +11,7 @@ public extension TelegramBot {
 	/// Send .webp stickers. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendsticker>
+	@discardableResult
 	public func sendStickerSync(chat_id: Int64, sticker: String,
 	                          parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =
@@ -22,6 +23,7 @@ public extension TelegramBot {
 	/// Send .webp stickers. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendsticker>
+	@discardableResult
 	public func sendStickerSync(chat_id: String, sticker: String,
 	                          parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =

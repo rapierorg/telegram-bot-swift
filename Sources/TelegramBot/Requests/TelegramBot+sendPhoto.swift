@@ -11,6 +11,7 @@ public extension TelegramBot {
 	/// Send photo. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendphoto>
+	@discardableResult
 	public func sendPhotoSync(chat_id: Int64, photo: String,
 	                            parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =
@@ -22,6 +23,7 @@ public extension TelegramBot {
 	/// Send photo. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendphoto>
+	@discardableResult
 	public func sendPhotoSync(chat_id: String, photo: String,
 	                          parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =

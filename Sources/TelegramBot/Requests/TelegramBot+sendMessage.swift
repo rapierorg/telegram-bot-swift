@@ -9,6 +9,7 @@ public extension TelegramBot {
 	/// Send text message. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
+	@discardableResult
 	public func sendMessageSync(chat_id: Int64, text: String,
 	                        parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =
@@ -20,6 +21,7 @@ public extension TelegramBot {
 	/// Send text message. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
+	@discardableResult
 	public func sendMessageSync(_ chat_id: Int64, _ text: String,
 	                            parameters: [String: Any?] = [:]) -> Message? {
 		return sendMessageSync(chat_id: chat_id, text: text, parameters: parameters)

@@ -11,6 +11,7 @@ public extension TelegramBot {
 	/// Send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvoice>
+	@discardableResult
 	public func sendVoiceSync(chat_id: Int64, voice: String,
 	                            parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =
@@ -22,6 +23,7 @@ public extension TelegramBot {
 	/// Send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvoice>
+	@discardableResult
 	public func sendVoiceSync(chat_id: String, voice: String,
 	                            parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =

@@ -11,6 +11,7 @@ public extension TelegramBot {
 	/// Send general files. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#senddocument>
+	@discardableResult
 	public func sendDocumentSync(chat_id: Int64, document: String,
 	                             parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =
@@ -22,6 +23,7 @@ public extension TelegramBot {
 	/// Send general files. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#senddocument>
+	@discardableResult
 	public func sendDocumentSync(chat_id: String, document: String,
 	                          parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =

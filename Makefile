@@ -4,7 +4,8 @@ test:
 	swift test
 
 build:
-	swift build -Xswiftc -j1
+	swift build
+#	swift build -Xswiftc -j1
 
 rebuild: clean build
 

@@ -12,6 +12,7 @@ public extension TelegramBot {
 	/// Tells the user that something is happening on the bot's side. Blocking version.
 	/// - Returns: true on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
+	@discardableResult
 	public func sendChatActionSync(chat_id: Int64, action: String,
 	                           parameters: [String: Any?] = [:]) -> Bool? {
 		let allParameters: [String: Any?] =
@@ -23,6 +24,7 @@ public extension TelegramBot {
 	/// Tells the user that something is happening on the bot's side. Blocking version.
 	/// - Returns: true on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
+	@discardableResult
 	public func sendChatActionSync(chat_id: String, action: String,
 	                          parameters: [String: Any?] = [:]) -> Bool? {
 		let allParameters: [String: Any?] =

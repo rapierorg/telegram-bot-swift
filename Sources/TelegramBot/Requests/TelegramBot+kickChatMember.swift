@@ -9,6 +9,7 @@ public extension TelegramBot {
 	/// Kick a user from a group or a supergroup. In the case of supergroups, the user will not be able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the group for this to work. Blocking version.
 	/// - Returns: true on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#kickchatmember>
+	@discardableResult
 	public func kickChatMemberSync(chat_id: Int64, user_id: Int64,
 	                          parameters: [String: Any?] = [:]) -> Bool? {
 		let allParameters: [String: Any?] =
@@ -20,6 +21,7 @@ public extension TelegramBot {
 	/// Kick a user from a group or a supergroup. In the case of supergroups, the user will not be able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the group for this to work. Blocking version.
 	/// - Returns: true on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#kickchatmember>
+	@discardableResult
 	public func kickChatMemberSync(chat_id: String, user_id: Int64,
 	                          parameters: [String: Any?] = [:]) -> Bool? {
 		let allParameters: [String: Any?] =

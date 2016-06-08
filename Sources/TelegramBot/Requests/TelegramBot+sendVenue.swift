@@ -11,6 +11,7 @@ public extension TelegramBot {
 	/// Send information about a venue. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvenue>
+	@discardableResult
 	public func sendVenueSync(chat_id: Int64, latitude: Double, longitude: Double,
 	                          title: String, address: String,
 	                          parameters: [String: Any?] = [:]) -> Message? {
@@ -24,6 +25,7 @@ public extension TelegramBot {
 	/// Send information about a venue. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvenue>
+	@discardableResult
 	public func sendVenueSync(chat_id: String, latitude: Double, longitude: Double,
 	                          title: String, address: String,
 	                          parameters: [String: Any?] = [:]) -> Message? {

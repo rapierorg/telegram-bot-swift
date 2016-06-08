@@ -9,6 +9,7 @@ public extension TelegramBot {
 	/// Forward messages of any kind. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#forwardmessage>
+	@discardableResult
 	public func forwardMessageSync(chat_id: Int64, from_chat_id: Int64, message_id: Int,
 	                            parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =

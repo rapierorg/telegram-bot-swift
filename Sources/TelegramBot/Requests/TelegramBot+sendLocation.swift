@@ -11,6 +11,7 @@ public extension TelegramBot {
 	/// Send point on the map. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendlocation>
+	@discardableResult
 	public func sendLocationSync(chat_id: Int64, latitude: Double, longitude: Double,
 	                            parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =
@@ -22,6 +23,7 @@ public extension TelegramBot {
 	/// Send point on the map. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendlocation>
+	@discardableResult
 	public func sendLocationSync(chat_id: String, latitude: Double, longitude: Double,
 	                            parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =

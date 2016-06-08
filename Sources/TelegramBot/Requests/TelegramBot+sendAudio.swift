@@ -11,6 +11,7 @@ public extension TelegramBot {
 	/// Send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendaudio>
+	@discardableResult
 	public func sendAudioSync(chat_id: Int64, audio: String,
 	                          parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =
@@ -22,6 +23,7 @@ public extension TelegramBot {
 	/// Send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendaudio>
+	@discardableResult
 	public func sendAudioSync(chat_id: String, audio: String,
 	                          parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =

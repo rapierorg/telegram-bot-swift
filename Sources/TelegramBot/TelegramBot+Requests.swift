@@ -9,8 +9,8 @@ extension TelegramBot {
 	public func requestSync<Result where Result: JsonObject>(_ endpoint: String, _ parameters: [String: Any?] = [:]) -> Result? {
 		
 		var retval: Result!
-		let sem = dispatch_semaphore_create(0)
-		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+		let sem = dispatch_semaphore_create(0)!
+		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)!
 		requestAsync(endpoint, parameters, queue: queue) {
 			(result: Result?, error: DataTaskError?) in
 			retval = result
@@ -26,8 +26,8 @@ extension TelegramBot {
 	public func requestSync<Result where Result: JsonObject>(_ endpoint: String, _ parameters: [String: Any?] = [:]) -> [Result]? {
 		
 		var retval: [Result]!
-		let sem = dispatch_semaphore_create(0)
-		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+		let sem = dispatch_semaphore_create(0)!
+		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)!
 		requestAsync(endpoint, parameters, queue: queue) {
 			(result: [Result]?, error: DataTaskError?) in
 			retval = result

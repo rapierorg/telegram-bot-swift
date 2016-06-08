@@ -20,7 +20,7 @@ public class Command {
         self.slash = slash
         if name.hasPrefix("/") {
             self.nameWithSlash = name
-			self.name = name.substring(from: name.startIndex.successor())
+			self.name = name.substring(from: name.index(after: name.startIndex))
             print("WARNING: Command name shouldn't start with '/', the slash is added automatically if needed")
         } else {
             self.nameWithSlash = "/" + name

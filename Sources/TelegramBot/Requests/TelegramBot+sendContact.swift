@@ -11,6 +11,7 @@ public extension TelegramBot {
 	/// Send phone contacts. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendcontact>
+	@discardableResult
 	public func sendContactSync(chat_id: Int64, phone_number: String, first_name: String,
 	                          parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =
@@ -22,6 +23,7 @@ public extension TelegramBot {
 	/// Send phone contacts. Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendcontact>
+	@discardableResult
 	public func sendContactSync(chat_id: String, phone_number: String, first_name: String,
 	                          parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =

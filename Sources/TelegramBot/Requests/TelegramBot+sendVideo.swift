@@ -11,6 +11,7 @@ public extension TelegramBot {
 	/// Send video files, Telegram clients support mp4 videos (other formats may be sent as Document). Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvideo>
+	@discardableResult
 	public func sendVideoSync(chat_id: Int64, video: String,
 	                            parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =
@@ -22,6 +23,7 @@ public extension TelegramBot {
 	/// Send video files, Telegram clients support mp4 videos (other formats may be sent as Document). Blocking version.
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvideo>
+	@discardableResult
 	public func sendVideoSync(chat_id: String, video: String,
 	                            parameters: [String: Any?] = [:]) -> Message? {
 		let allParameters: [String: Any?] =

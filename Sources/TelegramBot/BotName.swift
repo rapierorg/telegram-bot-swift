@@ -12,12 +12,12 @@ public class BotName {
         let lowercase = username.lowercased()
         if lowercase.hasSuffix(underscoreBotSuffix) {
 			withoutSuffix = username.substring(to:
-				username.endIndex.advanced(by:
+				username.index(username.endIndex, offsetBy:
                     -underscoreBotSuffix.characters.count))
             
         } else if lowercase.hasSuffix(botSuffix) {
 			withoutSuffix = username.substring(to:
-				username.endIndex.advanced(by:
+				username.index(username.endIndex, offsetBy:
                     -botSuffix.characters.count))
             
         } else {

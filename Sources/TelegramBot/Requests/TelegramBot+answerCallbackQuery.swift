@@ -9,6 +9,7 @@ public extension TelegramBot {
 	/// Send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. Blocking version.
 	/// - Returns: true on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#answercallbackquery>
+	@discardableResult
 	public func answerCallbackQuerySync(callback_query_id: String,
 	                          parameters: [String: Any?] = [:]) -> Bool? {
 		let allParameters: [String: Any?] =
