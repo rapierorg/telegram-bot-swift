@@ -13,14 +13,15 @@ let bot = TelegramBot(token: "my token")
 let router = Router(bot)
 
 router["greet"] = { context in
-    context.respondAsync("Hello, \(context.message.from.first_name)!")
+    guard let from = context.message.from else { return false }
+
+    context.respondAsync("Hello, \(from.first_name)!")
+    
     return true
 }
 
-while let message = bot.nextMessageSync() {
-    if let command = bot.lastCommand {
-        try router.process(command)
-    }
+while let update = bot.nextUpdateSync() {
+    try router.process(update)
 }
 
 fatalError("Server stopped due to error: \(bot.lastError)")
@@ -28,9 +29,9 @@ fatalError("Server stopped due to error: \(bot.lastError)")
 
 ## Documentation
 
-Check `Examples/` for sample bot projects.
-
 Build instructions and general information is available on [Telegram Bot Swift SDK Wiki](https://github.com/zmeyc/telegram-bot-swift/wiki).
+
+Check `Examples/` for sample bot projects.
 
 This SDK is a work in progress, expect the API to change very often.
 

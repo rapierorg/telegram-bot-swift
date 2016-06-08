@@ -1,5 +1,9 @@
 # telegram-bot-swift changelog
 
+## 0.6.2 (2016-06-08)
+
+- Ported to `Swift-DEVELOPMENT-SNAPSHOT-2016-06-06-a`.
+
 ## 0.6.0 (2016-06-08)
 
 - Router handlers now take Context and return Bool. Other overloads were removed. This was done to simplify Router usage with closures. Closure signatures had to be specified explicitly, but now they can be inferred automatically.
