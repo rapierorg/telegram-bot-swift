@@ -15,14 +15,17 @@ let bot = TelegramBot(token: token)
 let router = Router(bot: bot)
 
 router["help"] = { context in
-    let helpText = "Usage: /greet"
+	guard let from = context.message.from else { return false }
+
+	let helpText = "Usage: /greet"
     context.respondPrivatelyAsync(helpText,
-        groupText: "\(context.message.from.first_name), please find usage instructions in a personal message.")
+        groupText: "\(from.first_name), please find usage instructions in a personal message.")
 	return true
 }
 
 router["greet"] = { context in
-    context.respondAsync("Hello, \(context.message.from.first_name)!")
+	guard let from = context.message.from else { return false }
+    context.respondAsync("Hello, \(from.first_name)!")
 	return true
 }
 
