@@ -27,6 +27,10 @@ while let update = bot.nextUpdateSync() {
 fatalError("Server stopped due to error: \(bot.lastError)")
 ```
 
+## Telegram chat
+
+Join our chat in Telegram: [swiftsdkchat](https://telegram.me/swiftsdkchat).
+
 ## Documentation
 
 Build instructions and general information is available on [Telegram Bot Swift SDK Wiki](https://github.com/zmeyc/telegram-bot-swift/wiki).
