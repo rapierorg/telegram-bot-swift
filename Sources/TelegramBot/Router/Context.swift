@@ -29,11 +29,13 @@ public class Context {
 		bot.sendMessageAsync(chat_id: chatId, text: text, parameters: parameters, queue: queue, completion: completion)
 	}
 	
+	@discardableResult
 	public func respondSync(_ text: String,
 	                        parameters: [String: Any?] = [:]) -> Message? {
 		return bot.sendMessageSync(chat_id: chatId, text: text, parameters: parameters)
 	}
 	
+	@discardableResult
 	public func respondPrivatelySync(_ userText: String, groupText: String) -> (userMessage: Message?, groupMessage: Message?) {
 		var userMessage: Message?
 		if let fromId = fromId {
