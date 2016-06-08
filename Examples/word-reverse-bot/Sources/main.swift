@@ -53,6 +53,7 @@ class Controller {
     }
     
 	func help(context: Context) -> Bool {
+		guard let from = context.message.from else { return false }
         let helpText = "What can this bot do?\n" +
             "\n" +
             "This is a sample bot which reverses sentences or words. " +
@@ -69,17 +70,18 @@ class Controller {
             "To reverse words, use /word_reverse word1 word2 word3..."
         
         context.respondPrivatelyAsync(helpText,
-            groupText: "\(context.message.from.first_name), please find usage instructions in a personal message.")
+            groupText: "\(from.first_name), please find usage instructions in a personal message.")
 		return true
     }
     
 	func settings(context: Context) -> Bool {
+		guard let from = context.message.from else { return false }
         let settingsText = "Settings\n" +
             "\n" +
             "No settings are available for this bot."
         
         context.respondPrivatelyAsync(settingsText,
-            groupText: "\(context.message.from.first_name), please find a list of settings in a personal message.")
+            groupText: "\(from.first_name), please find a list of settings in a personal message.")
 		return true
     }
 
