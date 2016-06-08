@@ -52,12 +52,11 @@ extension DataTaskError: CustomDebugStringConvertible {
         //case .ResponseParseError(_, _, _):
         //    return "Error while parsing response"
         case .ServerError(_, _, _):
-            "Telegram server returned an error"
+            return "Telegram server returned an error"
         //case .NoResult(_, _, _):
         //    return "No result in Telegram response"
         //case .ResultParseError:
         //    return "Result couldn't be parsed"
         }
-        return "Unknown error"
     }
 }

@@ -9,6 +9,7 @@ extension NSScanner {
         return scanInt32(&result) ? result : nil
     }
     
+	@discardableResult
     func skipInt32() -> Bool {
         return scanInt32(nil)
     }
@@ -18,6 +19,7 @@ extension NSScanner {
         return scanInt(&result) ? result : nil
     }
     
+	@discardableResult
     func skipInt() -> Bool {
         return scanInt(nil)
     }
@@ -27,6 +29,7 @@ extension NSScanner {
         return scanInt64(&result) ? result : nil
     }
     
+	@discardableResult
     func skipInt64() -> Bool {
         return scanInt64(nil)
     }
@@ -36,6 +39,7 @@ extension NSScanner {
         return scanUnsignedLongLong(&result) ? result : nil
     }
     
+	@discardableResult
     func skipUInt64() -> Bool {
         return scanUnsignedLongLong(nil)
     }
@@ -45,6 +49,7 @@ extension NSScanner {
         return scanFloat(&result) ? result : nil
     }
     
+	@discardableResult
     func skipFloat() -> Bool {
         return scanFloat(nil)
     }
@@ -54,6 +59,7 @@ extension NSScanner {
         return scanDouble(&result) ? result : nil
     }
     
+	@discardableResult
     func skipDouble() -> Bool {
         return scanDouble(nil)
     }
@@ -63,6 +69,7 @@ extension NSScanner {
         return scanHexInt32(&result) ? result : nil
     }
     
+	@discardableResult
     func skipHexUInt32() -> Bool {
         return scanHexInt32(nil)
     }
@@ -72,6 +79,7 @@ extension NSScanner {
         return scanHexInt64(&result) ? result : nil
     }
     
+	@discardableResult
     func skipHexUInt64() -> Bool {
         return scanHexInt64(nil)
     }
@@ -81,6 +89,7 @@ extension NSScanner {
         return scanHexFloat(&result) ? result : nil
     }
     
+	@discardableResult
     func skipHexFloat() -> Bool {
         return scanHexFloat(nil)
     }
@@ -90,10 +99,12 @@ extension NSScanner {
         return scanHexDouble(&result) ? result : nil
     }
     
+	@discardableResult
     func skipHexDouble() -> Bool {
         return scanHexDouble(nil)
     }
     
+	@discardableResult
     func skipString(_ string: String) -> Bool {
         return scanString(string, into: nil)
     }
@@ -105,7 +116,8 @@ extension NSScanner {
         }
         return nil
     }
-    
+	
+	@discardableResult
     func skipCharactersFromSet(_ set: NSCharacterSet) -> Bool {
 		return scanCharacters(from: set, into: nil)
     }
@@ -117,7 +129,8 @@ extension NSScanner {
         }
         return nil
     }
-    
+	
+	@discardableResult
     func skipUpToString(_ string: String) -> Bool {
         return scanUpTo(string, into: nil)
     }
@@ -130,6 +143,7 @@ extension NSScanner {
         return nil
     }
     
+	@discardableResult
     func skipUpToCharactersFromSet(_ set: NSCharacterSet) -> Bool {
 		return scanUpToCharacters(from: set, into: nil)
     }

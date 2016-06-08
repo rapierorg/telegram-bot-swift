@@ -78,7 +78,8 @@ public class Router {
 			return true
 		}
     }
-	
+
+	@discardableResult
     public func process(update: Update) throws -> Bool {
 		let string = update.message?.extractCommand(for: bot) ?? ""
         let scanner = NSScanner(string: string)
