@@ -13,7 +13,7 @@ public class Context {
 
 	public var privateChat: Bool { return message.chat.type == .privateChat }
 	public var chatId: Int64 { return message.chat.id }
-	public var fromId: Int64 { return message.from.id }
+	public var fromId: Int64? { return message.from?.id }
 	
 	init(bot: TelegramBot, update: Update, scanner: NSScanner, command: String) {
 		self.bot = bot
@@ -35,7 +35,10 @@ public class Context {
 	}
 	
 	public func respondPrivatelySync(_ userText: String, groupText: String) -> (userMessage: Message?, groupMessage: Message?) {
-		let userMessage = bot.sendMessageSync(chat_id: fromId, text: userText)
+		var userMessage: Message?
+		if let fromId = fromId {
+			userMessage = bot.sendMessageSync(chat_id: fromId, text: userText)
+		}
 		let groupMessage: Message?
 		if !privateChat {
 			groupMessage = bot.sendMessageSync(chat_id: chatId, text: groupText)
@@ -48,7 +51,9 @@ public class Context {
 	public func respondPrivatelyAsync(_ userText: String, groupText: String,
 	                                  onDidSendToUser userCompletion: TelegramBot.SendMessageCompletion? = nil,
 	                                  onDidSendToGroup groupCompletion: TelegramBot.SendMessageCompletion? = nil) {
-		bot.sendMessageAsync(chat_id: fromId, text: userText, completion: userCompletion)
+		if let fromId = fromId {
+			bot.sendMessageAsync(chat_id: fromId, text: userText, completion: userCompletion)
+		}
 		if !privateChat {
 			bot.sendMessageAsync(chat_id: chatId, text: groupText, completion: groupCompletion)
 		}
