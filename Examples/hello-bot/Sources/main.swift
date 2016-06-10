@@ -31,7 +31,7 @@ router["greet"] = { context in
 
 print("Ready to accept commands")
 while let update = bot.nextUpdateSync() {
-	print("--- update: \(update)")
+	print("--- update: \(update.debugDescription)")
 
 	try router.process(update: update)
 }
