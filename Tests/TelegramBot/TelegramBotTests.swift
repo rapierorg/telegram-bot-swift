@@ -18,29 +18,18 @@ class TelegramBotTests: XCTestCase {
     override func setUp() {
         super.setUp()
 		
-        let environment = NSProcessInfo.processInfo().environment
-        token = environment["TEST_BOT_TOKEN"]
-        if token == nil {
-            do {
-                token = try String(contentsOfFile: "test_bot_token.txt", encoding: NSUTF8StringEncoding)
-                token.trim()
-            } catch {
-            }
-        }
-
-        if token == nil {
-            fatalError("Please create a bot for testing and add it's token to environment variable TEST_BOT_TOKEN in Scheme settings")
-            // -------------------
-            // How to create a bot
-            // -------------------
-            // * In Telegram, add BotFather.
-            // /newbot
-            // TestBot
-            // apitest_bot
-            // BotFather will return a token.
-            // * In Xcode, click on project scheme, Edit Scheme -> Run. Add to Environment Variables:
-            // TEST_BOT_TOKEN yourToken
-        }
+		// -------------------
+		// How to create a bot
+		// -------------------
+		// * In Telegram, add BotFather.
+		// /newbot
+		// TestBot
+		// apitest_bot
+		// BotFather will return a token.
+		// * In Xcode, click on project scheme, Edit Scheme -> Run. Add to Environment Variables:
+		// TEST_BOT_TOKEN yourToken
+		
+		token = readToken("TEST_BOT_TOKEN")
     }
     
     override func tearDown() {
@@ -60,14 +49,14 @@ class TelegramBotTests: XCTestCase {
 //        }
 //    }
     
-    func testGetMeSynchronous() {
+    func testGetMeSync() {
         let bot = TelegramBot(token: token, fetchBotInfo: false)
         let user = bot.getMeSync()
         let error = bot.lastError
         print("getMeSync: user: \(user), error: \(error)")
     }
     
-    func testGetMeAsynchronous() {
+    func testGetMeAsync() {
         let bot = TelegramBot(token: token, fetchBotInfo: false)
         
         let expectGetMe = expectation(withDescription: "getMe")
@@ -80,14 +69,14 @@ class TelegramBotTests: XCTestCase {
         }
     }
 
-    func testGetUpdatesSynchronous() {
+    func testGetUpdatesSync() {
         let bot = TelegramBot(token: token, fetchBotInfo: false)
         let updates = bot.getUpdatesSync()
         let error = bot.lastError
         print("getUpdatesSync: \(updates), error: \(error)")
     }
     
-    func testGetUpdatesAsynchronous() {
+    func testGetUpdatesAsync() {
         let bot = TelegramBot(token: token, fetchBotInfo: false)
         
         let expectGetUpdates = expectation(withDescription: "getUpdates")
@@ -107,7 +96,7 @@ class TelegramBotTests: XCTestCase {
         print("getMeSync: user: \(user), error: \(error)")
     }
     
-    func testErrorHandlingAsynchronous() {
+    func testErrorHandlingAsync() {
         let bot = TelegramBot(token: token, fetchBotInfo: false)
         bot.url = invalidUrl
 

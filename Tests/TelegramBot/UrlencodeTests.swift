@@ -123,13 +123,12 @@ class UrlencodeTests: XCTestCase {
     
     func testFormUrlencodeReplyMarkup() {
         let keyboardMarkup = ReplyKeyboardMarkup()
-        keyboardMarkup.keyboard = [
+        keyboardMarkup.keyboardStrings = [
             [ "A", "B", "C" ],
             [ "D", "E" ]
         ]
-        let replyMarkup = ReplyMarkup.ReplyKeyboardMarkupType(keyboardMarkup)
         let parameters: [String: Any?] = [
-            "key": replyMarkup
+            "key": keyboardMarkup
         ]
         let encoded = HTTPUtils.formUrlencode(parameters)
         // key={"keyboard":[["A","B","C"],["D","E"]]}

@@ -15,8 +15,7 @@ class BlockingServerTests: XCTestCase {
     var token: String!
 
     override func setUp() {
-        let environment = NSProcessInfo.processInfo().environment
-        token = environment["TelegramTestBotToken"]
+        token = readToken("TEST_BOT_TOKEN")
         super.setUp()
     }
     
@@ -24,15 +23,14 @@ class BlockingServerTests: XCTestCase {
         super.tearDown()
     }
     
-    func disable_testServer() {
+    func _testServer() {
         let bot = TelegramBot(token: token)
 
         while let update = bot.nextUpdateSync() {
-            print("--- updateId: \(update.updateId)")
-            print("update: \(update.prettyPrint)")
-            if let message = update.message, text = message.text {
+            print("--- update: \(update.debugDescription)")
+            if let message = update.message, text = message.text, chatId = message.from?.id {
                 if text == "Hello" {
-                    bot.sendMessageAsync(chatId: message.from.id, text: "How are you?")
+                    bot.sendMessageAsync(chat_id: chatId, text: "How are you?")
                 }
             }
         }
