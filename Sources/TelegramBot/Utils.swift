@@ -48,3 +48,14 @@ public func readConfigurationValue(_ name: String) -> Int64? {
 	}
 	return nil
 }
+
+/// Reads value from environment variable or from a file.
+///
+/// - Returns: `Int`.
+public func readConfigurationValue(_ name: String) -> Int? {
+	if let v: String = readConfigurationValue(name) {
+		return Int(v)
+	}
+	return nil
+}
+
