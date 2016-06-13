@@ -208,7 +208,7 @@ guard let sentMessage = bot.sendMessageSync(fromId, "Hello") else {
 
 Do not use synchronous methods in real apps because they're slow. Use them when debugging or for experimenting in `REPL`. More details: [Using Swift REPL for calling API methods](https://github.com/zmeyc/telegram-bot-swift/wiki/Using-Swift-REPL-for-calling-API-methods)
 
-* Asynchronous methods accept an optional completion handler which will be called when the operation is completed.
+* Asynchronous methods accept an optional completion handler which will be called when operation is completed.
 
 Completion handler is called on main thread by default.
 
@@ -254,13 +254,17 @@ So, in handler check preconditions and return false if they aren't satisfied:
 
 ```swift
 router["reboot"] = { context in
-  guard let fromId = context.fromId where isAdmin(fromId) else { return false }
-  ...
-  return true
+    guard let fromId = context.fromId where isAdmin(fromId) else { return false }
+    
+    context.respondAsync("I will now reboot the PC.") { _ in
+        reboot()
+    }
+    
+    return true
 }
 ```
 
-Handler functions can be marked as `throws` and throw exceptions. Router won't process them and will simply pass them to caller.
+Handler functions can be marked as `throws` and throw exceptions. Router won't process them and will simply pass the exceptions to caller.
 
 `Context` is a request context, it contains:
  
@@ -269,12 +273,12 @@ Handler functions can be marked as `throws` and throw exceptions. Router won't p
  * `message` - convenience method for accessing `update.message`.
  * `args` - command arguments scanner.
  
- It also contains a few helper methods and variables:
+`Context` also contains a few helper methods and variables:
  
  * `privateChat` - true, if this is a private chat with bot, false for all group chat types.
  * `chatId` - shortcut for message.chat.id
  * `fromId` - shortcut for message.from?.id
- * `respondAsync`, `respondSync` - work as `sendMessage(chatId, ...)`
+ * `respondAsync`, `respondSync` - works as `sendMessage(chatId, ...)`
  * `respondPrivatelyAsync/Sync("text", groupText: "text")` - respond to user privately, sending a short message to the group if this was a group chat. For example:
  
 ```swift
@@ -332,6 +336,7 @@ router["command"] = { context in
     let value2 = context.args.scanDouble()
     let text = context.args.scanRestOfString()
 }
+```
 
 It's also possible to directly access `NSScanner` used for scanning arguments: `context.args.scanner`.
 
