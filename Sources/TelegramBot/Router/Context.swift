@@ -6,19 +6,26 @@ import Foundation
 public class Context {
 	typealias T = Context
 	
+	static private let emptyMessage = Message()
+	
 	public let bot: TelegramBot
 	public let update: Update
-	public let message: Message
+	public var message: Message = {
+		print("WARNING: dereferencing an empty message")
+		return T.emptyMessage
+	}()
 	public let args: Arguments
 
-	public var privateChat: Bool { return message.chat.type == .privateChat }
+	public var privateChat: Bool { return message.chat.type == .private_chat }
 	public var chatId: Int64 { return message.chat.id }
 	public var fromId: Int64? { return message.from?.id }
 	
 	init(bot: TelegramBot, update: Update, scanner: NSScanner, command: String) {
 		self.bot = bot
 		self.update = update
-		self.message = update.message ?? Message()
+		if let message = update.message {
+			self.message = message
+		}
 		self.args = Arguments(scanner: scanner, command: command)
 	}
 	
