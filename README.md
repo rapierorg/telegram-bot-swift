@@ -6,6 +6,7 @@
 
 <p align="center">
     <a href="#telegram-chat">Chat</a>
+  • <a href="#whats-new">Changelog</a>    
   • <a href="#installation">Installation</a>
   • <a href="#getting-started">Getting started</a>
   • <a href="#creating-a-new-bot">Creating a new bot</a>
@@ -54,6 +55,10 @@ fatalError("Server stopped due to error: \(bot.lastError)")
 ## Telegram chat
 
 Join our chat in Telegram: [swiftsdkchat](https://telegram.me/swiftsdkchat).
+
+## What's new
+
+[Release notes](https://github.com/zmeyc/telegram-bot-swift/blob/master/CHANGELOG.md) contain the significant changes in each release with migration notes.
 
 ## Installation
 
