@@ -8,6 +8,7 @@ class RequestTests: XCTestCase {
 	var token: String!
 	var bot: TelegramBot!
 	var chatId: Int64!
+	var messageId: Int!
 	
 	override func setUp() {
 		super.setUp()
@@ -26,6 +27,7 @@ class RequestTests: XCTestCase {
 		
 		token = readToken("TEST_BOT_TOKEN")
 		chatId = readConfigurationValue("TEST_CHAT_ID")
+		messageId = readConfigurationValue("TEST_MESSAGE_ID")
 		bot = TelegramBot(token: token, fetchBotInfo: false)
 		
 		if chatId == nil {
@@ -40,9 +42,17 @@ class RequestTests: XCTestCase {
 		super.tearDown()
 	}
 	
+	//
+	// getMe
+	//
+	
 	func testGetMe() {
 		check( bot.getMeSync() )
 	}
+	
+	//
+	// sendMessage
+	//
 	
 	func testSendMessage() {
 		let response = bot.sendMessageSync(chat_id: chatId, text: "testSendMessage1: this is a simple message")
@@ -77,11 +87,11 @@ class RequestTests: XCTestCase {
 		button2.text = "Button 2"
 
 		let button3 = KeyboardButton()
-		button3.text = "Request Contact"
+		button3.text = "Share Contact"
 		button3.request_contact = true
 		
 		let button4 = KeyboardButton()
-		button4.text = "Request Location"
+		button4.text = "Share Location"
 		button4.request_location = true
 		
 		markup.keyboardButtons = [
@@ -91,6 +101,35 @@ class RequestTests: XCTestCase {
 		check( bot.sendMessageSync(chat_id: chatId, text: "Here is a keyboard", ["reply_markup": markup]) )
 	}
 	
+	func testHideKeyboard() {
+		let markup = ReplyKeyboardHide()
+		check( bot.sendMessageSync(chat_id: chatId, text: "Hiding the keyboard", ["reply_markup": markup]) )
+	}
+	
+	func testForceReply() {
+		let markup = ForceReply()
+		check( bot.sendMessageSync(chat_id: chatId, text: "Force reply", ["reply_markup": markup]) )
+	}
+	
+	//
+	// forwardMessage
+	//
+	
+	func testForwardMessage() {
+		check( bot.forwardMessageSync(chat_id: chatId, from_chat_id: chatId, message_id: messageId) )
+	}
+	
+	//
+	// sendLocation
+	//
+	
+	func testSendLocation() {
+		check( bot.sendChatActionSync(chat_id: chatId, action: .find_location) )
+		check( bot.sendLocationSync(chat_id: chatId, latitude: 50.4501, longitude: 30.5234) )
+	}
+	
+	// Helper functions
+
 	func check<T where T: JsonObject>(_ result: T?) {
 		XCTAssert(result?.prettyPrint() != nil)
 	}
