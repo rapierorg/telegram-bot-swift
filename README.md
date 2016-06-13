@@ -342,7 +342,7 @@ It's also possible to directly access `NSScanner` used for scanning arguments: `
 
 Handler is expected to read all the arguments, otherwise user will see a warning: _Part of your input was ignored: text_
 
-So, for example, if there's a command `swap` which expects two arguments, but user types: `/swap aaa bbb ccc`, he will see:
+So, for example, if there's a command `swap` which expects two arguments but user types: `/swap aaa bbb ccc`, he will see:
 
 ```
 bbb aaa
@@ -385,6 +385,16 @@ user.prettyPrint()
 
 bot.sendMessageSync(fromId, "Hello!")?.prettyPrint()
 ```
+
+## Examples
+
+There are two example projects available:
+
+* `Examples/hello-bot` - a trivial bot which responds to `/greet` command and greets users who join the chat.
+
+* `Examples/word-reverse-bot` - demonstrates how to handle start and stop requests, keep session state and parse command arguments. Behaves differently in private and group chats. Uses a router and a controller.
+
+Details are available on Wiki: [Building and running the example projects](https://github.com/zmeyc/telegram-bot-swift/wiki)
 
 ## Documentation
 
