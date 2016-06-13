@@ -10,6 +10,8 @@ public class Context {
 	
 	public let bot: TelegramBot
 	public let update: Update
+	/// `update.message` shortcut. Make sure that the message exists before using it,
+	/// otherwise it will be empty. For paths supported by Router the message is guaranteed to exist.
 	public var message: Message = {
 		print("WARNING: dereferencing an empty message")
 		return T.emptyMessage
