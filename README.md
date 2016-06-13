@@ -256,7 +256,7 @@ bot.sendMessage(chat_id: chatId, text: "Text")
 bot.sendMessage(chatId, "Text") // will also work
 ```
 
-Currently requests methods define only `required` parameters in their signatures. To pass `optional` parameters to these methods, use a dictionary:
+Currently request methods define only `required` parameters in their signatures. To pass `optional` parameters to these methods, use a dictionary:
 
 ```swift
 let markup = ForceReply()
@@ -270,7 +270,7 @@ It's also possible to set default parameter values for a request:
 bot.defaultParameters["sendMessage"] = ["disable_notification": true]
 ```
 
-In dictionaries `nil` values will be treated as `no value` and will be ignored.
+In dictionaries `nil` values will be treated as `no value` and won't be sent to Telegram server.
 
 **Available requests**
 
