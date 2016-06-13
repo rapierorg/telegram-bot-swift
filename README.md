@@ -197,6 +197,8 @@ All types conform to `JsonObject` protocol and can be created from json or seria
 
 ### Requests
 
+**Sync and Async**
+
 Request names closely mirror Telegram ones, but have two versions: `synchronous` and `asynchronous` with method suffixes `Sync` and `Async` correspondingly.
 
 * Synchronous methods block until the operation is completed.
@@ -239,6 +241,61 @@ while let update = bot.nextUpdateSync() {
 }
 ```
 
+**Request parameters**
+
+Parameter names should be specified explicitly in most cases:
+
+```swift
+bot.sendLocationAsync(chat_id: chatId, latitude: 50.4501, longitude: 30.5234)
+```
+
+Exception to this are `sendMessage` and `respondAsync` functions which are used very often. Parameter names can be omitted in them:
+
+```swift
+bot.sendMessage(chat_id: chatId, text: "Text")
+bot.sendMessage(chatId, "Text") // will also work
+```
+
+Currently requests methods define only `required` parameters in their signatures. To pass `optional` parameters to these methods, use a dictionary:
+
+```swift
+let markup = ForceReply()
+bot.sendMessageAsync(chat_id: chatId, text: "Force reply",
+    ["reply_markup": markup, "disable_notification": true])
+```
+
+It's also possible to set default parameter values for a request:
+
+```swift
+bot.defaultParameters["sendMessage"] = ["disable_notification": true]
+```
+
+In dictionaries `nil` values will be treated as `no value` and will be ignored.
+
+**Available requests**
+
+Check `TelegramBot/Requests` subdirectory for a list of available requests.
+
+If you find a missing request, please create a ticket and it will be added. 
+
+Arbitrary endpoint can be called like this:
+
+```swift
+let user: User = requestSync("sendMessage", ["chat_id": chatId, "text": text])
+```
+
+Or async version:
+
+```swift
+requestAsync("sendMessage", ["chat_id": chatId, "text": text]) { (result: User?, error: DataTaskError?) -> () in
+    ...
+}
+```
+
+These methods automatically deserialize the json response.
+
+Explicitly specifying result type is important. Result type should conform to `JsonObject` protocol. `Bool` and `Int` already conform to `JsonObject`.
+
 ### Routing
 
 Router maps text commands and other events to their handler functions and helps parsing command arguments.
@@ -277,7 +334,7 @@ Handler functions can be marked as `throws` and throw exceptions. Router won't p
 
 `Context` is a request context, it contains:
  
- * `bot` - a reference to bot.
+ * `bot` - a reference to the bot.
  * `update` - current `Update` structure.
  * `message` - convenience method for accessing `update.message`.
  * `args` - command arguments scanner.
