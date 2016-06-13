@@ -29,6 +29,13 @@ router["greet"] = { context in
 	return true
 }
 
+router[.new_chat_member] = { context in
+	guard let user = context.message.new_chat_member else { return false }
+	guard user.id != bot.user.id else { return false }
+	context.respondAsync("Welcome, \(user.first_name)!")
+	return true
+}
+
 print("Ready to accept commands")
 while let update = bot.nextUpdateSync() {
 	print("--- update: \(update.debugDescription)")
