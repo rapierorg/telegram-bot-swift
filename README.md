@@ -256,7 +256,7 @@ bot.sendMessage(chat_id: chatId, text: "Text")
 bot.sendMessage(chatId, "Text") // will also work
 ```
 
-Currently request methods define only `required` parameters in their signatures. To pass `optional` parameters to these methods, use a dictionary:
+Currently request methods define only `required` parameters in their signatures. To pass `optional` parameters to these methods, a dictionary should be used:
 
 ```swift
 let markup = ForceReply()
@@ -276,12 +276,10 @@ In dictionaries `nil` values will be treated as `no value` and won't be sent to 
 
 Check `TelegramBot/Requests` subdirectory for a list of available requests.
 
-If you find a missing request, please create a ticket and it will be added. 
-
-Arbitrary endpoint can be called like this:
+If you find a missing request, please create a ticket and it will be added. Until then, an arbitrary unsupported endpoint can be called like this:
 
 ```swift
-let user: User = requestSync("sendMessage", ["chat_id": chatId, "text": text])
+let user: User? = requestSync("sendMessage", ["chat_id": chatId, "text": text])
 ```
 
 Or async version:
@@ -295,6 +293,12 @@ requestAsync("sendMessage", ["chat_id": chatId, "text": text]) { (result: User?,
 These methods automatically deserialize the json response.
 
 Explicitly specifying result type is important. Result type should conform to `JsonObject` protocol. `Bool` and `Int` already conform to `JsonObject`.
+
+JSON class itself also conforms to `JsonObject`, so you can request a raw json if needed:
+
+```swift
+let user: JSON? = requestSync("sendMessage", ["chat_id": chatId, "text": text])
+```
 
 ### Routing
 
