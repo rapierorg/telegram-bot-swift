@@ -4,7 +4,7 @@
 import Foundation
 
 public class AnyCommand: Command {
-	public init(slash: SlashMode = .Required) {
+	public init(slash: SlashMode = .required) {
 		super.init("", slash: slash)
 	}
 }

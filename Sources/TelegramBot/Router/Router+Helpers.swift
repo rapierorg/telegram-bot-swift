@@ -6,19 +6,19 @@ import Foundation
 extension Router {
 	// add() taking string
 	
-	public func add(_ commandString: String, slash: Command.SlashMode = .Optional, _ handler: (Context) throws -> Bool) {
+	public func add(_ commandString: String, slash: Command.SlashMode = .optional, _ handler: (Context) throws -> Bool) {
 		add(Command(commandString, slash: slash), handler)
 	}
 	
-	public func add(_ commandString: String, slash: Command.SlashMode = .Optional, _ handler: (Context) throws->()) {
+	public func add(_ commandString: String, slash: Command.SlashMode = .optional, _ handler: (Context) throws->()) {
 		add(Command(commandString, slash: slash), handler)
 	}
 
-	public func add(_ commandString: String, slash: Command.SlashMode = .Optional, _ handler: () throws->(Bool)) {
+	public func add(_ commandString: String, slash: Command.SlashMode = .optional, _ handler: () throws->(Bool)) {
 		add(Command(commandString, slash: slash), handler)
 	}
 
-	public func add(_ commandString: String, slash: Command.SlashMode = .Optional, _ handler: () throws->()) {
+	public func add(_ commandString: String, slash: Command.SlashMode = .optional, _ handler: () throws->()) {
 		add(Command(commandString, slash: slash), handler)
 	}
 	
