@@ -1,5 +1,23 @@
 # telegram-bot-swift changelog
 
+## 0.7.0 (2016-06-13)
+
+- All enums renamed to match Swift 3 guidelines.
+- Request function signatures changed: `parameters` label is no longer explicit, added missing enum to `sendChatAction` and a few other fixes.
+- Bugfix: `ReplyKeyboardHide` is now JsonObject.
+- Bugfix: getMeAsync is now public.
+- Bugfix: default parameters now work correctly. For example, to disable notifications for all sendMessage calls, do:
+
+```swift
+bot.defaultParameters["sendMessage"] = {"disable_notification": true}
+```
+
+- `Int` now conforms to `JsonObject` and can be used as Request's return value.
+- Fixed existing tests and added more tests.
+- When trying to access the message via `context.message` non-optional shortcut and the message was nil initially, a warning will be printed.
+- Added .new_chat_member router path to hello-bot sample project.
+
+
 ## 0.6.2 (2016-06-08)
 
 - Ported to `Swift-DEVELOPMENT-SNAPSHOT-2016-06-06-a`.
