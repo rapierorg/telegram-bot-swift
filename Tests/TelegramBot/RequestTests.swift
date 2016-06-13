@@ -49,13 +49,13 @@ class RequestTests: XCTestCase {
 		check(response)
 		
 		let messageId = response!.message_id
-		check( bot.sendMessageSync(chat_id: chatId, text: "testSendMessage2: a reply to previous message", parameters: ["reply_to_message_id": messageId]) )
+		check( bot.sendMessageSync(chat_id: chatId, text: "testSendMessage2: a reply to previous message", ["reply_to_message_id": messageId]) )
 
-		check( bot.sendMessageSync(chat_id: chatId, text: "testSendMessage3: url without preview: http://google.com", parameters: ["disable_web_page_preview": true]) )
+		check( bot.sendMessageSync(chat_id: chatId, text: "testSendMessage3: url without preview: http://google.com", ["disable_web_page_preview": true]) )
 
-		check( bot.sendMessageSync(chat_id: chatId, text: "testSendMessage4: markdown: *bold* _italic_ [link](http://google.com)", parameters: ["parse_mode": "Markdown"]) )
+		check( bot.sendMessageSync(chat_id: chatId, text: "testSendMessage4: markdown: *bold* _italic_ [link](http://google.com)", ["parse_mode": "Markdown"]) )
 
-		check( bot.sendMessageSync(chat_id: chatId, text: "testSendMessage5: html: <b>bold</b> <i>italic</i>\n<code>void main() {\n  return 0;\n}</code>", parameters: ["parse_mode": "HTML"]) )
+		check( bot.sendMessageSync(chat_id: chatId, text: "testSendMessage5: html: <b>bold</b> <i>italic</i>\n<code>void main() {\n  return 0;\n}</code>", ["parse_mode": "HTML"]) )
 	}
 	
 	func testShowKeyboardWithText() {
@@ -64,7 +64,7 @@ class RequestTests: XCTestCase {
 			[ "Button 1", "Button 2" ],
 			[ "Button 3", "Button 4" ]
 		]
-		check( bot.sendMessageSync(chat_id: chatId, text: "Here is a keyboard", parameters: ["reply_markup": markup]) )
+		check( bot.sendMessageSync(chat_id: chatId, text: "Here is a keyboard", ["reply_markup": markup]) )
 	}
 	
 	func testShowKeyboardWithButtons() {
@@ -88,7 +88,7 @@ class RequestTests: XCTestCase {
 			[ button1, button2 ],
 			[ button3, button4 ]
 		]
-		check( bot.sendMessageSync(chat_id: chatId, text: "Here is a keyboard", parameters: ["reply_markup": markup]) )
+		check( bot.sendMessageSync(chat_id: chatId, text: "Here is a keyboard", ["reply_markup": markup]) )
 	}
 	
 	func check<T where T: JsonObject>(_ result: T?) {
