@@ -11,15 +11,15 @@ public class MessageEntity: JsonObject {
 	public enum MessageEntityType: String {
 		case mention = "mention"
 		case hashtag = "hashtag"
-		case botCommand = "bot_command"
+		case bot_command = "bot_command"
 		case url = "url"
 		case email = "email"
 		case bold = "bold"
 		case italic = "italic"
 		case code = "code"
 		case pre = "pre"
-		case textLink = "text_link"
-		case textMention = "text_mention"
+		case text_link = "text_link"
+		case text_mention = "text_mention"
 		case unknown = ""
 	}
 	

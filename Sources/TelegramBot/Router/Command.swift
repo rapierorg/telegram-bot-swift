@@ -6,17 +6,17 @@ import Foundation
 public class Command {
     public enum SlashMode {
         /// Both 'command' and '/command' allowed
-        case Optional
+        case optional
 		
         /// Only '/command' allowed
-        case Required
+        case required
     }
     
     let name: String
     let nameWithSlash: String
     let slash: SlashMode
     
-    public init(_ name: String, slash: SlashMode = .Optional) {
+    public init(_ name: String, slash: SlashMode = .optional) {
         self.slash = slash
         if name.hasPrefix("/") {
             self.nameWithSlash = name
@@ -35,14 +35,14 @@ public class Command {
         }
 		let matchAnyCommand = name.isEmpty
         switch slash {
-        case .Required:
+        case .required:
 			if matchAnyCommand && word.hasPrefix("/") {
 				return word
 			}
             if nameWithSlash.hasPrefix(word) {
                 return word
             }
-        case .Optional:
+        case .optional:
 			if matchAnyCommand {
 				return word
 			}

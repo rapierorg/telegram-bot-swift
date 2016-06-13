@@ -8,9 +8,9 @@ import SwiftyJSON
 /// - SeeAlso: <https://core.telegram.org/bots/api#chat>
 public class Chat: JsonObject {
 	public enum ChatType: String {
-		case privateChat = "private"
+		case private_chat = "private"
 		case group = "group"
-		case superGroup = "supergroup"
+		case supergroup = "supergroup"
 		case channel = "channel"
 		case unknown = ""
 	}

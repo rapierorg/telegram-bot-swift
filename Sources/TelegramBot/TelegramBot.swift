@@ -169,12 +169,12 @@ public class TelegramBot {
         
         // Report errors back to user except the ones we know how to handle
         switch error {
-        case let .GenericError(_, _, networkError)
+        case let .genericError(_, _, networkError)
             where networkError.domain == NSURLErrorDomain &&
                 TelegramBot.autoReconnectCodes.contains(networkError.code):
             print("Network error: \(networkError.localizedDescription)")
             break
-        case let .InvalidStatusCode(statusCode, _, _) where statusCode == 502:
+        case let .invalidStatusCode(statusCode, _, _) where statusCode == 502:
             print("Error: \(error.debugDescription)")
             break
         default:
@@ -324,26 +324,26 @@ public class TelegramBot {
     private func urlSessionDataTaskCompletion(task: NSURLSessionDataTask, _ dataOrNil: NSData?, _ responseOrNil: NSURLResponse?, _ errorOrNil: NSError?) {
         
         if let error = errorOrNil {
-            errorHandler?(task, .GenericError(
+            errorHandler?(task, .genericError(
                 data: dataOrNil, response: responseOrNil, error: error))
             return
         }
         
         guard let response = responseOrNil as? NSHTTPURLResponse else {
-            errorHandler?(task, .InvalidResponseType(
+            errorHandler?(task, .invalidResponseType(
                 data: dataOrNil, response: responseOrNil))
             return
         }
         
         if response.statusCode != 200 {
-            errorHandler?(task, .InvalidStatusCode(
+            errorHandler?(task, .invalidStatusCode(
                 statusCode: response.statusCode,
                 data: dataOrNil, response: response))
             return
         }
         
         guard let data = dataOrNil else {
-            errorHandler?(task, .NoDataReceived(
+            errorHandler?(task, .noDataReceived(
                 response: response))
             return
         }
@@ -357,7 +357,7 @@ public class TelegramBot {
         }*/
         
         if !telegramResponse.ok {
-            errorHandler?(task, .ServerError(
+            errorHandler?(task, .serverError(
                 telegramResponse: telegramResponse, data: data, response: response))
             return
         }

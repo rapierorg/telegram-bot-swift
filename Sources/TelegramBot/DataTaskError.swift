@@ -7,55 +7,55 @@ import SwiftyJSON
 /// Telegram DataTask errors
 public enum DataTaskError {
     /// NSDataTask returned an error
-    case GenericError(
+    case genericError(
         data: NSData?, response: NSURLResponse?, error: NSError)
     
     /// Response is not NSHTTPURLResponse
-    case InvalidResponseType(
+    case invalidResponseType(
         data: NSData?, response: NSURLResponse?)
     
     /// Status Code is not 200 (OK)
-    case InvalidStatusCode(statusCode: Int,
+    case invalidStatusCode(statusCode: Int,
         data: NSData?, response: NSHTTPURLResponse)
     
     /// Telegram server returned no data
-    case NoDataReceived(response: NSHTTPURLResponse)
+    case noDataReceived(response: NSHTTPURLResponse)
     
     /// Response couldn't be parsed
-    //case ResponseParseError(json: JSON,
+    //case responseParseError(json: JSON,
     //    data: NSData, response: NSHTTPURLResponse)
     
     /// Server error (server returned "ok: false")
-    case ServerError(telegramResponse: Response,
+    case serverError(telegramResponse: Response,
         data: NSData, response: NSHTTPURLResponse)
     
     /// No `result` in Telegram response
-    //case NoResult(telegramResponse: Response,
+    //case noResult(telegramResponse: Response,
     //    data: NSData, response: NSHTTPURLResponse)
     
     /// `Result` couldn't be parsed
-    //case ResultParseError(json: JSON)
+    //case resultParseError(json: JSON)
 }
 
 extension DataTaskError: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         switch self {
-        case .GenericError(_, _, let error):
+        case .genericError(_, _, let error):
             return "dataTaskWithRequest: error: \(error.localizedDescription)"
-        case .InvalidResponseType(_, _):
+        case .invalidResponseType(_, _):
             return "Response is not NSHTTPURLResponse"
-        case .InvalidStatusCode(let statusCode, _, _):
+        case .invalidStatusCode(let statusCode, _, _):
             return "Expected status code 200, got \(statusCode)"
-        case .NoDataReceived(_):
+        case .noDataReceived(_):
             return "No data received"
-        //case .ResponseParseError(_, _, _):
+        //case .responseParseError(_, _, _):
         //    return "Error while parsing response"
-        case .ServerError(_, _, _):
+        case .serverError(_, _, _):
             return "Telegram server returned an error"
-        //case .NoResult(_, _, _):
+        //case .noResult(_, _, _):
         //    return "No result in Telegram response"
-        //case .ResultParseError:
+        //case .resultParseError:
         //    return "Result couldn't be parsed"
         }
     }
