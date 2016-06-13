@@ -5,8 +5,17 @@
 </p>
 
 <p align="center">
-    <a href="#getting-started">Getting Started</a>
-  • <a href="#contributing">Contributing</a>
+    <a href="#telegram-chat">Chat</a>
+  • <a href="#installation">Installation</a>
+  • <a href="#getting-started">Getting started</a>
+  • <a href="#creating-a-new-bot">Creating a new bot</a>
+  • <a href="#generating-xcode-project">Generating Xcode project</a>
+  • <a href="#api-overview">API overview</a>
+  • <a href="#debugging-notes">Debugging notes</a>
+  • <a href="#examples">Examples</a>
+  • <a href="#documentation">Documentation</a>
+  • <a href="#need-help">Support</a>
+  • <a href="#license">License</a>
 </p>
 
 # SDK for creating Telegram Bots in Swift.
@@ -410,6 +419,8 @@ This SDK is a work in progress, expect the API to change very often.
 Please [submit an issue](https://github.com/zmeyc/telegram-bot-swift/issues) on Github.
 
 If you miss a specific feature, please create an issue, this will speed up it's development. PR-s are also welcome.
+
+Talk with other developers in our Telegram chat: [swiftsdkchat](https://telegram.me/swiftsdkchat).
 
 Happy coding!
 
