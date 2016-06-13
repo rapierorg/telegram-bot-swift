@@ -14,12 +14,10 @@ public extension TelegramBot {
 	@discardableResult
 	public func sendVenueSync(chat_id: Int64, latitude: Double, longitude: Double,
 	                          title: String, address: String,
-	                          parameters: [String: Any?] = [:]) -> Message? {
-		let allParameters: [String: Any?] =
-			defaultParameters["sendVenue"] ?? [:] + parameters +
-				["chat_id": chat_id, "latitude": latitude, "longitude": longitude,
-				 "title": title, "address": address]
-		return requestSync("sendVenue", allParameters)
+	                          _ parameters: [String: Any?] = [:]) -> Message? {
+		return requestSync("sendVenue", defaultParameters["sendVenue"], parameters,
+		                   ["chat_id": chat_id, "latitude": latitude, "longitude": longitude,
+		                    "title": title, "address": address])
 	}
 	
 	/// Send information about a venue. Blocking version.
@@ -28,12 +26,10 @@ public extension TelegramBot {
 	@discardableResult
 	public func sendVenueSync(chat_id: String, latitude: Double, longitude: Double,
 	                          title: String, address: String,
-	                          parameters: [String: Any?] = [:]) -> Message? {
-		let allParameters: [String: Any?] =
-			defaultParameters["sendVenue"] ?? [:] + parameters +
-				["chat_id": chat_id, "latitude": latitude, "longitude": longitude,
-				 "title": title, "address": address]
-		return requestSync("sendVenue", allParameters)
+	                          _ parameters: [String: Any?] = [:]) -> Message? {
+		return requestSync("sendVenue", defaultParameters["sendVenue"], parameters,
+		                   ["chat_id": chat_id, "latitude": latitude, "longitude": longitude,
+		                    "title": title, "address": address])
 	}
 	
 	/// Send information about a venue. Asynchronous version.
@@ -41,14 +37,13 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvenue>
 	public func sendVenueAsync(chat_id: Int64, latitude: Double, longitude: Double,
 	                           title: String, address: String,
-	                           parameters: [String: Any?] = [:],
+	                           _ parameters: [String: Any?] = [:],
 	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                           completion: SendMessageCompletion? = nil) {
-		let allParameters: [String: Any?] =
-			defaultParameters["sendVenue"] ?? [:] + parameters +
-				["chat_id": chat_id, "latitude": latitude, "longitude": longitude,
-				 "title": title, "address": address]
-		requestAsync("sendVenue", allParameters, queue: queue, completion: completion)
+		requestAsync("sendVenue", defaultParameters["sendVenue"], parameters,
+		             ["chat_id": chat_id, "latitude": latitude, "longitude": longitude,
+		              "title": title, "address": address],
+		             queue: queue, completion: completion)
 	}
 	
 	/// Send information about a venue. Asynchronous version.
@@ -56,13 +51,12 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvenue>
 	public func sendVenueAsync(chat_id: String, latitude: Double, longitude: Double,
 	                           title: String, address: String,
-	                           parameters: [String: Any?] = [:],
+	                           _ parameters: [String: Any?] = [:],
 	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                           completion: SendMessageCompletion? = nil) {
-		let allParameters: [String: Any?] =
-			defaultParameters["sendVenue"] ?? [:] + parameters +
-				["chat_id": chat_id, "latitude": latitude, "longitude": longitude,
-				 "title": title, "address": address]
-		requestAsync("sendVenue", allParameters, queue: queue, completion: completion)
+		requestAsync("sendVenue", defaultParameters["sendVenue"], parameters,
+		             ["chat_id": chat_id, "latitude": latitude, "longitude": longitude,
+		              "title": title, "address": address],
+		             queue: queue, completion: completion)
 	}
 }

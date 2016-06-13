@@ -13,11 +13,9 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendphoto>
 	@discardableResult
 	public func sendPhotoSync(chat_id: Int64, photo: String,
-	                            parameters: [String: Any?] = [:]) -> Message? {
-		let allParameters: [String: Any?] =
-			defaultParameters["sendPhoto"] ?? [:] + parameters +
-				["chat_id": chat_id, "photo": photo]
-		return requestSync("sendPhoto", allParameters)
+	                          _ parameters: [String: Any?] = [:]) -> Message? {
+		return requestSync("sendPhoto", defaultParameters["sendPhoto"], parameters,
+		                   ["chat_id": chat_id, "photo": photo])
 	}
 
 	/// Send photo. Blocking version.
@@ -25,36 +23,32 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendphoto>
 	@discardableResult
 	public func sendPhotoSync(chat_id: String, photo: String,
-	                          parameters: [String: Any?] = [:]) -> Message? {
-		let allParameters: [String: Any?] =
-			defaultParameters["sendPhoto"] ?? [:] + parameters +
-				["chat_id": chat_id, "photo": photo]
-		return requestSync("sendPhoto", allParameters)
+	                          _ parameters: [String: Any?] = [:]) -> Message? {
+		return requestSync("sendPhoto", defaultParameters["sendPhoto"], parameters,
+		                   ["chat_id": chat_id, "photo": photo])
 	}
 	
 	/// Send text messages. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendphoto>
 	public func sendPhotoAsync(chat_id: Int64, photo: String,
-	                             parameters: [String: Any?] = [:],
-	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
-	                             completion: SendMessageCompletion? = nil) {
-		let allParameters: [String: Any?] =
-			defaultParameters["sendPhoto"] ?? [:] + parameters +
-				["chat_id": chat_id, "photo": photo]
-		requestAsync("sendPhoto", allParameters, queue: queue, completion: completion)
+	                           _ parameters: [String: Any?] = [:],
+	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                           completion: SendMessageCompletion? = nil) {
+		requestAsync("sendPhoto", defaultParameters["sendPhoto"], parameters,
+		             ["chat_id": chat_id, "photo": photo],
+		             queue: queue, completion: completion)
 	}
 	
 	/// Send text messages. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendphoto>
 	public func sendPhotoAsync(chat_id: String, photo: String,
-	                             parameters: [String: Any?] = [:],
-	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
-	                             completion: SendMessageCompletion? = nil) {
-		let allParameters: [String: Any?] =
-			defaultParameters["sendPhoto"] ?? [:] + parameters +
-				["chat_id": chat_id, "photo": photo]
-		requestAsync("sendPhoto", allParameters, queue: queue, completion: completion)
+	                           _ parameters: [String: Any?] = [:],
+	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                           completion: SendMessageCompletion? = nil) {
+		requestAsync("sendPhoto", defaultParameters["sendPhoto"], parameters,
+		             ["chat_id": chat_id, "photo": photo],
+		             queue: queue, completion: completion)
 	}
 }

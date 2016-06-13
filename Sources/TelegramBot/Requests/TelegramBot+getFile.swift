@@ -10,23 +10,20 @@ public extension TelegramBot {
 	/// - Returns: File object on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getfile>
 	public func getFileSync(file_id: String,
-	                        parameters: [String: Any?] = [:]) -> File? {
-		let allParameters: [String: Any?] =
-			defaultParameters["getFile"] ?? [:] + parameters +
-			["file_id": file_id]
-		return requestSync("getFile", allParameters)
+	                        _ parameters: [String: Any?] = [:]) -> File? {
+		return requestSync("getFile", defaultParameters["getFile"], parameters,
+		                   ["file_id": file_id])
 	}
 	
 	/// Get basic info about a file and prepare it for downloading. Asynchronous version.
 	/// - Returns: File object on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getfile>
 	public func getFileAsync(file_id: String,
-	                         parameters: [String: Any?] = [:],
+	                         _ parameters: [String: Any?] = [:],
 	                         queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                         completion: GetFileCompletion? = nil) {
-		let allParameters: [String: Any?] =
-			defaultParameters["getFile"] ?? [:] + parameters +
-			["file_id": file_id]
-		requestAsync("getFile", allParameters, queue: queue, completion: completion)
+		requestAsync("getFile", defaultParameters["getFile"], parameters,
+		             ["file_id": file_id],
+		             queue: queue, completion: completion)
 	}
 }

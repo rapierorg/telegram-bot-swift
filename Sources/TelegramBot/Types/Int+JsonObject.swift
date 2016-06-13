@@ -4,9 +4,9 @@
 import Foundation
 import SwiftyJSON
 
-extension Bool: JsonObject {
+extension Int: JsonObject {
 	public init(json: JSON) {
-		self = json.boolValue
+		self = json.intValue
 	}
 	
 	public var json: JSON {
@@ -14,7 +14,7 @@ extension Bool: JsonObject {
 			return JSON(self)
 		}
 		set {
-			self = newValue.boolValue
+			self = newValue.intValue
 		}
 	}
 }

@@ -9,15 +9,18 @@ extension TelegramBot {
 	/// Get a list of profile pictures for a user. Blocking version.
 	/// - Returns: `UserProfilePhotos` object. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getuserprofilephotos>
-	public func getUserProfilePhotosSync() -> UserProfilePhotos? {
-		return requestSync("getUserProfilePhotos")
+	public func getUserProfilePhotosSync(_ parameters: [String: Any?] = [:]) -> UserProfilePhotos? {
+		return requestSync("getUserProfilePhotos", defaultParameters["getUserProfilePhotos"], parameters)
 	}
 	
 	/// Get a list of profile pictures for a user. Asynchronous version.
 	/// - Returns: `UserProfilePhotos` object. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getuserprofilephotos>
-	private func getMeAsync(queue: dispatch_queue_t = dispatch_get_main_queue(),
+	private func getMeAsync(_ parameters: [String: Any?] = [:],
+	                        queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                        completion: GetUserProfilePhotosCompletion? = nil) {
-		requestAsync("getUserProfilePhotos", completion: completion)
+		requestAsync("getUserProfilePhotos",
+		             defaultParameters["getUserProfilePhotos"], parameters,
+		             queue: queue, completion: completion)
 	}
 }

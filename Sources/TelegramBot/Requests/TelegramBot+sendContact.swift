@@ -13,11 +13,9 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendcontact>
 	@discardableResult
 	public func sendContactSync(chat_id: Int64, phone_number: String, first_name: String,
-	                          parameters: [String: Any?] = [:]) -> Message? {
-		let allParameters: [String: Any?] =
-			defaultParameters["sendContact"] ?? [:] + parameters +
-				["chat_id": chat_id, "phone_number": phone_number, "first_name": first_name]
-		return requestSync("sendContact", allParameters)
+	                            _ parameters: [String: Any?] = [:]) -> Message? {
+		return requestSync("sendContact", defaultParameters["sendContact"], parameters,
+		                   ["chat_id": chat_id, "phone_number": phone_number, "first_name": first_name])
 	}
 	
 	/// Send phone contacts. Blocking version.
@@ -25,36 +23,32 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendcontact>
 	@discardableResult
 	public func sendContactSync(chat_id: String, phone_number: String, first_name: String,
-	                          parameters: [String: Any?] = [:]) -> Message? {
-		let allParameters: [String: Any?] =
-			defaultParameters["sendContact"] ?? [:] + parameters +
-				["chat_id": chat_id, "phone_number": phone_number, "first_name": first_name]
-		return requestSync("sendContact", allParameters)
+	                            _ parameters: [String: Any?] = [:]) -> Message? {
+		return requestSync("sendContact", defaultParameters["sendContact"], parameters,
+		                   ["chat_id": chat_id, "phone_number": phone_number, "first_name": first_name])
 	}
 	
 	/// Send phone contacts. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendcontact>
 	public func sendContactAsync(chat_id: Int64, phone_number: String, first_name: String,
-	                           parameters: [String: Any?] = [:],
-	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
-	                           completion: SendMessageCompletion? = nil) {
-		let allParameters: [String: Any?] =
-			defaultParameters["sendContact"] ?? [:] + parameters +
-				["chat_id": chat_id, "phone_number": phone_number, "first_name": first_name]
-		requestAsync("sendContact", allParameters, queue: queue, completion: completion)
+	                             _ parameters: [String: Any?] = [:],
+	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                             completion: SendMessageCompletion? = nil) {
+		requestAsync("sendContact", defaultParameters["sendContact"], parameters,
+		             ["chat_id": chat_id, "phone_number": phone_number, "first_name": first_name],
+		             queue: queue, completion: completion)
 	}
 	
 	/// Send phone contacts. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendcontact>
 	public func sendContactAsync(chat_id: String, phone_number: String, first_name: String,
-	                           parameters: [String: Any?] = [:],
-	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
-	                           completion: SendMessageCompletion? = nil) {
-		let allParameters: [String: Any?] =
-			defaultParameters["sendContact"] ?? [:] + parameters +
-				["chat_id": chat_id, "phone_number": phone_number, "first_name": first_name]
-		requestAsync("sendContact", allParameters, queue: queue, completion: completion)
+	                             _ parameters: [String: Any?] = [:],
+	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                             completion: SendMessageCompletion? = nil) {
+		requestAsync("sendContact", defaultParameters["sendContact"], parameters,
+		             ["chat_id": chat_id, "phone_number": phone_number, "first_name": first_name],
+		             queue: queue, completion: completion)
 	}
 }

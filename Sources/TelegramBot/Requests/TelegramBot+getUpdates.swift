@@ -43,24 +43,20 @@ extension TelegramBot {
 	/// Receive incoming updates using long polling. Blocking version.
 	/// - Returns: Array of updates on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getupdates>
-    public func getUpdatesSync(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil) -> [Update]? {
-		let allParameters: [String: Any?] = [
-			"offset": offset,
-		    "limit": limit,
-		    "timeout": timeout
-		]
-		return requestSync("getUpdates", allParameters)
+    public func getUpdatesSync(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil,
+                               _ parameters: [String: Any?] = [:]) -> [Update]? {
+		return requestSync("getUpdates", defaultParameters["getUpdates"], parameters,
+		                   ["offset": offset, "limit": limit, "timeout": timeout])
     }
     
 	/// Receive incoming updates using long polling. Asynchronous version.
 	/// - Returns: Array of updates on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getupdates>
-    public func getUpdatesAsync(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: GetUpdatesCompletion? = nil) {
-        let allParameters: [String: Any?] = [
-            "offset": offset,
-            "limit": limit,
-            "timeout": timeout
-        ]
-		requestAsync("getUpdates", allParameters, queue: queue, completion: completion)
+    public func getUpdatesAsync(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil,
+                                _ parameters: [String: Any?] = [:],
+                                queue: dispatch_queue_t = dispatch_get_main_queue(), completion: GetUpdatesCompletion? = nil) {
+		requestAsync("getUpdates", defaultParameters["getUpdates"], parameters,
+		             ["offset": offset, "limit": limit, "timeout": timeout],
+		             queue: queue, completion: completion)
     }
 }

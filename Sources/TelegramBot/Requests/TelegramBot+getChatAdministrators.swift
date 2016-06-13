@@ -10,23 +10,20 @@ public extension TelegramBot {
 	/// - Returns: Array of ChatMember objects that contains information about all chat administrators except other bots on success. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchatadministrators>
 	public func getChatAdministratorsSync(chat_id: Int64,
-	                                      parameters: [String: Any?] = [:]) -> [ChatMember]? {
-		let allParameters: [String: Any?] =
-			defaultParameters["getChatAdministrators"] ?? [:] + parameters +
-				["chat_id": chat_id]
-		return requestSync("getChatAdministrators", allParameters)
+	                                      _ parameters: [String: Any?] = [:]) -> [ChatMember]? {
+		return requestSync("getChatAdministrators", defaultParameters["getChatAdministrators"], parameters,
+		                   ["chat_id": chat_id])
 	}
 	
 	/// Get a list of administrators in a chat. Asynchronous version.
 	/// - Returns: Array of ChatMember objects that contains information about all chat administrators except other bots on success. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchatadministrators>
 	public func getChatAdministratorsAsync(chat_id: Int64,
-	                                       parameters: [String: Any?] = [:],
+	                                       _ parameters: [String: Any?] = [:],
 	                                       queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                                       completion: GetChatCompletion? = nil) {
-		let allParameters: [String: Any?] =
-			defaultParameters["getChatAdministrators"] ?? [:] + parameters +
-				["chat_id": chat_id]
-		requestAsync("getChatAdministrators", allParameters, queue: queue, completion: completion)
+		requestAsync("getChatAdministrators", defaultParameters["getChatAdministrators"], parameters,
+		             ["chat_id": chat_id],
+		             queue: queue, completion: completion)
 	}
 }

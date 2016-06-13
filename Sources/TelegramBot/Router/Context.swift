@@ -23,16 +23,16 @@ public class Context {
 	}
 	
 	public func respondAsync(_ text: String,
-	                         parameters: [String: Any?] = [:],
+	                         _ parameters: [String: Any?] = [:],
 	                         queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                         completion: TelegramBot.SendMessageCompletion? = nil) {
-		bot.sendMessageAsync(chat_id: chatId, text: text, parameters: parameters, queue: queue, completion: completion)
+		bot.sendMessageAsync(chat_id: chatId, text: text, parameters, queue: queue, completion: completion)
 	}
 	
 	@discardableResult
 	public func respondSync(_ text: String,
 	                        parameters: [String: Any?] = [:]) -> Message? {
-		return bot.sendMessageSync(chat_id: chatId, text: text, parameters: parameters)
+		return bot.sendMessageSync(chat_id: chatId, text: text, parameters)
 	}
 	
 	@discardableResult

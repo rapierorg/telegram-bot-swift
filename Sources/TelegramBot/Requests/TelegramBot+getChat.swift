@@ -10,23 +10,20 @@ public extension TelegramBot {
 	/// - Returns: Chat object on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchat>
 	public func getChatSync(chat_id: Int64,
-	                        parameters: [String: Any?] = [:]) -> Chat? {
-		let allParameters: [String: Any?] =
-			defaultParameters["getChat"] ?? [:] + parameters +
-				["chat_id": chat_id]
-		return requestSync("getChat", allParameters)
+	                        _ parameters: [String: Any?] = [:]) -> Chat? {
+		return requestSync("getChat", defaultParameters["getChat"], parameters,
+		                   ["chat_id": chat_id])
 	}
 	
 	/// Get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Asynchronous version.
 	/// - Returns: Chat object on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchat>
 	public func getChatAsync(chat_id: Int64,
-	                         parameters: [String: Any?] = [:],
+	                         _ parameters: [String: Any?] = [:],
 	                         queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                         completion: GetChatCompletion? = nil) {
-		let allParameters: [String: Any?] =
-			defaultParameters["getChat"] ?? [:] + parameters +
-				["chat_id": chat_id]
-		requestAsync("getChat", allParameters, queue: queue, completion: completion)
+		requestAsync("getChat", defaultParameters["getChat"], parameters,
+		             ["chat_id": chat_id],
+		             queue: queue, completion: completion)
 	}
 }

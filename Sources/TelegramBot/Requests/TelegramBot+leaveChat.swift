@@ -11,11 +11,9 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#leavechat>
 	@discardableResult
 	public func leaveChatSync(chat_id: Int64,
-	                          parameters: [String: Any?] = [:]) -> Bool? {
-		let allParameters: [String: Any?] =
-			defaultParameters["leaveChat"] ?? [:] + parameters +
-			["chat_id": chat_id]
-		return requestSync("leaveChat", allParameters)
+	                          _ parameters: [String: Any?] = [:]) -> Bool? {
+		return requestSync("leaveChat", defaultParameters["leaveChat"], parameters,
+		                   ["chat_id": chat_id])
 	}
 	
 	/// Leave a group, supergroup or channel. Blocking version.
@@ -23,36 +21,32 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#leavechat>
 	@discardableResult
 	public func leaveChatSync(chat_id: String,
-	                          parameters: [String: Any?] = [:]) -> Bool? {
-		let allParameters: [String: Any?] =
-			defaultParameters["leaveChat"] ?? [:] + parameters +
-			["chat_id": chat_id]
-		return requestSync("leaveChat", allParameters)
+	                          _ parameters: [String: Any?] = [:]) -> Bool? {
+		return requestSync("leaveChat", defaultParameters["leaveChat"], parameters,
+		                   ["chat_id": chat_id])
 	}
 	
 	/// Leave a group, supergroup or channel. Asynchronous version.
 	/// - Returns: true on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#leavechat>
 	public func leaveChatAsync(chat_id: Int64,
-	                         parameters: [String: Any?] = [:],
-	                         queue: dispatch_queue_t = dispatch_get_main_queue(),
-	                         completion: LeaveChatCompletion? = nil) {
-		let allParameters: [String: Any?] =
-			defaultParameters["leaveChat"] ?? [:] + parameters +
-			["chat_id": chat_id]
-		requestAsync("leaveChat", allParameters, queue: queue, completion: completion)
+	                           _ parameters: [String: Any?] = [:],
+	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                           completion: LeaveChatCompletion? = nil) {
+		requestAsync("leaveChat", defaultParameters["leaveChat"], parameters,
+		             ["chat_id": chat_id],
+		             queue: queue, completion: completion)
 	}
 	
 	/// Leave a group, supergroup or channel. Asynchronous version.
 	/// - Returns: true on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#leavechat>
 	public func leaveChatAsync(chat_id: String,
-	                           parameters: [String: Any?] = [:],
+	                           _ parameters: [String: Any?] = [:],
 	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
 	                           completion: LeaveChatCompletion? = nil) {
-		let allParameters: [String: Any?] =
-			defaultParameters["leaveChat"] ?? [:] + parameters +
-			["chat_id": chat_id]
-		requestAsync("leaveChat", allParameters, queue: queue, completion: completion)
+		requestAsync("leaveChat", defaultParameters["leaveChat"], parameters,
+		             ["chat_id": chat_id],
+		             queue: queue, completion: completion)
 	}
 }
