@@ -1,5 +1,10 @@
 # telegram-bot-swift changelog
 
+## 0.8.0 (2016-06-15)
+
+- Upgrade to Xcode 8 (Swift 3.0 Preview 1)
+- Bugfix: "unknown command" / "unsupported content type" messages are no longer sent to group chats.
+
 ## 0.7.0 (2016-06-13)
 
 - All enums renamed to match Swift 3 guidelines.
