@@ -254,11 +254,11 @@ Parameter names should be specified explicitly in most cases:
 bot.sendLocationAsync(chat_id: chatId, latitude: 50.4501, longitude: 30.5234)
 ```
 
-Exception to this are `sendMessage` and `respondAsync` functions which are used very often. Parameter names can be omitted in them:
+Exception to this are `sendMessageSync/Async` and `respondSync/Async` functions which are used very often. Parameter names can be omitted in them:
 
 ```swift
-bot.sendMessage(chat_id: chatId, text: "Text")
-bot.sendMessage(chatId, "Text") // will also work
+bot.sendMessageAsync(chat_id: chatId, text: "Text")
+bot.sendMessageAsync(chatId, "Text") // will also work
 ```
 
 Currently request methods define only `required` parameters in their signatures. To pass `optional` parameters to these methods, a dictionary should be used:
@@ -376,7 +376,7 @@ Command name is processed differently in private and group chats:
 * In private chats slash is optional. `start` matches `/start` as well as `start`.
 * It group chats 'start' only matches `/start`.
 
-This can be overridden. The following line will require slash even in group chats:
+This can be overridden. The following line will require slash even in private chats:
 
 ```swift
 router["start", slash: .required] = onStart
