@@ -3,7 +3,7 @@ import PackageDescription
 let package = Package(
     name: "hello-bot",
     dependencies: [
-	    .Package(url: "../..", majorVersion: 0)
+        .Package(url: "../..", majorVersion: 0)
     ]
 )
 
