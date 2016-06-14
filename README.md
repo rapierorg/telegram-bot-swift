@@ -376,7 +376,7 @@ Command name is processed differently in private and group chats:
 * In private chats slash is optional. `start` matches `/start` as well as `start`.
 * It group chats 'start' only matches `/start`.
 
-This can be overridden. The following line will require slash even in group chats:
+This can be overridden. The following line will require slash even in private chats:
 
 ```swift
 router["start", slash: .required] = onStart
