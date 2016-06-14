@@ -119,7 +119,7 @@ router["start"] = controller.start
 router["stop"] = controller.stop
 router["help"] = controller.help
 router["settings"] = controller.settings
-router["reverse", slash: .Required] = controller.reverseText
+router["reverse", slash: .required] = controller.reverseText
 router["word_reverse"] = controller.reverseWords
 // Default handler
 router.unknownCommand = controller.reverseText
