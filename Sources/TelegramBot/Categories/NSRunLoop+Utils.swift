@@ -3,14 +3,14 @@
 
 import Foundation
 
-public extension NSRunLoop {
+public extension RunLoop {
 	public func runOnce() {
-		run(mode: NSDefaultRunLoopMode, before: NSDate(timeIntervalSinceNow: 0.01))
+		run(mode: RunLoopMode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: 0.01))
 	}
 	
-	public func waitForSemaphore(_ sem: dispatch_semaphore_t) {
+	public func waitForSemaphore(_ sem: DispatchSemaphore) {
 		repeat {
 			runOnce()
-		} while 0 != dispatch_semaphore_wait(sem, DISPATCH_TIME_NOW)
+		} while .Success != sem.wait(timeout: DispatchTime.now())
 	}
 }

@@ -17,7 +17,7 @@ extension TelegramBot {
 	/// - Returns: `UserProfilePhotos` object. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getuserprofilephotos>
 	private func getMeAsync(_ parameters: [String: Any?] = [:],
-	                        queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                        queue: DispatchQueue = DispatchQueue.main,
 	                        completion: GetUserProfilePhotosCompletion? = nil) {
 		requestAsync("getUserProfilePhotos",
 		             defaultParameters["getUserProfilePhotos"], parameters,

@@ -33,7 +33,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvideo>
 	public func sendVideoAsync(chat_id: Int64, video: String,
 	                           _ parameters: [String: Any?] = [:],
-	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                           queue: DispatchQueue = DispatchQueue.main,
 	                           completion: SendMessageCompletion? = nil) {
 		requestAsync("sendVideo", defaultParameters["sendVideo"], parameters,
 		             ["chat_id": chat_id, "video": video],
@@ -45,7 +45,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvideo>
 	public func sendVideoAsync(chat_id: String, video: String,
 	                             _ parameters: [String: Any?] = [:],
-	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                             queue: DispatchQueue = DispatchQueue.main,
 	                             completion: SendMessageCompletion? = nil) {
 		requestAsync("sendVideo", defaultParameters["sendVideo"], parameters,
 		             ["chat_id": chat_id, "video": video],

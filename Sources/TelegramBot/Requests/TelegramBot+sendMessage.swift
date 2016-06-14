@@ -22,7 +22,7 @@ public extension TelegramBot {
 	@discardableResult
 	public func sendMessageSync(_ chat_id: Int64, _ text: String,
 	                            _ parameters: [String: Any?] = [:]) -> Message? {
-		return sendMessageSync(chat_id: chat_id, text: text, parameters)
+		return sendMessageSync(chat_id, text, parameters)
 	}
 
     /// Send text messages. Asynchronous version.
@@ -30,7 +30,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
 	public func sendMessageAsync(chat_id: Int64, text: String,
 	                             _ parameters: [String: Any?] = [:],
-	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                             queue: DispatchQueue = DispatchQueue.main,
 	                             completion: SendMessageCompletion? = nil) {
 		requestAsync("sendMessage", defaultParameters["sendMessage"], parameters,
 		             ["chat_id": chat_id, "text": text],
@@ -42,7 +42,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
 	public func sendMessageAsync(_ chat_id: Int64, _ text: String,
 	                             _ parameters: [String: Any?] = [:],
-	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                             queue: DispatchQueue = DispatchQueue.main,
 	                             completion: SendMessageCompletion? = nil) {
 		sendMessageAsync(chat_id: chat_id, text: text, parameters, queue: queue, completion: completion)
 	}

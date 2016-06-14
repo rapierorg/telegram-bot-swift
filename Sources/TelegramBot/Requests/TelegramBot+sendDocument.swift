@@ -33,7 +33,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#senddocument>
 	public func sendDocumentAsync(chat_id: Int64, document: String,
 	                              _ parameters: [String: Any?] = [:],
-	                              queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                              queue: DispatchQueue = DispatchQueue.main,
 	                              completion: SendMessageCompletion? = nil) {
 		requestAsync("sendDocument", defaultParameters["sendDocument"], parameters,
 		             ["chat_id": chat_id, "document": document],
@@ -45,7 +45,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#senddocument>
 	public func sendDocumentAsync(chat_id: String, document: String,
 	                              _ parameters: [String: Any?] = [:],
-	                              queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                              queue: DispatchQueue = DispatchQueue.main,
 	                              completion: SendMessageCompletion? = nil) {
 		requestAsync("sendDocument", defaultParameters["sendDocument"], parameters,
 		             ["chat_id": chat_id, "document": document],

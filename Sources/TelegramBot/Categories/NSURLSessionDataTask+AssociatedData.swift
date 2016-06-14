@@ -3,7 +3,7 @@
 
 import Foundation
 
-public extension NSURLSessionDataTask {
+public extension URLSessionDataTask {
     
     private static var taskAssociatedDataKey = "taskAssociatedData"
     
@@ -11,10 +11,10 @@ public extension NSURLSessionDataTask {
     var associatedData: TaskAssociatedData? {
         get {
             return objc_getAssociatedObject(self,
-                &NSURLSessionDataTask.taskAssociatedDataKey) as? TaskAssociatedData
+                &URLSessionDataTask.taskAssociatedDataKey) as? TaskAssociatedData
         }
         set {
-            objc_setAssociatedObject(self, &NSURLSessionDataTask.taskAssociatedDataKey,
+            objc_setAssociatedObject(self, &URLSessionDataTask.taskAssociatedDataKey,
                 newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }

@@ -19,7 +19,7 @@ extension TelegramBot {
     ///            Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getme>
 	public func getMeAsync(_ parameters: [String: Any?] = [:],
-	                       queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                       queue: DispatchQueue = DispatchQueue.main,
 	                       completion: GetMeCompletion? = nil) {
 		requestAsync("getMe",
 		             defaultParameters["getMe"], parameters,

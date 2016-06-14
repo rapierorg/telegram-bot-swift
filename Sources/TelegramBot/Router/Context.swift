@@ -22,7 +22,7 @@ public class Context {
 	public var chatId: Int64 { return message.chat.id }
 	public var fromId: Int64? { return message.from?.id }
 	
-	init(bot: TelegramBot, update: Update, scanner: NSScanner, command: String) {
+	init(bot: TelegramBot, update: Update, scanner: Scanner, command: String) {
 		self.bot = bot
 		self.update = update
 		if let message = update.message {
@@ -33,7 +33,7 @@ public class Context {
 	
 	public func respondAsync(_ text: String,
 	                         _ parameters: [String: Any?] = [:],
-	                         queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                         queue: DispatchQueue = DispatchQueue.main,
 	                         completion: TelegramBot.SendMessageCompletion? = nil) {
 		bot.sendMessageAsync(chat_id: chatId, text: text, parameters, queue: queue, completion: completion)
 	}

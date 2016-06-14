@@ -28,8 +28,8 @@ public class Command {
         }
     }
     	
-    public func fetchFrom(_ scanner: NSScanner) -> String? {
-        let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
+    public func fetchFrom(_ scanner: Scanner) -> String? {
+        let whitespaceAndNewline = CharacterSet.whitespacesAndNewlines
         guard let word = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) else {
             return nil
         }

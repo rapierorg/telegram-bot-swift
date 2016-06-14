@@ -68,7 +68,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
 	public func sendChatActionAsync(chat_id: Int64, action: ChatAction,
 	                                _ parameters: [String: Any?] = [:],
-	                                queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                                queue: DispatchQueue = DispatchQueue.main,
 	                                completion: SendChatActionCompletion? = nil) {
 		requestAsync("sendChatAction", defaultParameters["sendChatAction"], parameters,
 		             ["chat_id": chat_id, "action": action],
@@ -80,7 +80,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
 	public func sendChatActionAsync(chat_id: Int64, action: String,
 	                                _ parameters: [String: Any?] = [:],
-	                                queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                                queue: DispatchQueue = DispatchQueue.main,
 	                                completion: SendChatActionCompletion? = nil) {
 		requestAsync("sendChatAction", defaultParameters["sendChatAction"], parameters,
 		             ["chat_id": chat_id, "action": action],
@@ -94,7 +94,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
 	public func sendChatActionAsync(chat_id: String, action: ChatAction,
 	                                _ parameters: [String: Any?] = [:],
-	                                queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                                queue: DispatchQueue = DispatchQueue.main,
 	                                completion: SendChatActionCompletion? = nil) {
 		requestAsync("sendChatAction", defaultParameters["sendChatAction"], parameters,
 		             ["chat_id": chat_id, "action": action],
@@ -106,7 +106,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
 	public func sendChatActionAsync(chat_id: String, action: String,
 	                                _ parameters: [String: Any?] = [:],
-	                                queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                                queue: DispatchQueue = DispatchQueue.main,
 	                                completion: SendChatActionCompletion? = nil) {
 		requestAsync("sendChatAction", defaultParameters["sendChatAction"], parameters,
 		             ["chat_id": chat_id, "action": action],

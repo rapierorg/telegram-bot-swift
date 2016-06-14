@@ -6,16 +6,16 @@ import Foundation
 public class Arguments {
 	typealias T = Arguments
 	
-	public let scanner: NSScanner
+	public let scanner: Scanner
 	public let command: String
 	
 	public var isAtEnd: Bool {
 		return scanner.isAtEnd
 	}
 
-	static let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
+	static let whitespaceAndNewline = CharacterSet.whitespacesAndNewlines
 	
-	init(scanner: NSScanner, command: String) {
+	init(scanner: Scanner, command: String) {
 		self.scanner = scanner
 		self.command = command
 	}
@@ -36,7 +36,7 @@ public class Arguments {
 		guard let word = scanWord() else {
 			return nil
 		}
-		let validator = NSScanner(string: word)
+		let validator = Scanner(string: word)
 		validator.charactersToBeSkipped = nil
 		guard let value = validator.scanInt() where validator.isAtEnd else {
 			return nil
@@ -48,7 +48,7 @@ public class Arguments {
 		guard let word = scanWord() else {
 			return nil
 		}
-		let validator = NSScanner(string: word)
+		let validator = Scanner(string: word)
 		validator.charactersToBeSkipped = nil
 		guard let value = validator.scanDouble() where validator.isAtEnd else {
 			return nil

@@ -33,7 +33,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendphoto>
 	public func sendPhotoAsync(chat_id: Int64, photo: String,
 	                           _ parameters: [String: Any?] = [:],
-	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                           queue: DispatchQueue = DispatchQueue.main,
 	                           completion: SendMessageCompletion? = nil) {
 		requestAsync("sendPhoto", defaultParameters["sendPhoto"], parameters,
 		             ["chat_id": chat_id, "photo": photo],
@@ -45,7 +45,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendphoto>
 	public func sendPhotoAsync(chat_id: String, photo: String,
 	                           _ parameters: [String: Any?] = [:],
-	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                           queue: DispatchQueue = DispatchQueue.main,
 	                           completion: SendMessageCompletion? = nil) {
 		requestAsync("sendPhoto", defaultParameters["sendPhoto"], parameters,
 		             ["chat_id": chat_id, "photo": photo],

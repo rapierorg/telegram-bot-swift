@@ -20,7 +20,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchat>
 	public func getChatAsync(chat_id: Int64,
 	                         _ parameters: [String: Any?] = [:],
-	                         queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                         queue: DispatchQueue = DispatchQueue.main,
 	                         completion: GetChatCompletion? = nil) {
 		requestAsync("getChat", defaultParameters["getChat"], parameters,
 		             ["chat_id": chat_id],

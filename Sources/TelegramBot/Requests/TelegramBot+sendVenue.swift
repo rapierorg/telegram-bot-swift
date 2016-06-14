@@ -38,7 +38,7 @@ public extension TelegramBot {
 	public func sendVenueAsync(chat_id: Int64, latitude: Double, longitude: Double,
 	                           title: String, address: String,
 	                           _ parameters: [String: Any?] = [:],
-	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                           queue: DispatchQueue = DispatchQueue.main,
 	                           completion: SendMessageCompletion? = nil) {
 		requestAsync("sendVenue", defaultParameters["sendVenue"], parameters,
 		             ["chat_id": chat_id, "latitude": latitude, "longitude": longitude,
@@ -52,7 +52,7 @@ public extension TelegramBot {
 	public func sendVenueAsync(chat_id: String, latitude: Double, longitude: Double,
 	                           title: String, address: String,
 	                           _ parameters: [String: Any?] = [:],
-	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                           queue: DispatchQueue = DispatchQueue.main,
 	                           completion: SendMessageCompletion? = nil) {
 		requestAsync("sendVenue", defaultParameters["sendVenue"], parameters,
 		             ["chat_id": chat_id, "latitude": latitude, "longitude": longitude,

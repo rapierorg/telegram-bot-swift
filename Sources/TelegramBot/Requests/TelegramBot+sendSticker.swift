@@ -33,7 +33,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendsticker>
 	public func sendStickerAsync(chat_id: Int64, sticker: String,
 	                             _ parameters: [String: Any?] = [:],
-	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                             queue: DispatchQueue = DispatchQueue.main,
 	                             completion: SendMessageCompletion? = nil) {
 		requestAsync("sendSticker", defaultParameters["sendSticker"], parameters,
 		             ["chat_id": chat_id, "sticker": sticker],
@@ -45,7 +45,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendsticker>
 	public func sendStickerAsync(chat_id: String, sticker: String,
 	                             _ parameters: [String: Any?] = [:],
-	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                             queue: DispatchQueue = DispatchQueue.main,
 	                             completion: SendMessageCompletion? = nil) {
 		requestAsync("sendSticker", defaultParameters["sendSticker"], parameters,
 		             ["chat_id": chat_id, "sticker": sticker],

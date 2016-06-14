@@ -8,18 +8,18 @@ import SwiftyJSON
 public enum DataTaskError {
     /// NSDataTask returned an error
     case genericError(
-        data: NSData?, response: NSURLResponse?, error: NSError)
+        data: Data?, response: URLResponse?, error: NSError)
     
     /// Response is not NSHTTPURLResponse
     case invalidResponseType(
-        data: NSData?, response: NSURLResponse?)
+        data: Data?, response: URLResponse?)
     
     /// Status Code is not 200 (OK)
     case invalidStatusCode(statusCode: Int,
-        data: NSData?, response: NSHTTPURLResponse)
+        data: Data?, response: HTTPURLResponse)
     
     /// Telegram server returned no data
-    case noDataReceived(response: NSHTTPURLResponse)
+    case noDataReceived(response: HTTPURLResponse)
     
     /// Response couldn't be parsed
     //case responseParseError(json: JSON,
@@ -27,7 +27,7 @@ public enum DataTaskError {
     
     /// Server error (server returned "ok: false")
     case serverError(telegramResponse: Response,
-        data: NSData, response: NSHTTPURLResponse)
+        data: Data, response: HTTPURLResponse)
     
     /// No `result` in Telegram response
     //case noResult(telegramResponse: Response,

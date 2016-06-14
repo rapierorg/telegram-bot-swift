@@ -54,7 +54,7 @@ extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getupdates>
     public func getUpdatesAsync(offset: Int? = nil, limit: Int? = nil, timeout: Int? = nil,
                                 _ parameters: [String: Any?] = [:],
-                                queue: dispatch_queue_t = dispatch_get_main_queue(), completion: GetUpdatesCompletion? = nil) {
+                                queue: DispatchQueue = DispatchQueue.main, completion: GetUpdatesCompletion? = nil) {
 		requestAsync("getUpdates", defaultParameters["getUpdates"], parameters,
 		             ["offset": offset, "limit": limit, "timeout": timeout],
 		             queue: queue, completion: completion)

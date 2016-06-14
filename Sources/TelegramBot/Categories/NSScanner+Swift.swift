@@ -3,7 +3,7 @@
 
 import Foundation
 
-extension NSScanner {
+extension Scanner {
     func scanInt32() -> Int32? {
         var result: Int32 = 0
         return scanInt32(&result) ? result : nil
@@ -109,7 +109,7 @@ extension NSScanner {
         return scanString(string, into: nil)
     }
     
-    func scanCharactersFromSet(_ set: NSCharacterSet) -> String? {
+    func scanCharactersFromSet(_ set: CharacterSet) -> String? {
         var result: NSString? = nil
 		if scanCharacters(from: set, into: &result) {
             return result as? String
@@ -118,7 +118,7 @@ extension NSScanner {
     }
 	
 	@discardableResult
-    func skipCharactersFromSet(_ set: NSCharacterSet) -> Bool {
+    func skipCharactersFromSet(_ set: CharacterSet) -> Bool {
 		return scanCharacters(from: set, into: nil)
     }
     
@@ -135,7 +135,7 @@ extension NSScanner {
         return scanUpTo(string, into: nil)
     }
     
-    func scanUpToCharactersFromSet(_ set: NSCharacterSet) -> String? {
+    func scanUpToCharactersFromSet(_ set: CharacterSet) -> String? {
         var result: NSString? = nil
 		if scanUpToCharacters(from: set, into: &result) {
             return result as? String
@@ -144,7 +144,7 @@ extension NSScanner {
     }
     
 	@discardableResult
-    func skipUpToCharactersFromSet(_ set: NSCharacterSet) -> Bool {
+    func skipUpToCharactersFromSet(_ set: CharacterSet) -> Bool {
 		return scanUpToCharacters(from: set, into: nil)
     }
 }

@@ -25,11 +25,11 @@ public func readToken(_ name: String) -> String {
 ///
 /// - Returns: `String`.
 public func readConfigurationValue(_ name: String) -> String? {
-	let environment = NSProcessInfo.processInfo().environment
+	let environment = ProcessInfo.processInfo().environment
 	var value = environment[name]
 	if value == nil {
 		do {
-			value = try String(contentsOfFile: name, encoding: NSUTF8StringEncoding)
+			value = try String(contentsOfFile: name, encoding: String.Encoding.utf8)
 		} catch {
 		}
 	}

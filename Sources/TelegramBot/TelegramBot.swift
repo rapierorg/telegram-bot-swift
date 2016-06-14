@@ -7,7 +7,7 @@ import SwiftyJSON
 public class TelegramBot {
     /// `errorHandler`'s completion block type
     /// - SeeAlso: `public var errorHandler: ErrorHandler?`
-    public typealias ErrorHandler = (NSURLSessionDataTask, DataTaskError) -> ()
+    public typealias ErrorHandler = (URLSessionDataTask, DataTaskError) -> ()
     
     public typealias DataTaskCompletion = (json: JSON, error: DataTaskError?)->()
 
@@ -91,7 +91,7 @@ public class TelegramBot {
     ]
     
     /// Session. By default, configured with ephemeralSessionConfiguration().
-    public var session: NSURLSession
+    public var session: URLSession
 
     /// Offset for long polling.
     public var nextOffset: Int?
@@ -107,12 +107,12 @@ public class TelegramBot {
     var unprocessedUpdates: [Update]
     
     /// Queue for callbacks in asynchronous versions of requests.
-    public var queue = dispatch_get_main_queue()
+    public var queue = DispatchQueue.main
     
     /// Last error for use with synchronous requests.
     public var lastError: DataTaskError?
     
-    private let workQueue = dispatch_queue_create("com.zabiyaka.TelegramBot", DISPATCH_QUEUE_SERIAL)!
+    private let workQueue = DispatchQueue(label: "com.zabiyaka.TelegramBot", attributes: DispatchQueueAttributes.serial)
     
     /// To handle network or parse errors,
     /// set a custom callback using this property.
@@ -198,20 +198,18 @@ public class TelegramBot {
             // Be aware that dispatch_after does NOT work correctly with serial queues.
             // The queue will perform async blocks BEFORE those inserted via dispatch_after.
             // So, use global queue for the pause, then execute the actual request on workQueue.
-            dispatch_after(
-                dispatch_time(DISPATCH_TIME_NOW,
-                    Int64(reconnectDelay * Double(NSEC_PER_SEC))),
-                dispatch_get_global_queue(
-                    DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            DispatchQueue.global(
+                    attributes: DispatchQueue.GlobalAttributes.qosDefault).after(
+                when: DispatchTime.now() + Double(Int64(reconnectDelay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
                 actualSelf.startDataTaskForRequest(originalRequest, associateTaskWithData: taskAssociatedData)
             }
         }
     }
     
     /// Default handling of network and parse errors.
-    public static let defaultSession: NSURLSession = {
-        let configuration = NSURLSessionConfiguration.ephemeral()
-        return NSURLSession(configuration: configuration)
+    public static let defaultSession: URLSession = {
+        let configuration = URLSessionConfiguration.ephemeral()
+        return URLSession(configuration: configuration)
     }()
     
     /// Equivalent of calling `getMe()`
@@ -243,7 +241,7 @@ public class TelegramBot {
     /// - Parameter token: A unique authentication token.
     /// - Parameter fetchBotInfo: If true, issue a blocking `getMe()` call and cache the bot information. Otherwise it will be lazy-loaded when needed. Defaults to true.
     /// - Parameter session: `NSURLSession` instance, a session with `ephemeralSessionConfiguration` is used by default.
-    public init(token: String, fetchBotInfo: Bool = true, session: NSURLSession = defaultSession) {
+    public init(token: String, fetchBotInfo: Bool = true, session: URLSession = defaultSession) {
         self.token = token
         self.session = session
         self.unprocessedUpdates = []
@@ -293,26 +291,26 @@ public class TelegramBot {
         let request = NSMutableURLRequest(url: endpointUrl)
         request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         request.httpMethod = "POST"
-		request.httpBody = data.data(using: NSUTF8StringEncoding)
+		request.httpBody = data.data(using: String.Encoding.utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
         let taskAssociatedData = TaskAssociatedData(completion)
-        startDataTaskForRequest(request, associateTaskWithData: taskAssociatedData)
+        startDataTaskForRequest(request as URLRequest, associateTaskWithData: taskAssociatedData)
     }
     
     /// Use this function for implementing retrying in
     /// custom `errorHandler`.
     ///
     /// See `defaultErrorHandler` implementation for an example.
-    public func startDataTaskForRequest(_ request: NSURLRequest, associateTaskWithData taskAssociatedData: TaskAssociatedData) {
+    public func startDataTaskForRequest(_ request: URLRequest, associateTaskWithData taskAssociatedData: TaskAssociatedData) {
         // This function can be called from main queue (when
         // call is initiated by user) or from dataTask queue (when
         // automatically retrying).
         // Dispatch calls to serial workQueue.
-        dispatch_async(self.workQueue) {
-            var task: NSURLSessionDataTask?
+        self.workQueue.async {
+            var task: URLSessionDataTask?
 			task = self.session.dataTask(with: request) { dataOrNil, responseOrNil, errorOrNil in
-				self.urlSessionDataTaskCompletion(task: task!, dataOrNil, responseOrNil, errorOrNil)
+				self.urlSessionDataTaskCompletion(task!, dataOrNil, responseOrNil, errorOrNil)
             }
             if let t = task {
                 t.associatedData = taskAssociatedData
@@ -321,7 +319,7 @@ public class TelegramBot {
         }
     }
 		
-    private func urlSessionDataTaskCompletion(task: NSURLSessionDataTask, _ dataOrNil: NSData?, _ responseOrNil: NSURLResponse?, _ errorOrNil: NSError?) {
+    private func urlSessionDataTaskCompletion(_ task: URLSessionDataTask, _ dataOrNil: Data?, _ responseOrNil: URLResponse?, _ errorOrNil: NSError?) {
         
         if let error = errorOrNil {
             errorHandler?(task, .genericError(
@@ -329,7 +327,7 @@ public class TelegramBot {
             return
         }
         
-        guard let response = responseOrNil as? NSHTTPURLResponse else {
+        guard let response = responseOrNil as? HTTPURLResponse else {
             errorHandler?(task, .invalidResponseType(
                 data: dataOrNil, response: responseOrNil))
             return
@@ -384,11 +382,11 @@ public class TelegramBot {
         }
     }
 
-    private func urlForEndpoint(_ endpoint: String) -> NSURL {
+    private func urlForEndpoint(_ endpoint: String) -> URL {
         let tokenUrlencoded = token.urlQueryEncode()
         let endpointUrlencoded = endpoint.urlQueryEncode()
         let urlString = "\(url)/bot\(tokenUrlencoded)/\(endpointUrlencoded)"
-        guard let result = NSURL(string: urlString) else {
+        guard let result = URL(string: urlString) else {
             fatalError("Invalid URL: \(urlString)")
         }
         return result

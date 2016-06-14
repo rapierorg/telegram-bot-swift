@@ -29,7 +29,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchatmember>
 	public func getChatMemberAsync(chat_id: Int64, user_id: Int64,
 	                               _ parameters: [String: Any?] = [:],
-	                               queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                               queue: DispatchQueue = DispatchQueue.main,
 	                               completion: GetChatMemberCompletion? = nil) {
 		requestAsync("getChatMember", defaultParameters["getChatMember"], parameters,
 		             ["chat_id": chat_id, "user_id": user_id],
@@ -41,7 +41,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchatmember>
 	public func getChatMemberAsync(chat_id: String, user_id: Int64,
 	                                _ parameters: [String: Any?] = [:],
-	                                queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                                queue: DispatchQueue = DispatchQueue.main,
 	                                completion: GetChatMemberCompletion? = nil) {
 		requestAsync("getChatMember", defaultParameters["getChatMember"], parameters,
 		             ["chat_id": chat_id, "user_id": user_id],

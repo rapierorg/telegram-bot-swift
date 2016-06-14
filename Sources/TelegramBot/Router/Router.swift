@@ -8,7 +8,7 @@ public class Router {
 	public typealias Path = (contentType: ContentType, handler: Handler)
 	
     public var caseSensitive: Bool = false
-    public var charactersToBeSkipped: NSCharacterSet? = NSCharacterSet.whitespacesAndNewlines()
+    public var charactersToBeSkipped: CharacterSet? = CharacterSet.whitespacesAndNewlines
 
 	public var bot: TelegramBot
 
@@ -82,14 +82,14 @@ public class Router {
 	@discardableResult
     public func process(update: Update) throws -> Bool {
 		let string = update.message?.extractCommand(for: bot) ?? ""
-        let scanner = NSScanner(string: string)
+        let scanner = Scanner(string: string)
         scanner.caseSensitive = caseSensitive
         scanner.charactersToBeSkipped = charactersToBeSkipped
 		let originalScanLocation = scanner.scanLocation
 		
 		for path in paths {
 			var command = ""
-			if !match(contentType: path.contentType, update: update, commandScanner: scanner, userCommand: &command) {
+            if !match(contentType: path.contentType, update: update, commandScanner: scanner, userCommand: &command) {
 				scanner.scanLocation = originalScanLocation
 				continue;
 			}
@@ -106,7 +106,7 @@ public class Router {
 
 		if !string.isEmpty {
 			if let unknownCommand = unknownCommand {
-				let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
+				let whitespaceAndNewline = CharacterSet.whitespacesAndNewlines
 				let command = scanner.scanUpToCharactersFromSet(whitespaceAndNewline)
 				let context = Context(bot: bot, update: update, scanner: scanner, command: command ?? "")
 				if try !unknownCommand(context: context) {
@@ -124,7 +124,7 @@ public class Router {
 		return false
     }
 	
-	func match(contentType: ContentType, update: Update, commandScanner: NSScanner, userCommand: inout String) -> Bool {
+	func match(contentType: ContentType, update: Update, commandScanner: Scanner, userCommand: inout String) -> Bool {
 		
 		guard let message = update.message else { return false }
 		

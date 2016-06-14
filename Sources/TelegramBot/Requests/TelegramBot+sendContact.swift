@@ -33,7 +33,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendcontact>
 	public func sendContactAsync(chat_id: Int64, phone_number: String, first_name: String,
 	                             _ parameters: [String: Any?] = [:],
-	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                             queue: DispatchQueue = DispatchQueue.main,
 	                             completion: SendMessageCompletion? = nil) {
 		requestAsync("sendContact", defaultParameters["sendContact"], parameters,
 		             ["chat_id": chat_id, "phone_number": phone_number, "first_name": first_name],
@@ -45,7 +45,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendcontact>
 	public func sendContactAsync(chat_id: String, phone_number: String, first_name: String,
 	                             _ parameters: [String: Any?] = [:],
-	                             queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                             queue: DispatchQueue = DispatchQueue.main,
 	                             completion: SendMessageCompletion? = nil) {
 		requestAsync("sendContact", defaultParameters["sendContact"], parameters,
 		             ["chat_id": chat_id, "phone_number": phone_number, "first_name": first_name],

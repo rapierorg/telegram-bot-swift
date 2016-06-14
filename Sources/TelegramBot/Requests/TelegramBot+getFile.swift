@@ -20,7 +20,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getfile>
 	public func getFileAsync(file_id: String,
 	                         _ parameters: [String: Any?] = [:],
-	                         queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                         queue: DispatchQueue = DispatchQueue.main,
 	                         completion: GetFileCompletion? = nil) {
 		requestAsync("getFile", defaultParameters["getFile"], parameters,
 		             ["file_id": file_id],

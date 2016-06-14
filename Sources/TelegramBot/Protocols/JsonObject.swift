@@ -12,7 +12,7 @@ public protocol JsonObject: CustomStringConvertible, CustomDebugStringConvertibl
 
 extension JsonObject {
 	public var description: String {
-		return json.rawString(encoding: NSUTF8StringEncoding, options: []) ?? ""
+		return json.rawString(encoding: String.Encoding.utf8, options: []) ?? ""
 	}
 	
 	public var debugDescription: String {

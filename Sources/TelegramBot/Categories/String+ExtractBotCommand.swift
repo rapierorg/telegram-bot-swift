@@ -7,18 +7,18 @@ extension String {
 	/// - Parameter botName: bot name to remove.
     /// - Returns: "/command@botName arguments" -> "/command arguments". Nil if bot name does not match `botName` parameter.
     public func without(botName: BotName) -> String? {
-        let scanner = NSScanner(string: self)
+        let scanner = Scanner(string: self)
         scanner.caseSensitive = false
         scanner.charactersToBeSkipped = nil
         
-        let whitespaceAndNewline = NSCharacterSet.whitespacesAndNewlines()
+        let whitespaceAndNewline = CharacterSet.whitespacesAndNewlines
         scanner.skipCharactersFromSet(whitespaceAndNewline)
         
         guard scanner.skipString("/") else {
             return self
         }
         
-        let alphanumericCharacters = NSCharacterSet.alphanumerics()
+        let alphanumericCharacters = CharacterSet.alphanumerics
         guard scanner.skipCharactersFromSet(alphanumericCharacters) else {
             return self
         }
@@ -31,7 +31,7 @@ extension String {
         }
 
         // A set of characters allowed in bot names
-        let usernameCharacters = NSCharacterSet(charactersIn:
+        let usernameCharacters = CharacterSet(charactersIn:
             "abcdefghijklmnopqrstuvwxyz" +
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
             "1234567890_")

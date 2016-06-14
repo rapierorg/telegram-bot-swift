@@ -33,7 +33,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvoice>
 	public func sendVoiceAsync(chat_id: Int64, voice: String,
 	                           _ parameters: [String: Any?] = [:],
-	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                           queue: DispatchQueue = DispatchQueue.main,
 	                           completion: SendMessageCompletion? = nil) {
 		requestAsync("sendVoice", defaultParameters["sendVoice"], parameters,
 		             ["chat_id": chat_id, "voice": voice],
@@ -45,7 +45,7 @@ public extension TelegramBot {
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvoice>
 	public func sendVoiceAsync(chat_id: String, voice: String,
 	                           _ parameters: [String: Any?] = [:],
-	                           queue: dispatch_queue_t = dispatch_get_main_queue(),
+	                           queue: DispatchQueue = DispatchQueue.main,
 	                           completion: SendMessageCompletion? = nil) {
 		requestAsync("sendVoice", defaultParameters["sendVoice"], parameters,
 		             ["chat_id": chat_id, "voice": voice],

@@ -5,16 +5,16 @@ import Foundation
 
 extension String {
     struct HTTPData {
-        static let formUrlencodedAllowedCharacters: NSMutableCharacterSet = {
+        static let formUrlencodedAllowedCharacters: CharacterSet = {
             let cs = NSMutableCharacterSet.alphanumerics()
 			cs.addCharacters(in: "-._* ")
-            return cs
+            return cs as CharacterSet
         }()
         
-        static let urlQueryAllowedCharacters: NSMutableCharacterSet = {
+        static let urlQueryAllowedCharacters: CharacterSet = {
             let cs = NSMutableCharacterSet.alphanumerics()
 			cs.addCharacters(in: "-._~")
-            return cs
+            return cs as CharacterSet
         }()
     }
     
