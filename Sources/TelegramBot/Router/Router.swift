@@ -18,11 +18,13 @@ public class Router {
 	}
 	
 	public lazy var unknownCommand: Handler? = { context in
+        guard context.privateChat else { return false }
 		context.respondAsync("Unrecognized command: \(context.args.command). Type /help for help.")
 		return true
 	}
 
 	public lazy var unsupportedContentType: Handler? = { context in
+        guard context.privateChat else { return false }
 		context.respondAsync("Unsupported content type.")
 		return true
 	}
