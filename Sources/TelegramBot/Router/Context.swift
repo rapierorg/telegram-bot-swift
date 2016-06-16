@@ -12,10 +12,13 @@ public class Context {
 	public let update: Update
 	/// `update.message` shortcut. Make sure that the message exists before using it,
 	/// otherwise it will be empty. For paths supported by Router the message is guaranteed to exist.
-	public var message: Message = {
-		print("WARNING: dereferencing an empty message")
-		return T.emptyMessage
-	}()
+	public var message: Message {
+        guard let message = update.message else {
+            print("WARNING: dereferencing an empty message")
+            return T.emptyMessage
+        }
+        return message
+	}
 	public let args: Arguments
 
 	public var privateChat: Bool { return message.chat.type == .private_chat }
@@ -25,9 +28,6 @@ public class Context {
 	init(bot: TelegramBot, update: Update, scanner: Scanner, command: String) {
 		self.bot = bot
 		self.update = update
-		if let message = update.message {
-			self.message = message
-		}
 		self.args = Arguments(scanner: scanner, command: command)
 	}
 	
