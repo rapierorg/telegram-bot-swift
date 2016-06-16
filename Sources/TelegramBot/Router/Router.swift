@@ -37,49 +37,9 @@ public class Router {
 		paths.append(Path(contentType, handler))
 	}
 	
-	public func add(_ contentType: ContentType, _ handler: (Context) throws->()) {
-		add(contentType) { (context: Context) -> Bool in
-			try handler(context)
-			return true
-		}
-	}
-	
-	public func add(_ contentType: ContentType, _ handler: () throws->(Bool)) {
-		add(contentType) {  (_: Context) -> Bool in
-			return try handler()
-		}
-	}
-	
-	public func add(_ contentType: ContentType, _ handler: () throws->()) {
-		add(contentType) {  (context: Context) -> Bool in
-			try handler()
-			return true
-		}
-	}
-	
 	public func add(_ command: Command, _ handler: (Context) throws -> Bool) {
 		paths.append(Path(.command(command), handler))
 	}
-
-	public func add(_ command: Command, _ handler: (Context) throws->()) {
-		add(command) { (context: Context) -> Bool in
-			try handler(context)
-			return true
-		}
-	}
-
-    public func add(_ command: Command, _ handler: () throws->(Bool)) {
-		add(command) {  (_: Context) -> Bool in
-			return try handler()
-		}
-    }
-
-	public func add(_ command: Command, _ handler: () throws->()) {
-		add(command) {  (context: Context) -> Bool in
-			try handler()
-			return true
-		}
-    }
 
 	@discardableResult
     public func process(update: Update) throws -> Bool {

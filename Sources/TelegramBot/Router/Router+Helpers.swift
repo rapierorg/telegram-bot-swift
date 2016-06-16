@@ -9,19 +9,7 @@ extension Router {
 	public func add(_ commandString: String, slash: Command.SlashMode = .optional, _ handler: (Context) throws -> Bool) {
 		add(Command(commandString, slash: slash), handler)
 	}
-	
-	public func add(_ commandString: String, slash: Command.SlashMode = .optional, _ handler: (Context) throws->()) {
-		add(Command(commandString, slash: slash), handler)
-	}
-
-	public func add(_ commandString: String, slash: Command.SlashMode = .optional, _ handler: () throws->(Bool)) {
-		add(Command(commandString, slash: slash), handler)
-	}
-
-	public func add(_ commandString: String, slash: Command.SlashMode = .optional, _ handler: () throws->()) {
-		add(Command(commandString, slash: slash), handler)
-	}
-	
+		
 	// Subscripts taking ContentType
 	
 	public subscript(contentType: ContentType) -> (Context) throws->Bool {
@@ -35,7 +23,7 @@ extension Router {
 		get { fatalError("Not implemented") }
 		set { add(command, newValue) }
 	}
-	
+    
 	// Subscripts taking String
 	
 	public subscript(commandString: String) -> (Context) throws -> Bool {
