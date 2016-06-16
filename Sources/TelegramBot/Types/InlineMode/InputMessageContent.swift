@@ -6,11 +6,11 @@ import SwiftyJSON
 
 /// Represents the content of a message to be sent as a result of an inline query.
 /// - SeeAlso: <https://core.telegram.org/bots/api#inputmessagecontent>
-public class InputMessageContent: JsonObject {
+public struct InputMessageContent: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

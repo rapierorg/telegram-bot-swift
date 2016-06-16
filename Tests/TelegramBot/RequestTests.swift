@@ -69,7 +69,7 @@ class RequestTests: XCTestCase {
 	}
 	
 	func testShowKeyboardWithText() {
-		let markup = ReplyKeyboardMarkup()
+		var markup = ReplyKeyboardMarkup()
 		markup.keyboardStrings = [
 			[ "Button 1", "Button 2" ],
 			[ "Button 3", "Button 4" ]
@@ -78,19 +78,19 @@ class RequestTests: XCTestCase {
 	}
 	
 	func testShowKeyboardWithButtons() {
-		let markup = ReplyKeyboardMarkup()
+		var markup = ReplyKeyboardMarkup()
 		
-		let button1 = KeyboardButton()
+		var button1 = KeyboardButton()
 		button1.text = "Button 1"
 		
-		let button2 = KeyboardButton()
+		var button2 = KeyboardButton()
 		button2.text = "Button 2"
 
-		let button3 = KeyboardButton()
+		var button3 = KeyboardButton()
 		button3.text = "Share Contact"
 		button3.request_contact = true
 		
-		let button4 = KeyboardButton()
+		var button4 = KeyboardButton()
 		button4.text = "Share Location"
 		button4.request_location = true
 		

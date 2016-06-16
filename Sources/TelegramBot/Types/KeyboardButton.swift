@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents one button of the reply keyboard. For simple text buttons String can be used instead of this object to specify text of the button. Optional fields are mutually exclusive.
 /// - SeeAlso: <https://core.telegram.org/bots/api#keyboardbutton>
-public class KeyboardButton: JsonObject {
+public struct KeyboardButton: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
@@ -28,7 +28,7 @@ public class KeyboardButton: JsonObject {
 		set { json["request_location"].bool = newValue }
 	}
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

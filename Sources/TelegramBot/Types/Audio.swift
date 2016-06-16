@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents an audio file to be treated as music by the Telegram clients.
 /// - SeeAlso: <https://core.telegram.org/bots/api#audio>
-public class Audio: JsonObject {
+public struct Audio: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
     
@@ -46,7 +46,7 @@ public class Audio: JsonObject {
 		set { json["file_size"].int = newValue }
 	}
 		
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
     }
 }

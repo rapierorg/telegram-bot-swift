@@ -6,11 +6,11 @@ import SwiftyJSON
 
 /// A link to a video animation (H.264/MPEG-4 AVC video without sound). By default, this animated MPEG-4 file will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the animation.
 /// - SeeAlso: <https://core.telegram.org/bots/api#inlinequeryresultmpeg4gif>
-public class InlineQueryResultMpeg4Gif: JsonObject {
+public struct InlineQueryResultMpeg4Gif: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

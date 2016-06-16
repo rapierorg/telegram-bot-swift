@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a phone contact.
 /// - SeeAlso: <https://core.telegram.org/bots/api#contact>
-public class Contact: JsonObject {
+public struct Contact: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 
@@ -34,7 +34,7 @@ public class Contact: JsonObject {
 		set { json["user_id"].string = newValue }
 	}
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
     }
 }

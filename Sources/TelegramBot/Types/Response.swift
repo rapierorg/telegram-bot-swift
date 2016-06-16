@@ -5,7 +5,7 @@ import Foundation
 import SwiftyJSON
 
 /// Response to Bot API request.
-public class Response: JsonObject {
+public struct Response: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
@@ -33,7 +33,7 @@ public class Response: JsonObject {
 		set { json["result"] = newValue }
 	}
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

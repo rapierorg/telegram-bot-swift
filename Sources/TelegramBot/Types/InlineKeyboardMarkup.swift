@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents an inline keyboard that appears right next to the message it belongs to.
 /// - SeeAlso: <https://core.telegram.org/bots/api#inlinekeyboardmarkup>
-public class InlineKeyboardMarkup: JsonObject {
+public struct InlineKeyboardMarkup: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
@@ -32,7 +32,7 @@ public class InlineKeyboardMarkup: JsonObject {
 		}
 	}
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

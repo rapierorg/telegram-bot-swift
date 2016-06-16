@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a venue..
 /// - SeeAlso: <https://core.telegram.org/bots/api#venue>
-public class Venue: JsonObject {
+public struct Venue: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
@@ -39,7 +39,7 @@ public class Venue: JsonObject {
 		set { json["foursquare_id"].string = newValue }
 	}
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

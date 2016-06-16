@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a general file (as opposed to photos, voice messages and audio files).
 /// - SeeAlso: <https://core.telegram.org/bots/api#document>
-public class Document: JsonObject {
+public struct Document: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
@@ -40,7 +40,7 @@ public class Document: JsonObject {
 		set { json["file_size"].int = newValue }
 	}
 		
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

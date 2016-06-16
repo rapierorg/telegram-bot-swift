@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a chat.
 /// - SeeAlso: <https://core.telegram.org/bots/api#chat>
-public class Chat: JsonObject {
+public struct Chat: JsonObject {
 	public enum ChatType: String {
 		case private_chat = "private"
 		case group = "group"
@@ -60,7 +60,7 @@ public class Chat: JsonObject {
 		set { json["last_name"].string = newValue }
 	}
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

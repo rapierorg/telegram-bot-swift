@@ -6,11 +6,11 @@ import SwiftyJSON
 
 /// Content of a venue message to be sent as the result of an inline query.
 /// - SeeAlso: <https://core.telegram.org/bots/api#inputvenuemessagecontent>
-public class InputVenueMessageContent: JsonObject {
+public struct InputVenueMessageContent: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

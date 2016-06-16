@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents an incoming update.
 /// - SeeAlso: <https://core.telegram.org/bots/api#update>
-public class Update: JsonObject {
+public struct Update: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 
@@ -71,7 +71,7 @@ public class Update: JsonObject {
 		}
 	}
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

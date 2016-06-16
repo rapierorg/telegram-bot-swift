@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a video file.
 /// - SeeAlso: <https://core.telegram.org/bots/api#video>
-public class Video: JsonObject {
+public struct Video: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 
@@ -57,7 +57,7 @@ public class Video: JsonObject {
 		set { json["caption"].string = newValue }
 	}
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

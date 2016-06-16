@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a voice note..
 /// - SeeAlso: <https://core.telegram.org/bots/api#voice>
-public class Voice: JsonObject {
+public struct Voice: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
@@ -34,7 +34,7 @@ public class Voice: JsonObject {
 		set { json["file_size"].int = newValue }
 	}
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

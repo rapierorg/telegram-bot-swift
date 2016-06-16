@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a file ready to be downloaded.
 /// - SeeAlso: <https://core.telegram.org/bots/api#file>
-public class File: JsonObject {
+public struct File: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
@@ -28,7 +28,7 @@ public class File: JsonObject {
 		set { json["file_path"].string = newValue }
 	}
 
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

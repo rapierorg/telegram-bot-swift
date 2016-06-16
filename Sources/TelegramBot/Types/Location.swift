@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a point on the map.
 /// - SeeAlso: <https://core.telegram.org/bots/api#location>
-public class Location: JsonObject {
+public struct Location: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
@@ -22,7 +22,7 @@ public class Location: JsonObject {
 		set { json["latitude"].floatValue = newValue }
 	}
 		
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

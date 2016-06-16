@@ -7,7 +7,7 @@ import SwiftyJSON
 
 /// Contains information about one member of the chat.
 /// - SeeAlso: <https://core.telegram.org/bots/api#chatmember>
-public class ChatMember: JsonObject {
+public struct ChatMember: JsonObject {
 	public enum Status: String {
 		case creator = "creator"
 		case administrator = "administrator"
@@ -38,7 +38,7 @@ public class ChatMember: JsonObject {
 		set { statusString = newValue.rawValue }
 	}
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

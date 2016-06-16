@@ -6,11 +6,11 @@ import SwiftyJSON
 
 /// Content of a location message to be sent as the result of an inline query.
 /// - SeeAlso: <https://core.telegram.org/bots/api#inputlocationmessagecontent>
-public class InputLocationMessageContent: JsonObject {
+public struct InputLocationMessageContent: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

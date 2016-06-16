@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a Telegram user or bot.
 /// - SeeAlso: <https://core.telegram.org/bots/api#user>
-public class User: JsonObject {
+public struct User: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 
@@ -34,7 +34,7 @@ public class User: JsonObject {
 		set { json["username"].string = newValue }
 	}
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

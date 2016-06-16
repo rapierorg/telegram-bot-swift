@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a sticker.
 /// - SeeAlso: <https://core.telegram.org/bots/api#sticker>
-public class Sticker: JsonObject {
+public struct Sticker: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 
@@ -46,7 +46,7 @@ public class Sticker: JsonObject {
 		set { json["file_size"].int = newValue }
 	}
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }

@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represent a user's profile pictures.
 /// - SeeAlso: <https://core.telegram.org/bots/api#userprofilephotos>
-public class UserProfilePhotos: JsonObject {
+public struct UserProfilePhotos: JsonObject {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
@@ -38,7 +38,7 @@ public class UserProfilePhotos: JsonObject {
 		}
 	}
 	
-	public required init(json: JSON = [:]) {
+	public init(json: JSON = [:]) {
 		self.json = json
 	}
 }
