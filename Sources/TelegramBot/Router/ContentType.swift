@@ -5,6 +5,7 @@ import Foundation
 
 public enum ContentType {
 	case command(Command)
+    case commands([Command])
 	case from
 	case forward_from
 	case forward_from_chat

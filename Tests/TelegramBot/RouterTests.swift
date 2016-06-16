@@ -27,20 +27,69 @@ class RouterTests: XCTestCase {
     }
     
     func testRouter() {
-        update.message?.text = "hello"
-        print(update.message?.text)
-        
-        var passed = false
+        XCTAssertTrue ( matches(path: "hello", text: "hello") )
+        XCTAssertTrue ( matches(path: "hello", text: "he") )
+        XCTAssertTrue ( matches(path: "hello", text: "/hello") )
+        XCTAssertTrue ( matches(path: "hello", text: "/he") )
+        XCTAssertFalse( matches(path: "hello", text: "helllo") )
 
+        XCTAssertTrue ( matches(paths: ["hello", "world"], text: "hello") )
+        XCTAssertTrue ( matches(paths: ["hello", "world"], text: "world") )
+    }
+    
+    func testCaseSensitivity() {
+        XCTAssertTrue ( matches(path: "HEllo", text: "helLO") )
+        XCTAssertTrue ( matches(path: "/HEllo", text: "helLO") )
+    }
+    
+    func testMultiPath() {
+        update.message?.text = "path2"
+        
+        var matched = false
+        
         let router = Router(bot: bot)
-        router["hello"] = { context in
-            passed = true
+        router["path1", "path2"] = { context in
+            matched = true
+            return true
+        }
+        
+        do { try router.process(update: update) }
+        catch { XCTFail() }
+
+        XCTAssertTrue(matched)
+    }
+    
+    func matches(path: String, text: String) -> Bool {
+        update.message?.text = text
+
+        var matched = false
+        
+        let router = Router(bot: bot)
+        router[path] = { context in
+            matched = true
             return true
         }
         
         do { try router.process(update: update) }
         catch { XCTFail() }
         
-        XCTAssert(passed)
+        return matched
+    }
+    
+    func matches(paths: [String], text: String) -> Bool {
+        update.message?.text = text
+        
+        var matched = false
+        
+        let router = Router(bot: bot)
+        router[paths] = { context in
+            matched = true
+            return true
+        }
+        
+        do { try router.process(update: update) }
+        catch { XCTFail() }
+        
+        return matched
     }
 }

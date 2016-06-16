@@ -41,6 +41,10 @@ public class Router {
 		paths.append(Path(.command(command), handler))
 	}
 
+    public func add(_ commands: [Command], _ handler: (Context) throws -> Bool) {
+        paths.append(Path(.commands(commands), handler))
+    }
+    
 	@discardableResult
     public func process(update: Update) throws -> Bool {
 		let string = update.message?.extractCommand(for: bot) ?? ""
@@ -97,6 +101,17 @@ public class Router {
 			}
 			userCommand = command
 			return true
+        case .commands(let commands):
+            let originalScanLocation = commandScanner.scanLocation
+            for command in commands {
+                guard let command = command.fetchFrom(commandScanner) else {
+                    commandScanner.scanLocation = originalScanLocation
+                    continue
+                }
+                userCommand = command
+                return true
+            }
+            return false
 		case .from: return message.from != nil
 		case .forward_from: return message.forward_from != nil
 		case .forward_from_chat: return message.forward_from_chat != nil
