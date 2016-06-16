@@ -40,7 +40,10 @@ class RouterTests: XCTestCase {
     func testCaseSensitivity() {
         XCTAssertTrue ( matches(path: "HEllo", text: "helLO") )
         XCTAssertTrue ( matches(path: "/HEllo", text: "helLO") )
-    }
+        XCTAssertTrue ( matches(path: "HEllo111", text: "helLO") )
+
+        XCTAssertFalse( matches(path: "HEllo", text: "helLO111") )
+}
     
     func testMultiPath() {
         update.message?.text = "path2"

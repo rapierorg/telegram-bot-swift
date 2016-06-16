@@ -39,14 +39,14 @@ public class Command {
 			if matchAnyCommand && word.hasPrefix("/") {
 				return word
 			}
-            if nameWithSlash.hasPrefix(word) {
+            if nameWithSlash.hasPrefix(word, caseInsensitive: true) {
                 return word
             }
         case .optional:
 			if matchAnyCommand {
 				return word
 			}
-            if name.hasPrefix(word) || nameWithSlash.hasPrefix(word) {
+            if name.hasPrefix(word, caseInsensitive: true) || nameWithSlash.hasPrefix(word, caseInsensitive: true) {
                 return word
             }
         }
