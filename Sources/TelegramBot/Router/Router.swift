@@ -28,6 +28,13 @@ public class Router {
 		context.respondAsync("Unsupported content type.")
 		return true
 	}
+    
+    public var handler: Handler {
+        return { [weak self] context in
+            try self?.process(update: context.update)
+            return true
+        }
+    }
 
 	public init(bot: TelegramBot) {
 		self.bot = bot

@@ -139,6 +139,27 @@ class RouterTests: XCTestCase {
         
         XCTAssertTrue(matched)
     }
+    
+    func testRouterChaining2() {
+        update.message?.text = "/hello"
+        
+        var matched = false
+        
+        let router1 = Router(bot: bot)
+        let router2 = Router(bot: bot)
+        
+        router2["hello"] = { context in
+            matched = true
+            return true
+        }
+        
+        router1.unknownCommand = router2.handler
+        
+        do { try router1.process(update: update) }
+        catch { XCTFail() }
+        
+        XCTAssertTrue(matched)
+    }
 
     func matches(path: String, text: String, options: Command.Options = []) -> Bool {
         update.message?.text = text
