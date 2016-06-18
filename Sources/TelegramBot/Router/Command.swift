@@ -37,7 +37,7 @@ public class Command {
         }
     }
     	
-    public func fetchFrom(_ scanner: Scanner) -> String? {
+    public func fetchFrom(_ scanner: Scanner, caseSensitive: Bool = false) -> String? {
         let whitespaceAndNewline = CharacterSet.whitespacesAndNewlines
         guard let word = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) else {
             return nil
@@ -46,7 +46,7 @@ public class Command {
             if name.isEmpty {
                 return word
             }
-            let caseSensitive = options.contains(.caseSensitive)
+            let caseSensitive = caseSensitive || options.contains(.caseSensitive)
             if name.hasPrefix(word, caseInsensitive: !caseSensitive) {
                 return word
             }
@@ -54,7 +54,7 @@ public class Command {
 			if name.isEmpty && word.hasPrefix("/") {
 				return word
 			}
-            let caseSensitive = options.contains(.caseSensitive)
+            let caseSensitive = caseSensitive || options.contains(.caseSensitive)
             if nameWithSlash.hasPrefix(word, caseInsensitive: !caseSensitive) {
                 return word
             }
@@ -62,7 +62,7 @@ public class Command {
 			if name.isEmpty {
 				return word
 			}
-            let caseSensitive = options.contains(.caseSensitive)
+            let caseSensitive = caseSensitive || options.contains(.caseSensitive)
             if name.hasPrefix(word, caseInsensitive: !caseSensitive) || nameWithSlash.hasPrefix(word, caseInsensitive: !caseSensitive) {
                 return word
             }

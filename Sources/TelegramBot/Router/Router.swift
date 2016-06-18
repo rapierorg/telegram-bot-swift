@@ -96,7 +96,7 @@ public class Router {
 		
 		switch contentType {
 		case .command(let command):
-			guard let command = command.fetchFrom(commandScanner) else {
+			guard let command = command.fetchFrom(commandScanner, caseSensitive: caseSensitive) else {
 				return false // Does not match path command
 			}
 			userCommand = command
@@ -104,7 +104,7 @@ public class Router {
         case .commands(let commands):
             let originalScanLocation = commandScanner.scanLocation
             for command in commands {
-                guard let command = command.fetchFrom(commandScanner) else {
+                guard let command = command.fetchFrom(commandScanner, caseSensitive: caseSensitive) else {
                     commandScanner.scanLocation = originalScanLocation
                     continue
                 }
