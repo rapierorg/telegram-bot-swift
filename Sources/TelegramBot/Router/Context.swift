@@ -19,16 +19,22 @@ public class Context {
         }
         return message
 	}
-	public let args: Arguments
+
+    /// Command starts with slash (useful if you want to skip commands not starting with slash in group chats)
+    public let slash: Bool
+    public let command: String
+    public let args: Arguments
 
 	public var privateChat: Bool { return message.chat.type == .private_chat }
 	public var chatId: Int64 { return message.chat.id }
 	public var fromId: Int64? { return message.from?.id }
 	
-	init(bot: TelegramBot, update: Update, scanner: Scanner, command: String) {
+    init(bot: TelegramBot, update: Update, scanner: Scanner, command: String, startsWithSlash: Bool) {
 		self.bot = bot
 		self.update = update
-		self.args = Arguments(scanner: scanner, command: command)
+        self.slash = startsWithSlash
+        self.command = command
+        self.args = Arguments(scanner: scanner)
 	}
 	
 	public func respondAsync(_ text: String,

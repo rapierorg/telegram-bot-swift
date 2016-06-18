@@ -7,7 +7,6 @@ public class Arguments {
 	typealias T = Arguments
 	
 	public let scanner: Scanner
-	public let command: String
 	
 	public var isAtEnd: Bool {
 		return scanner.isAtEnd
@@ -15,9 +14,8 @@ public class Arguments {
 
 	static let whitespaceAndNewline = CharacterSet.whitespacesAndNewlines
 	
-	init(scanner: Scanner, command: String) {
+	init(scanner: Scanner) {
 		self.scanner = scanner
-		self.command = command
 	}
 	
 	public func scanWord() -> String? {

@@ -39,36 +39,115 @@ class RouterTests: XCTestCase {
     
     func testCaseSensitivity() {
         XCTAssertTrue ( matches(path: "HEllo", text: "helLO") )
-        XCTAssertTrue ( matches(path: "/HEllo", text: "helLO") )
+        XCTAssertTrue ( matches(path: "HEllo", text: "/helLO") )
         XCTAssertTrue ( matches(path: "HEllo111", text: "helLO") )
 
         XCTAssertFalse( matches(path: "HEllo", text: "helLO111") )
+
+        // This one should show a warning:
+        XCTAssertTrue ( matches(path: "/HEllo", text: "helLO") )
 }
     
     func testMultiPath() {
-        update.message?.text = "path2"
+        XCTAssertTrue ( matches(paths: ["path1", "path2"],
+                                text: "path1") )
+        XCTAssertTrue ( matches(paths: ["path1", "path2"],
+                                text: "path2") )
+        XCTAssertFalse( matches(paths: ["path1", "path2"],
+                                text: "path3") )
+    }
+    
+    func testMultiWordCommands() {
+        XCTAssertTrue ( matches(path: "hello world", text: "hello world") )
+        XCTAssertFalse( matches(path: "hello world", text: "hello") )
+        XCTAssertFalse( matches(path: "hello world", text: "") )
+        
+        XCTAssertTrue ( matches(path: "hello world", text: "he wo") )
+        XCTAssertFalse( matches(path: "hello world", text: "he word") )
+
+        XCTAssertFalse( matches(path: "hello world", text: "he wo", options: .slashRequired) )
+        XCTAssertTrue ( matches(path: "hello world", text: "/he wo", options: .slashRequired) )
+
+        XCTAssertFalse( matches(path: "hello world", text: "/he wo", options: .exactMatch) )
+        XCTAssertTrue ( matches(path: "/hello world", text: "/he wo", options: .exactMatch) )
+
+        XCTAssertTrue ( matches(path: "/hello world", text: "/he     wo", options: .exactMatch) )
+    }
+    
+    func testPartialMatch() {
+        update.message?.text = "hello a b c"
         
         var matched = false
         
         let router = Router(bot: bot)
-        router["path1", "path2"] = { context in
+        router["hello"] = { context in
+            return true
+        }
+        router.partialMatch = { context in
             matched = true
             return true
         }
         
         do { try router.process(update: update) }
         catch { XCTFail() }
+        
+        XCTAssertTrue(matched)
+    }
 
+    func testUnknownCommand() {
+        update.message?.text = "/badcmd a b c"
+        
+        var matched = false
+        
+        let router = Router(bot: bot)
+        router["hello"] = { context in
+            return true
+        }
+        router.unknownCommand = { context in
+            print("Unknown command: \(context.args.scanRestOfString())")
+            matched = true
+            return true
+        }
+        
+        do { try router.process(update: update) }
+        catch { XCTFail() }
+        
         XCTAssertTrue(matched)
     }
     
-    func matches(path: String, text: String) -> Bool {
+    func testRouterChaining() {
+        update.message?.text = "/hello"
+        
+        var matched = false
+        
+        let router1 = Router(bot: bot)
+        let router2 = Router(bot: bot)
+
+        router2["hello"] = { context in
+            matched = true
+            return true
+        }
+
+        router1.unknownCommand = { context in
+            do { try router2.process(update: self.update) }
+            catch { XCTFail() }
+            return true
+        }
+        
+        do { try router1.process(update: update) }
+        catch { XCTFail() }
+        
+        XCTAssertTrue(matched)
+    }
+
+    func matches(path: String, text: String, options: Command.Options = []) -> Bool {
         update.message?.text = text
 
         var matched = false
         
         let router = Router(bot: bot)
-        router[path] = { context in
+        router[path, options] = { context in
+            print("path=\(path) text=\(text) command=\(context.command)")
             matched = true
             return true
         }
@@ -86,6 +165,7 @@ class RouterTests: XCTestCase {
         
         let router = Router(bot: bot)
         router[paths] = { context in
+            print("paths=\(paths) text=\(text) command=\(context.command)")
             matched = true
             return true
         }

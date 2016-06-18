@@ -19,7 +19,7 @@ public class Router {
 	
 	public lazy var unknownCommand: Handler? = { context in
         guard context.privateChat else { return false }
-		context.respondAsync("Unrecognized command: \(context.args.command). Type /help for help.")
+		context.respondAsync("Unrecognized command: \(context.args.scanWord()). Type /help for help.")
 		return true
 	}
 
@@ -55,16 +55,18 @@ public class Router {
 		
 		for path in paths {
 			var command = ""
-            if !match(contentType: path.contentType, update: update, commandScanner: scanner, userCommand: &command) {
+            var startsWithSlash = false
+            if !match(contentType: path.contentType, update: update, commandScanner: scanner, userCommand: &command, startsWithSlash: &startsWithSlash) {
 				scanner.scanLocation = originalScanLocation
 				continue;
 			}
 			
-			let context = Context(bot: bot, update: update, scanner: scanner, command: command)
+			let context = Context(bot: bot, update: update, scanner: scanner, command: command, startsWithSlash: startsWithSlash)
 			let handler = path.handler
 
 			if try handler(context: context) {
-				return try checkPartialMatch(context: context)
+				try checkPartialMatch(context: context)
+                return true
 			}
 
 			scanner.scanLocation = originalScanLocation
@@ -72,43 +74,40 @@ public class Router {
 
 		if !string.isEmpty {
 			if let unknownCommand = unknownCommand {
-				let whitespaceAndNewline = CharacterSet.whitespacesAndNewlines
-				let command = scanner.scanUpToCharactersFromSet(whitespaceAndNewline)
-				let context = Context(bot: bot, update: update, scanner: scanner, command: command ?? "")
-				if try !unknownCommand(context: context) {
-					return try checkPartialMatch(context: context)
-				}
-				return true
+                let context = Context(bot: bot, update: update, scanner: scanner, command: "", startsWithSlash: false)
+				return try unknownCommand(context: context)
 			}
 		} else {
 			if let unsupportedContentType = unsupportedContentType {
-				let context = Context(bot: bot, update: update, scanner: scanner, command: "")
-				return try !unsupportedContentType(context: context)
+				let context = Context(bot: bot, update: update, scanner: scanner, command: "", startsWithSlash: false)
+				return try unsupportedContentType(context: context)
 			}
 		}
 		
 		return false
     }
 	
-	func match(contentType: ContentType, update: Update, commandScanner: Scanner, userCommand: inout String) -> Bool {
+    func match(contentType: ContentType, update: Update, commandScanner: Scanner, userCommand: inout String, startsWithSlash: inout Bool) -> Bool {
 		
 		guard let message = update.message else { return false }
 		
 		switch contentType {
 		case .command(let command):
-			guard let command = command.fetchFrom(commandScanner, caseSensitive: caseSensitive) else {
+			guard let result = command.fetchFrom(commandScanner, caseSensitive: caseSensitive) else {
 				return false // Does not match path command
 			}
-			userCommand = command
+			userCommand = result.command
+            startsWithSlash = result.startsWithSlash
 			return true
         case .commands(let commands):
             let originalScanLocation = commandScanner.scanLocation
             for command in commands {
-                guard let command = command.fetchFrom(commandScanner, caseSensitive: caseSensitive) else {
+                guard let result = command.fetchFrom(commandScanner, caseSensitive: caseSensitive) else {
                     commandScanner.scanLocation = originalScanLocation
                     continue
                 }
-                userCommand = command
+                userCommand = result.command
+                startsWithSlash = result.startsWithSlash
                 return true
             }
             return false
@@ -145,6 +144,7 @@ public class Router {
 	}
 	
 	// After processing the command, check that no unprocessed text is left
+    @discardableResult
 	func checkPartialMatch(context: Context) throws -> Bool {
 
 		// Note that scanner.atEnd automatically ignores charactersToBeSkipped
