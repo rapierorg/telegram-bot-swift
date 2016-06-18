@@ -6,67 +6,76 @@ import Foundation
 extension Router {
 	// add() taking string
 	
-	public func add(_ commandString: String, slash: Command.SlashMode = .optional, _ handler: (Context) throws -> Bool) {
-		add(Command(commandString, slash: slash), handler)
+	public func add(_ commandString: String, _ options: Command.Options = [], _ handler: (Context) throws -> Bool) {
+		add(Command(commandString, options: options), handler)
 	}
 		
 	// Subscripts taking ContentType
 	
-	public subscript(contentType: ContentType) -> (Context) throws->Bool {
+	public subscript(_ contentType: ContentType) -> (Context) throws->Bool {
 		get { fatalError("Not implemented") }
 		set { add(contentType, newValue) }
 	}
 	
 	// Subscripts taking Command
 	
-	public subscript(command: Command) -> (Context) throws->Bool {
+	public subscript(_ command: Command) -> (Context) throws->Bool {
 		get { fatalError("Not implemented") }
 		set { add(command, newValue) }
 	}
 
-    public subscript(commands: [Command]) -> (Context) throws->Bool {
+    public subscript(_ commands: [Command]) -> (Context) throws->Bool {
         get { fatalError("Not implemented") }
         set { add(commands, newValue) }
     }
     
-    public subscript(commands: Command...) -> (Context) throws->Bool {
+    public subscript(_ commands: Command...) -> (Context) throws->Bool {
         get { fatalError("Not implemented") }
         set { add(commands, newValue) }
     }
     
 	// Subscripts taking String
 
-	public subscript(commandString: String, slash slash: Command.SlashMode) -> (Context) throws -> Bool {
+	public subscript(_ commandString: String, _ options: Command.Options) -> (Context) throws -> Bool {
 		get { fatalError("Not implemented") }
-		set { add(Command(commandString, slash: slash), newValue) }
+        set { add(Command(commandString, options: options), newValue) }
 	}
     
-    public subscript(commandString: String) -> (Context) throws -> Bool {
+    public subscript(_ commandString: String) -> (Context) throws -> Bool {
         get { fatalError("Not implemented") }
-        set { self[commandString, slash: .optional] = newValue }
+        set { add(Command(commandString), newValue) }
     }
 
-    public subscript(commandStrings: [String], slash slash: Command.SlashMode) -> (Context) throws -> Bool {
+    public subscript(_ commandStrings: [String], _ options: Command.Options) -> (Context) throws -> Bool {
         get { fatalError("Not implemented") }
         set {
-            let commands = commandStrings.map { Command($0, slash: slash) }
+            let commands = commandStrings.map { Command($0, options: options) }
             add(commands, newValue)
         }
     }
     
     public subscript(commandStrings: [String]) -> (Context) throws -> Bool {
         get { fatalError("Not implemented") }
-        set { self[commandStrings, slash: .optional] = newValue }
+        set {
+            let commands = commandStrings.map { Command($0) }
+            add(commands, newValue)
+        }
     }
 
 // Segmentation fault
-//    public subscript(commandStrings: String..., slash slash: Command.SlashMode) -> (Context) throws -> Bool {
+//    public subscript(commandStrings: String..., _ options: Command.Options) -> (Context) throws -> Bool {
 //        get { fatalError("Not implemented") }
-//        set { self[commandStrings, slash: slash] = newValue }
+//        set {
+//            let commands = commandStrings.map { Command($0, options: options) }
+//            add(commands, newValue)
+//        }
 //    }
 
     public subscript(commandStrings: String...) -> (Context) throws -> Bool {
         get { fatalError("Not implemented") }
-        set { self[commandStrings, slash: .optional] = newValue }
+        set {
+            let commands = commandStrings.map { Command($0) }
+            add(commands, newValue)
+        }
     }
 }

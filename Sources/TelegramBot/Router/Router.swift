@@ -7,7 +7,7 @@ public class Router {
 	public typealias Handler = (context: Context) throws -> Bool
 	public typealias Path = (contentType: ContentType, handler: Handler)
 	
-    public var caseSensitive: Bool = false
+    public var caseSensitive = false
     public var charactersToBeSkipped: CharacterSet? = CharacterSet.whitespacesAndNewlines
 
 	public var bot: TelegramBot

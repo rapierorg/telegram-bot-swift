@@ -4,20 +4,29 @@
 import Foundation
 
 public class Command {
-    public enum SlashMode {
-        /// Both 'command' and '/command' allowed
-        case optional
-		
-        /// Only '/command' allowed
-        case required
+    public struct Options: OptionSet {
+        public var rawValue: Int
+        public init(rawValue: Int) { self.rawValue = rawValue }
+
+        /// Match all words in a command exactly. Do not skip "/" prefix, if present.
+        /// Note that comparision is still case insensitive by default.
+        public static let exactMatch = Options(rawValue: 1 << 0)
+
+        /// Require commands to be prefixed with "/" even in private chats.
+        /// By default prefixing is required only in group chats.
+        /// Ignored if `exactMatch` flag is set.
+        public static let slashRequired = Options(rawValue: 1 << 1)
+        
+        /// Case sensitive comparision of commands.
+        public static let caseSensitive = Options(rawValue: 1 << 2)
     }
     
     let name: String
     let nameWithSlash: String
-    let slash: SlashMode
+    let options: Options
     
-    public init(_ name: String, slash: SlashMode = .optional) {
-        self.slash = slash
+    public init(_ name: String, options: Options = []) {
+        self.options = options
         if name.hasPrefix("/") {
             self.nameWithSlash = name
 			self.name = name.substring(from: name.index(after: name.startIndex))
@@ -33,20 +42,28 @@ public class Command {
         guard let word = scanner.scanUpToCharactersFromSet(whitespaceAndNewline) else {
             return nil
         }
-		let matchAnyCommand = name.isEmpty
-        switch slash {
-        case .required:
-			if matchAnyCommand && word.hasPrefix("/") {
-				return word
-			}
-            if nameWithSlash.hasPrefix(word, caseInsensitive: true) {
+        if options.contains(.exactMatch) {
+            if name.isEmpty {
                 return word
             }
-        case .optional:
-			if matchAnyCommand {
+            let caseSensitive = options.contains(.caseSensitive)
+            if name.hasPrefix(word, caseInsensitive: !caseSensitive) {
+                return word
+            }
+        } else if options.contains(.slashRequired) {
+			if name.isEmpty && word.hasPrefix("/") {
 				return word
 			}
-            if name.hasPrefix(word, caseInsensitive: true) || nameWithSlash.hasPrefix(word, caseInsensitive: true) {
+            let caseSensitive = options.contains(.caseSensitive)
+            if nameWithSlash.hasPrefix(word, caseInsensitive: !caseSensitive) {
+                return word
+            }
+        } else {
+			if name.isEmpty {
+				return word
+			}
+            let caseSensitive = options.contains(.caseSensitive)
+            if name.hasPrefix(word, caseInsensitive: !caseSensitive) || nameWithSlash.hasPrefix(word, caseInsensitive: !caseSensitive) {
                 return word
             }
         }
