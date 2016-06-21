@@ -17,9 +17,10 @@ public class Router {
 		return true
 	}
 	
-	public lazy var unknownCommand: Handler? = { context in
+	public lazy var unmatched: Handler? = { context in
         guard context.privateChat else { return false }
-		context.respondAsync("Unrecognized command: \(context.args.scanWord()). Type /help for help.")
+        guard let command = context.args.scanWord() else { return false }
+		context.respondAsync("Unrecognized command: \(command). Type /help for help.")
 		return true
 	}
 
@@ -80,9 +81,9 @@ public class Router {
 		}
 
 		if !string.isEmpty {
-			if let unknownCommand = unknownCommand {
+			if let unmatched = unmatched {
                 let context = Context(bot: bot, update: update, scanner: scanner, command: "", startsWithSlash: false)
-				return try unknownCommand(context: context)
+				return try unmatched(context: context)
 			}
 		} else {
 			if let unsupportedContentType = unsupportedContentType {
