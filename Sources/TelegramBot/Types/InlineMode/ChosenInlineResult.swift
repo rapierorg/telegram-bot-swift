@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// A result of an inline query that was chosen by the user and sent to their chat partner.
 /// - SeeAlso: <https://core.telegram.org/bots/api#choseninlineresult>
-public struct ChosenInlineResult: JsonObject {
+public struct ChosenInlineResult: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	

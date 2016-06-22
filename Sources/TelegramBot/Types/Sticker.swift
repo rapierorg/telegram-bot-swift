@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a sticker.
 /// - SeeAlso: <https://core.telegram.org/bots/api#sticker>
-public struct Sticker: JsonObject {
+public struct Sticker: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 

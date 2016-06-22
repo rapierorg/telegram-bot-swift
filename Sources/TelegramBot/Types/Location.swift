@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a point on the map.
 /// - SeeAlso: <https://core.telegram.org/bots/api#location>
-public struct Location: JsonObject {
+public struct Location: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	

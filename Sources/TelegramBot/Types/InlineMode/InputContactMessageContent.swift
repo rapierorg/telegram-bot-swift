@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Content of a contact message to be sent as the result of an inline query.
 /// - SeeAlso: <https://core.telegram.org/bots/api#inputcontactmessagecontent>
-public struct InputContactMessageContent: JsonObject {
+public struct InputContactMessageContent: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	

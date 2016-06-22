@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Upon receiving a message with this object, Telegram clients will hide the current custom keyboard and display the default letter-keyboard.
 /// - SeeAlso: <https://core.telegram.org/bots/api#replykeyboardhide>
-public struct ReplyKeyboardHide: JsonObject {
+public struct ReplyKeyboardHide: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures.
 	public var json: JSON
 	

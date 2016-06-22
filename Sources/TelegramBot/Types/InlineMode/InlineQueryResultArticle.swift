@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// A link to an article or web page.
 /// - SeeAlso: <https://core.telegram.org/bots/api#inlinequeryresultarticle>
-public struct InlineQueryResultArticle: JsonObject {
+public struct InlineQueryResultArticle: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	

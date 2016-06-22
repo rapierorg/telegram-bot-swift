@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents an audio file to be treated as music by the Telegram clients.
 /// - SeeAlso: <https://core.telegram.org/bots/api#audio>
-public struct Audio: JsonObject {
+public struct Audio: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
     

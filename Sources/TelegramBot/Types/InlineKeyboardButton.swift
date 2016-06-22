@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents one button of an inline keyboard. You must use exactly one of the optional fields..
 /// - SeeAlso: <https://core.telegram.org/bots/api#inlinekeyboardbutton>
-public struct InlineKeyboardButton: JsonObject {
+public struct InlineKeyboardButton: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	

@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a message.
 /// - SeeAlso: <https://core.telegram.org/bots/api#message>
-public struct Message: JsonObject {
+public struct Message: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures.
 	public var json: JSON
 

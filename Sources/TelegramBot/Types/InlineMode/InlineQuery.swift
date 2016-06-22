@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// An incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
 /// - SeeAlso: <https://core.telegram.org/bots/api#inlinequery>
-public struct InlineQuery: JsonObject {
+public struct InlineQuery: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	

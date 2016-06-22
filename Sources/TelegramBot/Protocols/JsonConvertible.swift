@@ -4,13 +4,13 @@
 import Foundation
 import SwiftyJSON
 
-public protocol JsonObject: CustomStringConvertible, CustomDebugStringConvertible {
+public protocol JsonConvertible: CustomStringConvertible, CustomDebugStringConvertible {
 	init(json: JSON)
 	var json: JSON { get set }
 	func prettyPrint()
 }
 
-extension JsonObject {
+extension JsonConvertible {
 	public var description: String {
 		return json.rawString(encoding: String.Encoding.utf8, options: []) ?? ""
 	}

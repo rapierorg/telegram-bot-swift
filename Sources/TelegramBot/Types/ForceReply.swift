@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.
 /// - SeeAlso: <https://core.telegram.org/bots/api#forcereply>
-public struct ForceReply: JsonObject {
+public struct ForceReply: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 

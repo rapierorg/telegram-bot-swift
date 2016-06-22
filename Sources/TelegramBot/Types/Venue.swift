@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a venue..
 /// - SeeAlso: <https://core.telegram.org/bots/api#venue>
-public struct Venue: JsonObject {
+public struct Venue: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	

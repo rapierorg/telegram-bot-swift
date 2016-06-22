@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// A link to a voice message stored on the Telegram servers. By default, this voice message will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the voice message.
 /// - SeeAlso: <https://core.telegram.org/bots/api#inlinequeryresultcachedvoice>
-public struct InlineQueryResultCachedVoice: JsonObject {
+public struct InlineQueryResultCachedVoice: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	

@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a voice note..
 /// - SeeAlso: <https://core.telegram.org/bots/api#voice>
-public struct Voice: JsonObject {
+public struct Voice: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	

@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represent a user's profile pictures.
 /// - SeeAlso: <https://core.telegram.org/bots/api#userprofilephotos>
-public struct UserProfilePhotos: JsonObject {
+public struct UserProfilePhotos: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	

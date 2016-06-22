@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents an incoming callback query from a callback button in an inline keyboard. If the button that originated the query was attached to a message sent by the bot, the field message will be presented. If the button was attached to a message sent via the bot (in inline mode), the field inline_message_id will be presented.
 /// - SeeAlso: <https://core.telegram.org/bots/api#callbackquery>
-public struct CallbackQuery: JsonObject {
+public struct CallbackQuery: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures.
 	public var json: JSON
 

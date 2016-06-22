@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a chat.
 /// - SeeAlso: <https://core.telegram.org/bots/api#chat>
-public struct Chat: JsonObject {
+public struct Chat: JsonConvertible {
 	public enum ChatType: String {
 		case private_chat = "private"
 		case group = "group"

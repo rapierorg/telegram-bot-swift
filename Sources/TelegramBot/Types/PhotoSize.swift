@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents one size of a photo or a file / sticker thumbnail.
 /// - SeeAlso: <https://core.telegram.org/bots/api#photosize>
-public struct PhotoSize: JsonObject {
+public struct PhotoSize: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 

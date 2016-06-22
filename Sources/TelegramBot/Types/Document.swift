@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a general file (as opposed to photos, voice messages and audio files).
 /// - SeeAlso: <https://core.telegram.org/bots/api#document>
-public struct Document: JsonObject {
+public struct Document: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	

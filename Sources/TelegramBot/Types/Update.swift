@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents an incoming update.
 /// - SeeAlso: <https://core.telegram.org/bots/api#update>
-public struct Update: JsonObject {
+public struct Update: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 

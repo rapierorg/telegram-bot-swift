@@ -7,7 +7,7 @@ import SwiftyJSON
 
 /// Represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
 /// - SeeAlso: <https://core.telegram.org/bots/api#messageentity>
-public struct MessageEntity: JsonObject {
+public struct MessageEntity: JsonConvertible {
 	public enum MessageEntityType: String {
 		case mention = "mention"
 		case hashtag = "hashtag"

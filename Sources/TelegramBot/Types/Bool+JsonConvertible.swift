@@ -4,7 +4,7 @@
 import Foundation
 import SwiftyJSON
 
-extension Bool: JsonObject {
+extension Bool: JsonConvertible {
 	public init(json: JSON) {
 		self = json.boolValue
 	}

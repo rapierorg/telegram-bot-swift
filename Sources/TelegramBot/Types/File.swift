@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a file ready to be downloaded.
 /// - SeeAlso: <https://core.telegram.org/bots/api#file>
-public struct File: JsonObject {
+public struct File: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	

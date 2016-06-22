@@ -5,7 +5,7 @@
 import Foundation
 import SwiftyJSON
 
-extension JSON: JsonObject {
+extension JSON: JsonConvertible {
 	public init(json: JSON) {
 		self = json
 	}

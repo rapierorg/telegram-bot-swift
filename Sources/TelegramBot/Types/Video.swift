@@ -6,7 +6,7 @@ import SwiftyJSON
 
 /// Represents a video file.
 /// - SeeAlso: <https://core.telegram.org/bots/api#video>
-public struct Video: JsonObject {
+public struct Video: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 
