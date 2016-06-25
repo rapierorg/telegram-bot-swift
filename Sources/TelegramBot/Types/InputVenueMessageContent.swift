@@ -4,18 +4,24 @@
 import Foundation
 import SwiftyJSON
 
-/// This object represents a venue.
+/// Represents the content of a venue message to be sent as the result of an inline query.
 ///
-/// - SeeAlso: <https://core.telegram.org/bots/api#venue>
+/// - SeeAlso: <https://core.telegram.org/bots/api#inputvenuemessagecontent>
 
-public struct Venue: JsonConvertible {
+public struct InputVenueMessageContent: JsonConvertible {
     /// Original JSON for fields not yet added to Swift structures.
     public var json: JSON
 
-    /// Venue location
-    public var location: Location {
-        get { return Location(json: "location") }
-        set { json["location"] = newValue.json }
+    /// Latitude of the venue in degrees
+    public var latitude: Float {
+        get { return json["latitude"].floatValue }
+        set { json["latitude"].floatValue = newValue }
+    }
+
+    /// Longitude of the venue in degrees
+    public var longitude: Float {
+        get { return json["longitude"].floatValue }
+        set { json["longitude"].floatValue = newValue }
     }
 
     /// Name of the venue
@@ -30,7 +36,7 @@ public struct Venue: JsonConvertible {
         set { json["address"].stringValue = newValue }
     }
 
-    /// Optional. Foursquare identifier of the venue
+    /// Optional. Foursquare identifier of the venue, if known
     public var foursquare_id: String? {
         get { return json["foursquare_id"].string }
         set { json["foursquare_id"].string = newValue }

@@ -4,11 +4,11 @@
 import Foundation
 import SwiftyJSON
 
-/// This object represents a phone contact.
+/// Represents the content of a contact message to be sent as the result of an inline query.
 ///
-/// - SeeAlso: <https://core.telegram.org/bots/api#contact>
+/// - SeeAlso: <https://core.telegram.org/bots/api#inputcontactmessagecontent>
 
-public struct Contact: JsonConvertible {
+public struct InputContactMessageContent: JsonConvertible {
     /// Original JSON for fields not yet added to Swift structures.
     public var json: JSON
 
@@ -28,12 +28,6 @@ public struct Contact: JsonConvertible {
     public var last_name: String? {
         get { return json["last_name"].string }
         set { json["last_name"].string = newValue }
-    }
-
-    /// Optional. Contact's user identifier in Telegram
-    public var user_id: Int64? {
-        get { return json["user_id"].int64 }
-        set { json["user_id"].int64 = newValue }
     }
 
     public init(json: JSON = [:]) {
