@@ -28,8 +28,8 @@ public class Context {
 	public var chatId: Int64? { return message?.chat.id }
 	public var fromId: Int64? {
         return update.message?.from?.id ??
-            update.edited_message?.from?.id ??
-            update.callback_query?.from.id
+            (update.edited_message?.from?.id ??
+            update.callback_query?.from.id)
     }
 	
     init(bot: TelegramBot, update: Update, scanner: Scanner, command: String, startsWithSlash: Bool) {
