@@ -37,7 +37,7 @@ def make_getter_name(type_name, var_name, var_type, var_desc)
   end
 end
 
-def write_getter_setter(out, getter_name, var_name, var_type, var_optional, var_desc)
+def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_optional, var_desc)
   init_params = {}
 
   var_desc.each_line { |line|
@@ -60,14 +60,16 @@ def write_getter_setter(out, getter_name, var_name, var_type, var_optional, var_
               "        set { json[\"#{var_name}\"].stringValue = newValue }\n"\
               "    }\n"
   when ['Integer', true]
-    is64bit = var_name.include?("user_id") || var_name.include?("chat_id") || var_desc.include?("64 bit integer")
+    is64bit = var_name.include?("user_id") || var_name.include?("chat_id") || var_desc.include?("64 bit integer") ||
+              (type_name == 'User' && var_name == 'id')
     suffix = is64bit ? '64' : ''
     out.write "    public var #{getter_name}: Int#{suffix}? {\n"\
               "        get { return json[\"#{var_name}\"].int#{suffix} }\n"\
               "        set { json[\"#{var_name}\"].int#{suffix} = newValue }\n"\
               "    }\n"
   when ['Integer', false]
-    is64bit = var_name.include?("user_id") || var_name.include?("chat_id") || var_desc.include?("64 bit integer")
+    is64bit = var_name.include?("user_id") || var_name.include?("chat_id") || var_desc.include?("64 bit integer") ||
+              (type_name == 'User' && var_name == 'id')
     suffix = is64bit ? '64' : ''
     out.write "    public var #{getter_name}: Int#{suffix} {\n"\
               "        get { return json[\"#{var_name}\"].int#{suffix}Value }\n"\
@@ -185,8 +187,8 @@ def generate_type(f, node)
 
   current_node = node
 
-  name = current_node.text
-  File.open("#{API_DIR}/Types/#{name}.swift", "wb") { | out |
+  type_name = current_node.text
+  File.open("#{API_DIR}/Types/#{type_name}.swift", "wb") { | out |
     out.write TYPE_HEADER
     
     current_node = current_node.next_element
@@ -208,11 +210,11 @@ def generate_type(f, node)
     }
     out.write "///\n"
 
-    anchor = name.downcase
+    anchor = type_name.downcase
     out.write "/// - SeeAlso: <https://core.telegram.org/bots/api\##{anchor}>\n"\
               "\n"
 
-    out.write "public struct #{name}: JsonConvertible {\n"\
+    out.write "public struct #{type_name}: JsonConvertible {\n"\
               "    /// Original JSON for fields not yet added to Swift structures.\n"\
               "    public var json: JSON\n"
 
@@ -228,10 +230,10 @@ def generate_type(f, node)
       var_optional = var_desc.start_with? "Optional"
       f.write "PARAM: #{var_name} [#{var_type}#{var_optional ? '?' : ''}]: #{var_desc}\n"
 
-      getter_name = make_getter_name(name, var_name, var_type, var_desc)
+      getter_name = make_getter_name(type_name, var_name, var_type, var_desc)
 
       out.write "\n"
-      init_params = write_getter_setter(out, getter_name, var_name, var_type, var_optional, var_desc)
+      init_params = write_getter_setter(out, getter_name, type_name, var_name, var_type, var_optional, var_desc)
 
       # Accumulate init params to pass them to constructor
       all_init_params.merge!(init_params)
