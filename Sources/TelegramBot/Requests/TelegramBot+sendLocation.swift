@@ -21,11 +21,11 @@ public extension TelegramBot {
     @discardableResult
     public func sendLocationSync(
             chat_id: ChatId,
-            latitude: Float number,
-            longitude: Float number,
+            latitude: Float,
+            longitude: Float,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendLocation", defaultParameters["sendLocation"], parameters, [
             "chat_id": chat_id,
@@ -50,11 +50,11 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendlocation>
     public func sendLocationAsync(
             chat_id: ChatId,
-            latitude: Float number,
-            longitude: Float number,
+            latitude: Float,
+            longitude: Float,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendLocationCompletion? = nil) {

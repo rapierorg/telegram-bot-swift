@@ -12,8 +12,7 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#getme>
     @discardableResult
-    public func getMeSync(,
-            _ parameters: [String: Any?] = [:]) -> User? {
+    public func getMeSync(_ parameters: [String: Any?] = [:]) -> User? {
         return requestSync("getMe", defaultParameters["getMe"], parameters)
     }
 
@@ -22,8 +21,7 @@ public extension TelegramBot {
     /// - Note: Asynchronous version of the method.
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#getme>
-    public func getMeAsync(,
-            _ parameters: [String: Any?] = [:],
+    public func getMeAsync(_ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: GetMeCompletion? = nil) {
         return requestAsync("getMe", defaultParameters["getMe"], parameters,

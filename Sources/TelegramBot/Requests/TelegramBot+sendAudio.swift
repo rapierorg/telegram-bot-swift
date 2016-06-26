@@ -24,13 +24,13 @@ public extension TelegramBot {
     @discardableResult
     public func sendAudioSync(
             chat_id: ChatId,
-            audio: InputFile or String,
+            audio: FileInfo,
             duration: Int? = nil,
             performer: String? = nil,
             title: String? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendAudio", defaultParameters["sendAudio"], parameters, [
             "chat_id": chat_id,
@@ -60,13 +60,13 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendaudio>
     public func sendAudioAsync(
             chat_id: ChatId,
-            audio: InputFile or String,
+            audio: FileInfo,
             duration: Int? = nil,
             performer: String? = nil,
             title: String? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendAudioCompletion? = nil) {

@@ -21,11 +21,11 @@ public extension TelegramBot {
     @discardableResult
     public func sendVoiceSync(
             chat_id: ChatId,
-            voice: InputFile or String,
+            voice: FileInfo,
             duration: Int? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendVoice", defaultParameters["sendVoice"], parameters, [
             "chat_id": chat_id,
@@ -50,11 +50,11 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendvoice>
     public func sendVoiceAsync(
             chat_id: ChatId,
-            voice: InputFile or String,
+            voice: FileInfo,
             duration: Int? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVoiceCompletion? = nil) {

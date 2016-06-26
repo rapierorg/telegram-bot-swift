@@ -27,7 +27,7 @@ public extension TelegramBot {
             disable_web_page_preview: Bool? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendMessage", defaultParameters["sendMessage"], parameters, [
             "chat_id": chat_id,
@@ -59,7 +59,7 @@ public extension TelegramBot {
             disable_web_page_preview: Bool? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendMessageCompletion? = nil) {

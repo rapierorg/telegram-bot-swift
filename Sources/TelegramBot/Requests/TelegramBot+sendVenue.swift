@@ -24,14 +24,14 @@ public extension TelegramBot {
     @discardableResult
     public func sendVenueSync(
             chat_id: ChatId,
-            latitude: Float number,
-            longitude: Float number,
+            latitude: Float,
+            longitude: Float,
             title: String,
             address: String,
             foursquare_id: String? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendVenue", defaultParameters["sendVenue"], parameters, [
             "chat_id": chat_id,
@@ -62,14 +62,14 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendvenue>
     public func sendVenueAsync(
             chat_id: ChatId,
-            latitude: Float number,
-            longitude: Float number,
+            latitude: Float,
+            longitude: Float,
             title: String,
             address: String,
             foursquare_id: String? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVenueCompletion? = nil) {

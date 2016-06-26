@@ -3,8 +3,17 @@
 
 import Foundation
 
-public protocol Markup: JsonConvertible {
+public protocol ReplyMarkup: JsonConvertible {
 }
 
-extension Int64: Markup {
+extension InlineKeyboardMarkup: ReplyMarkup {
+}
+
+extension ReplyKeyboardMarkup: ReplyMarkup {
+}
+
+extension ReplyKeyboardHide: ReplyMarkup {
+}
+
+extension ForceReply: ReplyMarkup {
 }

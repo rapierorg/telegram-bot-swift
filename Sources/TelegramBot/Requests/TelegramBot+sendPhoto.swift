@@ -21,11 +21,11 @@ public extension TelegramBot {
     @discardableResult
     public func sendPhotoSync(
             chat_id: ChatId,
-            photo: InputFile or String,
+            photo: FileInfo,
             caption: String? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendPhoto", defaultParameters["sendPhoto"], parameters, [
             "chat_id": chat_id,
@@ -50,11 +50,11 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendphoto>
     public func sendPhotoAsync(
             chat_id: ChatId,
-            photo: InputFile or String,
+            photo: FileInfo,
             caption: String? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendPhotoCompletion? = nil) {

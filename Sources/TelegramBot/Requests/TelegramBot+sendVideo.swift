@@ -24,14 +24,14 @@ public extension TelegramBot {
     @discardableResult
     public func sendVideoSync(
             chat_id: ChatId,
-            video: InputFile or String,
+            video: FileInfo,
             duration: Int? = nil,
             width: Int? = nil,
             height: Int? = nil,
             caption: String? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendVideo", defaultParameters["sendVideo"], parameters, [
             "chat_id": chat_id,
@@ -62,14 +62,14 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendvideo>
     public func sendVideoAsync(
             chat_id: ChatId,
-            video: InputFile or String,
+            video: FileInfo,
             duration: Int? = nil,
             width: Int? = nil,
             height: Int? = nil,
             caption: String? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVideoCompletion? = nil) {

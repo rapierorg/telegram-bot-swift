@@ -21,11 +21,11 @@ public extension TelegramBot {
     @discardableResult
     public func sendDocumentSync(
             chat_id: ChatId,
-            document: InputFile or String,
+            document: FileInfo,
             caption: String? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendDocument", defaultParameters["sendDocument"], parameters, [
             "chat_id": chat_id,
@@ -50,11 +50,11 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#senddocument>
     public func sendDocumentAsync(
             chat_id: ChatId,
-            document: InputFile or String,
+            document: FileInfo,
             caption: String? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
-            reply_markup: Markup? = nil,
+            reply_markup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendDocumentCompletion? = nil) {

@@ -3,11 +3,11 @@
 
 import Foundation
 
-public protocol PhotoType {
+public protocol FileInfo {
 }
 
-extension InputFile: PhotoType {
+extension InputFile: FileInfo {
 }
 
-extension String: PhotoType {
+extension String: FileInfo {
 }
