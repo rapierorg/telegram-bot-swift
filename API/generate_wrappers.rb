@@ -190,6 +190,85 @@ def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_opt
   return init_params
 end
 
+def make_swift_type_name(var_name, var_type)
+  array_prefix = 'Array of '
+  if var_type.start_with?(array_prefix) then
+    var_type.slice! array_prefix
+    return "[#{var_type}]"
+  end
+
+  case var_type
+  when 'Boolean', 'True'
+    return 'Bool'
+  when 'Integer'
+    if var_name.include?('user_id') then
+      return 'Int64'
+    else
+      return 'Int'
+    end
+  when 'Float number'
+    return 'Float'
+  when 'Integer or String'
+    if var_name.include?('chat_id') then
+      return 'ChatId'
+    end
+  when 'InputFile or String'
+    return 'FileInfo'
+  when 'InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardHide or ForceReply'
+    return 'ReplyMarkup'
+  end
+  return var_type
+end
+
+def make_request_parameter(request_name, swift_type_name, var_name, var_type, var_optional, var_desc)
+  return {"#{var_name}": "#{swift_type_name}#{var_optional ? '? = nil' : ''}"}
+end
+
+def make_request_value(request_name, swift_type_name, var_name, var_type, var_optional, var_desc)
+  return {"#{var_name}": "#{var_name}"}
+end
+
+def deduce_result_type(description)
+  type_name = description[/An (.+) objects is returned/, 1]
+  return type_name unless type_name.nil?
+
+  type_name = description[/returns an (.+) objects/, 1]
+  return type_name unless type_name.nil?
+
+  type_name = description[/in form of a (.+) object/, 1]
+  return type_name unless type_name.nil?
+
+  type_name = description[/, a (.+) object is returned/, 1]
+  return type_name unless type_name.nil?
+
+  type_name = description[/(\w+) is returned/, 1]
+  return type_name unless type_name.nil?
+
+  type_name = description[/Returns a (.+) object/, 1]
+  return type_name unless type_name.nil?
+
+  type_name = description[/Returns (.+) on/, 1]
+  return type_name unless type_name.nil?
+
+  return 'Bool'
+end
+
+def fetch_description(current_node)
+  description = ''
+  while !current_node.nil? && current_node.name != 'table' &&
+      current_node.name != 'h4' do
+    text = current_node.text.strip
+    continue unless text.length != 0
+
+    if description.length != 0 then
+      description += "\n"
+    end
+    description += text
+    current_node = current_node.next_element
+  end
+  return description, current_node
+end
+
 def generate_type(f, node)
   FileUtils.mkpath "#{API_DIR}/Types"
 
@@ -200,17 +279,7 @@ def generate_type(f, node)
     out.write TYPE_HEADER
     
     current_node = current_node.next_element
-    description = ''
-    while !current_node.nil? && current_node.name != 'table' do
-      text = current_node.text.strip
-      continue unless text.length != 0
-
-      if description.length != 0 then
-        description += "\n"
-      end
-      description += text
-      current_node = current_node.next_element
-    end
+    description, current_node = fetch_description(current_node)
 
     f.write "DESCRIPTION:\n#{description}\n"
     description.each_line { |line|
@@ -265,41 +334,125 @@ def generate_type(f, node)
 end
 
 def generate_method(f, node)
-  FileUtils.mkpath "#{API_DIR}/Requests"
+  FileUtils.mkpath "#{API_DIR}/Methods"
 
   current_node = node
 
   method_name = current_node.text
-  File.open("#{API_DIR}/Requests/TelegramBot+#{method_name}.swift", "wb") { | out |
+  File.open("#{API_DIR}/Methods/TelegramBot+#{method_name}.swift", "wb") { | out |
     out.write METHOD_HEADER
+
+    out.write "public extension TelegramBot {\n"
+
+    completion_name = method_name.slice(0,1).capitalize + method_name.slice(1..-1) + 'Completion'
     
     current_node = current_node.next_element
-    description = ''
-    while !current_node.nil? && current_node.name != 'table' do
-      text = current_node.text.strip
-      continue unless text.length != 0
+    description, current_node = fetch_description(current_node)
 
-      if description.length != 0 then
-        description += "\n"
-      end
-      description += text
-      current_node = current_node.next_element
-    end
+    result_type = deduce_result_type(description)
+    result_type =  make_swift_type_name('', result_type)
+    out.write "    typealias #{completion_name} = (result: #{result_type}?, error: DataTaskError?) -> ()\n"\
+      "\n"
 
     f.write "DESCRIPTION:\n#{description}\n"
-    description.each_line { |line|
-      out.write "/// #{line.strip}\n"
-    }
-    out.write "///\n"
 
     anchor = method_name.downcase
-    out.write "/// - SeeAlso: <https://core.telegram.org/bots/api\##{anchor}>\n"\
-              "\n"
 
-    out.write "extension #{method_name} {\n"
+    vars_desc = ''
+    all_params = {}
+    all_values = {}
+    current_node.search('tr').each { |node|
+      td = node.search('td')
+      next unless td[0].text != 'Parameters'
 
-    out.write "}\n"
+      var_name = td[0].text
+      var_type = td[1].text
+      var_optional = td[2].text.strip != 'Yes'
+      var_desc = td[3].text
+      f.write "PARAM: #{var_name} [#{var_type}#{var_optional ? '?' : ''}]: #{var_desc}\n"
+
+      swift_type_name = make_swift_type_name(var_name, var_type)
+      param = make_request_parameter(method_name, swift_type_name, var_name, var_type, var_optional, var_desc)
+      value = make_request_value(method_name, swift_type_name, var_name, var_type, var_optional, var_desc)
+
+      # Accumulate init params to pass them to constructor
+      all_params.merge!(param)
+      all_values.merge!(value)
+
+      if vars_desc.empty? then
+        vars_desc += "    /// - Parameters:\n"
+      end
+      vars_desc +=   "    ///     - #{var_name}: "
+      first_line = true
+      var_desc.each_line { |line|
+        stripped = line.strip
+        next unless !stripped.empty?
+        if first_line then
+          first_line = false
+        else
+          vars_desc += '    ///       '
+        end
+        vars_desc +=   "#{line.strip}\n"\
+      }
+    }
+
+    if all_params.empty? then
+      params = ''
+    else
+      params = "\n            " + all_params.map { |k, v|
+        "#{k}: #{v}"
+      }.join(",\n            ")
+    end
+
+    if all_values.empty? then
+      values = ''
+    else
+      values = "            " + all_values.map { |k, v|
+        "\"#{k}\": #{v}"
+      }.join(",\n            ")
+    end
+
+    # Generate Sync request
+    description.each_line { |line| out.write "    /// #{line.strip}\n" }
+    out.write vars_desc
+    out.write "    /// - Returns: #{result_type} on success. Nil on error, in which case `TelegramBot.lastError` contains the details.\n"
+    out.write "    /// - Note: Blocking version of the method.\n"
+    out.write "    ///\n"
+    out.write "    /// - SeeAlso: <https://core.telegram.org/bots/api\##{anchor}>\n"
+    out.write "    @discardableResult\n"
+    out.write "    public func #{method_name}Sync(#{params}#{!params.empty? ? ",\n            " : ''}"\
+      "_ parameters: [String: Any?] = [:]) -> #{result_type}? {\n"
+    out.write "        return requestSync(\"#{method_name}\", defaultParameters[\"#{method_name}\"], parameters"
+    if !values.empty? then
+        out.write ", [\n#{values}])\n"
+    else
+        out.write ")\n"
+    end
+    out.write "    }\n"
+
+    out.write "\n"
+
+    # Generate Async request
+    description.each_line { |line| out.write "    /// #{line.strip}\n" }
+    out.write vars_desc
+    out.write "    /// - Returns: #{result_type} on success. Nil on error, in which case `error` contains the details.\n"
+    out.write "    /// - Note: Asynchronous version of the method.\n"
+    out.write "    ///\n"
+    out.write "    /// - SeeAlso: <https://core.telegram.org/bots/api\##{anchor}>\n"
+    out.write "    public func #{method_name}Async(#{params}#{!params.empty? ? ",\n            " : ''}"\
+      "_ parameters: [String: Any?] = [:],\n"\
+      "            queue: DispatchQueue = .main,\n"\
+      "            completion: #{completion_name}? = nil) {\n"
+    out.write "        return requestAsync(\"#{method_name}\", defaultParameters[\"#{method_name}\"], parameters"
+    if !values.empty? then
+        out.write ", [\n#{values}]"
+    end
+    out.write ",\n"\
+      "            queue: queue, completion: completion)\n"
+    out.write "    }\n"
+    out.write "}\n\n"
   }
+
 end
 
 def main
