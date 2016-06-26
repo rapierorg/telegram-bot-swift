@@ -6,7 +6,7 @@ import Foundation
 extension String {
     public func hasPrefix(_ prefix: String, caseInsensitive: Bool) -> Bool {
         if caseInsensitive {
-            return nil != self.range(of: prefix, options: [.caseInsensitiveSearch, .anchoredSearch])
+            return nil != self.range(of: prefix, options: [.caseInsensitive, .anchored])
         }
         return hasPrefix(prefix)
     }
