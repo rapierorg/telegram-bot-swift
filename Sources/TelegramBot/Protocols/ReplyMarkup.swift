@@ -3,11 +3,8 @@
 
 import Foundation
 
-public protocol ChatIdType: JsonConvertible {
+public protocol Markup: JsonConvertible {
 }
 
-extension Int64: ChatIdType {
-}
-
-extension String: ChatIdType {
+extension Int64: Markup {
 }

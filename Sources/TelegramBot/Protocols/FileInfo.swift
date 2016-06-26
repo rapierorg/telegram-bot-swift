@@ -1,14 +1,13 @@
 // Telegram Bot SDK for Swift (unofficial).
 // (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
-
 import Foundation
 
-public protocol Photo {
+public protocol PhotoType {
 }
 
-extension InputFile: Photo {
+extension InputFile: PhotoType {
 }
 
-extension String: Photo {
+extension String: PhotoType {
 }
