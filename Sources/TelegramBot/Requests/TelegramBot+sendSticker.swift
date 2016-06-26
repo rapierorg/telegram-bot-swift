@@ -12,17 +12,7 @@ public extension TelegramBot {
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendsticker>
 	@discardableResult
-	public func sendStickerSync(chat_id: Int64, sticker: String,
-	                            _ parameters: [String: Any?] = [:]) -> Message? {
-		return requestSync("sendSticker", defaultParameters["sendSticker"], parameters,
-		                   ["chat_id": chat_id, "sticker": sticker])
-	}
-	
-	/// Send .webp stickers. Blocking version.
-	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
-	/// - SeeAlso: <https://core.telegram.org/bots/api#sendsticker>
-	@discardableResult
-	public func sendStickerSync(chat_id: String, sticker: String,
+	public func sendStickerSync(chat_id: ChatId, sticker: String,
 	                            _ parameters: [String: Any?] = [:]) -> Message? {
 		return requestSync("sendSticker", defaultParameters["sendSticker"], parameters,
 		                   ["chat_id": chat_id, "sticker": sticker])
@@ -31,19 +21,7 @@ public extension TelegramBot {
 	/// Send .webp stickers. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendsticker>
-	public func sendStickerAsync(chat_id: Int64, sticker: String,
-	                             _ parameters: [String: Any?] = [:],
-	                             queue: DispatchQueue = DispatchQueue.main,
-	                             completion: SendMessageCompletion? = nil) {
-		requestAsync("sendSticker", defaultParameters["sendSticker"], parameters,
-		             ["chat_id": chat_id, "sticker": sticker],
-		             queue: queue, completion: completion)
-	}
-	
-	/// Send .webp stickers. Asynchronous version.
-	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
-	/// - SeeAlso: <https://core.telegram.org/bots/api#sendsticker>
-	public func sendStickerAsync(chat_id: String, sticker: String,
+	public func sendStickerAsync(chat_id: ChatId, sticker: String,
 	                             _ parameters: [String: Any?] = [:],
 	                             queue: DispatchQueue = DispatchQueue.main,
 	                             completion: SendMessageCompletion? = nil) {

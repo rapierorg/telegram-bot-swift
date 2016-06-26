@@ -9,7 +9,7 @@ public extension TelegramBot {
 	/// Get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Blocking version.
 	/// - Returns: Chat object on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchat>
-	public func getChatSync(chat_id: Int64,
+	public func getChatSync(chat_id: ChatId,
 	                        _ parameters: [String: Any?] = [:]) -> Chat? {
 		return requestSync("getChat", defaultParameters["getChat"], parameters,
 		                   ["chat_id": chat_id])
@@ -18,7 +18,7 @@ public extension TelegramBot {
 	/// Get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Asynchronous version.
 	/// - Returns: Chat object on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#getchat>
-	public func getChatAsync(chat_id: Int64,
+	public func getChatAsync(chat_id: ChatId,
 	                         _ parameters: [String: Any?] = [:],
 	                         queue: DispatchQueue = DispatchQueue.main,
 	                         completion: GetChatCompletion? = nil) {

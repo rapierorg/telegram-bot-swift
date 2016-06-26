@@ -10,25 +10,16 @@ public extension TelegramBot {
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
 	@discardableResult
-	public func sendMessageSync(chat_id: Int64, text: String,
+	public func sendMessageSync(chat_id: ChatId, text: String,
 	                            _ parameters: [String: Any?] = [:]) -> Message? {
 		return requestSync("sendMessage", defaultParameters["sendMessage"], parameters,
 		                   ["chat_id": chat_id, "text": text])
 	}
 
-	/// Send text message. Blocking version.
-	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
-	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
-	@discardableResult
-	public func sendMessageSync(_ chat_id: Int64, _ text: String,
-	                            _ parameters: [String: Any?] = [:]) -> Message? {
-		return sendMessageSync(chat_id, text, parameters)
-	}
-
     /// Send text messages. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
-	public func sendMessageAsync(chat_id: Int64, text: String,
+	public func sendMessageAsync(chat_id: ChatId, text: String,
 	                             _ parameters: [String: Any?] = [:],
 	                             queue: DispatchQueue = DispatchQueue.main,
 	                             completion: SendMessageCompletion? = nil) {
@@ -36,14 +27,4 @@ public extension TelegramBot {
 		             ["chat_id": chat_id, "text": text],
 		             queue: queue, completion: completion)
     }
-	
-	/// Send text messages. Asynchronous version.
-	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
-	/// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
-	public func sendMessageAsync(_ chat_id: Int64, _ text: String,
-	                             _ parameters: [String: Any?] = [:],
-	                             queue: DispatchQueue = DispatchQueue.main,
-	                             completion: SendMessageCompletion? = nil) {
-		sendMessageAsync(chat_id: chat_id, text: text, parameters, queue: queue, completion: completion)
-	}
 }

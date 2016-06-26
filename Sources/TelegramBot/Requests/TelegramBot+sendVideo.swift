@@ -12,17 +12,7 @@ public extension TelegramBot {
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvideo>
 	@discardableResult
-	public func sendVideoSync(chat_id: Int64, video: String,
-	                          _ parameters: [String: Any?] = [:]) -> Message? {
-		return requestSync("sendVideo", defaultParameters["sendVideo"], parameters,
-		                   ["chat_id": chat_id, "video": video])
-	}
-	
-	/// Send video files, Telegram clients support mp4 videos (other formats may be sent as Document). Blocking version.
-	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
-	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvideo>
-	@discardableResult
-	public func sendVideoSync(chat_id: String, video: String,
+	public func sendVideoSync(chat_id: ChatId, video: String,
 	                          _ parameters: [String: Any?] = [:]) -> Message? {
 		return requestSync("sendVideo", defaultParameters["sendVideo"], parameters,
 		                   ["chat_id": chat_id, "video": video])
@@ -31,22 +21,10 @@ public extension TelegramBot {
 	/// Send video files, Telegram clients support mp4 videos (other formats may be sent as Document). Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvideo>
-	public func sendVideoAsync(chat_id: Int64, video: String,
+	public func sendVideoAsync(chat_id: ChatId, video: String,
 	                           _ parameters: [String: Any?] = [:],
 	                           queue: DispatchQueue = DispatchQueue.main,
 	                           completion: SendMessageCompletion? = nil) {
-		requestAsync("sendVideo", defaultParameters["sendVideo"], parameters,
-		             ["chat_id": chat_id, "video": video],
-		             queue: queue, completion: completion)
-	}
-	
-	/// Send video files, Telegram clients support mp4 videos (other formats may be sent as Document). Asynchronous version.
-	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
-	/// - SeeAlso: <https://core.telegram.org/bots/api#sendvideo>
-	public func sendVideoAsync(chat_id: String, video: String,
-	                             _ parameters: [String: Any?] = [:],
-	                             queue: DispatchQueue = DispatchQueue.main,
-	                             completion: SendMessageCompletion? = nil) {
 		requestAsync("sendVideo", defaultParameters["sendVideo"], parameters,
 		             ["chat_id": chat_id, "video": video],
 		             queue: queue, completion: completion)

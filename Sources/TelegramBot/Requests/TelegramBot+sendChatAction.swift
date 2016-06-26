@@ -25,7 +25,7 @@ public extension TelegramBot {
 	/// - Returns: true on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
 	@discardableResult
-	public func sendChatActionSync(chat_id: Int64, action: ChatAction,
+	public func sendChatActionSync(chat_id: ChatId, action: ChatAction,
 	                               _ parameters: [String: Any?] = [:]) -> Bool? {
 		return requestSync("sendChatAction", defaultParameters["sendChatAction"], parameters,
 		                   ["chat_id": chat_id, "action": action])
@@ -35,38 +35,16 @@ public extension TelegramBot {
 	/// - Returns: true on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
 	@discardableResult
-	public func sendChatActionSync(chat_id: Int64, action: String,
+	public func sendChatActionSync(chat_id: ChatId, action: String,
 	                               _ parameters: [String: Any?] = [:]) -> Bool? {
 		return requestSync("sendChatAction", defaultParameters["sendChatAction"], parameters,
 		                   ["chat_id": chat_id, "action": action])
 	}
-	
-	
-	/// Tells the user that something is happening on the bot's side. Blocking version.
-	/// - Returns: true on success. Nil on error, in which case `lastError` contains the details.
-	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
-	@discardableResult
-	public func sendChatActionSync(chat_id: String, action: ChatAction,
-	                               _ parameters: [String: Any?] = [:]) -> Bool? {
-		return requestSync("sendChatAction", defaultParameters["sendChatAction"], parameters,
-		                   ["chat_id": chat_id, "action": action])
-	}
-	
-	/// Tells the user that something is happening on the bot's side. Blocking version.
-	/// - Returns: true on success. Nil on error, in which case `lastError` contains the details.
-	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
-	@discardableResult
-	public func sendChatActionSync(chat_id: String, action: String,
-	                               _ parameters: [String: Any?] = [:]) -> Bool? {
-		return requestSync("sendChatAction", defaultParameters["sendChatAction"], parameters,
-		                   ["chat_id": chat_id, "action": action])
-	}
-	
 	
 	/// Tells the user that something is happening on the bot's side. Asynchronous version.
 	/// - Returns: true on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
-	public func sendChatActionAsync(chat_id: Int64, action: ChatAction,
+	public func sendChatActionAsync(chat_id: ChatId, action: ChatAction,
 	                                _ parameters: [String: Any?] = [:],
 	                                queue: DispatchQueue = DispatchQueue.main,
 	                                completion: SendChatActionCompletion? = nil) {
@@ -78,33 +56,7 @@ public extension TelegramBot {
 	/// Tells the user that something is happening on the bot's side. Asynchronous version.
 	/// - Returns: true on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
-	public func sendChatActionAsync(chat_id: Int64, action: String,
-	                                _ parameters: [String: Any?] = [:],
-	                                queue: DispatchQueue = DispatchQueue.main,
-	                                completion: SendChatActionCompletion? = nil) {
-		requestAsync("sendChatAction", defaultParameters["sendChatAction"], parameters,
-		             ["chat_id": chat_id, "action": action],
-		             queue: queue, completion: completion)
-	}
-	
-	
-	
-	/// Tells the user that something is happening on the bot's side. Asynchronous version.
-	/// - Returns: true on success. Nil on error, in which case `error` contains the details.
-	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
-	public func sendChatActionAsync(chat_id: String, action: ChatAction,
-	                                _ parameters: [String: Any?] = [:],
-	                                queue: DispatchQueue = DispatchQueue.main,
-	                                completion: SendChatActionCompletion? = nil) {
-		requestAsync("sendChatAction", defaultParameters["sendChatAction"], parameters,
-		             ["chat_id": chat_id, "action": action],
-		             queue: queue, completion: completion)
-	}
-	
-	/// Tells the user that something is happening on the bot's side. Asynchronous version.
-	/// - Returns: true on success. Nil on error, in which case `error` contains the details.
-	/// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
-	public func sendChatActionAsync(chat_id: String, action: String,
+	public func sendChatActionAsync(chat_id: ChatId, action: String,
 	                                _ parameters: [String: Any?] = [:],
 	                                queue: DispatchQueue = DispatchQueue.main,
 	                                completion: SendChatActionCompletion? = nil) {

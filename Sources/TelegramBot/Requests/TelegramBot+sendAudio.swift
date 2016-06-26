@@ -12,17 +12,7 @@ public extension TelegramBot {
 	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendaudio>
 	@discardableResult
-	public func sendAudioSync(chat_id: Int64, audio: String,
-	                          _ parameters: [String: Any?] = [:]) -> Message? {
-		return requestSync("sendAudio", defaultParameters["sendAudio"], parameters,
-		                   ["chat_id": chat_id, "audio": audio])
-	}
-	
-	/// Send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. Blocking version.
-	/// - Returns: Sent message on success. Nil on error, in which case `lastError` contains the details.
-	/// - SeeAlso: <https://core.telegram.org/bots/api#sendaudio>
-	@discardableResult
-	public func sendAudioSync(chat_id: String, audio: String,
+	public func sendAudioSync(chat_id: ChatId, audio: String,
 	                          _ parameters: [String: Any?] = [:]) -> Message? {
 		return requestSync("sendAudio", defaultParameters["sendAudio"], parameters,
 		                   ["chat_id": chat_id, "audio": audio])
@@ -31,19 +21,7 @@ public extension TelegramBot {
 	/// Send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. Asynchronous version.
 	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
 	/// - SeeAlso: <https://core.telegram.org/bots/api#sendaudio>
-	public func sendAudioAsync(chat_id: Int64, audio: String,
-	                           _ parameters: [String: Any?] = [:],
-	                           queue: DispatchQueue = DispatchQueue.main,
-	                           completion: SendMessageCompletion? = nil) {
-		requestAsync("sendAudio", defaultParameters["sendAudio"], parameters,
-		             ["chat_id": chat_id, "audio": audio],
-		             queue: queue, completion: completion)
-	}
-	
-	/// Send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. Asynchronous version.
-	/// - Returns: Sent message on success. Nil on error, in which case `error` contains the details.
-	/// - SeeAlso: <https://core.telegram.org/bots/api#sendaudio>
-	public func sendAudioAsync(chat_id: String, audio: String,
+	public func sendAudioAsync(chat_id: ChatId, audio: String,
 	                           _ parameters: [String: Any?] = [:],
 	                           queue: DispatchQueue = DispatchQueue.main,
 	                           completion: SendMessageCompletion? = nil) {
