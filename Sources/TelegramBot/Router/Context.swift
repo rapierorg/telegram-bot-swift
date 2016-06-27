@@ -39,31 +39,56 @@ public class Context {
         self.command = command
         self.args = Arguments(scanner: scanner)
 	}
-	
+    
     /// Sends a message to current chat.
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
-	public func respondAsync(_ text: String,
-	                         _ parameters: [String: Any?] = [:],
-	                         queue: DispatchQueue = DispatchQueue.main,
-	                         completion: TelegramBot.SendMessageCompletion? = nil) {
-        guard let chatId = chatId else {
-            assertionFailure("respondAsync() used when update.message is nil")
-            return
-        }
-		bot.sendMessageAsync(chat_id: chatId, text: text, parameters, queue: queue, completion: completion)
-	}
-	
-    /// Sends a message to current chat.
-    /// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
-	@discardableResult
-	public func respondSync(_ text: String,
-	                        parameters: [String: Any?] = [:]) -> Message? {
-        guard let chatId = chatId else {
+    @discardableResult
+    public func respondSync(_ text: String,
+                            parse_mode: String? = nil,
+                            disable_web_page_preview: Bool? = nil,
+                            disable_notification: Bool? = nil,
+                            reply_to_message_id: Int? = nil,
+                            reply_markup: ReplyMarkup? = nil,
+                            _ parameters: [String: Any?] = [:]) -> Message? {
+        guard let chat_id = chatId else {
             assertionFailure("respondSync() used when update.message is nil")
             bot.lastError = nil
             return nil
         }
-		return bot.sendMessageSync(chat_id: chatId, text: text, parameters)
+        return bot.requestSync("sendMessage", bot.defaultParameters["sendMessage"], parameters, [
+            "chat_id": chat_id,
+            "text": text,
+            "parse_mode": parse_mode,
+            "disable_web_page_preview": disable_web_page_preview,
+            "disable_notification": disable_notification,
+            "reply_to_message_id": reply_to_message_id,
+            "reply_markup": reply_markup])
+    }
+    
+    /// Sends a message to current chat.
+    /// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
+	public func respondAsync(_ text: String,
+	                         parse_mode: String? = nil,
+	                         disable_web_page_preview: Bool? = nil,
+	                         disable_notification: Bool? = nil,
+	                         reply_to_message_id: Int? = nil,
+	                         reply_markup: ReplyMarkup? = nil,
+	                         _ parameters: [String: Any?] = [:],
+	                         queue: DispatchQueue = .main,
+	                         completion: TelegramBot.SendMessageCompletion? = nil) {
+        guard let chat_id = chatId else {
+            assertionFailure("respondAsync() used when update.message is nil")
+            return
+        }
+        return bot.requestAsync("sendMessage", bot.defaultParameters["sendMessage"], parameters, [
+            "chat_id": chat_id,
+            "text": text,
+            "parse_mode": parse_mode,
+            "disable_web_page_preview": disable_web_page_preview,
+            "disable_notification": disable_notification,
+            "reply_to_message_id": reply_to_message_id,
+            "reply_markup": reply_markup],
+                            queue: queue, completion: completion)
 	}
 	
     /// Respond privately also sending a message to a group.
