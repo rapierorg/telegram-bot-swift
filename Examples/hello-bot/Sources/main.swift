@@ -15,7 +15,7 @@ let bot = TelegramBot(token: token)
 let router = Router(bot: bot)
 
 router["help"] = { context in
-	guard let from = context.message.from else { return false }
+	guard let from = context.message?.from else { return false }
 
 	let helpText = "Usage: /greet"
     context.respondPrivatelyAsync(helpText,
@@ -24,13 +24,13 @@ router["help"] = { context in
 }
 
 router["greet"] = { context in
-	guard let from = context.message.from else { return false }
+	guard let from = context.message?.from else { return false }
     context.respondAsync("Hello, \(from.first_name)!")
 	return true
 }
 
 router[.new_chat_member] = { context in
-	guard let user = context.message.new_chat_member else { return false }
+	guard let user = context.message?.new_chat_member else { return false }
 	guard user.id != bot.user.id else { return false }
 	context.respondAsync("Welcome, \(user.first_name)!")
 	return true
