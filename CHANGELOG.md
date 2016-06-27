@@ -1,5 +1,82 @@
 # telegram-bot-swift changelog
 
+## 0.8.0 (2016-06-27)
+
+### Major changes:
+
+- Project ported to Swift 3.0 Snapshot 2016-06-20 (a). Xcode8 is required.
+
+- Types and Requests (methods) are now generated automatically from Telegram docs by a Ruby script located in `API/` directory.
+
+- All types and requests are now supported.
+
+- Optional parameters added to request signatures. This code:
+
+```swift
+bot.sendMessage(chatId, "text", ["reply_markup": markup])
+```
+
+Can now be written as:
+
+```swift
+bot.sendMessage(chatId, "text", reply_markup: markup)
+```
+
+You can still pass an array with additional arguments at the end of parameters list if needed.
+
+### Other changes:
+
+- Router now supports multiple comma separated paths:
+
+```swift
+router["List Items", "list"] = onListItems
+```
+
+- Router is now case insensitive by default.
+
+- Multiword commands are now supported:
+
+```swift
+router["list add"] = onListAdd
+router["list remove"] = onListRemove
+```
+
+- Router chaining is now supported. Use `handler` method to use Router as a handler:
+
+`router1.unmatched = router2.handler`
+
+- To force the use of slash, instead of `slash: .required` option use:
+
+```swift
+router["command", .slashRequired] = handler
+```
+
+Multiple flags can be specified:
+
+```swift
+router["command", [.caseSensitive, .slashRequired]] = handler
+```
+
+- `context.args.command` is now `context.command`.
+
+- New variable: `context.slash`. True, if command was prefixed with a slash.
+
+- `bot.unknownCommand` handler renamed to `bot.unmatched`
+
+- Support `callback_query` in Router.
+
+- `JsonObject` protocol renamed to `JsonConvertible`.
+
+- `Context.message` is now optional. Also, it fallbacks to `edited_message` and `callback_query.message` when nil.
+
+- Unknown command handler will no longer treat the first word as a command and will pass the entire string to a handler unchanged. `Context.command` will be empty.
+
+- partialMatchHandler return value is now ignored. It can no longer cancel commands.
+
+- All types changed from classes to structs.
+
+- HTTP error codes except 401 (authentication error) are no longer fatal errors. TelegramBot will try to reconnect when encountering them.
+
 ## 0.7.0 (2016-06-13)
 
 - All enums renamed to match Swift 3 guidelines.
