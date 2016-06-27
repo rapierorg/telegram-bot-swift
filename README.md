@@ -33,13 +33,13 @@ let bot = TelegramBot(token: "my token")
 let router = Router(bot)
 
 router["greet"] = { context in
-    guard let from = context.message.from else { return false }
+    guard let from = context.message?.from else { return false }
     context.respondAsync("Hello, \(from.first_name)!")
     return true
 }
 
 router[.new_chat_member] = { context in
-	guard let user = context.message.new_chat_member else { return false }
+	guard let user = context.message?.new_chat_member else { return false }
 	guard user.id != bot.user.id else { return false }
 	context.respondAsync("Welcome, \(user.first_name)!")
 	return true
@@ -64,7 +64,7 @@ Join our chat in Telegram: [swiftsdkchat](https://telegram.me/swiftsdkchat).
 
 OS X is required. Linux support is planned, but not ready yet.
 
-On OS X, install `Swift 3.0 DEVELOPMENT-SNAPSHOT-2016-06-06-a` by following instructions on Wiki: [Setting Up Dev Environment](https://github.com/zmeyc/telegram-bot-swift/wiki/Dev%20Environment).
+On OS X, install `Swift 3.0 DEVELOPMENT-SNAPSHOT-2016-06-20-a` by following instructions on Wiki: [Setting Up Dev Environment](https://github.com/zmeyc/telegram-bot-swift/wiki/Dev%20Environment).
 
 
 ## Getting started
@@ -183,22 +183,22 @@ Swift types and enums were added where appropriate:
  
 
 ```swift
-if message.type == .bot_command { ... }
+if entity.type == .bot_command { ... }
 ```
 
 In most cases raw methods accepting strings are also available. They can be used as fallbacks if required enum case is not added yet:
 
 ```swift
-if message.typeString == "bot_command" { ... }
+if entity.type_string == "bot_command" { ... }
 ```
 
 To allow accessing fields which are still missing in SDK, every data type has `json` member with original json structure:
 
 ```swift
-if message.json["type"].stringValue == "bot_command" { ... }
+if entity.json["type"].stringValue == "bot_command" { ... }
 ```
 
-All types conform to `JsonObject` protocol and can be created from json or serialized back to json. Use `debugDescription` method for human-readable json or `description` for json which can be sent to server.
+All types conform to `JsonConvertible` protocol and can be created from json or serialized back to json. Use `debugDescription` method for human-readable json or `description` for json which can be sent to server.
 
 ### Requests
 
@@ -218,7 +218,7 @@ These methods return a server response or `nil` in case of error. If `nil` is re
 
 ```swift
 guard let sentMessage = bot.sendMessageSync(fromId, "Hello") else {
-    fatalError("Unable to send message: \(bot.lastError)")
+    fatalError("Unable to send message: \(bot.lastError.unwrapOptional)")
 }
 ```
 
@@ -261,7 +261,15 @@ bot.sendMessageAsync(chat_id: chatId, text: "Text")
 bot.sendMessageAsync(chatId, "Text") // will also work
 ```
 
-Currently request methods define only `required` parameters in their signatures. To pass `optional` parameters to these methods, a dictionary should be used:
+`Optional` parameters can also be passed:
+
+```swift
+let markup = ForceReply()
+bot.sendMessageAsync(chat_id: chatId, text: "Force reply",
+    reply_markup: markup, disable_notification: true)
+```
+
+If you ever encounter a situation when parameter hasn't been added to method signature yet, you can pass a dictionary with any parameters at the end of parameter list:
 
 ```swift
 let markup = ForceReply()
@@ -297,9 +305,9 @@ requestAsync("sendMessage", ["chat_id": chatId, "text": text]) { (result: User?,
 
 These methods automatically deserialize the json response.
 
-Explicitly specifying result type is important. Result type should conform to `JsonObject` protocol. `Bool` and `Int` already conform to `JsonObject`.
+Explicitly specifying result type is important. Result type should conform to `JsonConvertible` protocol. `Bool` and `Int` already conform to `JsonConvertible`.
 
-JSON class itself also conforms to `JsonObject`, so you can request a raw json if needed:
+JSON class itself also conforms to `JsonConvertible`, so you can request a raw json if needed:
 
 ```swift
 let user: JSON? = requestSync("sendMessage", ["chat_id": chatId, "text": text])
@@ -316,6 +324,25 @@ router["command2"] = handler2
 router[.event] = handler3
 ...
 router.process(update: update)
+```
+
+Multiple commands can be specified in a single rule:
+
+```swift
+router["Full Command Name", "command"] = handler
+```
+
+Multiword commands are also supported:
+
+```swift
+router["list add"] = onListAdd
+router["list remove"] = onListRemove
+```
+
+Routers can be chained. This helps creating a context-sensitive routers with fallback to a global router.
+
+```swift
+router1.unmatched = router2.handler
 ```
 
 **Handlers**
@@ -345,14 +372,16 @@ Handler functions can be marked as `throws` and throw exceptions. Router won't p
  
  * `bot` - a reference to the bot.
  * `update` - current `Update` structure.
- * `message` - convenience method for accessing `update.message`.
+ * `message` - convenience method for accessing `update.message`. If `update.message` is nil, fallbacks to `update.edited_message`, then to `update.callback_query?.message`.
+ * `command` - command without slash.
+ * `slash` - true, if command was prefixed with a slash. Useful if you want to skip commands not starting with slash in group chats.
  * `args` - command arguments scanner.
  
 `Context` also contains a few helper methods and variables:
  
  * `privateChat` - true, if this is a private chat with bot, false for all group chat types.
- * `chatId` - shortcut for message.chat.id
- * `fromId` - shortcut for message.from?.id
+ * `chatId` - shortcut for message?.chat.id
+ * `fromId` - shortcut for message?.from?.id
  * `respondAsync`, `respondSync` - works as `sendMessage(chatId, ...)`
  * `respondPrivatelyAsync/Sync("text", groupText: "text")` - respond to user privately, sending a short message to the group if this was a group chat. For example:
  
@@ -379,7 +408,19 @@ Command name is processed differently in private and group chats:
 This can be overridden. The following line will require slash even in private chats:
 
 ```swift
-router["start", slash: .required] = onStart
+router["start", .slashRequired] = onStart
+```
+
+Router is case-insensitive by default. To make it case-sensitive, pass `.caseSensitive` option:
+
+```swift
+router["command", .caseSensitive] = handler
+```
+
+Multiple options can be passed:
+
+```swift
+router["command", [.slashRequired, .caseSensitive]] = handler
 ```
 
 In Telegram group chats, user can append bot name to command, for example: `/greet@hello_bot`. Router takes care of removing the `@hello_bot` part from command name automatically.
@@ -452,7 +493,7 @@ Check `TelegramBot/Router/ContentType.swift` file for a complete list of events 
 
 In debugger you may want to dump the contents of a json structure, but `debugDescription` loses it's formatting.
 
-`prettyPrint` helper function allows printing any `JsonObject` with indentation:
+`prettyPrint` helper function allows printing any `JsonConvertible` with indentation:
 
 ```swift
 let user: User
