@@ -174,7 +174,7 @@ public class TelegramBot {
                 TelegramBot.autoReconnectCodes.contains(networkError.code):
             print("Network error: \(networkError.localizedDescription)")
             break
-        case let .invalidStatusCode(statusCode, _, _): // where statusCode == 502:
+        case let .invalidStatusCode(statusCode, _, _) where statusCode != 401: // == 502
             print("Error: \(error.debugDescription)")
             break
         default:
@@ -217,7 +217,7 @@ public class TelegramBot {
     /// This function will block until the request is finished.
     public lazy var user: User = {
         guard let me = self.getMeSync() else {
-            fatalError("Unable to fetch bot information")
+            fatalError("Unable to fetch bot information: \(self.lastError.unwrapOptional)")
         }
         return me
     }()
