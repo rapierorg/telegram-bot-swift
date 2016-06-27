@@ -70,7 +70,7 @@ class RequestTests: XCTestCase {
 	
 	func testShowKeyboardWithText() {
 		var markup = ReplyKeyboardMarkup()
-		markup.keyboardStrings = [
+		markup.keyboard_strings = [
 			[ "Button 1", "Button 2" ],
 			[ "Button 3", "Button 4" ]
 		]
@@ -94,7 +94,7 @@ class RequestTests: XCTestCase {
 		button4.text = "Share Location"
 		button4.request_location = true
 		
-		markup.keyboardButtons = [
+		markup.keyboard = [
 			[ button1, button2 ],
 			[ button3, button4 ]
 		]
@@ -130,7 +130,7 @@ class RequestTests: XCTestCase {
 	
 	// Helper functions
 
-	func check<T where T: JsonObject>(_ result: T?) {
+	func check<T where T: JsonConvertible>(_ result: T?) {
 		XCTAssert(result?.prettyPrint() != nil)
 	}
 }

@@ -117,7 +117,7 @@ class UrlencodeTests: XCTestCase {
     
     func testFormUrlencodeReplyMarkup() {
         var keyboardMarkup = ReplyKeyboardMarkup()
-        keyboardMarkup.keyboardStrings = [
+        keyboardMarkup.keyboard_strings = [
             [ "A", "B", "C" ],
             [ "D", "E" ]
         ]

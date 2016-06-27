@@ -103,7 +103,7 @@ class RouterTests: XCTestCase {
         router["hello"] = { context in
             return true
         }
-        router.unknownCommand = { context in
+        router.unmatched = { context in
             print("Unknown command: \(context.args.scanRestOfString())")
             matched = true
             return true
@@ -128,7 +128,7 @@ class RouterTests: XCTestCase {
             return true
         }
 
-        router1.unknownCommand = { context in
+        router1.unmatched = { context in
             do { try router2.process(update: self.update) }
             catch { XCTFail() }
             return true
@@ -153,7 +153,7 @@ class RouterTests: XCTestCase {
             return true
         }
         
-        router1.unknownCommand = router2.handler
+        router1.unmatched = router2.handler
         
         do { try router1.process(update: update) }
         catch { XCTFail() }
