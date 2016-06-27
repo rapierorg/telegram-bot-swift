@@ -1,6 +1,6 @@
 # telegram-bot-swift changelog
 
-## 0.8.0 (2016-06-27)
+## 0.9.0 (2016-06-27)
 
 ### Major changes:
 
@@ -76,6 +76,11 @@ router["command", [.caseSensitive, .slashRequired]] = handler
 - All types changed from classes to structs.
 
 - HTTP error codes except 401 (authentication error) are no longer fatal errors. TelegramBot will try to reconnect when encountering them.
+
+## 0.8.0 (2016-06-15)
+
+- Upgrade to Xcode 8 (Swift 3.0 Preview 1)
+- Bugfix: "unknown command" / "unsupported content type" messages are no longer sent to group chats.
 
 ## 0.7.0 (2016-06-13)
 
