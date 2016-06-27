@@ -23,11 +23,13 @@ class Controller {
     }
     
 	func start(context: Context) -> Bool {
-		guard !started(in: context.chatId) else {
+        guard let chatId = context.chatId else { return false }
+        
+		guard !started(in: chatId) else {
             context.respondAsync("@\(bot.username) already started.")
             return true
         }
-        startedInChatId.insert(context.chatId)
+        startedInChatId.insert(chatId)
         
         var startText: String
         if !context.privateChat {
@@ -42,18 +44,20 @@ class Controller {
     }
     
 	func stop(context: Context) -> Bool {
-		guard started(in: context.chatId) else {
+        guard let chatId = context.chatId else { return false }
+
+        guard started(in: chatId) else {
             context.respondAsync("@\(bot.username) already stopped.")
             return true
         }
-		startedInChatId.remove(context.chatId)
+		startedInChatId.remove(chatId)
 		
         context.respondSync("@\(bot.username) stopped. To restart, type /start")
 		return true
     }
     
 	func help(context: Context) -> Bool {
-		guard let from = context.message.from else { return false }
+		guard let from = context.message?.from else { return false }
         let helpText = "What can this bot do?\n" +
             "\n" +
             "This is a sample bot which reverses sentences or words. " +
@@ -75,7 +79,7 @@ class Controller {
     }
     
 	func settings(context: Context) -> Bool {
-		guard let from = context.message.from else { return false }
+		guard let from = context.message?.from else { return false }
         let settingsText = "Settings\n" +
             "\n" +
             "No settings are available for this bot."
@@ -91,7 +95,8 @@ class Controller {
     }
 
     func reverseText(context: Context) -> Bool {
-		guard started(in: context.chatId) else { return false }
+        guard let chatId = context.chatId else { return false }
+		guard started(in: chatId) else { return false }
 		
         let text = context.args.scanRestOfString()
 	
@@ -100,7 +105,8 @@ class Controller {
     }
     
     func reverseWords(context: Context) -> Bool {
-		guard started(in: context.chatId) else { return false }
+        guard let chatId = context.chatId else { return false }
+		guard started(in: chatId) else { return false }
 		
         let words = context.args.scanWords()
         switch words.isEmpty {
@@ -122,7 +128,7 @@ router["settings"] = controller.settings
 router["reverse", .slashRequired] = controller.reverseText
 router["word_reverse"] = controller.reverseWords
 // Default handler
-router.unknownCommand = controller.reverseText
+router.unmatched = controller.reverseText
 // If command has unprocessed arguments, report them:
 router.partialMatch = controller.partialMatchHandler
 
@@ -132,5 +138,5 @@ while let update = bot.nextUpdateSync() {
 	
 	try router.process(update: update)
 }
-fatalError("Server stopped due to error: \(bot.lastError)")
-
+print("Server stopped due to error: \(bot.lastError.unwrapOptional)")
+exit(1)
