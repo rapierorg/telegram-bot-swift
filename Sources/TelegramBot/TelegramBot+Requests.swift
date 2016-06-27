@@ -87,7 +87,7 @@ extension TelegramBot {
 				}
 			}
 			queue.async() {
-				completion?(result: resultArray, error: error)
+                completion?(result: error == nil ? resultArray : nil, error: error)
 			}
 		}
 	}
