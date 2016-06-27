@@ -4,7 +4,7 @@
 import Foundation
 import SwiftyJSON
 
-extension Int: JsonObject {
+extension Int: JsonConvertible {
 	public init(json: JSON) {
 		self = json.intValue
 	}

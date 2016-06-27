@@ -17,9 +17,10 @@ public class Router {
 		return true
 	}
 	
-	public lazy var unknownCommand: Handler? = { context in
+	public lazy var unmatched: Handler? = { context in
         guard context.privateChat else { return false }
-		context.respondAsync("Unrecognized command: \(context.args.scanWord()). Type /help for help.")
+        guard let command = context.args.scanWord() else { return false }
+		context.respondAsync("Unrecognized command: \(command). Type /help for help.")
 		return true
 	}
 
@@ -80,9 +81,9 @@ public class Router {
 		}
 
 		if !string.isEmpty {
-			if let unknownCommand = unknownCommand {
+			if let unmatched = unmatched {
                 let context = Context(bot: bot, update: update, scanner: scanner, command: "", startsWithSlash: false)
-				return try unknownCommand(context: context)
+				return try unmatched(context: context)
 			}
 		} else {
 			if let unsupportedContentType = unsupportedContentType {
@@ -96,58 +97,66 @@ public class Router {
 	
     func match(contentType: ContentType, update: Update, commandScanner: Scanner, userCommand: inout String, startsWithSlash: inout Bool) -> Bool {
 		
-		guard let message = update.message else { return false }
-		
-		switch contentType {
-		case .command(let command):
-			guard let result = command.fetchFrom(commandScanner, caseSensitive: caseSensitive) else {
-				return false // Does not match path command
-			}
-			userCommand = result.command
-            startsWithSlash = result.startsWithSlash
-			return true
-        case .commands(let commands):
-            let originalScanLocation = commandScanner.scanLocation
-            for command in commands {
+		if let message = update.message {
+            switch contentType {
+            case .command(let command):
                 guard let result = command.fetchFrom(commandScanner, caseSensitive: caseSensitive) else {
-                    commandScanner.scanLocation = originalScanLocation
-                    continue
+                    return false // Does not match path command
                 }
                 userCommand = result.command
                 startsWithSlash = result.startsWithSlash
                 return true
+            case .commands(let commands):
+                let originalScanLocation = commandScanner.scanLocation
+                for command in commands {
+                    guard let result = command.fetchFrom(commandScanner, caseSensitive: caseSensitive) else {
+                        commandScanner.scanLocation = originalScanLocation
+                        continue
+                    }
+                    userCommand = result.command
+                    startsWithSlash = result.startsWithSlash
+                    return true
+                }
+                return false
+            case .from: return message.from != nil
+            case .forward_from: return message.forward_from != nil
+            case .forward_from_chat: return message.forward_from_chat != nil
+            case .forward_date: return message.forward_date_unix != nil
+            case .reply_to_message: return message.reply_to_message != nil
+            case .edit_date: return message.edit_date_unix != nil
+            case .text: return message.text != nil
+            case .entities: return !message.entities.isEmpty
+            case .audio: return message.audio != nil
+            case .document: return message.document != nil
+            case .photo: return !message.photo.isEmpty
+            case .sticker: return message.sticker != nil
+            case .video: return message.video != nil
+            case .voice: return message.voice != nil
+            case .caption: return message.caption != nil
+            case .contact: return message.contact != nil
+            case .location: return message.location != nil
+            case .venue: return message.venue != nil
+            case .new_chat_member: return message.new_chat_member != nil
+            case .left_chat_member: return message.left_chat_member != nil
+            case .new_chat_title: return message.new_chat_title != nil
+            case .new_chat_photo: return !message.new_chat_photo.isEmpty
+            case .delete_chat_photo: return message.delete_chat_photo ?? false
+            case .group_chat_created: return message.group_chat_created ?? false
+            case .supergroup_chat_created: return message.supergroup_chat_created ?? false
+            case .channel_chat_created: return message.channel_chat_created ?? false
+            case .migrate_to_chat_id: return message.migrate_to_chat_id != nil
+            case .migrate_from_chat_id: return message.migrate_from_chat_id != nil
+            case .pinned_message: return message.pinned_message != nil
+            default: break
             }
-            return false
-		case .from: return message.from != nil
-		case .forward_from: return message.forward_from != nil
-		case .forward_from_chat: return message.forward_from_chat != nil
-		case .forward_date: return message.forward_date != nil
-		case .reply_to_message: return message.reply_to_message != nil
-		case .edit_date: return message.edit_date != nil
-		case .text: return message.text != nil
-		case .entities: return !message.entities.isEmpty
-		case .audio: return message.audio != nil
-		case .document: return message.document != nil
-		case .photo: return !message.photo.isEmpty
-		case .sticker: return message.sticker != nil
-		case .video: return message.video != nil
-		case .voice: return message.voice != nil
-		case .caption: return message.caption != nil
-		case .contact: return message.contact != nil
-		case .location: return message.location != nil
-		case .venue: return message.venue != nil
-		case .new_chat_member: return message.new_chat_member != nil
-		case .left_chat_member: return message.left_chat_member != nil
-		case .new_chat_title: return message.new_chat_title != nil
-		case .new_chat_photo: return !message.new_chat_photo.isEmpty
-		case .delete_chat_photo: return message.delete_chat_photo
-		case .group_chat_created: return message.group_chat_created
-		case .supergroup_chat_created: return message.supergroup_chat_created
-		case .channel_chat_created: return message.channel_chat_created
-		case .migrate_to_chat_id: return message.migrate_to_chat_id != nil
-		case .migrate_from_chat_id: return message.migrate_from_chat_id != nil
-		case .pinned_message: return message.pinned_message != nil
-		}
+        } else {
+            switch contentType {
+            case .callback_query(let data):
+                return update.callback_query?.data == data
+            default: break
+            }
+        }
+        return false
 	}
 	
 	// After processing the command, check that no unprocessed text is left

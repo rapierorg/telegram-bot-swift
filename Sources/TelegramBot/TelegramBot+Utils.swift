@@ -6,25 +6,25 @@ import Foundation
 extension TelegramBot {
 	public static var unhandledErrorText = "❗ Error while performing the operation."
 
-    public func reportErrorSync(chatId: Int64, text: String, errorDescription: String) {
+    @discardableResult
+    public func reportErrorSync(chatId: Int64, text: String, errorDescription: String) -> Message? {
 		print("ERROR: \(errorDescription)")
-		sendMessageSync(chat_id: chatId, text: text)
+		return sendMessageSync(chat_id: chatId, text: text)
     }
 	
-	public func reportErrorSync(chatId: Int64, errorDescription: String) {
+    @discardableResult
+	public func reportErrorSync(chatId: Int64, errorDescription: String) -> Message? {
 		print("ERROR: \(errorDescription)")
-		sendMessageSync(chat_id: chatId, text: TelegramBot.unhandledErrorText)
+		return sendMessageSync(chat_id: chatId, text: TelegramBot.unhandledErrorText)
 	}
 	
-	public func reportErrorAsync(chatId: Int64?, text: String, errorDescription: String, completion: SendMessageCompletion? = nil) {
+	public func reportErrorAsync(chatId: Int64, text: String, errorDescription: String, completion: SendMessageCompletion? = nil) {
 		print("ERROR: \(errorDescription)")
-		guard let chatId = chatId else { return }
 		sendMessageAsync(chat_id: chatId, text: text, completion: completion)
 	}
 	
-	public func reportErrorAsync(chatId: Int64?, errorDescription: String, completion: SendMessageCompletion? = nil) {
+	public func reportErrorAsync(chatId: Int64, errorDescription: String, completion: SendMessageCompletion? = nil) {
 		print("ERROR: \(errorDescription)")
-		guard let chatId = chatId else { return }
 		sendMessageAsync(chat_id: chatId, text: TelegramBot.unhandledErrorText, completion: completion)
 	}
 }

@@ -5,29 +5,32 @@ import Foundation
 
 public class Context {
 	typealias T = Context
-	
-	static private let emptyMessage = Message()
-	
+		
 	public let bot: TelegramBot
 	public let update: Update
 	/// `update.message` shortcut. Make sure that the message exists before using it,
 	/// otherwise it will be empty. For paths supported by Router the message is guaranteed to exist.
-	public var message: Message {
-        guard let message = update.message else {
-            print("WARNING: dereferencing an empty message")
-            return T.emptyMessage
-        }
-        return message
-	}
+	public var message: Message? {
+        return update.message ??
+            update.edited_message ??
+            update.callback_query?.message
+    }
 
     /// Command starts with slash (useful if you want to skip commands not starting with slash in group chats)
     public let slash: Bool
     public let command: String
     public let args: Arguments
 
-	public var privateChat: Bool { return message.chat.type == .private_chat }
-	public var chatId: Int64 { return message.chat.id }
-	public var fromId: Int64? { return message.from?.id }
+	public var privateChat: Bool {
+        guard let message = message else { return false }
+        return message.chat.type == .private_chat
+    }
+	public var chatId: Int64? { return message?.chat.id }
+	public var fromId: Int64? {
+        return update.message?.from?.id ??
+            (update.edited_message?.from?.id ??
+            update.callback_query?.from.id)
+    }
 	
     init(bot: TelegramBot, update: Update, scanner: Scanner, command: String, startsWithSlash: Bool) {
 		self.bot = bot
@@ -37,34 +40,54 @@ public class Context {
         self.args = Arguments(scanner: scanner)
 	}
 	
+    /// Sends a message to current chat.
+    /// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
 	public func respondAsync(_ text: String,
 	                         _ parameters: [String: Any?] = [:],
 	                         queue: DispatchQueue = DispatchQueue.main,
 	                         completion: TelegramBot.SendMessageCompletion? = nil) {
+        guard let chatId = chatId else {
+            assertionFailure("respondAsync() used when update.message is nil")
+            return
+        }
 		bot.sendMessageAsync(chat_id: chatId, text: text, parameters, queue: queue, completion: completion)
 	}
 	
+    /// Sends a message to current chat.
+    /// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
 	@discardableResult
 	public func respondSync(_ text: String,
 	                        parameters: [String: Any?] = [:]) -> Message? {
+        guard let chatId = chatId else {
+            assertionFailure("respondSync() used when update.message is nil")
+            bot.lastError = nil
+            return nil
+        }
 		return bot.sendMessageSync(chat_id: chatId, text: text, parameters)
 	}
 	
+    /// Respond privately also sending a message to a group.
+    /// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
 	@discardableResult
 	public func respondPrivatelySync(_ userText: String, groupText: String) -> (userMessage: Message?, groupMessage: Message?) {
 		var userMessage: Message?
 		if let fromId = fromId {
 			userMessage = bot.sendMessageSync(chat_id: fromId, text: userText)
 		}
-		let groupMessage: Message?
+		var groupMessage: Message? = nil
 		if !privateChat {
-			groupMessage = bot.sendMessageSync(chat_id: chatId, text: groupText)
-		} else {
-			groupMessage = nil
+            if let chatId = chatId {
+                groupMessage = bot.sendMessageSync(chat_id: chatId, text: groupText)
+            } else {
+                assertionFailure("respondPrivatelySync() used when update.message is nil")
+                bot.lastError = nil
+            }
 		}
 		return (userMessage, groupMessage)
 	}
 	
+    /// Respond privately also sending a message to a group.
+    /// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
 	public func respondPrivatelyAsync(_ userText: String, groupText: String,
 	                                  onDidSendToUser userCompletion: TelegramBot.SendMessageCompletion? = nil,
 	                                  onDidSendToGroup groupCompletion: TelegramBot.SendMessageCompletion? = nil) {
@@ -72,23 +95,47 @@ public class Context {
 			bot.sendMessageAsync(chat_id: fromId, text: userText, completion: userCompletion)
 		}
 		if !privateChat {
-			bot.sendMessageAsync(chat_id: chatId, text: groupText, completion: groupCompletion)
+            if let chatId = chatId {
+                bot.sendMessageAsync(chat_id: chatId, text: groupText, completion: groupCompletion)
+            } else {
+                assertionFailure("respondPrivatelyAsync() used when update.message is nil")
+            }
 		}
 	}
 	
-	public func reportErrorSync(text: String, errorDescription: String) {
-		bot.reportErrorSync(chatId: chatId, text: text, errorDescription: errorDescription)
+    @discardableResult
+	public func reportErrorSync(text: String, errorDescription: String) -> Message? {
+        guard let chatId = chatId else {
+            assertionFailure("reportErrorSync() used when update.message is nil")
+            bot.lastError = nil
+            return nil
+        }
+        return bot.reportErrorSync(chatId: chatId, text: text, errorDescription: errorDescription)
 	}
 
-	public func reportErrorSync(errorDescription: String) {
-		bot.reportErrorSync(chatId: chatId, errorDescription: errorDescription)
+    @discardableResult
+	public func reportErrorSync(errorDescription: String) -> Message? {
+        guard let chatId = chatId else {
+            assertionFailure("reportErrorSync() used when update.message is nil")
+            bot.lastError = nil
+            return nil
+        }
+		return bot.reportErrorSync(chatId: chatId, errorDescription: errorDescription)
 	}
 
 	public func reportErrorAsync(text: String, errorDescription: String, completion: TelegramBot.SendMessageCompletion? = nil) {
+        guard let chatId = chatId else {
+            assertionFailure("reportErrorAsync() used when update.message is nil")
+            return
+        }
 		bot.reportErrorAsync(chatId: chatId, text: text, errorDescription: errorDescription, completion: completion)
 	}
 	
 	public func reportErrorAsync(errorDescription: String, completion: TelegramBot.SendMessageCompletion? = nil) {
+        guard let chatId = chatId else {
+            assertionFailure("reportErrorAsync() used when update.message is nil")
+            return
+        }
 		bot.reportErrorAsync(chatId: chatId, errorDescription: errorDescription, completion: completion)
 	}
 }

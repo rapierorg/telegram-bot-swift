@@ -4,7 +4,7 @@
 import Foundation
 
 extension String {
-    @warn_unused_result public func trimmed(set: CharacterSet = CharacterSet.whitespacesAndNewlines) -> String {
+    public func trimmed(set: CharacterSet = CharacterSet.whitespacesAndNewlines) -> String {
         return trimmingCharacters(in: set)
     }
 }

@@ -15,7 +15,7 @@ extension SwiftyJSON.JSON {
 		print(debugDescription)
 	}
 	
-	init<T where T: JsonObject>(_ from: [T]) {
+	init<T where T: JsonConvertible>(_ from: [T]) {
 		var jsonArray = [JSON]()
 		jsonArray.reserveCapacity(from.count)
 		for item in from {
@@ -24,7 +24,7 @@ extension SwiftyJSON.JSON {
 		self = JSON(jsonArray)
 	}
 	
-	func arrayValue<T where T: JsonObject>() -> [T] {
+	func arrayValue<T where T: JsonConvertible>() -> [T] {
 		let jsonArray: [JSON] = arrayValue
 		var result = [T]()
 		result.reserveCapacity(jsonArray.count)

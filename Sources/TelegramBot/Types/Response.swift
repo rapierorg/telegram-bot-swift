@@ -5,7 +5,7 @@ import Foundation
 import SwiftyJSON
 
 /// Response to Bot API request.
-public struct Response: JsonObject {
+public struct Response: JsonConvertible {
 	/// Original JSON for fields not yet added to Swift structures
 	public var json: JSON
 	
