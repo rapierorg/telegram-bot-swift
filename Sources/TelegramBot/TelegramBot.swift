@@ -174,7 +174,7 @@ public class TelegramBot {
                 TelegramBot.autoReconnectCodes.contains(networkError.code):
             print("Network error: \(networkError.localizedDescription)")
             break
-        case let .invalidStatusCode(statusCode, _, _) where statusCode == 502:
+        case let .invalidStatusCode(statusCode, _, _): // where statusCode == 502:
             print("Error: \(error.debugDescription)")
             break
         default:
