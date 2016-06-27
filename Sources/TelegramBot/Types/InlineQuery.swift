@@ -20,7 +20,7 @@ public struct InlineQuery: JsonConvertible {
 
     /// Sender
     public var from: User {
-        get { return User(json: "from") }
+        get { return User(json: json["from"]) }
         set { json["from"] = newValue.json }
     }
 

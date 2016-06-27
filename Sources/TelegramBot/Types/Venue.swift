@@ -14,7 +14,7 @@ public struct Venue: JsonConvertible {
 
     /// Venue location
     public var location: Location {
-        get { return Location(json: "location") }
+        get { return Location(json: json["location"]) }
         set { json["location"] = newValue.json }
     }
 

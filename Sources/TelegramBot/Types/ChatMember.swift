@@ -14,7 +14,7 @@ public struct ChatMember: JsonConvertible {
 
     /// Information about the user
     public var user: User {
-        get { return User(json: "user") }
+        get { return User(json: json["user"]) }
         set { json["user"] = newValue.json }
     }
 

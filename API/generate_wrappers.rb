@@ -180,7 +180,7 @@ def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_opt
                   "    }\n"
       else
         out.write "    public var #{getter_name}: #{var_type} {\n"\
-                  "        get { return #{var_type}(json: \"#{var_name}\") }\n"\
+                  "        get { return #{var_type}(json: json[\"#{var_name}\"]) }\n"\
                   "        set { json[\"#{var_name}\"] = newValue.json }\n"\
                   "    }\n"
       end

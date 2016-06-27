@@ -20,7 +20,7 @@ public struct ChosenInlineResult: JsonConvertible {
 
     /// The user that chose the result
     public var from: User {
-        get { return User(json: "from") }
+        get { return User(json: json["from"]) }
         set { json["from"] = newValue.json }
     }
 

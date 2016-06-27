@@ -37,7 +37,7 @@ public struct Message: JsonConvertible {
 
     /// Conversation the message belongs to
     public var chat: Chat {
-        get { return Chat(json: "chat") }
+        get { return Chat(json: json["chat"]) }
         set { json["chat"] = newValue.json }
     }
 
