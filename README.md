@@ -53,6 +53,9 @@ while let update = bot.nextUpdateSync() {
 fatalError("Server stopped due to error: \(bot.lastError)")
 ```
 
+## Telegram chat
+
+Join our chat in Telegram: [swiftsdkchat](https://telegram.me/swiftsdkchat).
 
 ## What's new
 
