@@ -61,7 +61,7 @@ router["command", [.caseSensitive, .slashRequired]] = handler
 
 - New variable: `context.slash`. True, if command was prefixed with a slash.
 
-- `bot.unknownCommand` handler renamed to `bot.unmatched`
+- `router.unknownCommand` handler renamed to `router.unmatched`
 
 - Support `callback_query` in Router.
 
