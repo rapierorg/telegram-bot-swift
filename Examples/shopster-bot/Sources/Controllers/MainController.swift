@@ -67,7 +67,7 @@ class MainController {
     }
     
     func onDelete(context: Context) throws -> Bool {
-        deleteController.showConfirmationKeyboard(context: context, text: "Are you sure? /confirm_deletion or /cancel")
+        deleteController.showConfirmationKeyboard(context: context, text: "Delete purchased items? /confirm_deletion or /cancel")
         context.session.routerName = "delete"
         try context.session.save()
         return true
