@@ -124,7 +124,7 @@ Create `Sources/main.swift`:
 import Foundation
 import TelegramBot
 
-let token = readToken("HELLO_BOT_TOKEN")
+let token = readToken(from: "HELLO_BOT_TOKEN")
 let bot = TelegramBot(token: token)
 
 while let update = bot.nextUpdateSync() {
