@@ -384,12 +384,36 @@ Handler functions can be marked as `throws` and throw exceptions. Router won't p
  * `command` - command without slash.
  * `slash` - true, if command was prefixed with a slash. Useful if you want to skip commands not starting with slash in group chats.
  * `args` - command arguments scanner.
+ * `properties` - context sensitive properties. Pass them to `process` method:
+
+```swift
+var properties = [String: AnyObject]()
+properties["myField"] = myValue
+try router.process(update: update, properties: properties)
+```
+
+And use them in handlers:
+
+```swift
+func myHandler(context: Context) -> Bool {
+    let myValue = context.properties["myField"] as? MyValueType
+    // ...
+}
+```
+
+Or make a `Context` category for easier access to your properties, for example:
+
+```swift
+extension Context {
+    var session: Session { return properties["session"] as! Session }
+}
+```
  
 `Context` also contains a few helper methods and variables:
  
  * `privateChat` - true, if this is a private chat with bot, false for all group chat types.
- * `chatId` - shortcut for message?.chat.id
- * `fromId` - shortcut for message?.from?.id
+ * `chatId` - shortcut for message?.chat.id. If message is nil, tries to retrieve chatId from other `Update` fields.
+ * `fromId` - shortcut for message?.from?.id. If message is nil, tries to retrieve fromId from other `Update` fields.
  * `respondAsync`, `respondSync` - works as `sendMessage(chatId, ...)`
  * `respondPrivatelyAsync/Sync("text", groupText: "text")` - respond to user privately, sending a short message to the group if this was a group chat. For example:
  
@@ -431,7 +455,7 @@ Multiple options can be passed:
 router["command", [.slashRequired, .caseSensitive]] = handler
 ```
 
-In Telegram group chats, user can append bot name to command, for example: `/greet@hello_bot`. Router takes care of removing the `@hello_bot` part from command name automatically.
+In Telegram group chats, user can append bot name to a command, for example: `/greet@hello_bot`. Router takes care of removing the `@hello_bot` part from command name automatically.
 
 **Text commands with arguments**
 
@@ -452,7 +476,7 @@ router["words"] = { context in
 }
 ```
 
-Numbers can be captured using `scanInt` and `scanDouble`. `restOfString` captures the remainder as a single string.
+Numbers can be captured using `scanInt`, `scanInt64` and `scanDouble`. `restOfString` captures the remainder as a single string.
 
 ```swift
 router["command"] = { context in
@@ -473,7 +497,9 @@ bbb aaa
 Part of your input was ignored: ccc
 ```
 
-The warning can be overridden:
+A possible way to avoid the warning is to skip unneeded arguments by calling `context.args.skipRestOfString()`.
+
+Also, the warning can be overridden:
 
 ```swift
 router.partialMatch = { context in
@@ -497,6 +523,18 @@ router[.new_chat_member] = { context in
 
 Check `TelegramBot/Router/ContentType.swift` file for a complete list of events supported by Router.
 
+**Handling unmatched paths**
+
+If no paths were matched, router will call it's `unmatched` handler, which will print "Command not found" by default.
+This can be overridden by setting an explicit handler:
+
+```swift
+router.unmatched = { context in
+    // Do something else with context.args
+    return true
+}
+```
+
 ### Debugging notes
 
 In debugger you may want to dump the contents of a json structure, but `debugDescription` loses it's formatting.
@@ -512,13 +550,15 @@ bot.sendMessageSync(fromId, "Hello!")?.prettyPrint()
 
 ## Examples
 
-There are two example projects available:
+There are 3 example projects available:
 
 * `Examples/hello-bot` - a trivial bot which responds to `/greet` command and greets users who join the chat.
 
 * `Examples/word-reverse-bot` - demonstrates how to handle start and stop requests, keep session state and parse command arguments. Behaves differently in private and group chats. Uses a router and a controller.
 
-Details are available on Wiki: [Building and running the example projects](https://github.com/zmeyc/telegram-bot-swift/wiki)
+* `Examples/shopster-bot` - maintains a shopping list using sqlite3 database. Allows creating shared shopping lists in group chats. [GRDB library](https://github.com/groue/GRDB.swift) is used for working with database.
+
+Details on compiling and running the bots are available on Wiki: [Building and running the example projects](https://github.com/zmeyc/telegram-bot-swift/wiki).
 
 ## Documentation
 
@@ -528,12 +568,11 @@ Check `Examples/` for sample bot projects.
 
 This SDK is a work in progress, expect the API to change very often.
 
-
 ## Need help?
 
 Please [submit an issue](https://github.com/zmeyc/telegram-bot-swift/issues) on Github.
 
-If you miss a specific feature, please create an issue, this will speed up it's development. PR-s are also welcome.
+If you miss a specific feature, please create an issue and it will be prioritized. Pull Requests are also welcome.
 
 Talk with other developers in our Telegram chat: [swiftsdkchat](https://telegram.me/swiftsdkchat).
 
@@ -542,3 +581,4 @@ Happy coding!
 ## License
 
 MIT license. Please see LICENSE for more information.
+

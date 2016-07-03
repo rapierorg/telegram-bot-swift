@@ -2,13 +2,13 @@
 
 ## 0.10.0 (2016-07-03)
 
-- Added `Examples/shopster-bot`: a sample bot maintaining a shopping list using sqlite3 database. [GRDB library](https://github.com/groue/GRDB.swift) is used for working with database.
+- Added `Examples/shopster-bot`: a sample bot which maintains a shopping list using sqlite3 database. [GRDB library](https://github.com/groue/GRDB.swift) is used for working with database. This bot allows creating shared shopping lists in group chats.
 
 - Callback query data used in InlineButtons can now be parsed similarly to plaintext commands using arguments scanner. Simply call `context.args.scanWord()` to fetch a word from callback data and so on.
 
 - Router path `.callback_query` now accepts nil: `callback_query(data: nil)`. Pass nil to match any data, then parse it in handler using arguments scanner.
 
-- Router now supports context-sensitive user properties. Pass them to `parse` method:
+- Router now supports context-sensitive user properties. Pass them to `process` method:
 
 ```swift
 var properties = [String: AnyObject]()
