@@ -25,19 +25,23 @@ public class Context {
         guard let message = message else { return false }
         return message.chat.type == .private_chat
     }
-	public var chatId: Int64? { return message?.chat.id }
+	public var chatId: Int64? { return message?.chat.id ??
+        update.callback_query?.message?.chat.id
+    }
 	public var fromId: Int64? {
         return update.message?.from?.id ??
             (update.edited_message?.from?.id ??
             update.callback_query?.from.id)
     }
+    public var properties: [String: AnyObject]
 	
-    init(bot: TelegramBot, update: Update, scanner: Scanner, command: String, startsWithSlash: Bool) {
+    init(bot: TelegramBot, update: Update, scanner: Scanner, command: String, startsWithSlash: Bool, properties: [String: AnyObject] = [:]) {
 		self.bot = bot
 		self.update = update
         self.slash = startsWithSlash
         self.command = command
         self.args = Arguments(scanner: scanner)
+        self.properties = properties
 	}
     
     /// Sends a message to current chat.
