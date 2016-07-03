@@ -6,7 +6,7 @@ import Foundation
 /// Reads token from environment variable or from a file.
 ///
 /// - Returns: token.
-public func readToken(_ name: String) -> String {
+public func readToken(from name: String) -> String {
 	guard let token: String = readConfigurationValue(name) else {
 		print("\n" +
 			"-----\n" +
