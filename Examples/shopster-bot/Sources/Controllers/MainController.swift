@@ -53,13 +53,15 @@ class MainController {
     }
     
     func onAdd(context: Context) throws -> Bool {
-        let item = context.args.scanRestOfString()
-        if item.isEmpty {
+        guard let chatId = context.chatId else { return false }
+        let name = context.args.scanRestOfString()
+        if name.isEmpty {
             addController.showHelp(context: context)
             context.session.routerName = "add"
             try context.session.save()
         } else {
-            context.respondAsync("Added: \(item)")
+            try Item.add(name: name, chatId: chatId)
+            context.respondAsync("Added: \(name)")
         }
         return true
     }
