@@ -1,5 +1,42 @@
 # telegram-bot-swift changelog
 
+## 0.10.0 (2016-07-03)
+
+- Added `Examples/shopster-bot`: a sample bot maintaining a shopping list using sqlite3 database. [GRDB library](https://github.com/groue/GRDB.swift) is used for working with database.
+
+- Callback query data used in InlineButtons can now be parsed similarly to plaintext commands using arguments scanner. Simply call `context.args.scanWord()` to fetch a word from callback data and so on.
+
+- Router path `.callback_query` now accepts nil: `callback_query(data: nil)`. Pass nil to match any data, then parse it in handler using arguments scanner.
+
+- Router now supports context-sensitive user properties. Pass them to `parse` method:
+
+```swift
+var properties = [String: AnyObject]()
+properties["myField"] = myValue
+try router.process(update: update, properties: properties)
+```
+
+And use them in handlers:
+
+```swift
+func myHandler(context: Context) -> Bool {
+    let myValue = context.properties["myField"] as? MyValueType
+    // ...
+}
+```
+
+Or make a `Context` category for easier access to your properties, for example:
+
+```swift
+extension Context {
+    var session: Session { return properties["session"] as! Session }
+}
+```
+
+- Added `scanInt64()` to arguments scanner.
+
+- `readToken("filename or env var")` is now `readToken(from: "filename or env var")`
+
 ## 0.9.0 (2016-06-27)
 
 ### Major changes:
