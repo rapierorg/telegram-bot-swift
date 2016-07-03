@@ -35,5 +35,5 @@ public enum ContentType {
 	case migrate_to_chat_id
 	case migrate_from_chat_id
 	case pinned_message
-    case callback_query(data: String)
+    case callback_query(data: String?)
 }

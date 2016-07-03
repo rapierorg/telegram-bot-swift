@@ -26,7 +26,11 @@ public class Router {
 
 	public lazy var unsupportedContentType: Handler? = { context in
         guard context.privateChat else { return false }
-		context.respondAsync("Unsupported content type.")
+        if !context.args.isAtEnd {
+            context.respondAsync("Unsupported action.")
+        } else {
+            context.respondAsync("Unsupported content type.")
+        }
 		return true
 	}
     
@@ -39,6 +43,11 @@ public class Router {
 
 	public init(bot: TelegramBot) {
 		self.bot = bot
+    }
+    
+    public convenience init(bot: TelegramBot, setup: @noescape (router: Router)->()) {
+        self.init(bot: bot)
+        setup(router: self)
     }
 	
 	public func add(_ contentType: ContentType, _ handler: (Context) throws -> Bool) {
@@ -54,8 +63,8 @@ public class Router {
     }
     
 	@discardableResult
-    public func process(update: Update) throws -> Bool {
-		let string = update.message?.extractCommand(for: bot) ?? ""
+    public func process(update: Update, properties: [String: AnyObject] = [:]) throws -> Bool {
+		let string = update.message?.extractCommand(for: bot) ?? (update.callback_query?.data ?? "")
         let scanner = Scanner(string: string)
         scanner.caseSensitive = caseSensitive
         scanner.charactersToBeSkipped = charactersToBeSkipped
@@ -69,7 +78,7 @@ public class Router {
 				continue;
 			}
 			
-			let context = Context(bot: bot, update: update, scanner: scanner, command: command, startsWithSlash: startsWithSlash)
+            let context = Context(bot: bot, update: update, scanner: scanner, command: command, startsWithSlash: startsWithSlash, properties: properties)
 			let handler = path.handler
 
 			if try handler(context: context) {
@@ -80,14 +89,14 @@ public class Router {
 			scanner.scanLocation = originalScanLocation
 		}
 
-		if !string.isEmpty {
+		if update.message != nil && !string.isEmpty {
 			if let unmatched = unmatched {
-                let context = Context(bot: bot, update: update, scanner: scanner, command: "", startsWithSlash: false)
+                let context = Context(bot: bot, update: update, scanner: scanner, command: "", startsWithSlash: false, properties: properties)
 				return try unmatched(context: context)
 			}
 		} else {
 			if let unsupportedContentType = unsupportedContentType {
-				let context = Context(bot: bot, update: update, scanner: scanner, command: "", startsWithSlash: false)
+				let context = Context(bot: bot, update: update, scanner: scanner, command: "", startsWithSlash: false, properties: properties)
 				return try unsupportedContentType(context: context)
 			}
 		}
@@ -152,7 +161,10 @@ public class Router {
         } else {
             switch contentType {
             case .callback_query(let data):
-                return update.callback_query?.data == data
+                if let data = data {
+                    return update.callback_query?.data == data
+                }
+                return update.callback_query != nil
             default: break
             }
         }
