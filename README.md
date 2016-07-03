@@ -22,6 +22,13 @@
 
 # SDK for creating Telegram Bots in Swift.
 
+*Sample projects:*
+
+Shopping list bot.
+
+<img src="https://github.com/zmeyc/telegram-bot-swift/wiki/img/shopster_bot.jpg" width=300>
+
+Word reverse bot.
 
 <img src="https://github.com/zmeyc/telegram-bot-swift/wiki/img/word_reverse_bot.jpg" width=300>
 
