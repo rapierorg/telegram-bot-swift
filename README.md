@@ -1,5 +1,6 @@
 <p align="center">
     <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-3.0-orange.svg" alt="Swift" /></a>
+    <a href="https://telegram.me/swiftsdkchat"><img src="https://img.shields.io/badge/Chat-Telegram-blue.svg" alt="Chat" /></a>
     <a href="https://swift.org"><img src="https://img.shields.io/badge/Platforms-OS%20X-lightgrey.svg" alt="Platform" /></a>
     <a href="https://tldrlegal.com/license/mit-license"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License" /></a>
 </p>
