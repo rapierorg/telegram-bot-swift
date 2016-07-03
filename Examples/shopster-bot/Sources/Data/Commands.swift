@@ -16,5 +16,5 @@ struct Commands {
     static let list = ["🎁 List Items", "list"]
     static let support = ["✉️ Support", "support"]
     static let cancel = ["↩️ Cancel", "cancel"]
-    static let confirmDeletion = ["⛔️ Confirm Deletion", "confirm_delete"]
+    static let confirmDeletion = ["⛔️ Confirm Deletion", "confirm_deletion"]
 }
