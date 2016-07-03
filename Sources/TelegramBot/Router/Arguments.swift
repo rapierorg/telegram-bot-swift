@@ -42,6 +42,18 @@ public class Arguments {
 		return value
 	}
 	
+    public func scanInt64() -> Int64? {
+        guard let word = scanWord() else {
+            return nil
+        }
+        let validator = Scanner(string: word)
+        validator.charactersToBeSkipped = nil
+        guard let value = validator.scanInt64() where validator.isAtEnd else {
+            return nil
+        }
+        return value
+    }
+    
 	public func scanDouble() -> Double? {
 		guard let word = scanWord() else {
 			return nil
