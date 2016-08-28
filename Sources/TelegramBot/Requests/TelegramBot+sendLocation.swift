@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias SendLocationCompletion = (result: Message?, error: DataTaskError?) -> ()
+    typealias SendLocationCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
 
     /// Use this method to send point on the map. On success, the sent Message is returned.
     /// - Parameters:

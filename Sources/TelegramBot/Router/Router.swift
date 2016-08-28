@@ -4,7 +4,7 @@
 import Foundation
 
 public class Router {
-	public typealias Handler = (context: Context) throws -> Bool
+	public typealias Handler = (_ context: Context) throws -> Bool
 	public typealias Path = (contentType: ContentType, handler: Handler)
 	
     public var caseSensitive = false
@@ -45,20 +45,20 @@ public class Router {
 		self.bot = bot
     }
     
-    public convenience init(bot: TelegramBot, setup: @noescape (router: Router)->()) {
+    public convenience init(bot: TelegramBot, setup: (_ router: Router)->()) {
         self.init(bot: bot)
-        setup(router: self)
+        setup(self)
     }
 	
-	public func add(_ contentType: ContentType, _ handler: (Context) throws -> Bool) {
+	public func add(_ contentType: ContentType, _ handler: @escaping (Context) throws -> Bool) {
 		paths.append(Path(contentType, handler))
 	}
 	
-	public func add(_ command: Command, _ handler: (Context) throws -> Bool) {
+	public func add(_ command: Command, _ handler: @escaping (Context) throws -> Bool) {
 		paths.append(Path(.command(command), handler))
 	}
 
-    public func add(_ commands: [Command], _ handler: (Context) throws -> Bool) {
+    public func add(_ commands: [Command], _ handler: @escaping (Context) throws -> Bool) {
         paths.append(Path(.commands(commands), handler))
     }
     
@@ -81,7 +81,7 @@ public class Router {
             let context = Context(bot: bot, update: update, scanner: scanner, command: command, startsWithSlash: startsWithSlash, properties: properties)
 			let handler = path.handler
 
-			if try handler(context: context) {
+			if try handler(context) {
 				try checkPartialMatch(context: context)
                 return true
 			}
@@ -92,12 +92,12 @@ public class Router {
 		if update.message != nil && !string.isEmpty {
 			if let unmatched = unmatched {
                 let context = Context(bot: bot, update: update, scanner: scanner, command: "", startsWithSlash: false, properties: properties)
-				return try unmatched(context: context)
+				return try unmatched(context)
 			}
 		} else {
 			if let unsupportedContentType = unsupportedContentType {
 				let context = Context(bot: bot, update: update, scanner: scanner, command: "", startsWithSlash: false, properties: properties)
-				return try unsupportedContentType(context: context)
+				return try unsupportedContentType(context)
 			}
 		}
 		
@@ -179,7 +179,7 @@ public class Router {
 		if !context.args.isAtEnd {
 			// Partial match
 			if let handler = partialMatch {
-				return try handler(context: context)
+				return try handler(context)
 			}
 		}
 		

@@ -15,16 +15,21 @@ extension SwiftyJSON.JSON {
 		print(debugDescription)
 	}
 	
-	init<T where T: JsonConvertible>(_ from: [T]) {
+    // This doesn't work:
+    // https://bugs.swift.org/browse/SR-2504
+    // https://bugs.swift.org/browse/SR-2505
+    //init<T>(_ from: [T]) where T: JsonConvertible {
+    // Workaround:
+    static func initFrom<T>(_ from: [T]) -> JSON where T: JsonConvertible {
 		var jsonArray = [JSON]()
 		jsonArray.reserveCapacity(from.count)
 		for item in from {
 			jsonArray.append(item.json)
 		}
-		self = JSON(jsonArray)
+        return JSON(jsonArray)
 	}
 	
-	func arrayValue<T where T: JsonConvertible>() -> [T] {
+	func arrayValue<T>() -> [T] where T: JsonConvertible {
 		let jsonArray: [JSON] = arrayValue
 		var result = [T]()
 		result.reserveCapacity(jsonArray.count)

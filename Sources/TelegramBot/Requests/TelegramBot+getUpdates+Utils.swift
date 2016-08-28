@@ -31,7 +31,7 @@ extension TelegramBot {
         }
         
         let nextUpdateId = update.update_id + 1
-        if nextOffset == nil || nextUpdateId > nextOffset {
+        if nextOffset == nil || nextUpdateId > nextOffset! {
             nextOffset = nextUpdateId
         }
 		unprocessedUpdates.remove(at: 0)

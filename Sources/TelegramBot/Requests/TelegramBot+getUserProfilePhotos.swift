@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias GetUserProfilePhotosCompletion = (result: UserProfilePhotos?, error: DataTaskError?) -> ()
+    typealias GetUserProfilePhotosCompletion = (_ result: UserProfilePhotos?, _ error: DataTaskError?) -> ()
 
     /// Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
     /// - Parameters:

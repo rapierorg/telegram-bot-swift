@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias UnbanChatMemberCompletion = (result: Bool?, error: DataTaskError?) -> ()
+    typealias UnbanChatMemberCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
     /// Use this method to unban a previously kicked user in a supergroup. The user will not return to the group automatically, but will be able to join via link, etc. The bot must be an administrator in the group for this to work. Returns True on success.
     /// - Parameters:

@@ -8,7 +8,7 @@ import SwiftyJSON
 public enum DataTaskError {
     /// NSDataTask returned an error
     case genericError(
-        data: Data?, response: URLResponse?, error: NSError)
+        data: Data?, response: URLResponse?, error: Error)
     
     /// Response is not NSHTTPURLResponse
     case invalidResponseType(

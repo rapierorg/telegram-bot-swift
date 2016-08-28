@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias ForwardMessageCompletion = (result: Message?, error: DataTaskError?) -> ()
+    typealias ForwardMessageCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
 
     /// Use this method to forward messages of any kind. On success, the sent Message is returned.
     /// - Parameters:

@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias GetChatMemberCompletion = (result: ChatMember?, error: DataTaskError?) -> ()
+    typealias GetChatMemberCompletion = (_ result: ChatMember?, _ error: DataTaskError?) -> ()
 
     /// Use this method to get information about a member of a chat. Returns a ChatMember object on success.
     /// - Parameters:

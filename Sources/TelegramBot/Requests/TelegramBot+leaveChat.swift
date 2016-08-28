@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias LeaveChatCompletion = (result: Bool?, error: DataTaskError?) -> ()
+    typealias LeaveChatCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
     /// Use this method for your bot to leave a group, supergroup or channel. Returns True on success.
     /// - Parameters:

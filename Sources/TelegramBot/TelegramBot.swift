@@ -9,7 +9,7 @@ public class TelegramBot {
     /// - SeeAlso: `public var errorHandler: ErrorHandler?`
     public typealias ErrorHandler = (URLSessionDataTask, DataTaskError) -> ()
     
-    public typealias DataTaskCompletion = (json: JSON, error: DataTaskError?)->()
+    public typealias DataTaskCompletion = (_ json: JSON, _ error: DataTaskError?)->()
 
 	public typealias RequestParameters = [String: Any?]
 	
@@ -112,7 +112,7 @@ public class TelegramBot {
     /// Last error for use with synchronous requests.
     public var lastError: DataTaskError?
     
-    private let workQueue = DispatchQueue(label: "com.zabiyaka.TelegramBot", attributes: DispatchQueueAttributes.serial)
+    private let workQueue = DispatchQueue(label: "com.zabiyaka.TelegramBot")
     
     /// To handle network or parse errors,
     /// set a custom callback using this property.
@@ -133,7 +133,7 @@ public class TelegramBot {
     ///
     /// - Parameter retryCount: Number of reconnect retries associated with `request`.
     /// - Returns: Seconds to wait before next reconnect attempt. Return `0.0` for instant reconnect.
-    public var reconnectDelay: (retryCount: Int) -> Double = { retryCount in
+    public var reconnectDelay: (_ retryCount: Int) -> Double = { retryCount in
         switch retryCount {
         case 0: return 0.0
         case 1: return 1.0
@@ -163,13 +163,13 @@ public class TelegramBot {
         guard let actualSelf = self else { return }
 
         if !actualSelf.autoReconnect {
-            taskAssociatedData.completion?(json: nil, error: error)
+            taskAssociatedData.completion?(nil, error)
             return
         }
         
         // Report errors back to user except the ones we know how to handle
         switch error {
-        case let .genericError(_, _, networkError)
+        case let .genericError(_, _, networkError as NSError)
             where networkError.domain == NSURLErrorDomain &&
                 TelegramBot.autoReconnectCodes.contains(networkError.code):
             print("Network error: \(networkError.localizedDescription)")
@@ -178,13 +178,13 @@ public class TelegramBot {
             print("Error: \(error.debugDescription)")
             break
         default:
-            taskAssociatedData.completion?(json: nil, error: error)
+            taskAssociatedData.completion?(nil, error)
             return
         }
         
         // Known error, reconnect:
         let retryCount = taskAssociatedData.retryCount
-        let reconnectDelay = actualSelf.reconnectDelay(retryCount: retryCount)
+        let reconnectDelay = actualSelf.reconnectDelay(retryCount)
         taskAssociatedData.retryCount += 1
         
         // This closure will be called from dataTask queue,
@@ -198,9 +198,8 @@ public class TelegramBot {
             // Be aware that dispatch_after does NOT work correctly with serial queues.
             // The queue will perform async blocks BEFORE those inserted via dispatch_after.
             // So, use global queue for the pause, then execute the actual request on workQueue.
-            DispatchQueue.global(
-                    attributes: DispatchQueue.GlobalAttributes.qosDefault).after(
-                when: DispatchTime.now() + Double(Int64(reconnectDelay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
+            DispatchQueue.global().asyncAfter(
+                deadline: DispatchTime.now() + reconnectDelay) {
                 actualSelf.startDataTaskForRequest(originalRequest, associateTaskWithData: taskAssociatedData)
             }
         }
@@ -208,7 +207,7 @@ public class TelegramBot {
     
     /// Default handling of network and parse errors.
     public static let defaultSession: URLSession = {
-        let configuration = URLSessionConfiguration.ephemeral()
+        let configuration = URLSessionConfiguration.ephemeral
         return URLSession(configuration: configuration)
     }()
     
@@ -265,7 +264,7 @@ public class TelegramBot {
 	public func nextUpdateSync(onlyMine: Bool = true) -> Update? {
         while let update = nextUpdateSync() {
 			if onlyMine {
-	            if let message = update.message where !message.addressed(to: self) {
+	            if let message = update.message, !message.addressed(to: self) {
 					continue
 				}
 			}
@@ -277,13 +276,13 @@ public class TelegramBot {
     
     /// Initiates a request to the server. Used for implementing
     /// specific requests (getMe, getStatus etc).
-    public func startDataTaskForEndpoint(_ endpoint: String, completion: DataTaskCompletion) {
+    public func startDataTaskForEndpoint(_ endpoint: String, completion: @escaping DataTaskCompletion) {
         startDataTaskForEndpoint(endpoint, parameters: [:], completion: completion)
     }
     
     /// Initiates a request to the server. Used for implementing
     /// specific requests.
-    public func startDataTaskForEndpoint(_ endpoint: String, parameters: [String: Any?], completion: DataTaskCompletion) {
+    public func startDataTaskForEndpoint(_ endpoint: String, parameters: [String: Any?], completion: @escaping DataTaskCompletion) {
         let endpointUrl = urlForEndpoint(endpoint)
         let data = HTTPUtils.formUrlencode(parameters)
 		print("endpoint: \(endpoint), data: \(data)")
@@ -319,7 +318,7 @@ public class TelegramBot {
         }
     }
 		
-    private func urlSessionDataTaskCompletion(_ task: URLSessionDataTask, _ dataOrNil: Data?, _ responseOrNil: URLResponse?, _ errorOrNil: NSError?) {
+    private func urlSessionDataTaskCompletion(_ task: URLSessionDataTask, _ dataOrNil: Data?, _ responseOrNil: URLResponse?, _ errorOrNil: Error?) {
         
         if let error = errorOrNil {
             errorHandler?(task, .genericError(
@@ -378,7 +377,7 @@ public class TelegramBot {
                 print("Reconnected to Telegram server")
             }
 
-            taskAssociatedData.completion?(json: result, error: nil)
+            taskAssociatedData.completion?(result, nil)
         }
     }
 

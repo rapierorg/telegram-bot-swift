@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias SetWebhookCompletion = (result: Bool?, error: DataTaskError?) -> ()
+    typealias SetWebhookCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
     /// Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts.
     /// If you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. https://www.example.com/<token>. Since nobody else knows your bot‘s token, you can be pretty sure it’s us.

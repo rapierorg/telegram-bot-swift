@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias SendStickerCompletion = (result: Message?, error: DataTaskError?) -> ()
+    typealias SendStickerCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
 
     /// Use this method to send .webp stickers. On success, the sent Message is returned.
     /// - Parameters:

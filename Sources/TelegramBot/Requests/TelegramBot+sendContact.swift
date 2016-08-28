@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias SendContactCompletion = (result: Message?, error: DataTaskError?) -> ()
+    typealias SendContactCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
 
     /// Use this method to send phone contacts. On success, the sent Message is returned.
     /// - Parameters:

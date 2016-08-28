@@ -11,7 +11,7 @@ public class TaskAssociatedData {
     /// Current number of reconnect attempts
     public var retryCount: Int = 0
     
-    init(_ completion: TelegramBot.DataTaskCompletion?) {
+    init(_ completion: @escaping TelegramBot.DataTaskCompletion = { _, _ in }) {
         self.completion = completion
     }
 }

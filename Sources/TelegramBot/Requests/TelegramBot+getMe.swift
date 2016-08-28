@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias GetMeCompletion = (result: User?, error: DataTaskError?) -> ()
+    typealias GetMeCompletion = (_ result: User?, _ error: DataTaskError?) -> ()
 
     /// A simple method for testing your bot's auth token. Requires no parameters. Returns basic information about the bot in form of a User object.
     /// - Returns: User on success. Nil on error, in which case `TelegramBot.lastError` contains the details.

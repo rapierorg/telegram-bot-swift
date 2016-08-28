@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias GetUpdatesCompletion = (result: [Update]?, error: DataTaskError?) -> ()
+    typealias GetUpdatesCompletion = (_ result: [Update]?, _ error: DataTaskError?) -> ()
 
     /// Use this method to receive incoming updates using long polling (wiki). An Array of Update objects is returned.
     /// - Parameters:

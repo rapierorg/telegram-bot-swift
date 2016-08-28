@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias SendPhotoCompletion = (result: Message?, error: DataTaskError?) -> ()
+    typealias SendPhotoCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
 
     /// Use this method to send photos. On success, the sent Message is returned.
     /// - Parameters:

@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias SendVenueCompletion = (result: Message?, error: DataTaskError?) -> ()
+    typealias SendVenueCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
 
     /// Use this method to send information about a venue. On success, the sent Message is returned.
     /// - Parameters:

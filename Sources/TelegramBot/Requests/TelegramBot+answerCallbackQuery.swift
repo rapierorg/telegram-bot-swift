@@ -4,12 +4,12 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias AnswerCallbackQueryCompletion = (result: Bool?, error: DataTaskError?) -> ()
+    typealias AnswerCallbackQueryCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
     /// Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
     /// - Parameters:
     ///     - callback_query_id: Unique identifier for the query to be answered
-    ///     - text: Text of the notification. If not specified, nothing will be shown to the user
+    ///     - text: Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters
     ///     - show_alert: If true, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to false.
     /// - Returns: Bool on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
     /// - Note: Blocking version of the method.
@@ -30,7 +30,7 @@ public extension TelegramBot {
     /// Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
     /// - Parameters:
     ///     - callback_query_id: Unique identifier for the query to be answered
-    ///     - text: Text of the notification. If not specified, nothing will be shown to the user
+    ///     - text: Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters
     ///     - show_alert: If true, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to false.
     /// - Returns: Bool on success. Nil on error, in which case `error` contains the details.
     /// - Note: Asynchronous version of the method.

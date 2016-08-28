@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias GetChatMembersCountCompletion = (result: Int?, error: DataTaskError?) -> ()
+    typealias GetChatMembersCountCompletion = (_ result: Int?, _ error: DataTaskError?) -> ()
 
     /// Use this method to get the number of members in a chat. Returns Int on success.
     /// - Parameters:

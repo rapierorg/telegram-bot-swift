@@ -159,12 +159,12 @@ def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_opt
       if var_optional then
         out.write "    public var #{getter_name}: [#{var_type}] {\n"\
                   "        get { return json[\"#{var_name}\"].arrayValue() }\n"\
-                  "        set { json[\"#{var_name}\"] = newValue.isEmpty ? nil : JSON(newValue) }\n"\
+                  "        set { json[\"#{var_name}\"] = newValue.isEmpty ? nil : JSON.initFrom(newValue) }\n"\
                   "    }\n"
       else
         out.write "    public var #{getter_name}: [#{var_type}] {\n"\
                   "        get { return json[\"#{var_name}\"].arrayValue() }\n"\
-                  "        set { json[\"#{var_name}\"] = JSON(newValue) }\n"\
+                  "        set { json[\"#{var_name}\"] = JSON.initFrom(newValue) }\n"\
                   "    }\n"
       end
     else
@@ -351,7 +351,7 @@ def generate_method(f, node)
 
     result_type = deduce_result_type(description)
     result_type =  make_swift_type_name('', result_type)
-    out.write "    typealias #{completion_name} = (result: #{result_type}?, error: DataTaskError?) -> ()\n"\
+    out.write "    typealias #{completion_name} = (_ result: #{result_type}?, _ error: DataTaskError?) -> ()\n"\
       "\n"
 
     f.write "DESCRIPTION:\n#{description}\n"

@@ -95,7 +95,7 @@ public struct Message: JsonConvertible {
     /// Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
     public var entities: [MessageEntity] {
         get { return json["entities"].arrayValue() }
-        set { json["entities"] = newValue.isEmpty ? nil : JSON(newValue) }
+        set { json["entities"] = newValue.isEmpty ? nil : JSON.initFrom(newValue) }
     }
 
     /// Optional. Message is an audio file, information about the file
@@ -123,7 +123,7 @@ public struct Message: JsonConvertible {
     /// Optional. Message is a photo, available sizes of the photo
     public var photo: [PhotoSize] {
         get { return json["photo"].arrayValue() }
-        set { json["photo"] = newValue.isEmpty ? nil : JSON(newValue) }
+        set { json["photo"] = newValue.isEmpty ? nil : JSON.initFrom(newValue) }
     }
 
     /// Optional. Message is a sticker, information about the sticker
@@ -229,7 +229,7 @@ public struct Message: JsonConvertible {
     /// Optional. A chat photo was change to this value
     public var new_chat_photo: [PhotoSize] {
         get { return json["new_chat_photo"].arrayValue() }
-        set { json["new_chat_photo"] = newValue.isEmpty ? nil : JSON(newValue) }
+        set { json["new_chat_photo"] = newValue.isEmpty ? nil : JSON.initFrom(newValue) }
     }
 
     /// Optional. Service message: the chat photo was deleted

@@ -11,6 +11,6 @@ public extension RunLoop {
 	public func waitForSemaphore(_ sem: DispatchSemaphore) {
 		repeat {
 			runOnce()
-		} while .Success != sem.wait(timeout: DispatchTime.now())
+		} while .success != sem.wait(timeout: DispatchTime.now())
 	}
 }

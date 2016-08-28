@@ -6,7 +6,7 @@ import Foundation
 extension Router {
 	// add() taking string
 	
-	public func add(_ commandString: String, _ options: Command.Options = [], _ handler: (Context) throws -> Bool) {
+	public func add(_ commandString: String, _ options: Command.Options = [], _ handler: @escaping (Context) throws -> Bool) {
 		add(Command(commandString, options: options), handler)
 	}
 		

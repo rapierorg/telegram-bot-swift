@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias SendMessageCompletion = (result: Message?, error: DataTaskError?) -> ()
+    typealias SendMessageCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
 
     /// Use this method to send text messages. On success, the sent Message is returned.
     /// - Parameters:

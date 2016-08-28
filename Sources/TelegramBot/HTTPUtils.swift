@@ -21,7 +21,9 @@ public class HTTPUtils {
                 continue
             }
             
-            let keyString = String(key)
+            guard let keyString = String(key) else {
+                continue
+            }
             
             var valueString: String
             
@@ -32,7 +34,7 @@ public class HTTPUtils {
                 // If true, add "key=" to encoded string
                 valueString = "true"
             } else {
-                valueString = String(value)
+                valueString = String(describing: value)
             }
             
             if !result.isEmpty {

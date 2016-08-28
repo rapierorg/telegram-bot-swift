@@ -4,7 +4,7 @@
 import Foundation
 
 public extension TelegramBot {
-    typealias AnswerInlineQueryCompletion = (result: Bool?, error: DataTaskError?) -> ()
+    typealias AnswerInlineQueryCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
     /// Use this method to send answers to an inline query. On success, True is returned.
     /// No more than 50 results per query are allowed.

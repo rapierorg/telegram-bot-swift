@@ -25,7 +25,7 @@ public func readToken(from name: String) -> String {
 ///
 /// - Returns: `String`.
 public func readConfigurationValue(_ name: String) -> String? {
-	let environment = ProcessInfo.processInfo().environment
+	let environment = ProcessInfo.processInfo.environment
 	var value = environment[name]
 	if value == nil {
 		do {
