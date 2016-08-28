@@ -8,7 +8,7 @@
 import Foundation
 import TelegramBot
 
-let token = readToken("WORD_REVERSE_BOT_TOKEN")
+let token = readToken(from: "WORD_REVERSE_BOT_TOKEN")
 
 class Controller {
     let bot: TelegramBot
