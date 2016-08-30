@@ -72,7 +72,7 @@ Join our chat in Telegram: [swiftsdkchat](https://telegram.me/swiftsdkchat).
 
 OS X is required. Linux support is planned, but not ready yet.
 
-On OS X, install `Swift 3.0 DEVELOPMENT-SNAPSHOT-2016-06-20-a` by following instructions on Wiki: [Setting Up Dev Environment](https://github.com/zmeyc/telegram-bot-swift/wiki/Dev%20Environment).
+On OS X, install `Swift 3.0 DEVELOPMENT-SNAPSHOT-2016-08-26-a` by following instructions on Wiki: [Setting Up Dev Environment](https://github.com/zmeyc/telegram-bot-swift/wiki/Dev%20Environment).
 
 
 ## Getting started
