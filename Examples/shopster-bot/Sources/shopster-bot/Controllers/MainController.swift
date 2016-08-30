@@ -103,7 +103,7 @@ class MainController {
     }
 
     func onNewChatMember(context: Context) -> Bool {
-        guard let newChatMember = context.message?.new_chat_member where
+        guard let newChatMember = context.message?.new_chat_member,
             newChatMember.id == bot.user.id else { return false }
         
         context.respondAsync("Hi All. I'll maintain your shared shopping list. Type /start to start working with me.")

@@ -14,7 +14,7 @@ class Item: Record {
     var name: String
     var purchased: Bool
     
-    override class func databaseTableName() -> String {
+    override class var databaseTableName: String {
         return "items"
     }
     

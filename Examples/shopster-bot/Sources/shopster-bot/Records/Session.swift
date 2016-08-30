@@ -13,7 +13,7 @@ class Session: Record {
     var chatId: Int64
     var routerName: String
 
-    override class func databaseTableName() -> String {
+    override class var databaseTableName: String {
         return "sessions"
     }
     
