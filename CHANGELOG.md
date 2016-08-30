@@ -1,5 +1,9 @@
 # telegram-bot-swift changelog
 
+## 0.11.0 (2016-08-30)
+
+- Updated to 2016-08-26 Swift toolchain.
+
 ## 0.10.0 (2016-07-03)
 
 - Added `Examples/shopster-bot`: a sample bot which maintains a shopping list using sqlite3 database. [GRDB library](https://github.com/groue/GRDB.swift) is used for working with database. This bot allows creating shared shopping lists in group chats.
