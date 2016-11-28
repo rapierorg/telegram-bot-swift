@@ -289,14 +289,14 @@ public class TelegramBot {
         let data = HTTPUtils.formUrlencode(parameters)
 		print("endpoint: \(endpoint), data: \(data)")
         
-        let request = NSMutableURLRequest(url: endpointUrl)
+        var request = URLRequest(url: endpointUrl)
         request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         request.httpMethod = "POST"
 		request.httpBody = data.data(using: String.Encoding.utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
         let taskAssociatedData = TaskAssociatedData(completion)
-        startDataTaskForRequest(request as URLRequest, associateTaskWithData: taskAssociatedData)
+        startDataTaskForRequest(request, associateTaskWithData: taskAssociatedData)
     }
     
     /// Use this function for implementing retrying in
