@@ -4,6 +4,7 @@
 import Foundation
 import Dispatch
 import SwiftyJSON
+import Dispatch
 
 public extension TelegramBot {
 	public enum ChatAction: String {
