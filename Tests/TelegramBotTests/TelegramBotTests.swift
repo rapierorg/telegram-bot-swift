@@ -23,7 +23,7 @@ class TelegramBotTests: XCTestCase {
 		// * In Xcode, click on project scheme, Edit Scheme -> Run. Add to Environment Variables:
 		// TEST_BOT_TOKEN yourToken
 		
-		token = readToken("TEST_BOT_TOKEN")
+		token = readToken(from: "TEST_BOT_TOKEN")
     }
     
     override func tearDown() {
@@ -53,12 +53,12 @@ class TelegramBotTests: XCTestCase {
     func testGetMeAsync() {
         let bot = TelegramBot(token: token, fetchBotInfo: false)
         
-        let expectGetMe = expectation(withDescription: "getMe")
+        let expectGetMe = expectation(description: "getMe")
         bot.getMeAsync { user, error in
             print("getMeAsync: user: \(user), error: \(error)")
             expectGetMe.fulfill()
         }
-        waitForExpectations(withTimeout: connectionTimeout) { error in
+        waitForExpectations(timeout: connectionTimeout) { error in
             print("getMeAsync: \(error)")
         }
     }
@@ -73,12 +73,12 @@ class TelegramBotTests: XCTestCase {
     func testGetUpdatesAsync() {
         let bot = TelegramBot(token: token, fetchBotInfo: false)
         
-        let expectGetUpdates = expectation(withDescription: "getUpdates")
+        let expectGetUpdates = expectation(description: "getUpdates")
         bot.getUpdatesAsync { updates, error in
             print("getUpdatesAsync: updates: \(updates), error: \(error)")
             expectGetUpdates.fulfill()
         }
-        waitForExpectations(withTimeout: connectionTimeout) { error in
+        waitForExpectations(timeout: connectionTimeout) { error in
             print("getUpdatesAsync: \(error)")
         }
     }
@@ -94,7 +94,7 @@ class TelegramBotTests: XCTestCase {
         let bot = TelegramBot(token: token, fetchBotInfo: false)
         bot.url = invalidUrl
 
-        let expectGetMe = expectation(withDescription: "getMe")
+        let expectGetMe = expectation(description: "getMe")
 
         // Comment out custom errorHandler to see
         // autoreconnects in action (but the test
@@ -110,7 +110,7 @@ class TelegramBotTests: XCTestCase {
             XCTFail("Expected error handler to run")
         }
         
-        waitForExpectations(withTimeout: connectionTimeout) { error in
+        waitForExpectations(timeout: connectionTimeout) { error in
             print("getMeAsync: \(error)")
         }
         
