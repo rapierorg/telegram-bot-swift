@@ -6,112 +6,112 @@ import Foundation
 extension Scanner {
     func scanInt32() -> Int32? {
         var result: Int32 = 0
-        return scanInt32(&result) ? result : nil
+        return self.scanInt32(&result) ? result : nil
     }
     
 	@discardableResult
     func skipInt32() -> Bool {
-        return scanInt32(nil)
+        return self.scanInt32(nil)
     }
     
     func scanInt() -> Int? {
         var result: Int = 0
-        return scanInt(&result) ? result : nil
+        return self.scanInt(&result) ? result : nil
     }
     
 	@discardableResult
     func skipInt() -> Bool {
-        return scanInt(nil)
+        return self.scanInt(nil)
     }
     
     func scanInt64() -> Int64? {
         var result: Int64 = 0
-        return scanInt64(&result) ? result : nil
+        return self.scanInt64(&result) ? result : nil
     }
     
 	@discardableResult
     func skipInt64() -> Bool {
-        return scanInt64(nil)
+        return self.scanInt64(nil)
     }
     
     func scanUInt64() -> UInt64? {
         var result: UInt64 = 0
-        return scanUnsignedLongLong(&result) ? result : nil
+        return self.scanUnsignedLongLong(&result) ? result : nil
     }
     
 	@discardableResult
     func skipUInt64() -> Bool {
-        return scanUnsignedLongLong(nil)
+        return self.scanUnsignedLongLong(nil)
     }
     
     func scanFloat() -> Float? {
         var result: Float = 0.0
-        return scanFloat(&result) ? result : nil
+        return self.scanFloat(&result) ? result : nil
     }
     
 	@discardableResult
     func skipFloat() -> Bool {
-        return scanFloat(nil)
+        return self.scanFloat(nil)
     }
     
     func scanDouble() -> Double? {
         var result: Double = 0.0
-        return scanDouble(&result) ? result : nil
+        return self.scanDouble(&result) ? result : nil
     }
     
 	@discardableResult
     func skipDouble() -> Bool {
-        return scanDouble(nil)
+        return self.scanDouble(nil)
     }
     
     func scanHexUInt32() -> UInt32? {
         var result: UInt32 = 0
-        return scanHexInt32(&result) ? result : nil
+        return self.scanHexInt32(&result) ? result : nil
     }
     
 	@discardableResult
     func skipHexUInt32() -> Bool {
-        return scanHexInt32(nil)
+        return self.scanHexInt32(nil)
     }
     
     func scanHexUInt64() -> UInt64? {
         var result: UInt64 = 0
-        return scanHexInt64(&result) ? result : nil
+        return self.scanHexInt64(&result) ? result : nil
     }
     
 	@discardableResult
     func skipHexUInt64() -> Bool {
-        return scanHexInt64(nil)
+        return self.scanHexInt64(nil)
     }
     
     func scanHexFloat() -> Float? {
         var result: Float = 0.0
-        return scanHexFloat(&result) ? result : nil
+        return self.scanHexFloat(&result) ? result : nil
     }
     
 	@discardableResult
     func skipHexFloat() -> Bool {
-        return scanHexFloat(nil)
+        return self.scanHexFloat(nil)
     }
     
     func scanHexDouble() -> Double? {
         var result: Double = 0.0
-        return scanHexDouble(&result) ? result : nil
+        return self.scanHexDouble(&result) ? result : nil
     }
     
 	@discardableResult
     func skipHexDouble() -> Bool {
-        return scanHexDouble(nil)
+        return self.scanHexDouble(nil)
     }
     
 	@discardableResult
     func skipString(_ string: String) -> Bool {
-        return scanString(string, into: nil)
+        return self.scanString(string, into: nil)
     }
     
     func scanCharactersFromSet(_ set: CharacterSet) -> String? {
         var result: NSString? = nil
-		if scanCharacters(from: set, into: &result) {
+		if self.scanCharacters(from: set, into: &result) {
             return result as? String
         }
         return nil
@@ -119,12 +119,12 @@ extension Scanner {
 	
 	@discardableResult
     func skipCharactersFromSet(_ set: CharacterSet) -> Bool {
-		return scanCharacters(from: set, into: nil)
+		return self.scanCharacters(from: set, into: nil)
     }
     
     func scanUpToString(_ string: String) -> String? {
         var result: NSString? = nil
-		if scanUpTo(string, into: &result) {
+		if self.scanUpTo(string, into: &result) {
             return result as? String
         }
         return nil
@@ -132,12 +132,12 @@ extension Scanner {
 	
 	@discardableResult
     func skipUpToString(_ string: String) -> Bool {
-        return scanUpTo(string, into: nil)
+        return self.scanUpTo(string, into: nil)
     }
     
     func scanUpToCharactersFromSet(_ set: CharacterSet) -> String? {
         var result: NSString? = nil
-		if scanUpToCharacters(from: set, into: &result) {
+		if self.scanUpToCharacters(from: set, into: &result) {
             return result as? String
         }
         return nil
@@ -145,6 +145,6 @@ extension Scanner {
     
 	@discardableResult
     func skipUpToCharactersFromSet(_ set: CharacterSet) -> Bool {
-		return scanUpToCharacters(from: set, into: nil)
+		return self.scanUpToCharacters(from: set, into: nil)
     }
 }
