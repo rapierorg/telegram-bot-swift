@@ -3,8 +3,8 @@
 
 import Foundation
 import SwiftyJSON
+import Dispatch
 
-import Foundation
 
 public extension TelegramBot {
     /// Use this method to send text messages. On success, the sent Message is returned.
