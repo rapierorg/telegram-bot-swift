@@ -208,7 +208,11 @@ public class TelegramBot {
     
     /// Default handling of network and parse errors.
     public static let defaultSession: URLSession = {
+        #if os(Linux)
+        let configuration = URLSessionConfiguration.default
+        #else
         let configuration = URLSessionConfiguration.ephemeral
+        #endif
         return URLSession(configuration: configuration)
     }()
     
