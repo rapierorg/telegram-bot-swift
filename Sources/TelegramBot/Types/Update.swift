@@ -5,7 +5,7 @@ import Foundation
 import SwiftyJSON
 
 /// This object represents an incoming update.
-/// Only one of the optional parameters can be present in any given update.
+/// At most one of the optional parameters can be present in any given update.
 ///
 /// - SeeAlso: <https://core.telegram.org/bots/api#update>
 
@@ -38,6 +38,28 @@ public struct Update: JsonConvertible {
         }
         set {
             json["edited_message"] = newValue?.json ?? nil
+        }
+    }
+
+    /// Optional. New incoming channel post of any kind — text, photo, sticker, etc.
+    public var channel_post: Message? {
+        get {
+            let value = json["channel_post"]
+            return value.isNullOrUnknown ? nil : Message(json: value)
+        }
+        set {
+            json["channel_post"] = newValue?.json ?? nil
+        }
+    }
+
+    /// Optional. New version of a channel post that is known to the bot and was edited
+    public var edited_channel_post: Message? {
+        get {
+            let value = json["edited_channel_post"]
+            return value.isNullOrUnknown ? nil : Message(json: value)
+        }
+        set {
+            json["edited_channel_post"] = newValue?.json ?? nil
         }
     }
 

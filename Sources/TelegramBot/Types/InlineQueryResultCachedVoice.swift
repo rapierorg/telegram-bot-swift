@@ -36,7 +36,13 @@ public struct InlineQueryResultCachedVoice: JsonConvertible {
         set { json["title"].stringValue = newValue }
     }
 
-    /// Optional. An Inline keyboard attached to the message
+    /// Optional. Caption, 0-200 characters
+    public var caption: String? {
+        get { return json["caption"].string }
+        set { json["caption"].string = newValue }
+    }
+
+    /// Optional. Inline keyboard attached to the message
     public var reply_markup: InlineKeyboardMarkup? {
         get {
             let value = json["reply_markup"]

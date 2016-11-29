@@ -38,6 +38,27 @@ public struct InlineKeyboardButton: JsonConvertible {
         set { json["switch_inline_query"].string = newValue }
     }
 
+    /// Optional. If set, pressing the button will insert the bot‘s username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot’s username will be inserted.
+    /// 
+    /// This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting something from multiple options.
+    public var switch_inline_query_current_chat: String? {
+        get { return json["switch_inline_query_current_chat"].string }
+        set { json["switch_inline_query_current_chat"].string = newValue }
+    }
+
+    /// Optional. Description of the game that will be launched when the user presses the button.
+    /// 
+    /// NOTE: This type of button must always be the first button in the first row.
+    public var callback_game: CallbackGame? {
+        get {
+            let value = json["callback_game"]
+            return value.isNullOrUnknown ? nil : CallbackGame(json: value)
+        }
+        set {
+            json["callback_game"] = newValue?.json ?? nil
+        }
+    }
+
     public init(json: JSON = [:]) {
         self.json = json
     }

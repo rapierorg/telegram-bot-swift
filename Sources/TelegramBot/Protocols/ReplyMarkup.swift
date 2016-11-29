@@ -12,7 +12,7 @@ extension InlineKeyboardMarkup: ReplyMarkup {
 extension ReplyKeyboardMarkup: ReplyMarkup {
 }
 
-extension ReplyKeyboardHide: ReplyMarkup {
+extension ReplyKeyboardRemove: ReplyMarkup {
 }
 
 extension ForceReply: ReplyMarkup {
