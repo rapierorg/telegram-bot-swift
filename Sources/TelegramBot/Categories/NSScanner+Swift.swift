@@ -116,6 +116,7 @@ extension Scanner {
         return scanUpToString(string)
     }
     #elseif os(OSX)
+    @discardableResult
     public func scanUpTo(_ string: String) -> String? {
         var result: NSString?
         guard scanUpTo(string, into: &result) else { return nil }

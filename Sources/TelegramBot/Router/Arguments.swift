@@ -19,7 +19,7 @@ public class Arguments {
 	}
 	
 	public func scanWord() -> String? {
-		return scanner.scanUpToCharactersFromSet(T.whitespaceAndNewline)
+        return scanner.scanUpToCharacters(from: T.whitespaceAndNewline)
 	}
 	
 	public func scanWords() -> [String] {
@@ -36,7 +36,7 @@ public class Arguments {
 		}
 		let validator = Scanner(string: word)
 		validator.charactersToBeSkipped = nil
-		guard let value = validator.scanInt(), validator.isAtEnd else {
+		guard let value = validator.scanInteger(), validator.isAtEnd else {
 			return nil
 		}
 		return value
@@ -67,13 +67,13 @@ public class Arguments {
 	}
 	
 	public func scanRestOfString() -> String {
-		guard let restOfString = scanner.scanUpToString("") else {
+        guard let restOfString = scanner.scanUpTo("") else {
 			return ""
 		}
 		return restOfString
 	}
 	
 	public func skipRestOfString() {
-		scanner.skipUpToString("")
+		scanner.scanUpTo("")
 	}
 }

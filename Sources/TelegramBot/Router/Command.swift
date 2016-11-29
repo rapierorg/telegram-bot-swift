@@ -45,7 +45,7 @@ public class Command {
     public func fetchFrom(_ scanner: Scanner, caseSensitive: Bool = false) -> (command: String, startsWithSlash: Bool)? {
         if nameWords.isEmpty {
             // This is "match all" rule
-            guard let word = scanner.scanUpToCharactersFromSet(T.whitespaceAndNewline) else {
+            guard let word = scanner.scanUpToCharacters(from: T.whitespaceAndNewline) else {
                 return nil
             }
 
@@ -63,7 +63,7 @@ public class Command {
         
         // Each word in nameWords should match a word (possibly abbreviated) from scanner
         for nameWord in nameWords {
-            guard let word = scanner.scanUpToCharactersFromSet(T.whitespaceAndNewline) else {
+            guard let word = scanner.scanUpToCharacters(from: T.whitespaceAndNewline) else {
                 return nil
             }
             
