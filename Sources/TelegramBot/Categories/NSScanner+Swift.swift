@@ -112,6 +112,7 @@ extension Scanner {
     #endif
 
     #if os(Linux) || os(Windows)
+    @discardableResult
     public func scanUpTo(_ string: String) -> String? {
         return scanUpToString(string)
     }

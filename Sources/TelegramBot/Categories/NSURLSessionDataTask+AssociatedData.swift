@@ -3,19 +3,16 @@
 
 import Foundation
 
+private var taskAssociatedDataHolder = [URLSessionDataTask: TaskAssociatedData]()
+
 public extension URLSessionDataTask {
-    
-    private static var taskAssociatedDataKey = "taskAssociatedData"
-    
     /// Returns data associated with task if any.
     var associatedData: TaskAssociatedData? {
         get {
-            return objc_getAssociatedObject(self,
-                &URLSessionDataTask.taskAssociatedDataKey) as? TaskAssociatedData
+            return taskAssociatedDataHolder[self]
         }
         set {
-            objc_setAssociatedObject(self, &URLSessionDataTask.taskAssociatedDataKey,
-                newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            taskAssociatedDataHolder[self] = newValue
         }
     }
 }
