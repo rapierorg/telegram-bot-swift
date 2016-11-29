@@ -10,13 +10,14 @@ public extension TelegramBot {
     /// For sending voice messages, use the sendVoice method instead.
     /// - Parameters:
     ///     - chat_id: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    ///     - audio: Audio file to send. You can either pass a file_id as String to resend an audio that is already on the Telegram servers, or upload a new audio file using multipart/form-data.
+    ///     - audio: Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
+    ///     - caption: Audio caption, 0-200 characters
     ///     - duration: Duration of the audio in seconds
     ///     - performer: Performer
     ///     - title: Track name
     ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
-    ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+    ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
     /// - Returns: Message on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
     /// - Note: Blocking version of the method.
     ///
@@ -25,6 +26,7 @@ public extension TelegramBot {
     public func sendAudioSync(
             chat_id: ChatId,
             audio: FileInfo,
+            caption: String? = nil,
             duration: Int? = nil,
             performer: String? = nil,
             title: String? = nil,
@@ -35,6 +37,7 @@ public extension TelegramBot {
         return requestSync("sendAudio", defaultParameters["sendAudio"], parameters, [
             "chat_id": chat_id,
             "audio": audio,
+            "caption": caption,
             "duration": duration,
             "performer": performer,
             "title": title,
@@ -47,13 +50,14 @@ public extension TelegramBot {
     /// For sending voice messages, use the sendVoice method instead.
     /// - Parameters:
     ///     - chat_id: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    ///     - audio: Audio file to send. You can either pass a file_id as String to resend an audio that is already on the Telegram servers, or upload a new audio file using multipart/form-data.
+    ///     - audio: Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
+    ///     - caption: Audio caption, 0-200 characters
     ///     - duration: Duration of the audio in seconds
     ///     - performer: Performer
     ///     - title: Track name
     ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
-    ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+    ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
     /// - Returns: Message on success. Nil on error, in which case `error` contains the details.
     /// - Note: Asynchronous version of the method.
     ///
@@ -61,6 +65,7 @@ public extension TelegramBot {
     public func sendAudioAsync(
             chat_id: ChatId,
             audio: FileInfo,
+            caption: String? = nil,
             duration: Int? = nil,
             performer: String? = nil,
             title: String? = nil,
@@ -73,6 +78,7 @@ public extension TelegramBot {
         return requestAsync("sendAudio", defaultParameters["sendAudio"], parameters, [
             "chat_id": chat_id,
             "audio": audio,
+            "caption": caption,
             "duration": duration,
             "performer": performer,
             "title": title,

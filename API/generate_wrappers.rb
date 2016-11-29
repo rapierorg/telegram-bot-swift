@@ -7,7 +7,7 @@ Bundler.require(:default)
 require 'fileutils'
 
 HTML_FILE = 'api.html'
-API_DIR = 'out'
+API_DIR = '../Sources/TelegramBot'
 API_FILE = 'api.txt'
 
 TYPE_HEADER = <<EOT
@@ -214,7 +214,7 @@ def make_swift_type_name(var_name, var_type)
     end
   when 'InputFile or String'
     return 'FileInfo'
-  when 'InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardHide or ForceReply'
+  when 'InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply'
     return 'ReplyMarkup'
   end
   return var_type

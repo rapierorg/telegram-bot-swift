@@ -6,10 +6,10 @@ import Foundation
 public extension TelegramBot {
     typealias EditMessageTextCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
 
-    /// Use this method to edit text messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+    /// Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
     /// - Parameters:
     ///     - chat_id: Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    ///     - message_id: Required if inline_message_id is not specified. Unique identifier of the sent message
+    ///     - message_id: Required if inline_message_id is not specified. Identifier of the sent message
     ///     - inline_message_id: Required if chat_id and message_id are not specified. Identifier of the inline message
     ///     - text: New text of the message
     ///     - parse_mode: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
@@ -39,10 +39,10 @@ public extension TelegramBot {
             "reply_markup": reply_markup])
     }
 
-    /// Use this method to edit text messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+    /// Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
     /// - Parameters:
     ///     - chat_id: Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    ///     - message_id: Required if inline_message_id is not specified. Unique identifier of the sent message
+    ///     - message_id: Required if inline_message_id is not specified. Identifier of the sent message
     ///     - inline_message_id: Required if chat_id and message_id are not specified. Identifier of the inline message
     ///     - text: New text of the message
     ///     - parse_mode: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.

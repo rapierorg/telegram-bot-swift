@@ -16,7 +16,7 @@ public extension TelegramBot {
     ///     - foursquare_id: Foursquare identifier of the venue
     ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
-    ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+    ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
     /// - Returns: Message on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
     /// - Note: Blocking version of the method.
     ///
@@ -55,7 +55,7 @@ public extension TelegramBot {
     ///     - foursquare_id: Foursquare identifier of the venue
     ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
-    ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+    ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
     /// - Returns: Message on success. Nil on error, in which case `error` contains the details.
     /// - Note: Asynchronous version of the method.
     ///

@@ -24,7 +24,7 @@ public struct Chat: JsonConvertible {
         set { json["type"].stringValue = newValue }
     }
 
-    /// Optional. Title, for channels and group chats
+    /// Optional. Title, for supergroups, channels and group chats
     public var title: String? {
         get { return json["title"].string }
         set { json["title"].string = newValue }
@@ -46,6 +46,12 @@ public struct Chat: JsonConvertible {
     public var last_name: String? {
         get { return json["last_name"].string }
         set { json["last_name"].string = newValue }
+    }
+
+    /// Optional. True if a group has ‘All Members Are Admins’ enabled.
+    public var all_members_are_administrators: Bool? {
+        get { return json["all_members_are_administrators"].bool }
+        set { json["all_members_are_administrators"].bool = newValue }
     }
 
     public init(json: JSON = [:]) {

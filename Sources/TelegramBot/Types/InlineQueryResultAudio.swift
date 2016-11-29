@@ -36,6 +36,12 @@ public struct InlineQueryResultAudio: JsonConvertible {
         set { json["title"].stringValue = newValue }
     }
 
+    /// Optional. Caption, 0-200 characters
+    public var caption: String? {
+        get { return json["caption"].string }
+        set { json["caption"].string = newValue }
+    }
+
     /// Optional. Performer
     public var performer: String? {
         get { return json["performer"].string }

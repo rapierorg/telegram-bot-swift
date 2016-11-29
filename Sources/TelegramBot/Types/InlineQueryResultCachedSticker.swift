@@ -30,7 +30,7 @@ public struct InlineQueryResultCachedSticker: JsonConvertible {
         set { json["sticker_file_id"].stringValue = newValue }
     }
 
-    /// Optional. An Inline keyboard attached to the message
+    /// Optional. Inline keyboard attached to the message
     public var reply_markup: InlineKeyboardMarkup? {
         get {
             let value = json["reply_markup"]

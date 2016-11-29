@@ -9,14 +9,14 @@ public extension TelegramBot {
     /// Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
     /// - Parameters:
     ///     - chat_id: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    ///     - video: Video to send. You can either pass a file_id as String to resend a video that is already on the Telegram servers, or upload a new video file using multipart/form-data.
+    ///     - video: Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. More info on Sending Files »
     ///     - duration: Duration of sent video in seconds
     ///     - width: Video width
     ///     - height: Video height
     ///     - caption: Video caption (may also be used when resending videos by file_id), 0-200 characters
     ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
-    ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+    ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
     /// - Returns: Message on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
     /// - Note: Blocking version of the method.
     ///
@@ -48,14 +48,14 @@ public extension TelegramBot {
     /// Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
     /// - Parameters:
     ///     - chat_id: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    ///     - video: Video to send. You can either pass a file_id as String to resend a video that is already on the Telegram servers, or upload a new video file using multipart/form-data.
+    ///     - video: Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. More info on Sending Files »
     ///     - duration: Duration of sent video in seconds
     ///     - width: Video width
     ///     - height: Video height
     ///     - caption: Video caption (may also be used when resending videos by file_id), 0-200 characters
     ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
-    ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+    ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
     /// - Returns: Message on success. Nil on error, in which case `error` contains the details.
     /// - Note: Asynchronous version of the method.
     ///
