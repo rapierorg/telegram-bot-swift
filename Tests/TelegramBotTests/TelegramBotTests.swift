@@ -100,7 +100,7 @@ class TelegramBotTests: XCTestCase {
         // autoreconnects in action (but the test
         // will fail)
 #if true
-        bot.errorHandler = { task, error in
+        bot.errorHandler = { task, associatedData, error in
             print("getMe: errorHandler: task: \(task), error: \(error)")
             expectGetMe.fulfill()
         }

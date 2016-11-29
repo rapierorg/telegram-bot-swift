@@ -101,8 +101,8 @@ class RequestTests: XCTestCase {
 		check( bot.sendMessageSync(chat_id: chatId, text: "Here is a keyboard", ["reply_markup": markup]) )
 	}
 	
-	func testHideKeyboard() {
-		let markup = ReplyKeyboardHide()
+	func testRemoveKeyboard() {
+		let markup = ReplyKeyboardRemove()
 		check( bot.sendMessageSync(chat_id: chatId, text: "Hiding the keyboard", ["reply_markup": markup]) )
 	}
 	
