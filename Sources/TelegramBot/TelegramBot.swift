@@ -4,6 +4,7 @@
 import Foundation
 import Dispatch
 import SwiftyJSON
+import Dispatch
 
 public class TelegramBot {
     /// `errorHandler`'s completion block type
