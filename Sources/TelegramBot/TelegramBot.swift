@@ -8,7 +8,7 @@ import SwiftyJSON
 public class TelegramBot {
     /// `errorHandler`'s completion block type
     /// - SeeAlso: `public var errorHandler: ErrorHandler?`
-    public typealias ErrorHandler = (URLSessionDataTask, DataTaskError) -> ()
+    public typealias ErrorHandler = (URLSessionDataTask, TaskAssociatedData, DataTaskError) -> ()
     
     public typealias DataTaskCompletion = (_ json: JSON, _ error: DataTaskError?)->()
 
@@ -150,16 +150,12 @@ public class TelegramBot {
     /// Implements the default error handling logic. Consult
     /// `TelegramBot` class description for details.
     public lazy var defaultErrorHandler: ErrorHandler = {
-        [weak self] task, error in
+        [weak self] task, taskAssociatedData, error in
         
         guard let originalRequest = task.originalRequest else {
             fatalError("\(error)")
         }
  
-        guard let taskAssociatedData = task.associatedData else {
-            fatalError("\(error)")
-        }
-        
         // Strong capture the self if it's still not nil
         guard let actualSelf = self else { return }
 
@@ -196,8 +192,8 @@ public class TelegramBot {
             actualSelf.startDataTaskForRequest(originalRequest, associateTaskWithData: taskAssociatedData)
         } else {
             print("Reconnect attempt \(taskAssociatedData.retryCount), will retry after \(reconnectDelay) sec")
-            // Be aware that dispatch_after does NOT work correctly with serial queues.
-            // The queue will perform async blocks BEFORE those inserted via dispatch_after.
+            // Be aware that asyncAfter does NOT work correctly with serial queues.
+            // The queue will perform async blocks BEFORE those inserted via asyncAfter.
             // So, use global queue for the pause, then execute the actual request on workQueue.
             DispatchQueue.global().asyncAfter(
                 deadline: DispatchTime.now() + reconnectDelay) {
@@ -310,38 +306,35 @@ public class TelegramBot {
         self.workQueue.async {
             var task: URLSessionDataTask?
 			task = self.session.dataTask(with: request) { dataOrNil, responseOrNil, errorOrNil in
-				self.urlSessionDataTaskCompletion(task!, dataOrNil, responseOrNil, errorOrNil)
+				self.urlSessionDataTaskCompletion(task!, taskAssociatedData, dataOrNil, responseOrNil, errorOrNil)
             }
-            if let t = task {
-                t.associatedData = taskAssociatedData
-                t.resume()
-            }
+            task?.resume()
         }
     }
 		
-    private func urlSessionDataTaskCompletion(_ task: URLSessionDataTask, _ dataOrNil: Data?, _ responseOrNil: URLResponse?, _ errorOrNil: Error?) {
+    private func urlSessionDataTaskCompletion(_ task: URLSessionDataTask, _ taskAssociatedData: TaskAssociatedData, _ dataOrNil: Data?, _ responseOrNil: URLResponse?, _ errorOrNil: Error?) {
         
         if let error = errorOrNil {
-            errorHandler?(task, .genericError(
+            errorHandler?(task, taskAssociatedData, .genericError(
                 data: dataOrNil, response: responseOrNil, error: error))
             return
         }
         
         guard let response = responseOrNil as? HTTPURLResponse else {
-            errorHandler?(task, .invalidResponseType(
+            errorHandler?(task, taskAssociatedData, .invalidResponseType(
                 data: dataOrNil, response: responseOrNil))
             return
         }
         
         if response.statusCode != 200 {
-            errorHandler?(task, .invalidStatusCode(
+            errorHandler?(task, taskAssociatedData, .invalidStatusCode(
                 statusCode: response.statusCode,
                 data: dataOrNil, response: response))
             return
         }
         
         guard let data = dataOrNil else {
-            errorHandler?(task, .noDataReceived(
+            errorHandler?(task, taskAssociatedData, .noDataReceived(
                 response: response))
             return
         }
@@ -355,7 +348,7 @@ public class TelegramBot {
         }*/
         
         if !telegramResponse.ok {
-            errorHandler?(task, .serverError(
+            errorHandler?(task, taskAssociatedData, .serverError(
                 telegramResponse: telegramResponse, data: data, response: response))
             return
         }
@@ -370,16 +363,12 @@ public class TelegramBot {
         // task, call it. Completion handler is stored as
         // an associated property and not passed as a function
         // argument to support retrying.
-        if let taskAssociatedData = task.associatedData {
-            
-            // Success
-            if taskAssociatedData.retryCount != 0 {
-                taskAssociatedData.retryCount = 0
-                print("Reconnected to Telegram server")
-            }
-
-            taskAssociatedData.completion?(result, nil)
+        if taskAssociatedData.retryCount != 0 {
+            taskAssociatedData.retryCount = 0
+            print("Reconnected to Telegram server")
         }
+
+        taskAssociatedData.completion?(result, nil)
     }
 
     private func urlForEndpoint(_ endpoint: String) -> URL {
