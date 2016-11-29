@@ -43,7 +43,7 @@ extension String {
             return nil
         }
         
-        let t = self as NSString
+        let t = NSString(string: self)
 		return t.substring(to: usernameSeparatorIndex) +
 			t.substring(from: scanner.scanLocation)
     }
