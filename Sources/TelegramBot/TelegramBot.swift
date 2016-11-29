@@ -91,7 +91,7 @@ public class TelegramBot {
         NSURLErrorBackgroundSessionWasDisconnected,
     ]
     
-    /// Session. By default, configured with ephemeralSessionConfiguration().
+    /// Session. By default, configured with ephemeral session configuration on OS X or default session configuration on Linux.
     public var session: URLSession
 
     /// Offset for long polling.
@@ -204,7 +204,11 @@ public class TelegramBot {
     
     /// Default handling of network and parse errors.
     public static let defaultSession: URLSession = {
+        #if os(Linux)
+        let configuration = URLSessionConfiguration.default
+        #else
         let configuration = URLSessionConfiguration.ephemeral
+        #endif
         return URLSession(configuration: configuration)
     }()
     
