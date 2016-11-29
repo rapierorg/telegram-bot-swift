@@ -2,6 +2,7 @@
 // (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import Foundation
+import ScannerUtils
 
 extension String {
 	/// - Parameter botName: bot name to remove.
@@ -12,14 +13,14 @@ extension String {
         scanner.charactersToBeSkipped = nil
         
         let whitespaceAndNewline = CharacterSet.whitespacesAndNewlines
-        scanner.skipCharactersFromSet(whitespaceAndNewline)
+        scanner.skipCharacters(from: whitespaceAndNewline)
         
         guard scanner.skipString("/") else {
             return self
         }
         
         let alphanumericCharacters = CharacterSet.alphanumerics
-        guard scanner.skipCharactersFromSet(alphanumericCharacters) else {
+        guard scanner.skipCharacters(from: alphanumericCharacters) else {
             return self
         }
 
@@ -35,7 +36,7 @@ extension String {
             "abcdefghijklmnopqrstuvwxyz" +
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
             "1234567890_")
-        guard let username = scanner.scanCharactersFromSet(usernameCharacters) else {
+        guard let username = scanner.scanCharacters(from: usernameCharacters) else {
             // Empty bot name. Treat as no bot name and process the comamnd.
             return self
         }
