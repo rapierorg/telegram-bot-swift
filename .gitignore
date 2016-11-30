@@ -1,4 +1,6 @@
 .build/
+Packages/
+*_TOKEN
 telegram-bot-swift.xcodeproj
 test_bot_token.txt
 API/api.html

@@ -31,4 +31,10 @@ class BlockingServerTests: XCTestCase {
         print("Server stopped due to error: \(bot.lastError)")
     }
     
+    static var allTests : [(String, (BlockingServerTests) -> () throws -> Void)] {
+        return [
+            //("testExample", testExample),
+        ]
+    }
 }
+

@@ -133,4 +133,10 @@ class RequestTests: XCTestCase {
 	func check<T>(_ result: T?) where T: JsonConvertible {
 		XCTAssert(result?.prettyPrint() != nil)
 	}
+
+    static var allTests : [(String, (RequestTests) -> () throws -> Void)] {
+        return [
+            //("testExample", testExample),
+        ]
+    }
 }

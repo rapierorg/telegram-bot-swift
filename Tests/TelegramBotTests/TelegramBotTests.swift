@@ -115,4 +115,10 @@ class TelegramBotTests: XCTestCase {
         }
         
     }
+
+    static var allTests : [(String, (TelegramBotTests) -> () throws -> Void)] {
+        return [
+            //("testExample", testExample),
+        ]
+    }
 }
