@@ -292,7 +292,10 @@ public class TelegramBot {
         request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         request.httpMethod = "POST"
 		request.httpBody = data.data(using: String.Encoding.utf8)
+        // Temporarily workaround https://bugs.swift.org/browse/SR-2617
+        #if !os(Linux)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        #endif
         
         let taskAssociatedData = TaskAssociatedData(completion)
         startDataTaskForRequest(request, associateTaskWithData: taskAssociatedData)
