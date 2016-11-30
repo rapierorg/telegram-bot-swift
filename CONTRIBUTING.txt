@@ -1,0 +1,1 @@
+By submitting a pull request, you represent that you have the right to license your contribution to the project authors listed in AUTHORS.txt and the community, and agree by submitting the patch that your contributions are licensed under the project's license: LICENSE.txt
