@@ -128,5 +128,21 @@ class UrlencodeTests: XCTestCase {
         // key={"keyboard":[["A","B","C"],["D","E"]]}
         XCTAssert(encoded == "key=%7B%22keyboard%22%3A%5B%5B%22A%22%2C%22B%22%2C%22C%22%5D%2C%5B%22D%22%2C%22E%22%5D%5D%7D")
     }
+
+    static var allTests : [(String, (UrlencodeTests) -> () throws -> Void)] {
+        return [
+            ("testQueryUrlencode", testQueryUrlencode),
+            ("testFormUrlencodeSimple", testFormUrlencodeSimple),
+            ("testFormUrlencodePercentEscaping", testFormUrlencodePercentEscaping),
+            ("testFormUrlencodeMixed", testFormUrlencodeMixed),
+            ("testFormUrlencodeNilValue", testFormUrlencodeNilValue),
+            ("testFormUrlencodeOptionalString", testFormUrlencodeOptionalString),
+            ("testFormUrlencodeAny", testFormUrlencodeAny),
+            ("testFormUrlencodeOptionalAsAny", testFormUrlencodeOptionalAsAny),
+            ("testFormUrlencodeNilAsAny", testFormUrlencodeNilAsAny),
+            ("testFormUrlencodeTypes", testFormUrlencodeTypes),
+            ("testFormUrlencodeReplyMarkup", testFormUrlencodeReplyMarkup),
+        ]
+    }
 }
 

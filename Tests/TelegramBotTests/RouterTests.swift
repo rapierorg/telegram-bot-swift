@@ -196,4 +196,17 @@ class RouterTests: XCTestCase {
         
         return matched
     }
+
+    static var allTests : [(String, (RouterTests) -> () throws -> Void)] {
+        return [
+            ("testRouter", testRouter),
+            ("testCaseSensitivity", testCaseSensitivity),
+            ("testMultiPath", testMultiPath),
+            ("testMultiWordCommands", testMultiWordCommands),
+            ("testPartialMatch", testPartialMatch),
+            ("testUnknownCommand", testUnknownCommand),
+            ("testRouterChaining", testRouterChaining),
+            ("testRouterChaining2", testRouterChaining2),
+        ]
+    }
 }
