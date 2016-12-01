@@ -39,6 +39,7 @@ extension String {
     /// - Returns: Encoded string
     public func formUrlencode() -> String {
         #if os(Linux)
+        // https://bugs.swift.org/browse/SR-3216
         let encoded = _addingPercentEncoding(withAllowedCharacters: HTTPData.formUrlencodedAllowedCharacters)
         #else
         let encoded = addingPercentEncoding(withAllowedCharacters: HTTPData.formUrlencodedAllowedCharacters)
@@ -55,6 +56,7 @@ extension String {
     /// - SeeAlso: `func formUrlencode() -> String`
     public func urlQueryEncode() -> String {
         #if os(Linux)
+        // https://bugs.swift.org/browse/SR-3216
         return _addingPercentEncoding(withAllowedCharacters: HTTPData.urlQueryAllowedCharacters) ?? ""
         #else
 		return addingPercentEncoding(withAllowedCharacters: HTTPData.urlQueryAllowedCharacters) ?? ""
