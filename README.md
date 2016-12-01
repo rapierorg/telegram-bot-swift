@@ -1,8 +1,8 @@
 <p align="center">
     <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-3.0-orange.svg" alt="Swift" /></a>
     <a href="https://telegram.me/swiftsdkchat"><img src="https://img.shields.io/badge/Chat-Telegram-lightgrey.svg" alt="Chat" /></a>
-    <a href="https://swift.org"><img src="https://img.shields.io/badge/Platforms-OS%20X-lightgrey.svg" alt="Platform" /></a>
-    <a href="https://tldrlegal.com/license/mit-license"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License" /></a>
+    <a href="https://swift.org"><img src="https://img.shields.io/badge/OS-OS%20X%2C%20Linux-lightgrey.svg" alt="Platform" /></a>
+    <a href="https://tldrlegal.com/license/mit-license"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License" /></a>
 </p>
 
 <p align="center">
@@ -580,5 +580,5 @@ Happy coding!
 
 ## License
 
-MIT license. Please see LICENSE for more information.
+Apache License Version 2.0 with Runtime Library Exception. Please see LICENSE.txt for more information.
 
