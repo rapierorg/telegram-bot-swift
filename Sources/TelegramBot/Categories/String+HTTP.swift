@@ -5,15 +5,26 @@ import Foundation
 
 extension String {
     struct HTTPData {
+        // "0123456789ABCDEF"
+        static let hexDigits: [CChar] = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 65, 66, 67, 68, 69, 70]
+        
         static let formUrlencodedAllowedCharacters: CharacterSet = {
-            var cs = CharacterSet.alphanumerics
-            cs.insert(charactersIn: "-._* ")
+            var cs = CharacterSet()
+            cs.insert(charactersIn:
+                "0123456789" +
+                "abcdefghijklmnopqrstuvwxyz" +
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                "-._* ")
             return cs
         }()
         
         static let urlQueryAllowedCharacters: CharacterSet = {
-            var cs = CharacterSet.alphanumerics
-			cs.insert(charactersIn: "-._~")
+            var cs = CharacterSet()
+			cs.insert(charactersIn:
+                "0123456789" +
+                "abcdefghijklmnopqrstuvwxyz" +
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                "-._~")
             return cs
         }()
     }
@@ -26,8 +37,13 @@ extension String {
     ///
     /// - SeeAlso: `func urlQueryEncode() -> String`
     /// - Returns: Encoded string
-    func formUrlencode() -> String {
-        return addingPercentEncoding(withAllowedCharacters: HTTPData.formUrlencodedAllowedCharacters)?.replacingOccurrences(of: " ", with: "+") ?? ""
+    public func formUrlencode() -> String {
+        #if os(Linux)
+        let encoded = _addingPercentEncoding(withAllowedCharacters: HTTPData.formUrlencodedAllowedCharacters)
+        #else
+        let encoded = addingPercentEncoding(withAllowedCharacters: HTTPData.formUrlencodedAllowedCharacters)
+        #endif
+        return encoded?.replacingOccurrences(of: " ", with: "+") ?? ""
     }
     
     /// Percent-encodes everything except alphanumerics
@@ -37,7 +53,29 @@ extension String {
     ///
     /// - Returns: Encoded string
     /// - SeeAlso: `func formUrlencode() -> String`
-    func urlQueryEncode() -> String {
+    public func urlQueryEncode() -> String {
+        #if os(Linux)
+        return _addingPercentEncoding(withAllowedCharacters: HTTPData.urlQueryAllowedCharacters) ?? ""
+        #else
 		return addingPercentEncoding(withAllowedCharacters: HTTPData.urlQueryAllowedCharacters) ?? ""
+        #endif
+    }
+    
+    private func _addingPercentEncoding(withAllowedCharacters allowedCharacters: CharacterSet) -> String? {
+        // Workaround broken addingPercentEncoding()
+        var result: [CChar] = []
+        for byte in utf8 {
+            let scalar = UnicodeScalar(byte)
+            if allowedCharacters.contains(scalar) {
+                result.append(CChar(bitPattern: byte))
+            } else {
+                result.append(37) // "%"
+                result.append(HTTPData.hexDigits[Int((byte & 0xf0) >> 4)])
+                result.append(HTTPData.hexDigits[Int(byte & 0x0f)])
+            }
+        }
+        result.append(0)
+        let encoded = String(cString: result, encoding: .utf8)
+        return encoded
     }
 }
