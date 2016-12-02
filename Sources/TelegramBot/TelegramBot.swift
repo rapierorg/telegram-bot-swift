@@ -122,6 +122,9 @@ public class TelegramBot {
     /// `defaultErrorHandler` is used by default.
     public var errorHandler: ErrorHandler?
     
+    /// Logging function. Defaults to `print`.
+    public let logger: (_ text: String) -> () = { print($0) }
+    
     /// Defines reconnect delay in seconds depending on `retryCount`. Can be overridden.
     ///
     /// Used by default `errorHandler` implementation.
@@ -169,10 +172,10 @@ public class TelegramBot {
         case let .genericError(_, _, networkError as NSError)
             where networkError.domain == NSURLErrorDomain &&
                 TelegramBot.autoReconnectCodes.contains(networkError.code):
-            print("Network error: \(networkError.localizedDescription)")
+            actualSelf.logger("Network error: \(networkError.localizedDescription)")
             break
         case let .invalidStatusCode(statusCode, _, _) where statusCode != 401: // == 502
-            print("Error: \(error.debugDescription)")
+            actualSelf.logger("Error: \(error.debugDescription)")
             break
         default:
             taskAssociatedData.completion?(nil, error)
@@ -188,10 +191,10 @@ public class TelegramBot {
         // but startDataTaskForRequest will start the new
         // dataTask from workQueue.
         if reconnectDelay == 0.0 {
-            print("Reconnect attempt \(taskAssociatedData.retryCount), will retry at once")
+            actualSelf.logger("Reconnect attempt \(taskAssociatedData.retryCount), will retry at once")
             actualSelf.startDataTaskForRequest(originalRequest, associateTaskWithData: taskAssociatedData)
         } else {
-            print("Reconnect attempt \(taskAssociatedData.retryCount), will retry after \(reconnectDelay) sec")
+            actualSelf.logger("Reconnect attempt \(taskAssociatedData.retryCount), will retry after \(reconnectDelay) sec")
             // Be aware that asyncAfter does NOT work correctly with serial queues.
             // The queue will perform async blocks BEFORE those inserted via asyncAfter.
             // So, use global queue for the pause, then execute the actual request on workQueue.
@@ -286,7 +289,7 @@ public class TelegramBot {
     public func startDataTaskForEndpoint(_ endpoint: String, parameters: [String: Any?], completion: @escaping DataTaskCompletion) {
         let endpointUrl = urlForEndpoint(endpoint)
         let data = HTTPUtils.formUrlencode(parameters)
-		print("endpoint: \(endpoint), data: \(data)")
+		logger("endpoint: \(endpoint), data: \(data)")
         
         var request = URLRequest(url: endpointUrl)
         request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
@@ -372,7 +375,7 @@ public class TelegramBot {
         // argument to support retrying.
         if taskAssociatedData.retryCount != 0 {
             taskAssociatedData.retryCount = 0
-            print("Reconnected to Telegram server")
+            logger("Reconnected to Telegram server")
         }
 
         taskAssociatedData.completion?(result, nil)
