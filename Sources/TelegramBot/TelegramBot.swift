@@ -123,7 +123,7 @@ public class TelegramBot {
     public var errorHandler: ErrorHandler?
     
     /// Logging function. Defaults to `print`.
-    public let logger: (_ text: String) -> () = { print($0) }
+    public var logger: (_ text: String) -> () = { print($0) }
     
     /// Defines reconnect delay in seconds depending on `retryCount`. Can be overridden.
     ///
