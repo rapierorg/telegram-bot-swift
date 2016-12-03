@@ -8,7 +8,7 @@
 <p align="center">
     <a href="#telegram-chat">Chat</a>
   • <a href="#whats-new">Changelog</a>    
-  • <a href="#installation">Installation</a>
+  • <a href="#prerequisites">Prerequisites</a>
   • <a href="#getting-started">Getting started</a>
   • <a href="#creating-a-new-bot">Creating a new bot</a>
   • <a href="#generating-xcode-project">Generating Xcode project</a>
@@ -68,12 +68,11 @@ Join our chat in Telegram: [swiftsdkchat](https://telegram.me/swiftsdkchat).
 
 [Release notes](https://github.com/zmeyc/telegram-bot-swift/blob/master/CHANGELOG.md) contain the significant changes in each release with migration notes.
 
-## Installation
+## Prerequisites
 
-OS X is required. Linux support is planned, but not ready yet.
+On OS X, use the latest Xcode 8 release.
 
-On OS X, install `Swift 3.0 DEVELOPMENT-SNAPSHOT-2016-06-20-a` by following instructions on Wiki: [Setting Up Dev Environment](https://github.com/zmeyc/telegram-bot-swift/wiki/Dev%20Environment).
-
+On Linux, install `Swift 3.0.2 Preview 1` or newer. Note that `shopster-bot` example won't build on Linux because GRDB doesn't support Linux yet, but otherwise the library should be functional.
 
 ## Getting started
 

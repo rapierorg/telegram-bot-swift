@@ -1,5 +1,5 @@
 //
-// ReplyKeyboardMarkup+Utils.swift
+// JSON+JsonConvertible.swift
 //
 // This source file is part of the Telegram Bot SDK for Swift (unofficial).
 //
@@ -13,14 +13,17 @@
 import Foundation
 import SwiftyJSON
 
-extension ReplyKeyboardMarkup {
-    /// Array of button rows, each represented by an Array of Strings
-    public var keyboard_strings: [[String]] {
-        get {
-            return json["keyboard"].twoDArrayValue()
-        }
-        set {
-            json["keyboard"] = JSON(newValue)
-        }
-    }
+extension JSON: JsonConvertible {
+	public init(json: JSON) {
+		self = json
+	}
+	
+	public var json: JSON {
+		get {
+			return self
+		}
+		set {
+			self = newValue
+		}
+	}
 }

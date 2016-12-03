@@ -1,10 +1,13 @@
 //
 // TelegramBot.h
 //
-// Copyright (c) 2015 Andrey Fidrya
+// This source file is part of the Telegram Bot SDK for Swift (unofficial).
 //
-// Licensed under the MIT license. For full copyright and license information,
-// please see the LICENSE file.
+// Copyright (c) 2015 - 2016 Andrey Fidrya and the project authors
+// Licensed under Apache License v2.0 with Runtime Library Exception
+//
+// See LICENSE.txt for license information
+// See AUTHORS.txt for the list of the project authors
 //
 
 #import <Cocoa/Cocoa.h>
