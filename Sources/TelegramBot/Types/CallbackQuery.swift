@@ -4,7 +4,7 @@
 import Foundation
 import SwiftyJSON
 
-/// This object represents an incoming callback query from a callback button in an inline keyboard. If the button that originated the query was attached to a message sent by the bot, the field message will be presented. If the button was attached to a message sent via the bot (in inline mode), the field inline_message_id will be presented.
+/// This object represents an incoming callback query from a callback button in an inline keyboard. If the button that originated the query was attached to a message sent by the bot, the field message will be present. If the button was attached to a message sent via the bot (in inline mode), the field inline_message_id will be present. Exactly one of the fields data or game_short_name will be present.
 ///
 /// - SeeAlso: <https://core.telegram.org/bots/api#callbackquery>
 
@@ -35,16 +35,28 @@ public struct CallbackQuery: JsonConvertible {
         }
     }
 
-    /// Optional. Identifier of the message sent via the bot in inline mode, that originated the query
+    /// Optional. Identifier of the message sent via the bot in inline mode, that originated the query.
     public var inline_message_id: String? {
         get { return json["inline_message_id"].string }
         set { json["inline_message_id"].string = newValue }
     }
 
-    /// Data associated with the callback button. Be aware that a bad client can send arbitrary data in this field
-    public var data: String {
-        get { return json["data"].stringValue }
-        set { json["data"].stringValue = newValue }
+    /// Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in games.
+    public var chat_instance: String {
+        get { return json["chat_instance"].stringValue }
+        set { json["chat_instance"].stringValue = newValue }
+    }
+
+    /// Optional. Data associated with the callback button. Be aware that a bad client can send arbitrary data in this field.
+    public var data: String? {
+        get { return json["data"].string }
+        set { json["data"].string = newValue }
+    }
+
+    /// Optional. Short name of a Game to be returned, serves as the unique identifier for the game
+    public var game_short_name: String? {
+        get { return json["game_short_name"].string }
+        set { json["game_short_name"].string = newValue }
     }
 
     public init(json: JSON = [:]) {

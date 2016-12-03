@@ -1,0 +1,7 @@
+---------------
+Project authors
+---------------
+
+- Andrey Fidrya <af@zabiyaka.com>
+- Andrea de Marco <24erre@gmail.com>
+

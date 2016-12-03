@@ -16,7 +16,7 @@ class RouterTests: XCTestCase {
 
         update.message = Message()
 
-        token = readToken("TEST_BOT_TOKEN")
+        token = readToken(from: "TEST_BOT_TOKEN")
         bot = TelegramBot(token: token, fetchBotInfo: false)
         
     }
@@ -195,5 +195,18 @@ class RouterTests: XCTestCase {
         catch { XCTFail() }
         
         return matched
+    }
+
+    static var allTests : [(String, (RouterTests) -> () throws -> Void)] {
+        return [
+            ("testRouter", testRouter),
+            ("testCaseSensitivity", testCaseSensitivity),
+            ("testMultiPath", testMultiPath),
+            ("testMultiWordCommands", testMultiWordCommands),
+            ("testPartialMatch", testPartialMatch),
+            ("testUnknownCommand", testUnknownCommand),
+            ("testRouterChaining", testRouterChaining),
+            ("testRouterChaining2", testRouterChaining2),
+        ]
     }
 }

@@ -36,6 +36,12 @@ public struct InlineQueryResultVoice: JsonConvertible {
         set { json["title"].stringValue = newValue }
     }
 
+    /// Optional. Caption, 0-200 characters
+    public var caption: String? {
+        get { return json["caption"].string }
+        set { json["caption"].string = newValue }
+    }
+
     /// Optional. Recording duration in seconds
     public var voice_duration: Int? {
         get { return json["voice_duration"].int }

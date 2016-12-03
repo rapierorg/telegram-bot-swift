@@ -48,7 +48,7 @@ public struct InlineQueryResultCachedVideo: JsonConvertible {
         set { json["caption"].string = newValue }
     }
 
-    /// Optional. An Inline keyboard attached to the message
+    /// Optional. Inline keyboard attached to the message
     public var reply_markup: InlineKeyboardMarkup? {
         get {
             let value = json["reply_markup"]

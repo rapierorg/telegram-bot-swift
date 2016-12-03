@@ -25,7 +25,7 @@ class RequestTests: XCTestCase {
 		// * In Xcode, click on project scheme, Edit Scheme -> Run. Add to Environment Variables:
 		// TEST_BOT_TOKEN yourToken
 		
-		token = readToken("TEST_BOT_TOKEN")
+		token = readToken(from: "TEST_BOT_TOKEN")
 		chatId = readConfigurationValue("TEST_CHAT_ID")
 		messageId = readConfigurationValue("TEST_MESSAGE_ID")
 		bot = TelegramBot(token: token, fetchBotInfo: false)
@@ -102,8 +102,8 @@ class RequestTests: XCTestCase {
 	}
 	
 	func testHideKeyboard() {
-		let markup = ReplyKeyboardHide()
-		check( bot.sendMessageSync(chat_id: chatId, text: "Hiding the keyboard", ["reply_markup": markup]) )
+		let markup = ReplyKeyboardRemove()
+		check( bot.sendMessageSync(chat_id: chatId, text: "Removing the keyboard", ["reply_markup": markup]) )
 	}
 	
 	func testForceReply() {
@@ -130,7 +130,13 @@ class RequestTests: XCTestCase {
 	
 	// Helper functions
 
-	func check<T where T: JsonConvertible>(_ result: T?) {
+	func check<T>(_ result: T?) where T: JsonConvertible {
 		XCTAssert(result?.prettyPrint() != nil)
 	}
+
+    static var allTests : [(String, (RequestTests) -> () throws -> Void)] {
+        return [
+            //("testExample", testExample),
+        ]
+    }
 }

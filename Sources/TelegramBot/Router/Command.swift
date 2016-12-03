@@ -1,5 +1,14 @@
-// Telegram Bot SDK for Swift (unofficial).
-// (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
+//
+// Command.swift
+//
+// This source file is part of the Telegram Bot SDK for Swift (unofficial).
+//
+// Copyright (c) 2015 - 2016 Andrey Fidrya and the project authors
+// Licensed under Apache License v2.0 with Runtime Library Exception
+//
+// See LICENSE.txt for license information
+// See AUTHORS.txt for the list of the project authors
+//
 
 import Foundation
 
@@ -45,7 +54,7 @@ public class Command {
     public func fetchFrom(_ scanner: Scanner, caseSensitive: Bool = false) -> (command: String, startsWithSlash: Bool)? {
         if nameWords.isEmpty {
             // This is "match all" rule
-            guard let word = scanner.scanUpToCharactersFromSet(T.whitespaceAndNewline) else {
+            guard let word = scanner.scanUpToCharacters(from: T.whitespaceAndNewline) else {
                 return nil
             }
 
@@ -63,7 +72,7 @@ public class Command {
         
         // Each word in nameWords should match a word (possibly abbreviated) from scanner
         for nameWord in nameWords {
-            guard let word = scanner.scanUpToCharactersFromSet(T.whitespaceAndNewline) else {
+            guard let word = scanner.scanUpToCharacters(from: T.whitespaceAndNewline) else {
                 return nil
             }
             

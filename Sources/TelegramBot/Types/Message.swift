@@ -12,7 +12,7 @@ public struct Message: JsonConvertible {
     /// Original JSON for fields not yet added to Swift structures.
     public var json: JSON
 
-    /// Unique message identifier
+    /// Unique message identifier inside this chat
     public var message_id: Int {
         get { return json["message_id"].intValue }
         set { json["message_id"].intValue = newValue }
@@ -61,6 +61,12 @@ public struct Message: JsonConvertible {
         set {
             json["forward_from_chat"] = newValue?.json ?? nil
         }
+    }
+
+    /// Optional. For forwarded channel posts, identifier of the original message in the channel
+    public var forward_from_message_id: Int? {
+        get { return json["forward_from_message_id"].int }
+        set { json["forward_from_message_id"].int = newValue }
     }
 
     /// Optional. For forwarded messages, date the original message was sent in Unix time
@@ -117,6 +123,17 @@ public struct Message: JsonConvertible {
         }
         set {
             json["document"] = newValue?.json ?? nil
+        }
+    }
+
+    /// Optional. Message is a game, information about the game. More about games »
+    public var game: Game? {
+        get {
+            let value = json["game"]
+            return value.isNullOrUnknown ? nil : Game(json: value)
+        }
+        set {
+            json["game"] = newValue?.json ?? nil
         }
     }
 

@@ -9,7 +9,7 @@ class BlockingServerTests: XCTestCase {
     var token: String!
 
     override func setUp() {
-        token = readToken("TEST_BOT_TOKEN")
+        token = readToken(from: "TEST_BOT_TOKEN")
         super.setUp()
     }
     
@@ -22,7 +22,7 @@ class BlockingServerTests: XCTestCase {
 
         while let update = bot.nextUpdateSync() {
             print("--- update: \(update.debugDescription)")
-            if let message = update.message, text = message.text, chatId = message.from?.id {
+            if let message = update.message, let text = message.text, let chatId = message.from?.id {
                 if text == "Hello" {
                     bot.sendMessageAsync(chat_id: chatId, text: "How are you?")
                 }
@@ -31,4 +31,10 @@ class BlockingServerTests: XCTestCase {
         print("Server stopped due to error: \(bot.lastError)")
     }
     
+    static var allTests : [(String, (BlockingServerTests) -> () throws -> Void)] {
+        return [
+            //("testExample", testExample),
+        ]
+    }
 }
+
