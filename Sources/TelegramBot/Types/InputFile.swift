@@ -19,9 +19,11 @@ import SwiftyJSON
 public class InputFile {
     var filename: String
     var data: Data
+    var mimeType: String?
     
-    init(filename: String, data: Data) {
+    init(filename: String, data: Data, mimeType: String? = nil) {
         self.filename = filename
         self.data = data
+        self.mimeType = mimeType
     }
 }

@@ -116,7 +116,7 @@ public class HTTPUtils {
             body.append(boundary1)
             if let inputFile = value as? InputFile {
                 let filename = inputFile.filename
-                let mimetype = mimeType(for: filename)
+                let mimetype = inputFile.mimeType ?? mimeType(for: filename)
                 let data = inputFile.data
                 guard let contentDisposition = "Content-Disposition: form-data; name=\"\(keyString)\"; filename=\"\(filename)\"\r\n".data(using: .utf8) else {
                     return nil
@@ -166,6 +166,7 @@ public class HTTPUtils {
     /// - returns:                Returns the mime type if successful. Returns application/octet-stream if unable to determine mime type.
     
     public class func mimeType(for path: String) -> String {
+        #if os(OSX)
         let url = NSURL(fileURLWithPath: path)
         let pathExtension = url.pathExtension
         
@@ -174,6 +175,7 @@ public class HTTPUtils {
                 return mimetype as String
             }
         }
+        #endif
         return "application/octet-stream";
     }
 }
