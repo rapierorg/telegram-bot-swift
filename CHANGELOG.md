@@ -1,5 +1,9 @@
 # telegram-bot-swift changelog
 
+## 0.13.0 (2016-12-04)
+
+- Update to Bot API 2.3.1.
+
 ## 0.12.0 (2016-12-03)
 
 - Linux port, thanks to Andrea de Marco who fixed most of the bugs!

@@ -13,7 +13,7 @@ public extension TelegramBot {
     ///     - score: New score, must be non-negative
     ///     - force: Pass True, if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters
     ///     - disable_edit_message: Pass True, if the game message should not be automatically edited to include the current scoreboard
-    ///     - chat_id: Required if inline_message_id is not specified. Unique identifier for the target chat (or username of the target channel in the format @channelusername)
+    ///     - chat_id: Required if inline_message_id is not specified. Unique identifier for the target chat
     ///     - message_id: Required if inline_message_id is not specified. Identifier of the sent message
     ///     - inline_message_id: Required if chat_id and message_id are not specified. Identifier of the inline message
     /// - Returns: Bool on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
@@ -26,7 +26,7 @@ public extension TelegramBot {
             score: Int,
             force: Bool? = nil,
             disable_edit_message: Bool? = nil,
-            chat_id: ChatId? = nil,
+            chat_id: Int64? = nil,
             message_id: Int? = nil,
             inline_message_id: String? = nil,
             _ parameters: [String: Any?] = [:]) -> Bool? {
@@ -46,7 +46,7 @@ public extension TelegramBot {
     ///     - score: New score, must be non-negative
     ///     - force: Pass True, if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters
     ///     - disable_edit_message: Pass True, if the game message should not be automatically edited to include the current scoreboard
-    ///     - chat_id: Required if inline_message_id is not specified. Unique identifier for the target chat (or username of the target channel in the format @channelusername)
+    ///     - chat_id: Required if inline_message_id is not specified. Unique identifier for the target chat
     ///     - message_id: Required if inline_message_id is not specified. Identifier of the sent message
     ///     - inline_message_id: Required if chat_id and message_id are not specified. Identifier of the inline message
     /// - Returns: Bool on success. Nil on error, in which case `error` contains the details.
@@ -58,7 +58,7 @@ public extension TelegramBot {
             score: Int,
             force: Bool? = nil,
             disable_edit_message: Bool? = nil,
-            chat_id: ChatId? = nil,
+            chat_id: Int64? = nil,
             message_id: Int? = nil,
             inline_message_id: String? = nil,
             _ parameters: [String: Any?] = [:],
