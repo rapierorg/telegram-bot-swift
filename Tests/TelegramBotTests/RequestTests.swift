@@ -128,6 +128,24 @@ class RequestTests: XCTestCase {
 		check( bot.sendLocationSync(chat_id: chatId, latitude: 50.4501, longitude: 30.5234) )
 	}
 	
+    //
+    // sendPhoto
+    //
+    
+    func testSendPhoto() {
+        let filename = "/tmp/test.jpg"
+        let url = URL(fileURLWithPath: filename)
+        let imageData: Data
+        do {
+            imageData = try Data(contentsOf: url)
+        } catch {
+            XCTFail("\(error)")
+            return
+        }
+        let inputFile = InputFile(filename: "test.jpg", data: imageData)
+        bot.sendPhotoSync(chat_id: chatId, photo: inputFile)
+    }
+    
 	// Helper functions
 
 	func check<T>(_ result: T?) where T: JsonConvertible {

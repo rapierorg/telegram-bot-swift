@@ -17,5 +17,11 @@ import SwiftyJSON
 /// - SeeAlso: <https://core.telegram.org/bots/api#inputfile>
 
 public class InputFile {
-	// TODO: implement
+    var filename: String
+    var data: Data
+    
+    init(filename: String, data: Data) {
+        self.filename = filename
+        self.data = data
+    }
 }

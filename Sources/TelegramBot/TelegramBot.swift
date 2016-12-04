@@ -297,16 +297,38 @@ public class TelegramBot {
     /// specific requests.
     public func startDataTaskForEndpoint(_ endpoint: String, parameters: [String: Any?], completion: @escaping DataTaskCompletion) {
         let endpointUrl = urlForEndpoint(endpoint)
-        let data = HTTPUtils.formUrlencode(parameters)
-		logger("endpoint: \(endpoint), data: \(data)")
+        
+        // If parameters contain values of type InputFile, use  multipart/form-data for sending them.
+        var hasAttachments = false
+        for value in parameters.values {
+            if value is InputFile {
+                hasAttachments = true
+                break
+            }
+        }
+
+        let contentType: String
+        let data: Data?
+        if hasAttachments {
+            let boundary = HTTPUtils.generateBoundaryString()
+            contentType = "multipart/form-data; boundary=\(boundary)"
+            data = HTTPUtils.createMultipartFormDataBody(with: parameters, boundary: boundary)
+            try! data!.write(to: URL(fileURLWithPath: "/tmp/dump.bin"))
+            logger("endpoint: \(endpoint), sending parameters as multipart/form-data")
+        } else {
+            contentType = "application/x-www-form-urlencoded"
+            let encoded = HTTPUtils.formUrlencode(parameters)
+            data = encoded.data(using: .utf8)
+            logger("endpoint: \(endpoint), data: \(data)")
+        }
         
         var request = URLRequest(url: endpointUrl)
         request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         request.httpMethod = "POST"
-		request.httpBody = data.data(using: String.Encoding.utf8)
+		request.httpBody = data
         // Temporarily workaround https://bugs.swift.org/browse/SR-2617
         #if !os(Linux)
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue(contentType, forHTTPHeaderField: "Content-Type")
         #endif
         
         let taskAssociatedData = TaskAssociatedData(completion)
