@@ -166,7 +166,7 @@ public class HTTPUtils {
     /// - returns:                Returns the mime type if successful. Returns application/octet-stream if unable to determine mime type.
     
     public class func mimeType(for path: String) -> String {
-        #if os(OSX)
+        #if false
         let url = NSURL(fileURLWithPath: path)
         let pathExtension = url.pathExtension
         
