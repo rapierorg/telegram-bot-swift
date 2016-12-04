@@ -202,7 +202,7 @@ def make_swift_type_name(var_name, var_type)
   when 'Boolean', 'True'
     return 'Bool'
   when 'Integer'
-    if var_name.include?('user_id') then
+    if var_name.include?('user_id') || var_name.include?('chat_id') then
       return 'Int64'
     else
       return 'Int'

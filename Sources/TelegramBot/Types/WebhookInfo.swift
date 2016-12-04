@@ -42,6 +42,18 @@ public struct WebhookInfo: JsonConvertible {
         set { json["last_error_message"].string = newValue }
     }
 
+    /// Optional. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
+    public var max_connections: Int? {
+        get { return json["max_connections"].int }
+        set { json["max_connections"].int = newValue }
+    }
+
+    /// Optional. A list of update types the bot is subscribed to. Defaults to all update types
+    public var allowed_updates: [String] {
+        get { return json["allowed_updates"].arrayValue() }
+        set { json["allowed_updates"] = newValue.isEmpty ? nil : JSON.initFrom(newValue) }
+    }
+
     public init(json: JSON = [:]) {
         self.json = json
     }

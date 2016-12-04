@@ -9,7 +9,7 @@ public extension TelegramBot {
 
     /// Use this method to send a game. On success, the sent Message is returned.
     /// - Parameters:
-    ///     - chat_id: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    ///     - chat_id: Unique identifier for the target chat
     ///     - game_short_name: Short name of the game, serves as the unique identifier for the game. Set up your games via Botfather.
     ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
@@ -20,7 +20,7 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendgame>
     @discardableResult
     public func sendGameSync(
-            chat_id: ChatId,
+            chat_id: Int64,
             game_short_name: String,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
@@ -36,7 +36,7 @@ public extension TelegramBot {
 
     /// Use this method to send a game. On success, the sent Message is returned.
     /// - Parameters:
-    ///     - chat_id: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    ///     - chat_id: Unique identifier for the target chat
     ///     - game_short_name: Short name of the game, serves as the unique identifier for the game. Set up your games via Botfather.
     ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
@@ -46,7 +46,7 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendgame>
     public func sendGameAsync(
-            chat_id: ChatId,
+            chat_id: Int64,
             game_short_name: String,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,

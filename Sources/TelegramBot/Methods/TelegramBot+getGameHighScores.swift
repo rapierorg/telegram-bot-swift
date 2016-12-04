@@ -11,7 +11,7 @@ public extension TelegramBot {
     /// This method will currently return scores for the target user, plus two of his closest neighbors on each side. Will also return the top three users if the user and his neighbors are not among them. Please note that this behavior is subject to change.
     /// - Parameters:
     ///     - user_id: Target user id
-    ///     - chat_id: Required if inline_message_id is not specified. Unique identifier for the target chat (or username of the target channel in the format @channelusername)
+    ///     - chat_id: Required if inline_message_id is not specified. Unique identifier for the target chat
     ///     - message_id: Required if inline_message_id is not specified. Identifier of the sent message
     ///     - inline_message_id: Required if chat_id and message_id are not specified. Identifier of the inline message
     /// - Returns: [GameHighScore] on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
@@ -21,7 +21,7 @@ public extension TelegramBot {
     @discardableResult
     public func getGameHighScoresSync(
             user_id: Int64,
-            chat_id: ChatId? = nil,
+            chat_id: Int64? = nil,
             message_id: Int? = nil,
             inline_message_id: String? = nil,
             _ parameters: [String: Any?] = [:]) -> [GameHighScore]? {
@@ -36,7 +36,7 @@ public extension TelegramBot {
     /// This method will currently return scores for the target user, plus two of his closest neighbors on each side. Will also return the top three users if the user and his neighbors are not among them. Please note that this behavior is subject to change.
     /// - Parameters:
     ///     - user_id: Target user id
-    ///     - chat_id: Required if inline_message_id is not specified. Unique identifier for the target chat (or username of the target channel in the format @channelusername)
+    ///     - chat_id: Required if inline_message_id is not specified. Unique identifier for the target chat
     ///     - message_id: Required if inline_message_id is not specified. Identifier of the sent message
     ///     - inline_message_id: Required if chat_id and message_id are not specified. Identifier of the inline message
     /// - Returns: [GameHighScore] on success. Nil on error, in which case `error` contains the details.
@@ -45,7 +45,7 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#getgamehighscores>
     public func getGameHighScoresAsync(
             user_id: Int64,
-            chat_id: ChatId? = nil,
+            chat_id: Int64? = nil,
             message_id: Int? = nil,
             inline_message_id: String? = nil,
             _ parameters: [String: Any?] = [:],
