@@ -2,6 +2,7 @@
 // (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import XCTest
+import Foundation
 @testable import TelegramBot
 
 class RequestTests: XCTestCase {
@@ -154,6 +155,15 @@ class RequestTests: XCTestCase {
 
     static var allTests : [(String, (RequestTests) -> () throws -> Void)] {
         return [
+            ("testGetMe", testGetMe),
+	        ("testSendMessage", testSendMessage),
+	        ("testShowKeyboardWithText", testShowKeyboardWithText),
+	        ("testShowKeyboardWithButtons", testShowKeyboardWithButtons),
+	        ("testHideKeyboard", testHideKeyboard),
+	        ("testForceReply", testForceReply),
+	        ("testForwardMessage", testForwardMessage),
+	        ("testSendLocation", testSendLocation),
+            ("testSendPhoto", testSendPhoto),
             //("testExample", testExample),
         ]
     }
