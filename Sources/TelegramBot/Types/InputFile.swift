@@ -21,7 +21,7 @@ public class InputFile {
     var data: Data
     var mimeType: String?
     
-    init(filename: String, data: Data, mimeType: String? = nil) {
+    public init(filename: String, data: Data, mimeType: String? = nil) {
         self.filename = filename
         self.data = data
         self.mimeType = mimeType
