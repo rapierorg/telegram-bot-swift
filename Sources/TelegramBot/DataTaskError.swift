@@ -15,57 +15,47 @@ import SwiftyJSON
 
 /// Telegram DataTask errors
 public enum DataTaskError {
-    /// NSDataTask returned an error
-    case genericError(
-        data: Data?, response: URLResponse?, error: Error)
+    /// Invalid request
+    case invalidRequest
     
-    /// Response is not NSHTTPURLResponse
-    case invalidResponseType(
-        data: Data?, response: URLResponse?)
+    /// Libcurl initialization error
+    case libcurlInitError
+    
+    /// Libcurl error
+    case libcurlError(code: UInt32, description: String)
+    
+    /// Aborted by callback
+    case libcurlAbortedByCallback
     
     /// Status Code is not 200 (OK)
-    case invalidStatusCode(statusCode: Int,
-        data: Data?, response: HTTPURLResponse)
+    case invalidStatusCode(statusCode: Int, data: Data?)
     
     /// Telegram server returned no data
-    case noDataReceived(response: HTTPURLResponse)
-    
-    /// Response couldn't be parsed
-    //case responseParseError(json: JSON,
-    //    data: NSData, response: NSHTTPURLResponse)
+    case noDataReceived
     
     /// Server error (server returned "ok: false")
     case serverError(telegramResponse: Response,
-        data: Data, response: HTTPURLResponse)
-    
-    /// No `result` in Telegram response
-    //case noResult(telegramResponse: Response,
-    //    data: NSData, response: NSHTTPURLResponse)
-    
-    /// `Result` couldn't be parsed
-    //case resultParseError(json: JSON)
+        data: Data)
 }
 
 extension DataTaskError: CustomDebugStringConvertible {
     // MARK: CustomDebugStringConvertible
     public var debugDescription: String {
         switch self {
-        case .genericError(_, _, let error):
-            return "dataTaskWithRequest: error: \(error.localizedDescription)"
-        case .invalidResponseType(_, _):
-            return "Response is not NSHTTPURLResponse"
-        case .invalidStatusCode(let statusCode, _, _):
+        case .invalidRequest:
+            return "Invalid HTTP request"
+        case .libcurlInitError:
+            return "Libcurl initialization error"
+        case let .libcurlError(code, description):
+            return "Libcurl error \(code): \(description)"
+        case .libcurlAbortedByCallback:
+            return "Libcurl aborted by callback"
+        case .invalidStatusCode(let statusCode, _):
             return "Expected status code 200, got \(statusCode)"
-        case .noDataReceived(_):
+        case .noDataReceived:
             return "No data received"
-        //case .responseParseError(_, _, _):
-        //    return "Error while parsing response"
-        case .serverError(_, _, _):
+        case .serverError(_, _):
             return "Telegram server returned an error"
-        //case .noResult(_, _, _):
-        //    return "No result in Telegram response"
-        //case .resultParseError:
-        //    return "Result couldn't be parsed"
         }
     }
 }

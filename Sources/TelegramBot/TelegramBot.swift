@@ -13,12 +13,9 @@
 import Foundation
 import Dispatch
 import SwiftyJSON
+import CCurl
 
 public class TelegramBot {
-    /// `errorHandler`'s completion block type
-    /// - SeeAlso: `public var errorHandler: ErrorHandler?`
-    public typealias ErrorHandler = (URLSessionDataTask, TaskAssociatedData, DataTaskError) -> ()
-    
     public typealias DataTaskCompletion = (_ json: JSON, _ error: DataTaskError?)->()
 
 	public typealias RequestParameters = [String: Any?]
@@ -36,72 +33,6 @@ public class TelegramBot {
     /// do not report the errors and try to reconnect
     /// automatically.
     public var autoReconnect: Bool = true
-
-    /// A list of errors to handle automatically if `autoReconnect` is on.
-    public static var autoReconnectCodes: Set<Int> = [
-        //NSURLErrorUnknown,
-        //NSURLErrorCancelled,
-        //NSURLErrorBadURL,
-        NSURLErrorTimedOut,
-        //NSURLErrorUnsupportedURL,
-        NSURLErrorCannotFindHost,
-        NSURLErrorCannotConnectToHost,
-        NSURLErrorNetworkConnectionLost,
-        NSURLErrorDNSLookupFailed,
-        //NSURLErrorHTTPTooManyRedirects,
-        NSURLErrorResourceUnavailable,
-        NSURLErrorNotConnectedToInternet,
-        //NSURLErrorRedirectToNonExistentLocation,
-        NSURLErrorBadServerResponse,
-        //NSURLErrorUserCancelledAuthentication,
-        //NSURLErrorUserAuthenticationRequired,
-        //NSURLErrorZeroByteResource,
-        //NSURLErrorCannotDecodeRawData,
-        //NSURLErrorCannotDecodeContentData,
-        //NSURLErrorCannotParseResponse,
-        //@available(OSX 10.11, *)
-        //NSURLErrorAppTransportSecurityRequiresSecureConnection,
-        //NSURLErrorFileDoesNotExist,
-        //NSURLErrorFileIsDirectory,
-        //NSURLErrorNoPermissionsToReadFile,
-        //@available(OSX 10.5, *)
-        //NSURLErrorDataLengthExceedsMaximum,
-        // SSL errors
-        NSURLErrorSecureConnectionFailed,
-        //NSURLErrorServerCertificateHasBadDate,
-        //NSURLErrorServerCertificateUntrusted,
-        //NSURLErrorServerCertificateHasUnknownRoot,
-        //NSURLErrorServerCertificateNotYetValid,
-        //NSURLErrorClientCertificateRejected,
-        //NSURLErrorClientCertificateRequired,
-        NSURLErrorCannotLoadFromNetwork,
-        // Download and file I/O errors
-        //NSURLErrorCannotCreateFile,
-        //NSURLErrorCannotOpenFile,
-        //NSURLErrorCannotCloseFile,
-        //NSURLErrorCannotWriteToFile,
-        //NSURLErrorCannotRemoveFile,
-        //NSURLErrorCannotMoveFile,
-        NSURLErrorDownloadDecodingFailedMidStream,
-        NSURLErrorDownloadDecodingFailedToComplete,
-        //@available(OSX 10.7, *)
-        NSURLErrorInternationalRoamingOff,
-        //@available(OSX 10.7, *)
-        NSURLErrorCallIsActive,
-        //@available(OSX 10.7, *)
-        NSURLErrorDataNotAllowed,
-        //@available(OSX 10.7, *)
-        //NSURLErrorRequestBodyStreamExhausted,
-        //@available(OSX 10.10, *)
-        //NSURLErrorBackgroundSessionRequiresSharedContainer,
-        //@available(OSX 10.10, *)
-        NSURLErrorBackgroundSessionInUseByAnotherProcess,
-        //@available(OSX 10.10, *)
-        NSURLErrorBackgroundSessionWasDisconnected,
-    ]
-    
-    /// Session. By default, configured with ephemeral session configuration on OS X or default session configuration on Linux.
-    public var session: URLSession
 
     /// Offset for long polling.
     public var nextOffset: Int?
@@ -122,27 +53,10 @@ public class TelegramBot {
     /// Last error for use with synchronous requests.
     public var lastError: DataTaskError?
     
-    private let workQueue = DispatchQueue(label: "com.zabiyaka.TelegramBot")
-    
-    /// To handle network or parse errors,
-    /// set a custom callback using this property.
-    /// In a typical case this is not needed.
-    ///
-    /// `defaultErrorHandler` is used by default.
-    public var errorHandler: ErrorHandler?
-    
     /// Logging function. Defaults to `print`.
     public var logger: (_ text: String) -> () = { print($0) }
     
-    /// Defines reconnect delay in seconds depending on `retryCount`. Can be overridden.
-    ///
-    /// Used by default `errorHandler` implementation.
-    ///
-    /// - Reconnect instantly on first error.
-    /// - Add 2 seconds delay for each failed attempt up to 60 seconds maximum to avoid
-    /// spamming the server.
-    ///
-    /// Warning: called on `dataTask` queue.
+    /// Defines reconnect delay in seconds when requesting updates. Can be overridden.
     ///
     /// - Parameter retryCount: Number of reconnect retries associated with `request`.
     /// - Returns: Seconds to wait before next reconnect attempt. Return `0.0` for instant reconnect.
@@ -158,71 +72,6 @@ public class TelegramBot {
         }
         return 30.0
     }
-    
-    /// Implements the default error handling logic. Consult
-    /// `TelegramBot` class description for details.
-    public lazy var defaultErrorHandler: ErrorHandler = {
-        [weak self] task, taskAssociatedData, error in
-        
-        guard let originalRequest = task.originalRequest else {
-            fatalError("\(error)")
-        }
- 
-        // Strong capture the self if it's still not nil
-        guard let actualSelf = self else { return }
-
-        if !actualSelf.autoReconnect {
-            taskAssociatedData.completion?(nil, error)
-            return
-        }
-        
-        // Report errors back to user except the ones we know how to handle
-        switch error {
-        case let .genericError(_, _, networkError as NSError)
-            where networkError.domain == NSURLErrorDomain &&
-                TelegramBot.autoReconnectCodes.contains(networkError.code):
-            actualSelf.logger("Network error: \(networkError.localizedDescription)")
-            break
-        case let .invalidStatusCode(statusCode, _, _) where statusCode != 401: // == 502
-            actualSelf.logger("Error: \(error.debugDescription)")
-            break
-        default:
-            taskAssociatedData.completion?(nil, error)
-            return
-        }
-        
-        // Known error, reconnect:
-        let retryCount = taskAssociatedData.retryCount
-        let reconnectDelay = actualSelf.reconnectDelay(retryCount)
-        taskAssociatedData.retryCount += 1
-        
-        // This closure will be called from dataTask queue,
-        // but startDataTaskForRequest will start the new
-        // dataTask from workQueue.
-        if reconnectDelay == 0.0 {
-            actualSelf.logger("Reconnect attempt \(taskAssociatedData.retryCount), will retry at once")
-            actualSelf.startDataTaskForRequest(originalRequest, associateTaskWithData: taskAssociatedData)
-        } else {
-            actualSelf.logger("Reconnect attempt \(taskAssociatedData.retryCount), will retry after \(reconnectDelay) sec")
-            // Be aware that asyncAfter does NOT work correctly with serial queues.
-            // The queue will perform async blocks BEFORE those inserted via asyncAfter.
-            // So, use global queue for the pause, then execute the actual request on workQueue.
-            DispatchQueue.global().asyncAfter(
-                deadline: DispatchTime.now() + reconnectDelay) {
-                actualSelf.startDataTaskForRequest(originalRequest, associateTaskWithData: taskAssociatedData)
-            }
-        }
-    }
-    
-    /// Default handling of network and parse errors.
-    public static let defaultSession: URLSession = {
-        #if os(Linux)
-        let configuration = URLSessionConfiguration.default
-        #else
-        let configuration = URLSessionConfiguration.ephemeral
-        #endif
-        return URLSession(configuration: configuration)
-    }()
     
     /// Equivalent of calling `getMe()`
     ///
@@ -253,11 +102,9 @@ public class TelegramBot {
     /// - Parameter token: A unique authentication token.
     /// - Parameter fetchBotInfo: If true, issue a blocking `getMe()` call and cache the bot information. Otherwise it will be lazy-loaded when needed. Defaults to true.
     /// - Parameter session: `NSURLSession` instance, a session with `ephemeralSessionConfiguration` is used by default.
-    public init(token: String, fetchBotInfo: Bool = true, session: URLSession = defaultSession) {
+    public init(token: String, fetchBotInfo: Bool = true) {
         self.token = token
-        self.session = session
         self.unprocessedUpdates = []
-        self.errorHandler = defaultErrorHandler
         if fetchBotInfo {
             _ = user // Load the lazy user variable
         }
@@ -308,110 +155,112 @@ public class TelegramBot {
         }
 
         let contentType: String
-        let data: Data?
+        let requestDataOrNil: Data?
         if hasAttachments {
             let boundary = HTTPUtils.generateBoundaryString()
             contentType = "multipart/form-data; boundary=\(boundary)"
-            data = HTTPUtils.createMultipartFormDataBody(with: parameters, boundary: boundary)
-            try! data!.write(to: URL(fileURLWithPath: "/tmp/dump.bin"))
+            requestDataOrNil = HTTPUtils.createMultipartFormDataBody(with: parameters, boundary: boundary)
+            try! requestDataOrNil!.write(to: URL(fileURLWithPath: "/tmp/dump.bin"))
             logger("endpoint: \(endpoint), sending parameters as multipart/form-data")
         } else {
             contentType = "application/x-www-form-urlencoded"
             let encoded = HTTPUtils.formUrlencode(parameters)
-            data = encoded.data(using: .utf8)
-            logger("endpoint: \(endpoint), data: \(data)")
+            requestDataOrNil = encoded.data(using: .utf8)
+            logger("endpoint: \(endpoint), data: \(requestDataOrNil.unwrapOptional)")
+        }
+        requestDataOrNil?.append(0)
+
+        guard let requestData = requestDataOrNil else {
+            completion(nil, .invalidRequest)
+            return
         }
         
-        var request = URLRequest(url: endpointUrl)
-        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
-        request.httpMethod = "POST"
-		request.httpBody = data
-        // Temporarily workaround https://bugs.swift.org/browse/SR-2617
-        #if !os(Linux)
-        request.setValue(contentType, forHTTPHeaderField: "Content-Type")
-        #endif
-        
-        let taskAssociatedData = TaskAssociatedData(completion)
-        startDataTaskForRequest(request, associateTaskWithData: taskAssociatedData)
+        DispatchQueue.global().async {
+            requestData.withUnsafeBytes { (bytes: UnsafePointer<UInt8>)->Void in
+                self.curlPerformRequest(endpointUrl: endpointUrl, contentType: contentType, requestBytes: bytes, completion: completion)
+            }
+        }
     }
     
-    /// Use this function for implementing retrying in
-    /// custom `errorHandler`.
-    ///
-    /// See `defaultErrorHandler` implementation for an example.
-    public func startDataTaskForRequest(_ request: URLRequest, associateTaskWithData taskAssociatedData: TaskAssociatedData) {
-        // This function can be called from main queue (when
-        // call is initiated by user) or from dataTask queue (when
-        // automatically retrying).
-        // Dispatch calls to serial workQueue.
-        self.workQueue.async {
-            var task: URLSessionDataTask?
-			task = self.session.dataTask(with: request) { dataOrNil, responseOrNil, errorOrNil in
-				self.urlSessionDataTaskCompletion(task!, taskAssociatedData, dataOrNil, responseOrNil, errorOrNil)
+    /// Note: performed on global queue
+    private func curlPerformRequest(endpointUrl: URL, contentType: String, requestBytes: UnsafePointer<UInt8>, completion: @escaping DataTaskCompletion) {
+        var callbackData = WriteCallbackData()
+        
+        guard let curl = curl_easy_init() else {
+            completion(nil, .libcurlInitError)
+            return
+        }
+        
+        curl_easy_setopt_string(curl, CURLOPT_URL, endpointUrl.absoluteString)
+        //curl_easy_setopt_int(curl, CURLOPT_SAFE_UPLOAD, 1)
+        curl_easy_setopt_int(curl, CURLOPT_POST, 1)
+        curl_easy_setopt_binary(curl, CURLOPT_POSTFIELDS, requestBytes)
+        
+        var headers: UnsafeMutablePointer<curl_slist>? = nil
+        headers = curl_slist_append(headers, "Content-Type: \(contentType)")
+        curl_easy_setopt_slist(curl, CURLOPT_HTTPHEADER, headers)
+        defer { curl_slist_free_all(headers) }
+        
+        let writeFunction: curl_write_callback = { (ptr, size, nmemb, userdata) -> Int in
+            let count = size * nmemb
+            if let writeCallbackDataPointer = userdata?.assumingMemoryBound(to: WriteCallbackData.self) {
+                let writeCallbackData = writeCallbackDataPointer.pointee
+                ptr?.withMemoryRebound(to: UInt8.self, capacity: count) {
+                    writeCallbackData.data.append(&$0.pointee, count: count)
+                }
             }
-            task?.resume()
+            return count
         }
-    }
-		
-    private func urlSessionDataTaskCompletion(_ task: URLSessionDataTask, _ taskAssociatedData: TaskAssociatedData, _ dataOrNil: Data?, _ responseOrNil: URLResponse?, _ errorOrNil: Error?) {
-        
-        if let error = errorOrNil {
-            errorHandler?(task, taskAssociatedData, .genericError(
-                data: dataOrNil, response: responseOrNil, error: error))
+        curl_easy_setopt_write_function(curl, CURLOPT_WRITEFUNCTION, writeFunction)
+        curl_easy_setopt_pointer(curl, CURLOPT_WRITEDATA, &callbackData)
+        //curl_easy_setopt_int(curl, CURLOPT_VERBOSE, 1)
+        let code = curl_easy_perform(curl)
+        guard code == CURLE_OK else {
+            reportCurlError(code: code, completion: completion)
             return
         }
         
-        guard let response = responseOrNil as? HTTPURLResponse else {
-            errorHandler?(task, taskAssociatedData, .invalidResponseType(
-                data: dataOrNil, response: responseOrNil))
+        //let result = String(data: callbackData.data, encoding: .utf8)
+        //print("CURLcode=\(code.rawValue) result=\(result.unwrapOptional)")
+        
+        guard code != CURLE_ABORTED_BY_CALLBACK else {
+            completion(nil, .libcurlAbortedByCallback)
             return
         }
         
-        if response.statusCode != 200 {
-            errorHandler?(task, taskAssociatedData, .invalidStatusCode(
-                statusCode: response.statusCode,
-                data: dataOrNil, response: response))
+        var httpCode: Int = 0
+        guard CURLE_OK == curl_easy_getinfo_long(curl, CURLINFO_RESPONSE_CODE, &httpCode) else {
+            reportCurlError(code: code, completion: completion)
+            return
+        }
+        let data = callbackData.data
+        guard httpCode == 200 else {
+            completion(nil, .invalidStatusCode(statusCode: httpCode, data: data))
             return
         }
         
-        guard let data = dataOrNil else {
-            errorHandler?(task, taskAssociatedData, .noDataReceived(
-                response: response))
+        guard !data.isEmpty else {
+            completion(nil, .noDataReceived)
             return
         }
         
         let json = JSON(data: data)
         
-        /*guard*/ let telegramResponse = Response(json: json) /*else {
-            errorHandler?(task, .ResponseParseError(
-                json: json, data: data, response: response))
-            return
-        }*/
-        
+        let telegramResponse = Response(json: json)
         if !telegramResponse.ok {
-            errorHandler?(task, taskAssociatedData, .serverError(
-                telegramResponse: telegramResponse, data: data, response: response))
+            completion(nil, .serverError(telegramResponse: telegramResponse, data: data))
             return
         }
         
-        /*guard*/ let result = telegramResponse.result /*else {
-            errorHandler?(task, .NoResult(
-                telegramResponse: telegramResponse, data: data, response: response))
-            return
-        }*/
-
-        // If user completion handler is attached to this
-        // task, call it. Completion handler is stored as
-        // an associated property and not passed as a function
-        // argument to support retrying.
-        if taskAssociatedData.retryCount != 0 {
-            taskAssociatedData.retryCount = 0
-            logger("Reconnected to Telegram server")
-        }
-
-        taskAssociatedData.completion?(result, nil)
+        completion(telegramResponse.result, nil)
     }
-
+    
+    private func reportCurlError(code: CURLcode, completion: @escaping DataTaskCompletion) {
+        let failReason = String(cString: curl_easy_strerror(code), encoding: .utf8) ?? "unknown error"
+        //print("Request failed: \(failReason)")
+        completion(nil, .libcurlError(code: code.rawValue, description: failReason))
+    }
+    
     private func urlForEndpoint(_ endpoint: String) -> URL {
         let tokenUrlencoded = token.urlQueryEncode()
         let endpointUrlencoded = endpoint.urlQueryEncode()
