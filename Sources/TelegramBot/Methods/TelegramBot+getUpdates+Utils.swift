@@ -29,7 +29,6 @@ extension TelegramBot {
                 updates = getUpdatesSync(offset: nextOffset,
                     limit: defaultUpdatesLimit,
                     timeout: defaultUpdatesTimeout)
-                updates = nil; lastError = DataTaskError.libcurlError(code: CURLE_COULDNT_RESOLVE_PROXY, description: "oh")
                 if updates == nil {
                     // Retry on temporary problems
                     if autoReconnect,
