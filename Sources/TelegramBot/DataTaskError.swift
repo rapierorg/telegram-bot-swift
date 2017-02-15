@@ -12,6 +12,7 @@
 
 import Foundation
 import SwiftyJSON
+import CCurl
 
 /// Telegram DataTask errors
 public enum DataTaskError {
@@ -22,7 +23,7 @@ public enum DataTaskError {
     case libcurlInitError
     
     /// Libcurl error
-    case libcurlError(code: UInt32, description: String)
+    case libcurlError(code: CURLcode, description: String)
     
     /// Aborted by callback
     case libcurlAbortedByCallback
@@ -47,7 +48,7 @@ extension DataTaskError: CustomDebugStringConvertible {
         case .libcurlInitError:
             return "Libcurl initialization error"
         case let .libcurlError(code, description):
-            return "Libcurl error \(code): \(description)"
+            return "Libcurl error \(code.rawValue): \(description)"
         case .libcurlAbortedByCallback:
             return "Libcurl aborted by callback"
         case .invalidStatusCode(let statusCode, _):

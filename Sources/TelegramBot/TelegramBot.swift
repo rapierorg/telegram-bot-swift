@@ -78,7 +78,8 @@ public class TelegramBot {
     /// This function will block until the request is finished.
     public lazy var user: User = {
         guard let me = self.getMeSync() else {
-            fatalError("Unable to fetch bot information: \(self.lastError.unwrapOptional)")
+            print("Unable to fetch bot information: \(self.lastError.unwrapOptional)")
+            exit(1)
         }
         return me
     }()
@@ -134,6 +135,17 @@ public class TelegramBot {
         return nil
     }
     
+    /// Waits for specified number of seconds. Message loop won't be blocked.
+    ///
+    /// - Parameter wait: Seconds to wait.
+    public func wait(seconds: Double) {
+        let sem = DispatchSemaphore(value: 0)
+        DispatchQueue.global().asyncAfter(deadline: .now() + seconds) {
+            sem.signal()
+        }
+        RunLoop.current.waitForSemaphore(sem)
+    }
+    
     /// Initiates a request to the server. Used for implementing
     /// specific requests (getMe, getStatus etc).
     public func startDataTaskForEndpoint(_ endpoint: String, completion: @escaping DataTaskCompletion) {
@@ -166,7 +178,7 @@ public class TelegramBot {
             contentType = "application/x-www-form-urlencoded"
             let encoded = HTTPUtils.formUrlencode(parameters)
             requestDataOrNil = encoded.data(using: .utf8)
-            logger("endpoint: \(endpoint), data: \(requestDataOrNil.unwrapOptional)")
+            logger("endpoint: \(endpoint), data: \(encoded)")
         }
         requestDataOrNil?.append(0)
 
@@ -258,7 +270,7 @@ public class TelegramBot {
     private func reportCurlError(code: CURLcode, completion: @escaping DataTaskCompletion) {
         let failReason = String(cString: curl_easy_strerror(code), encoding: .utf8) ?? "unknown error"
         //print("Request failed: \(failReason)")
-        completion(nil, .libcurlError(code: code.rawValue, description: failReason))
+        completion(nil, .libcurlError(code: code, description: failReason))
     }
     
     private func urlForEndpoint(_ endpoint: String) -> URL {
