@@ -38,7 +38,7 @@ Trivial bot:
 import TelegramBot
 
 let bot = TelegramBot(token: "my token")
-let router = Router(bot)
+let router = Router(bot: bot)
 
 router["greet"] = { context in
     guard let from = context.message?.from else { return false }
