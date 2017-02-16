@@ -6,12 +6,7 @@ test:
 build:
 	swift build
 
-rebuild: clean build
-
 clean:
-	swift build --clean
+	swift package clean
 
-distclean:
-	swift build --clean dist
-
-.PHONY: all build rebuild clean distclean
+.PHONY: all test build clean

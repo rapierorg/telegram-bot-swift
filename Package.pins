@@ -2,16 +2,22 @@
   "autoPin": true,
   "pins": [
     {
+      "package": "CCurl",
+      "reason": null,
+      "repositoryURL": "https://github.com/zmeyc/CCurl.git",
+      "version": "0.0.2"
+    },
+    {
       "package": "ScannerUtils",
       "reason": null,
       "repositoryURL": "https://github.com/smud/ScannerUtils.git",
-      "version": "1.0.5"
+      "version": "1.0.6"
     },
     {
       "package": "SwiftyJSON",
       "reason": null,
       "repositoryURL": "https://github.com/zmeyc/SwiftyJSON.git",
-      "version": "12.1.2"
+      "version": "12.1.3"
     }
   ],
   "version": 1
