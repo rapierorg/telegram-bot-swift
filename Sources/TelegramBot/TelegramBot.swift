@@ -172,7 +172,7 @@ public class TelegramBot {
             let boundary = HTTPUtils.generateBoundaryString()
             contentType = "multipart/form-data; boundary=\(boundary)"
             requestDataOrNil = HTTPUtils.createMultipartFormDataBody(with: parameters, boundary: boundary)
-            try! requestDataOrNil!.write(to: URL(fileURLWithPath: "/tmp/dump.bin"))
+            //try! requestDataOrNil!.write(to: URL(fileURLWithPath: "/tmp/dump.bin"))
             logger("endpoint: \(endpoint), sending parameters as multipart/form-data")
         } else {
             contentType = "application/x-www-form-urlencoded"
