@@ -189,13 +189,13 @@ public class TelegramBot {
         
         DispatchQueue.global().async {
             requestData.withUnsafeBytes { (bytes: UnsafePointer<UInt8>)->Void in
-                self.curlPerformRequest(endpointUrl: endpointUrl, contentType: contentType, requestBytes: bytes, completion: completion)
+                self.curlPerformRequest(endpointUrl: endpointUrl, contentType: contentType, requestBytes: bytes, byteCount: requestData.count, completion: completion)
             }
         }
     }
     
     /// Note: performed on global queue
-    private func curlPerformRequest(endpointUrl: URL, contentType: String, requestBytes: UnsafePointer<UInt8>, completion: @escaping DataTaskCompletion) {
+    private func curlPerformRequest(endpointUrl: URL, contentType: String, requestBytes: UnsafePointer<UInt8>, byteCount: Int, completion: @escaping DataTaskCompletion) {
         var callbackData = WriteCallbackData()
         
         guard let curl = curl_easy_init() else {
@@ -207,6 +207,7 @@ public class TelegramBot {
         //curl_easy_setopt_int(curl, CURLOPT_SAFE_UPLOAD, 1)
         curl_easy_setopt_int(curl, CURLOPT_POST, 1)
         curl_easy_setopt_binary(curl, CURLOPT_POSTFIELDS, requestBytes)
+        curl_easy_setopt_int(curl, CURLOPT_POSTFIELDSIZE, Int32(byteCount))
         
         var headers: UnsafeMutablePointer<curl_slist>? = nil
         headers = curl_slist_append(headers, "Content-Type: \(contentType)")
