@@ -1,5 +1,10 @@
 # telegram-bot-swift changelog
 
+## 0.14.0 (2017-02-17)
+
+- Lib rewritten to use libcurl because Foundation's URLSession
+is not working reliably on Linux yet.
+
 ## 0.13.0 (2016-12-04)
 
 - Update to Bot API 2.3.1.
