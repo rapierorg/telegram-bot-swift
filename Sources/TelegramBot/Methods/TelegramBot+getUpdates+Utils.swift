@@ -11,6 +11,7 @@
 //
 
 import Foundation
+import CCurl
 
 extension TelegramBot {
     /// Returns next unprocessed update from Telegram.
@@ -23,15 +24,40 @@ extension TelegramBot {
     public func nextUpdateSync() -> Update? {
         if unprocessedUpdates.isEmpty {
             var updates: [Update]?
-            repeat {
+            var retryCount = 0
+            while true {
                 updates = getUpdatesSync(offset: nextOffset,
                     limit: defaultUpdatesLimit,
                     timeout: defaultUpdatesTimeout)
                 if updates == nil {
-                    // Error, report to caller
+                    // Retry on temporary problems
+                    if autoReconnect,
+                        let error = lastError,
+                        case .libcurlError(let code, _) = error
+                    {
+                        switch code {
+                        case CURLE_COULDNT_RESOLVE_PROXY, CURLE_COULDNT_RESOLVE_HOST, CURLE_COULDNT_CONNECT, CURLE_OPERATION_TIMEDOUT, CURLE_SSL_CONNECT_ERROR, CURLE_SEND_ERROR, CURLE_RECV_ERROR:
+                            let delay = reconnectDelay(retryCount)
+                            retryCount += 1
+                            if delay == 0.0 {
+                                logger("Reconnect attempt \(retryCount), will retry at once")
+                            } else {
+                                logger("Reconnect attempt \(retryCount), will retry after \(delay) sec")
+                                wait(seconds: delay)
+                            }
+                            continue
+                        default:
+                            break
+                        }
+                    }
+                    // Unrecoverable error, report to caller
                     return nil
                 }
-            } while updates!.isEmpty // Timeout, retry
+                if let updates = updates, !updates.isEmpty {
+                    break
+                }
+                // else try again
+            }
             unprocessedUpdates = updates!
         }
         

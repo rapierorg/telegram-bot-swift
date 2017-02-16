@@ -1,0 +1,18 @@
+{
+  "autoPin": true,
+  "pins": [
+    {
+      "package": "ScannerUtils",
+      "reason": null,
+      "repositoryURL": "https://github.com/smud/ScannerUtils.git",
+      "version": "1.0.5"
+    },
+    {
+      "package": "SwiftyJSON",
+      "reason": null,
+      "repositoryURL": "https://github.com/zmeyc/SwiftyJSON.git",
+      "version": "12.1.2"
+    }
+  ],
+  "version": 1
+}
