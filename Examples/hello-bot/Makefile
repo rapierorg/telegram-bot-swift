@@ -1,12 +1,12 @@
 all: build
 
-build:
-	swift build -Xswiftc -j8
+test:
+	swift test
 
-rebuild: clean build
+build:
+	swift build
 
 clean:
-	@echo --- Invoking swift build --clean
-	-swift build --clean
+	swift package clean
 
-.PHONY: all build rebuild clean
+.PHONY: all test build clean
