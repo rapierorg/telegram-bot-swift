@@ -202,7 +202,7 @@ public class TelegramBot {
             completion(nil, .libcurlInitError)
             return
         }
-        
+        defer{curl_easy_cleanup(curl)}
         curl_easy_setopt_string(curl, CURLOPT_URL, endpointUrl.absoluteString)
         //curl_easy_setopt_int(curl, CURLOPT_SAFE_UPLOAD, 1)
         curl_easy_setopt_int(curl, CURLOPT_POST, 1)
