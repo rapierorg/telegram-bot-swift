@@ -73,7 +73,7 @@ public class Router {
     
 	@discardableResult
     public func process(update: Update, properties: [String: AnyObject] = [:]) throws -> Bool {
-		let string = update.message?.extractCommand(for: bot) ?? (update.callback_query?.data ?? "")
+		let string = update.message?.extractCommand(for: bot) ?? ""
         let scanner = Scanner(string: string)
         scanner.caseSensitive = caseSensitive
         scanner.charactersToBeSkipped = charactersToBeSkipped
