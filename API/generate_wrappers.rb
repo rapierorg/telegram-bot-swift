@@ -217,6 +217,8 @@ def make_swift_type_name(var_name, var_type)
     return 'FileInfo'
   when 'InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply'
     return 'ReplyMarkup'
+  when 'MessageOrBoolean'
+    return 'MessageOrBool'
   end
   return var_type
 end
@@ -242,6 +244,9 @@ def deduce_result_type(description)
   type_name = description[/, a (.+) object is returned/, 1]
   return type_name unless type_name.nil?
 
+  type_name = description[/(\w+) is returned, otherwise True is returned/, 1]
+  return "#{type_name}OrBoolean" unless type_name.nil?
+
   type_name = description[/(\w+) is returned/, 1]
   return type_name unless type_name.nil?
 
@@ -251,7 +256,7 @@ def deduce_result_type(description)
   type_name = description[/Returns (.+) on/, 1]
   return type_name unless type_name.nil?
 
-  return 'Bool'
+  return 'Boolean'
 end
 
 def fetch_description(current_node)

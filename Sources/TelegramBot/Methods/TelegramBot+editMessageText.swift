@@ -5,7 +5,7 @@ import Foundation
 import Dispatch
 
 public extension TelegramBot {
-    typealias EditMessageTextCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+    typealias EditMessageTextCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
 
     /// Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
     /// - Parameters:
@@ -16,7 +16,7 @@ public extension TelegramBot {
     ///     - parse_mode: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
     ///     - disable_web_page_preview: Disables link previews for links in this message
     ///     - reply_markup: A JSON-serialized object for an inline keyboard.
-    /// - Returns: Message on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
+    /// - Returns: MessageOrBool on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
     /// - Note: Blocking version of the method.
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#editmessagetext>
@@ -29,7 +29,7 @@ public extension TelegramBot {
             parse_mode: String? = nil,
             disable_web_page_preview: Bool? = nil,
             reply_markup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
         return requestSync("editMessageText", defaultParameters["editMessageText"], parameters, [
             "chat_id": chat_id,
             "message_id": message_id,
@@ -49,7 +49,7 @@ public extension TelegramBot {
     ///     - parse_mode: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
     ///     - disable_web_page_preview: Disables link previews for links in this message
     ///     - reply_markup: A JSON-serialized object for an inline keyboard.
-    /// - Returns: Message on success. Nil on error, in which case `error` contains the details.
+    /// - Returns: MessageOrBool on success. Nil on error, in which case `error` contains the details.
     /// - Note: Asynchronous version of the method.
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#editmessagetext>

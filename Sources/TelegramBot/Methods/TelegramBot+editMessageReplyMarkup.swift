@@ -5,7 +5,7 @@ import Foundation
 import Dispatch
 
 public extension TelegramBot {
-    typealias EditMessageReplyMarkupCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+    typealias EditMessageReplyMarkupCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
 
     /// Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots).  On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
     /// - Parameters:
@@ -13,7 +13,7 @@ public extension TelegramBot {
     ///     - message_id: Required if inline_message_id is not specified. Identifier of the sent message
     ///     - inline_message_id: Required if chat_id and message_id are not specified. Identifier of the inline message
     ///     - reply_markup: A JSON-serialized object for an inline keyboard.
-    /// - Returns: Message on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
+    /// - Returns: MessageOrBool on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
     /// - Note: Blocking version of the method.
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#editmessagereplymarkup>
@@ -23,7 +23,7 @@ public extension TelegramBot {
             message_id: Int? = nil,
             inline_message_id: String? = nil,
             reply_markup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
         return requestSync("editMessageReplyMarkup", defaultParameters["editMessageReplyMarkup"], parameters, [
             "chat_id": chat_id,
             "message_id": message_id,
@@ -37,7 +37,7 @@ public extension TelegramBot {
     ///     - message_id: Required if inline_message_id is not specified. Identifier of the sent message
     ///     - inline_message_id: Required if chat_id and message_id are not specified. Identifier of the inline message
     ///     - reply_markup: A JSON-serialized object for an inline keyboard.
-    /// - Returns: Message on success. Nil on error, in which case `error` contains the details.
+    /// - Returns: MessageOrBool on success. Nil on error, in which case `error` contains the details.
     /// - Note: Asynchronous version of the method.
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#editmessagereplymarkup>
