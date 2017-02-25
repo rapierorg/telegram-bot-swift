@@ -29,7 +29,7 @@ public enum DataTaskError {
     case libcurlAbortedByCallback
     
     /// Status Code is not 200 (OK)
-    case invalidStatusCode(statusCode: Int, data: Data?)
+    case invalidStatusCode(statusCode: Int, telegramResponse: Response, data: Data?)
     
     /// Telegram server returned no data
     case noDataReceived
@@ -51,12 +51,12 @@ extension DataTaskError: CustomDebugStringConvertible {
             return "Libcurl error \(code.rawValue): \(description)"
         case .libcurlAbortedByCallback:
             return "Libcurl aborted by callback"
-        case .invalidStatusCode(let statusCode, _):
-            return "Expected status code 200, got \(statusCode)"
+        case let .invalidStatusCode(statusCode, telegramResponse, _):
+            return "Expected status code 200, got \(statusCode): \(telegramResponse.description.unwrapOptional)"
         case .noDataReceived:
             return "No data received"
-        case .serverError(_, _):
-            return "Telegram server returned an error"
+        case let .serverError(telegramResponse, _):
+            return "Telegram server returned an error: \(telegramResponse.description.unwrapOptional)"
         }
     }
 }

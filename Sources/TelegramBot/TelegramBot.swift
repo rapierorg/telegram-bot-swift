@@ -248,8 +248,11 @@ public class TelegramBot {
             return
         }
         let data = callbackData.data
+        let json = JSON(data: data)
+        let telegramResponse = Response(json: json)
+        
         guard httpCode == 200 else {
-            completion(nil, .invalidStatusCode(statusCode: httpCode, data: data))
+            completion(nil, .invalidStatusCode(statusCode: httpCode, telegramResponse: telegramResponse, data: data))
             return
         }
         
@@ -258,9 +261,6 @@ public class TelegramBot {
             return
         }
         
-        let json = JSON(data: data)
-        
-        let telegramResponse = Response(json: json)
         if !telegramResponse.ok {
             completion(nil, .serverError(telegramResponse: telegramResponse, data: data))
             return

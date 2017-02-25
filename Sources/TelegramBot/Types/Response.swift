@@ -25,9 +25,9 @@ public struct Response: JsonConvertible {
 	}
 		
     /// *Optional.* Error description.
-	public var error_description: String? {
-		get { return json["error_description"].string }
-		set { json["error_description"].string = newValue }
+	public var description: String? {
+		get { return json["description"].string }
+		set { json["description"].string = newValue }
 	}
 		
     /// *Optional.* Error code. Its contents are subject to change in the future.
