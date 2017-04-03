@@ -111,12 +111,15 @@ class MainController {
     }
     
     func onCallbackQuery(context: Context) throws -> Bool {
-        guard let chatId = context.update.callback_query?.message?.chat.id else { return false }
-        guard let messageId = context.update.callback_query?.message?.message_id else { return false }
+        guard let callback_query = context.update.callback_query else { return false }
+        guard let chatId = callback_query.message?.chat.id else { return false }
+        guard let messageId = callback_query.message?.message_id else { return false }
+        guard let data = callback_query.data else { return false }
+        let scanner = Scanner(string: data)
 
         // "toggle 1234567"
-        guard context.args.scanWord() == "toggle" else { return false }
-        guard let itemId = context.args.scanInt64() else { return false }
+        guard scanner.skipString("toggle") else { return false }
+        guard let itemId = scanner.scanInt64() else { return false }
         
         guard let item = try Item.item(itemId: itemId, from: chatId) else {
             context.respondAsync("This item no longer exists.")
