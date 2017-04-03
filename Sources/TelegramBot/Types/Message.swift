@@ -273,13 +273,13 @@ public struct Message: JsonConvertible {
         set { json["channel_chat_created"].bool = newValue }
     }
 
-    /// Optional. The group has been migrated to a supergroup with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+    /// Optional. The group has been migrated to a supergroup with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
     public var migrate_to_chat_id: Int64? {
         get { return json["migrate_to_chat_id"].int64 }
         set { json["migrate_to_chat_id"].int64 = newValue }
     }
 
-    /// Optional. The supergroup has been migrated from a group with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+    /// Optional. The supergroup has been migrated from a group with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
     public var migrate_from_chat_id: Int64? {
         get { return json["migrate_from_chat_id"].int64 }
         set { json["migrate_from_chat_id"].int64 = newValue }

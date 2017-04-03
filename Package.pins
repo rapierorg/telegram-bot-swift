@@ -16,8 +16,8 @@
     {
       "package": "SwiftyJSON",
       "reason": null,
-      "repositoryURL": "https://github.com/zmeyc/SwiftyJSON.git",
-      "version": "12.1.4"
+      "repositoryURL": "https://github.com/SwiftyJSON/SwiftyJSON.git",
+      "version": "3.1.4"
     }
   ],
   "version": 1

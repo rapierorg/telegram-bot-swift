@@ -21,7 +21,7 @@ public protocol JsonConvertible: CustomStringConvertible, CustomDebugStringConve
 
 extension JsonConvertible {
 	public var description: String {
-		return json.rawString(encoding: String.Encoding.utf8, options: []) ?? ""
+		return json.rawString() ?? ""
 	}
 	
 	public var debugDescription: String {
