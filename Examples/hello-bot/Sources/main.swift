@@ -43,4 +43,4 @@ while let update = bot.nextUpdateSync() {
 	try router.process(update: update)
 }
 
-fatalError("Server stopped due to error: \(bot.lastError)")
+fatalError("Server stopped due to error: \(bot.lastError.unwrapOptional)")
