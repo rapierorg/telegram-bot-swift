@@ -66,5 +66,5 @@ while let update = bot.nextUpdateSync() {
     }
 }
 
-print("Server stopped due to error: \(bot.lastError)")
+print("Server stopped due to error: \(bot.lastError.unwrapOptional)")
 exit(1)

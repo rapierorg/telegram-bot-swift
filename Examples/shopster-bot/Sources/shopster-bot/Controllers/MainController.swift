@@ -33,7 +33,7 @@ class MainController {
     func onStop(context: Context) -> Bool {
         let replyTo = context.privateChat ? nil : context.message?.message_id
         
-        var markup = ReplyKeyboardHide()
+        var markup = ReplyKeyboardRemove()
         markup.selective = replyTo != nil
         context.respondAsync("Stopping.",
                              reply_to_message_id: replyTo,

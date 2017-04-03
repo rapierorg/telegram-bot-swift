@@ -46,7 +46,7 @@ class AddController {
         let text = "Type a name to add or /cancel to cancel."
         
         if context.privateChat {
-            context.respondAsync(text, reply_markup: ReplyKeyboardHide())
+            context.respondAsync(text, reply_markup: ReplyKeyboardRemove())
         } else {
             let replyTo = context.message?.message_id
             var markup = ForceReply()
