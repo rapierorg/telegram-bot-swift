@@ -1,5 +1,17 @@
 # telegram-bot-swift changelog
 
+## 0.15.0 (2017-04-03)
+
+- Memory leak fixed.
+
+- Callback_query bug fixed.
+
+- Message editing requests generation fixed.
+
+- Better error reporting.
+
+- Move back to original SwiftyJSON.
+
 ## 0.14.0 (2017-02-17)
 
 - Library rewritten to use libcurl because Foundation's URLSession is not working reliably on Linux yet.
