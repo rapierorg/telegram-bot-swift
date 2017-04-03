@@ -37,7 +37,7 @@ public struct InlineQueryResultGame: JsonConvertible {
             return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(json: value)
         }
         set {
-            json["reply_markup"] = newValue?.json ?? nil
+            json["reply_markup"] = newValue?.json ?? JSON.null
         }
     }
 

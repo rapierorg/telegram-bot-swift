@@ -39,7 +39,7 @@ public struct Game: JsonConvertible {
     /// Optional. Special entities that appear in text, such as usernames, URLs, bot commands, etc.
     public var text_entities: [MessageEntity] {
         get { return json["text_entities"].arrayValue() }
-        set { json["text_entities"] = newValue.isEmpty ? nil : JSON.initFrom(newValue) }
+        set { json["text_entities"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
     }
 
     /// Optional. Animation that will be displayed in the game message in chats. Upload via BotFather
@@ -49,7 +49,7 @@ public struct Game: JsonConvertible {
             return value.isNullOrUnknown ? nil : Animation(json: value)
         }
         set {
-            json["animation"] = newValue?.json ?? nil
+            json["animation"] = newValue?.json ?? JSON.null
         }
     }
 

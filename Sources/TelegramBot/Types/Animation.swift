@@ -25,7 +25,7 @@ public struct Animation: JsonConvertible {
             return value.isNullOrUnknown ? nil : PhotoSize(json: value)
         }
         set {
-            json["thumb"] = newValue?.json ?? nil
+            json["thumb"] = newValue?.json ?? JSON.null
         }
     }
 

@@ -118,7 +118,7 @@ def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_opt
                   "        get { return json[\"#{var_name}\"].twoDArrayValue() }\n"\
                   "        set {\n"\
                   "            if newValue.isEmpty {\n"\
-                  "                json[\"#{var_name}\"] = nil\n"\
+                  "                json[\"#{var_name}\"] = JSON.null\n"\
                   "                return\n"\
                   "            }\n"\
                   "            var rowsJson = [JSON]()\n"\
@@ -160,7 +160,7 @@ def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_opt
       if var_optional then
         out.write "    public var #{getter_name}: [#{var_type}] {\n"\
                   "        get { return json[\"#{var_name}\"].arrayValue() }\n"\
-                  "        set { json[\"#{var_name}\"] = newValue.isEmpty ? nil : JSON.initFrom(newValue) }\n"\
+                  "        set { json[\"#{var_name}\"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }\n"\
                   "    }\n"
       else
         out.write "    public var #{getter_name}: [#{var_type}] {\n"\
@@ -176,7 +176,7 @@ def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_opt
                   "            return value.isNullOrUnknown ? nil : #{var_type}(json: value)\n"\
                   "        }\n"\
                   "        set {\n"\
-                  "            json[\"#{var_name}\"] = newValue?.json ?? nil\n"\
+                  "            json[\"#{var_name}\"] = newValue?.json ?? JSON.null\n"\
                   "        }\n"\
                   "    }\n"
       else

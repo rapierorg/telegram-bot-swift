@@ -51,7 +51,7 @@ public struct WebhookInfo: JsonConvertible {
     /// Optional. A list of update types the bot is subscribed to. Defaults to all update types
     public var allowed_updates: [String] {
         get { return json["allowed_updates"].arrayValue() }
-        set { json["allowed_updates"] = newValue.isEmpty ? nil : JSON.initFrom(newValue) }
+        set { json["allowed_updates"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
     }
 
     public init(json: JSON = [:]) {

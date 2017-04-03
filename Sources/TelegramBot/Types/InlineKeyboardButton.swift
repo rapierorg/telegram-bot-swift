@@ -55,7 +55,7 @@ public struct InlineKeyboardButton: JsonConvertible {
             return value.isNullOrUnknown ? nil : CallbackGame(json: value)
         }
         set {
-            json["callback_game"] = newValue?.json ?? nil
+            json["callback_game"] = newValue?.json ?? JSON.null
         }
     }
 

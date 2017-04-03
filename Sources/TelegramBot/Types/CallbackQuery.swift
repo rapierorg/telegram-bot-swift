@@ -31,7 +31,7 @@ public struct CallbackQuery: JsonConvertible {
             return value.isNullOrUnknown ? nil : Message(json: value)
         }
         set {
-            json["message"] = newValue?.json ?? nil
+            json["message"] = newValue?.json ?? JSON.null
         }
     }
 

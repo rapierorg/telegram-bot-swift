@@ -43,7 +43,7 @@ public struct MessageEntity: JsonConvertible {
             return value.isNullOrUnknown ? nil : User(json: value)
         }
         set {
-            json["user"] = newValue?.json ?? nil
+            json["user"] = newValue?.json ?? JSON.null
         }
     }
 

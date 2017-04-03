@@ -25,7 +25,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : User(json: value)
         }
         set {
-            json["from"] = newValue?.json ?? nil
+            json["from"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -48,7 +48,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : User(json: value)
         }
         set {
-            json["forward_from"] = newValue?.json ?? nil
+            json["forward_from"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -59,7 +59,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : Chat(json: value)
         }
         set {
-            json["forward_from_chat"] = newValue?.json ?? nil
+            json["forward_from_chat"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -82,7 +82,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : Message(json: value)
         }
         set {
-            json["reply_to_message"] = newValue?.json ?? nil
+            json["reply_to_message"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -101,7 +101,7 @@ public struct Message: JsonConvertible {
     /// Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
     public var entities: [MessageEntity] {
         get { return json["entities"].arrayValue() }
-        set { json["entities"] = newValue.isEmpty ? nil : JSON.initFrom(newValue) }
+        set { json["entities"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
     }
 
     /// Optional. Message is an audio file, information about the file
@@ -111,7 +111,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : Audio(json: value)
         }
         set {
-            json["audio"] = newValue?.json ?? nil
+            json["audio"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -122,7 +122,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : Document(json: value)
         }
         set {
-            json["document"] = newValue?.json ?? nil
+            json["document"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -133,14 +133,14 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : Game(json: value)
         }
         set {
-            json["game"] = newValue?.json ?? nil
+            json["game"] = newValue?.json ?? JSON.null
         }
     }
 
     /// Optional. Message is a photo, available sizes of the photo
     public var photo: [PhotoSize] {
         get { return json["photo"].arrayValue() }
-        set { json["photo"] = newValue.isEmpty ? nil : JSON.initFrom(newValue) }
+        set { json["photo"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
     }
 
     /// Optional. Message is a sticker, information about the sticker
@@ -150,7 +150,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : Sticker(json: value)
         }
         set {
-            json["sticker"] = newValue?.json ?? nil
+            json["sticker"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -161,7 +161,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : Video(json: value)
         }
         set {
-            json["video"] = newValue?.json ?? nil
+            json["video"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -172,7 +172,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : Voice(json: value)
         }
         set {
-            json["voice"] = newValue?.json ?? nil
+            json["voice"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -189,7 +189,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : Contact(json: value)
         }
         set {
-            json["contact"] = newValue?.json ?? nil
+            json["contact"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -200,7 +200,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : Location(json: value)
         }
         set {
-            json["location"] = newValue?.json ?? nil
+            json["location"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -211,7 +211,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : Venue(json: value)
         }
         set {
-            json["venue"] = newValue?.json ?? nil
+            json["venue"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -222,7 +222,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : User(json: value)
         }
         set {
-            json["new_chat_member"] = newValue?.json ?? nil
+            json["new_chat_member"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -233,7 +233,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : User(json: value)
         }
         set {
-            json["left_chat_member"] = newValue?.json ?? nil
+            json["left_chat_member"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -246,7 +246,7 @@ public struct Message: JsonConvertible {
     /// Optional. A chat photo was change to this value
     public var new_chat_photo: [PhotoSize] {
         get { return json["new_chat_photo"].arrayValue() }
-        set { json["new_chat_photo"] = newValue.isEmpty ? nil : JSON.initFrom(newValue) }
+        set { json["new_chat_photo"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
     }
 
     /// Optional. Service message: the chat photo was deleted
@@ -292,7 +292,7 @@ public struct Message: JsonConvertible {
             return value.isNullOrUnknown ? nil : Message(json: value)
         }
         set {
-            json["pinned_message"] = newValue?.json ?? nil
+            json["pinned_message"] = newValue?.json ?? JSON.null
         }
     }
 

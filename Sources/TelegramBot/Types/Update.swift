@@ -26,7 +26,7 @@ public struct Update: JsonConvertible {
             return value.isNullOrUnknown ? nil : Message(json: value)
         }
         set {
-            json["message"] = newValue?.json ?? nil
+            json["message"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -37,7 +37,7 @@ public struct Update: JsonConvertible {
             return value.isNullOrUnknown ? nil : Message(json: value)
         }
         set {
-            json["edited_message"] = newValue?.json ?? nil
+            json["edited_message"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -48,7 +48,7 @@ public struct Update: JsonConvertible {
             return value.isNullOrUnknown ? nil : Message(json: value)
         }
         set {
-            json["channel_post"] = newValue?.json ?? nil
+            json["channel_post"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -59,7 +59,7 @@ public struct Update: JsonConvertible {
             return value.isNullOrUnknown ? nil : Message(json: value)
         }
         set {
-            json["edited_channel_post"] = newValue?.json ?? nil
+            json["edited_channel_post"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -70,7 +70,7 @@ public struct Update: JsonConvertible {
             return value.isNullOrUnknown ? nil : InlineQuery(json: value)
         }
         set {
-            json["inline_query"] = newValue?.json ?? nil
+            json["inline_query"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -81,7 +81,7 @@ public struct Update: JsonConvertible {
             return value.isNullOrUnknown ? nil : ChosenInlineResult(json: value)
         }
         set {
-            json["chosen_inline_result"] = newValue?.json ?? nil
+            json["chosen_inline_result"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -92,7 +92,7 @@ public struct Update: JsonConvertible {
             return value.isNullOrUnknown ? nil : CallbackQuery(json: value)
         }
         set {
-            json["callback_query"] = newValue?.json ?? nil
+            json["callback_query"] = newValue?.json ?? JSON.null
         }
     }
 

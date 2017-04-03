@@ -31,7 +31,7 @@ public struct InlineQuery: JsonConvertible {
             return value.isNullOrUnknown ? nil : Location(json: value)
         }
         set {
-            json["location"] = newValue?.json ?? nil
+            json["location"] = newValue?.json ?? JSON.null
         }
     }
 

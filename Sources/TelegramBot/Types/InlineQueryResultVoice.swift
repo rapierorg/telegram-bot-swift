@@ -55,7 +55,7 @@ public struct InlineQueryResultVoice: JsonConvertible {
             return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(json: value)
         }
         set {
-            json["reply_markup"] = newValue?.json ?? nil
+            json["reply_markup"] = newValue?.json ?? JSON.null
         }
     }
 
@@ -66,7 +66,7 @@ public struct InlineQueryResultVoice: JsonConvertible {
             return value.isNullOrUnknown ? nil : InputMessageContent(json: value)
         }
         set {
-            json["input_message_content"] = newValue?.json ?? nil
+            json["input_message_content"] = newValue?.json ?? JSON.null
         }
     }
 
