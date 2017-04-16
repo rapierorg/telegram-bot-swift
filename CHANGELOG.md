@@ -1,6 +1,6 @@
 # telegram-bot-swift changelog
 
-## 0.17.0 ()
+## 0.16.1 (2017-04-16)
 
 - Bugfix: POST data length was calculated incorrectly resulting in
   getFile returning HTTP error 400 "invalid file_id".
