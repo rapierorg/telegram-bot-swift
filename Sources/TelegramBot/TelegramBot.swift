@@ -186,10 +186,12 @@ public class TelegramBot {
             completion(nil, .invalidRequest)
             return
         }
+        // -1 for '\0'
+        let byteCount = requestData.count - 1
         
         DispatchQueue.global().async {
             requestData.withUnsafeBytes { (bytes: UnsafePointer<UInt8>)->Void in
-                self.curlPerformRequest(endpointUrl: endpointUrl, contentType: contentType, requestBytes: bytes, byteCount: requestData.count, completion: completion)
+                self.curlPerformRequest(endpointUrl: endpointUrl, contentType: contentType, requestBytes: bytes, byteCount: byteCount, completion: completion)
             }
         }
     }
