@@ -1,5 +1,10 @@
 # telegram-bot-swift changelog
 
+## 0.17.0 ()
+
+- Bugfix: POST data length was calculated incorrectly resulting in
+  getFile returning HTTP error 400 "invalid file_id".
+
 ## 0.16.0 (2017-04-03)
 
 - Switch to IBM's version of SwiftyJSON for Linux compatibility.
