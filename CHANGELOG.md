@@ -1,6 +1,6 @@
 # telegram-bot-swift changelog
 
-## 0.16.0 (2017-04-03)
+## 0.15.1 (2017-04-16)
 
 - Switch to IBM's version of SwiftyJSON for Linux compatibility.
 
