@@ -27,17 +27,17 @@ public class Command {
         /// By default prefixing is optional.
         /// Ignored if `exactMatch` flag is set.
         public static let slashRequired = Options(rawValue: 1 << 1)
-        
+
         /// Case sensitive comparision of commands.
         public static let caseSensitive = Options(rawValue: 1 << 2)
     }
-    
+
     static let whitespaceAndNewline = CharacterSet.whitespacesAndNewlines
 
     let name: String
     let nameWords: [String]
     let options: Options
-    
+
     public init(_ name: String, options: Options = []) {
         self.options = options
         let finalName: String
@@ -50,7 +50,7 @@ public class Command {
         self.name = finalName
         nameWords = finalName.components(separatedBy: T.whitespaceAndNewline)
     }
-    	
+
     public func fetchFrom(_ scanner: Scanner, caseSensitive: Bool = false) -> (command: String, startsWithSlash: Bool)? {
         if nameWords.isEmpty {
             // This is "match all" rule
@@ -69,45 +69,45 @@ public class Command {
         var userCommand = ""
         var isFirstWord = true
         var firstWordStartsWithSlash = false
-        
+
         // Each word in nameWords should match a word (possibly abbreviated) from scanner
         for nameWord in nameWords {
             guard let word = scanner.scanUpToCharacters(from: T.whitespaceAndNewline) else {
                 return nil
             }
-            
+
             if isFirstWord {
                 firstWordStartsWithSlash = word.hasPrefix("/")
             }
-            
+
             if options.contains(.exactMatch) {
-                
+
                 guard nameWord.hasPrefix(word, caseInsensitive: !caseSensitive) else {
                     return nil
                 }
-                
+
                 userCommand += word
-                
+
             } else {
-                
+
                 if isFirstWord && options.contains(.slashRequired) {
                     guard firstWordStartsWithSlash else { return nil }
                 }
-                
+
                 let processedWord: String
                 if isFirstWord && firstWordStartsWithSlash {
                     processedWord = word.substring(from: word.index(after: word.startIndex))
                 } else {
                     processedWord = word
                 }
-                
-                guard nameWord.hasPrefix(processedWord, caseInsensitive: !caseSensitive) else {
+
+                guard nameWord.compare(processedWord, options: !caseSensitive ? [.caseInsensitive] : []) == .orderedSame else {
                     return nil
                 }
-                
+
                 userCommand += processedWord
             }
-            
+
             isFirstWord = false
         }
         return (userCommand, firstWordStartsWithSlash)
