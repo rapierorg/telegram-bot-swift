@@ -197,7 +197,7 @@ def make_swift_type_name(var_name, var_type)
     var_type.slice! array_prefix
     return "[#{var_type}]"
   end
-
+  
   case var_type
   when 'Boolean', 'True'
     return 'Bool'
@@ -209,6 +209,10 @@ def make_swift_type_name(var_name, var_type)
     end
   when 'Float number'
     return 'Float'
+  when 'exported invite link as String'
+    return 'String'
+  when 'the uploaded File'
+    return 'File'
   when 'Integer or String'
     if var_name.include?('chat_id') then
       return 'ChatId'
