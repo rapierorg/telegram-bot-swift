@@ -7,7 +7,7 @@ Bundler.require(:default)
 require 'fileutils'
 
 HTML_FILE = 'api.html'
-API_DIR = '../Sources/TelegramBot'
+API_DIR = '../Sources/TelegramBotSDK'
 API_FILE = 'api.txt'
 
 TYPE_HEADER = <<EOT
