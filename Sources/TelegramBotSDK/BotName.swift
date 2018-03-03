@@ -22,12 +22,12 @@ public class BotName {
         if lowercase.hasSuffix(underscoreBotSuffix) {
 			withoutSuffix = username.substring(to:
 				username.index(username.endIndex, offsetBy:
-                    -underscoreBotSuffix.characters.count))
+                    -underscoreBotSuffix.count))
             
         } else if lowercase.hasSuffix(botSuffix) {
 			withoutSuffix = username.substring(to:
 				username.index(username.endIndex, offsetBy:
-                    -botSuffix.characters.count))
+                    -botSuffix.count))
             
         } else {
             withoutSuffix = username
