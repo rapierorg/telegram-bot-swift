@@ -2,7 +2,7 @@
 // (c) 2015 - 2016 Andrey Fidrya. MIT license. See LICENSE for more information.
 
 import XCTest
-@testable import TelegramBot
+@testable import TelegramBotSDK
 
 class BlockingServerTests: XCTestCase {
 
