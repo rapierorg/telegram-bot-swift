@@ -20,15 +20,9 @@ public class BotName {
     public init(username: String) {
         let lowercase = username.lowercased()
         if lowercase.hasSuffix(underscoreBotSuffix) {
-			withoutSuffix = username.substring(to:
-				username.index(username.endIndex, offsetBy:
-                    -underscoreBotSuffix.count))
-            
+			withoutSuffix = String(username.dropLast(underscoreBotSuffix.count))
         } else if lowercase.hasSuffix(botSuffix) {
-			withoutSuffix = username.substring(to:
-				username.index(username.endIndex, offsetBy:
-                    -botSuffix.count))
-            
+			withoutSuffix = String(username.dropLast(botSuffix.count))
         } else {
             withoutSuffix = username
         }
