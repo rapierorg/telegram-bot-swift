@@ -1,12 +1,8 @@
 import Foundation
 
 extension Scanner {
-    #if os(Linux) || os(Windows)
-    var isAtEnd: Bool { return atEnd }
-    #endif
-    
     #if os(OSX)
-    func scanInteger() -> Int? {
+    func scanInt() -> Int? {
         var result: Int = 0
         return scanInt(&result) ? result : nil
     }
@@ -19,17 +15,10 @@ extension Scanner {
     }
     #endif
 
-    #if os(OSX)
     func scanInt64() -> Int64? {
         var result: Int64 = 0
         return scanInt64(&result) ? result : nil
     }
-    #else
-    func scanInt64() -> Int64? {
-        var result: Int64 = 0
-        return scanLongLong(&result) ? result : nil
-    }
-    #endif
 
     func scanUInt64() -> UInt64? {
         var result: UInt64 = 0
@@ -50,29 +39,15 @@ extension Scanner {
     }
     #endif
 
-    #if os(OSX)
     func scanHexUInt32() -> UInt32? {
         var result: UInt32 = 0
         return scanHexInt32(&result) ? result : nil
     }
-    #else
-    func scanHexUInt32() -> UInt32? {
-        var result: UInt32 = 0
-        return scanHexInt(&result) ? result : nil
-    }
-    #endif
 
-    #if os(OSX)
     func scanHexUInt64() -> UInt64? {
         var result: UInt64 = 0
         return scanHexInt64(&result) ? result : nil
     }
-    #else
-    func scanHexUInt64() -> UInt64? {
-        var result: UInt64 = 0
-        return scanHexLongLong(&result) ? result : nil
-    }
-    #endif
 
     func scanHexFloat() -> Float? {
         var result: Float = 0.0
@@ -84,11 +59,7 @@ extension Scanner {
         return scanHexDouble(&result) ? result : nil
     }
 
-    #if os(Linux) || os(Windows)
-    func scanString(_ searchString: String) -> String? {
-        return scanString(string: searchString)
-    }
-    #elseif os(OSX)
+    #if os(OSX)
     func scanString(_ searchString: String) -> String? {
         var result: NSString?
         guard scanString(searchString, into: &result) else { return nil }
