@@ -12,7 +12,7 @@
 
 import XCTest
 import Foundation
-@testable import TelegramBot
+@testable import TelegramBotSDK
 
 class RequestTests: XCTestCase {
 	var token: String!
