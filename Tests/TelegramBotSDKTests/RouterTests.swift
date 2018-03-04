@@ -11,7 +11,7 @@
 //
 
 import XCTest
-@testable import TelegramBot
+@testable import TelegramBotSDK
 
 class RouterTests: XCTestCase {
     var token: String!
