@@ -28,8 +28,7 @@ public class Arguments {
 	}
 	
 	public func scanWord() -> String? {
-        var word: NSString?
-        return scanner.scanUpToCharacters(from: T.whitespaceAndNewline, into: &word) ? (word as String?) : nil
+        return scanner.scanUpToCharacters(from: T.whitespaceAndNewline)
 	}
 	
 	public func scanWords() -> [String] {
@@ -46,8 +45,7 @@ public class Arguments {
 		}
 		let validator = Scanner(string: word)
 		validator.charactersToBeSkipped = nil
-        var value: Int = 0
-		guard validator.scanInt(&value), validator.isAtEnd else {
+		guard let value = validator.scanInteger(), validator.isAtEnd else {
 			return nil
 		}
 		return value
@@ -59,8 +57,7 @@ public class Arguments {
         }
         let validator = Scanner(string: word)
         validator.charactersToBeSkipped = nil
-        var value: Int64 = 0
-        guard validator.scanInt64(&value), validator.isAtEnd else {
+        guard let value = validator.scanInt64(), validator.isAtEnd else {
             return nil
         }
         return value
@@ -72,22 +69,20 @@ public class Arguments {
 		}
 		let validator = Scanner(string: word)
 		validator.charactersToBeSkipped = nil
-        var value: Double = 0.0
-		guard validator.scanDouble(&value), validator.isAtEnd else {
+		guard let value = validator.scanDouble(), validator.isAtEnd else {
 			return nil
 		}
 		return value
 	}
 	
 	public func scanRestOfString() -> String {
-        var restOfString: NSString?
-        guard scanner.scanUpTo("", into: &restOfString) else {
+		guard let restOfString = scanner.scanUpTo("") else {
 			return ""
 		}
-		return (restOfString as String?) ?? ""
+		return restOfString
 	}
 	
 	public func skipRestOfString() {
-        scanner.scanLocation = scanner.string.utf16.count
+		scanner.skipUpTo("")
 	}
 }
