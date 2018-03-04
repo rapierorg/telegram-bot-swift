@@ -45,7 +45,7 @@ public class Arguments {
 		}
 		let validator = Scanner(string: word)
 		validator.charactersToBeSkipped = nil
-		guard let value = validator.scanInteger(), validator.isAtEnd else {
+		guard let value = validator.scanInt(), validator.isAtEnd else {
 			return nil
 		}
 		return value

@@ -9,8 +9,8 @@ extension Scanner {
     }
     
     @discardableResult
-    func skipInteger() -> Bool {
-        return scanInteger() != nil
+    func skipInt() -> Bool {
+        return scanInt() != nil
     }
     
     @discardableResult
