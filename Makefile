@@ -9,4 +9,7 @@ build:
 clean:
 	swift package clean
 
-.PHONY: all test build clean
+xcodeproj:
+	swift package generate-xcodeproj
+
+.PHONY: all test build clean xcodeproj

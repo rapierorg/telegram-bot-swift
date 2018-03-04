@@ -11,7 +11,6 @@
 //
 
 import Foundation
-import ScannerUtils
 
 extension String {
 	/// - Parameter botName: bot name to remove.
@@ -22,21 +21,21 @@ extension String {
         scanner.charactersToBeSkipped = nil
         
         let whitespaceAndNewline = CharacterSet.whitespacesAndNewlines
-        scanner.skipCharacters(from: whitespaceAndNewline)
+        scanner.scanCharacters(from: whitespaceAndNewline, into: nil)
         
-        guard scanner.skipString("/") else {
+        guard scanner.scanString("/", into: nil) else {
             return self
         }
         
         let alphanumericCharacters = CharacterSet.alphanumerics
-        guard scanner.skipCharacters(from: alphanumericCharacters) else {
+        guard scanner.scanCharacters(from: alphanumericCharacters, into: nil) else {
             return self
         }
 
         let usernameSeparatorIndex = scanner.scanLocation
 
         let usernameSeparator = "@"
-        guard scanner.skipString(usernameSeparator) else {
+        guard scanner.scanString(usernameSeparator, into: nil) else {
             return self
         }
 
@@ -45,7 +44,9 @@ extension String {
             "abcdefghijklmnopqrstuvwxyz" +
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
             "1234567890_")
-        guard let username = scanner.scanCharacters(from: usernameCharacters) else {
+        var usernameNS: NSString?
+        guard scanner.scanCharacters(from: usernameCharacters, into: &usernameNS),
+                let username = usernameNS as String? else {
             // Empty bot name. Treat as no bot name and process the comamnd.
             return self
         }

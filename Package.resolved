@@ -11,15 +11,6 @@
         }
       },
       {
-        "package": "ScannerUtils",
-        "repositoryURL": "https://github.com/smud/ScannerUtils.git",
-        "state": {
-          "branch": null,
-          "revision": "26015cb4fb0c4d2021d9d428dade45d7a15d1800",
-          "version": "1.0.6"
-        }
-      },
-      {
         "package": "SwiftyJSON",
         "repositoryURL": "https://github.com/IBM-Swift/SwiftyJSON.git",
         "state": {
