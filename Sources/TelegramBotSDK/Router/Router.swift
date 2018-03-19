@@ -154,7 +154,7 @@ public class Router {
             case .contact: return message.contact != nil
             case .location: return message.location != nil
             case .venue: return message.venue != nil
-            case .new_chat_member: return message.new_chat_member != nil
+            case .new_chat_members: return message.new_chat_members.count > 0
             case .left_chat_member: return message.left_chat_member != nil
             case .new_chat_title: return message.new_chat_title != nil
             case .new_chat_photo: return !message.new_chat_photo.isEmpty
