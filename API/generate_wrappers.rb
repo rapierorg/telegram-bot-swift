@@ -193,8 +193,10 @@ end
 
 def make_swift_type_name(var_name, var_type)
   array_prefix = 'Array of '
-  if var_type.start_with?(array_prefix) then
+  downcase_array_prefix = array_prefix.downcase
+  if var_type.start_with?(array_prefix) || var_type.start_with?(downcase_array_prefix) then
     var_type.slice! array_prefix
+    var_type.slice! downcase_array_prefix
     return "[#{var_type}]"
   end
   
@@ -213,6 +215,8 @@ def make_swift_type_name(var_name, var_type)
     return 'String'
   when 'the uploaded File'
     return 'File'
+  when 'Messages'
+    return '[Message]'
   when 'Integer or String'
     if var_name.include?('chat_id') then
       return 'ChatId'
@@ -300,8 +304,22 @@ def generate_type(f, node)
     anchor = type_name.downcase
     out.write "/// - SeeAlso: <https://core.telegram.org/bots/api\##{anchor}>\n"\
               "\n"
-
-    out.write "public struct #{type_name}: JsonConvertible {\n"\
+    
+    if type_name == "InputMedia" then
+      out.write "public protocol #{type_name} {\n"\
+                "    /// Original JSON for fields not yet added to Swift structures.\n"\
+                "    var json: JSON { get set }\n"\
+                "}\n"
+      return
+    end
+    
+    if type_name == "InputMediaPhoto" || type_name == "InputMediaVideo" then
+      base_protocol = "InputMedia"
+    else
+      base_protocol = "JsonConvertible"
+    end
+    
+    out.write "public struct #{type_name}: #{base_protocol} {\n"\
               "    /// Original JSON for fields not yet added to Swift structures.\n"\
               "    public var json: JSON\n"
 
