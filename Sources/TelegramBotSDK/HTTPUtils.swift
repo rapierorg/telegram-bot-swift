@@ -11,6 +11,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 public class HTTPUtils {
     /// Encodes keys and values in a dictionary for using with
