@@ -211,7 +211,7 @@ def make_swift_type_name(var_name, var_type)
     end
   when 'Float number'
     return 'Float'
-  when 'exported invite link as String'
+  when 'the new invite link as String'
     return 'String'
   when 'the uploaded File'
     return 'File'
