@@ -33,7 +33,7 @@ public enum ContentType {
 	case contact
 	case location
 	case venue
-	case new_chat_member
+	case new_chat_members
 	case left_chat_member
 	case new_chat_title
 	case new_chat_photo
