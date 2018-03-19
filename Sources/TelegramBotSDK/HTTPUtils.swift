@@ -48,7 +48,6 @@ public class HTTPUtils {
                 let jsonConvertible = JSON(jsonArray)
                 
                 if let resultString = jsonConvertible.json.rawString(options: JSONSerialization.WritingOptions()) {
-                    print(resultString)
                     valueString = String(describing: resultString)
                 } else {
                     continue
