@@ -289,12 +289,7 @@ def generate_type(f, node)
   current_node = node
 
   type_name = current_node.text
-  if type_name == "InputMedia" then
-    folder = "Protocols"
-  else
-    folder = "Types"
-  end
-  File.open("#{API_DIR}/#{folder}/#{type_name}.swift", "wb") { | out |
+  File.open("#{API_DIR}/Types/#{type_name}.swift", "wb") { | out |
     out.write TYPE_HEADER
     
     current_node = current_node.next_element
@@ -310,21 +305,7 @@ def generate_type(f, node)
     out.write "/// - SeeAlso: <https://core.telegram.org/bots/api\##{anchor}>\n"\
               "\n"
     
-    if type_name == "InputMedia" then
-        out.write "public protocol #{type_name}: JsonConvertible {\n"\
-                "    /// Original JSON for fields not yet added to Swift structures.\n"\
-                "    var json: JSON { get set }\n"\
-                "}\n"
-      return
-    end
-    
-    if type_name == "InputMediaPhoto" || type_name == "InputMediaVideo" then
-      base_protocol = "InputMedia"
-    else
-      base_protocol = "JsonConvertible"
-    end
-    
-    out.write "public struct #{type_name}: #{base_protocol} {\n"\
+    out.write "public struct #{type_name}: JsonConvertible {\n"\
               "    /// Original JSON for fields not yet added to Swift structures.\n"\
               "    public var json: JSON\n"
 
@@ -502,7 +483,7 @@ def main
       next unless title.split.count == 1
 
       # These types are complex and created manually:
-      next unless !['InlineQueryResult', 'InputFile'].include?(title)
+      next unless !['InlineQueryResult', 'InputFile', 'InputMedia'].include?(title)
 
       kind = (title.chars.first == title.chars.first.upcase) ? :type : :method
 
