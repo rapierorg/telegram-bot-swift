@@ -289,7 +289,12 @@ def generate_type(f, node)
   current_node = node
 
   type_name = current_node.text
-  File.open("#{API_DIR}/Types/#{type_name}.swift", "wb") { | out |
+  if type_name == "InputMedia" then
+    folder = "Protocols"
+  else
+    folder = "Types"
+  end
+  File.open("#{API_DIR}/#{folder}/#{type_name}.swift", "wb") { | out |
     out.write TYPE_HEADER
     
     current_node = current_node.next_element
@@ -306,7 +311,7 @@ def generate_type(f, node)
               "\n"
     
     if type_name == "InputMedia" then
-      out.write "public protocol #{type_name} {\n"\
+        out.write "public protocol #{type_name}: JsonConvertible {\n"\
                 "    /// Original JSON for fields not yet added to Swift structures.\n"\
                 "    var json: JSON { get set }\n"\
                 "}\n"
@@ -314,7 +319,7 @@ def generate_type(f, node)
     end
     
     if type_name == "InputMediaPhoto" || type_name == "InputMediaVideo" then
-      base_protocol = "InputMedia, JsonConvertible"
+      base_protocol = "InputMedia"
     else
       base_protocol = "JsonConvertible"
     end
