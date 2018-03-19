@@ -7,7 +7,7 @@ Bundler.require(:default)
 require 'fileutils'
 
 HTML_FILE = 'api.html'
-API_DIR = '../Sources/TelegramBot'
+API_DIR = '../Sources/TelegramBotSDK'
 API_FILE = 'api.txt'
 
 TYPE_HEADER = <<EOT
@@ -193,11 +193,13 @@ end
 
 def make_swift_type_name(var_name, var_type)
   array_prefix = 'Array of '
-  if var_type.start_with?(array_prefix) then
+  downcase_array_prefix = array_prefix.downcase
+  if var_type.start_with?(array_prefix) || var_type.start_with?(downcase_array_prefix) then
     var_type.slice! array_prefix
+    var_type.slice! downcase_array_prefix
     return "[#{var_type}]"
   end
-
+  
   case var_type
   when 'Boolean', 'True'
     return 'Bool'
@@ -209,6 +211,12 @@ def make_swift_type_name(var_name, var_type)
     end
   when 'Float number'
     return 'Float'
+  when 'the new invite link as String'
+    return 'String'
+  when 'the uploaded File'
+    return 'File'
+  when 'Messages'
+    return '[Message]'
   when 'Integer or String'
     if var_name.include?('chat_id') then
       return 'ChatId'
@@ -296,7 +304,7 @@ def generate_type(f, node)
     anchor = type_name.downcase
     out.write "/// - SeeAlso: <https://core.telegram.org/bots/api\##{anchor}>\n"\
               "\n"
-
+    
     out.write "public struct #{type_name}: JsonConvertible {\n"\
               "    /// Original JSON for fields not yet added to Swift structures.\n"\
               "    public var json: JSON\n"
@@ -475,7 +483,7 @@ def main
       next unless title.split.count == 1
 
       # These types are complex and created manually:
-      next unless !['InlineQueryResult', 'InputFile'].include?(title)
+      next unless !['InlineQueryResult', 'InputFile', 'InputMedia'].include?(title)
 
       kind = (title.chars.first == title.chars.first.upcase) ? :type : :method
 

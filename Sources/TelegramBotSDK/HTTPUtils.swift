@@ -11,6 +11,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 public class HTTPUtils {
     /// Encodes keys and values in a dictionary for using with
@@ -38,6 +39,19 @@ public class HTTPUtils {
                 }
                 // If true, add "key=" to encoded string
                 valueString = "true"
+            } else if let arrayValue = value as? [JsonConvertible] {
+                
+                let jsonArray = arrayValue.map({ (jsonObject) -> JSON in
+                    return jsonObject.json
+                })
+                
+                let jsonConvertible = JSON(jsonArray)
+                
+                if let resultString = jsonConvertible.json.rawString(options: JSONSerialization.WritingOptions()) {
+                    valueString = String(describing: resultString)
+                } else {
+                    continue
+                }
             } else {
                 valueString = String(describing: value)
             }
