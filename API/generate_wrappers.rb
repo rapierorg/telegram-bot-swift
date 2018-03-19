@@ -314,7 +314,7 @@ def generate_type(f, node)
     end
     
     if type_name == "InputMediaPhoto" || type_name == "InputMediaVideo" then
-      base_protocol = "InputMedia"
+      base_protocol = "InputMedia, JsonConvertible"
     else
       base_protocol = "JsonConvertible"
     end
