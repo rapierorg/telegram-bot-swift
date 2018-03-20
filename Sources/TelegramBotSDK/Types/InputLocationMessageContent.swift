@@ -24,6 +24,12 @@ public struct InputLocationMessageContent: JsonConvertible {
         set { json["longitude"].floatValue = newValue }
     }
 
+    /// Optional. Period in seconds for which the location can be updated, should be between 60 and 86400.
+    public var live_period: Int? {
+        get { return json["live_period"].int }
+        set { json["live_period"].int = newValue }
+    }
+
     public init(json: JSON = [:]) {
         self.json = json
     }

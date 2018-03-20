@@ -31,9 +31,14 @@ public struct WebhookInfo: JsonConvertible {
     }
 
     /// Optional. Unix time for the most recent error that happened when trying to deliver an update via webhook
-    public var last_error_date_unix: Int? {
-        get { return json["last_error_date"].int }
-        set { json["last_error_date"].int = newValue }
+    public var last_error_date: Date? {
+        get {
+            guard let date = json["last_error_date"].double else { return nil }
+            return Date(timeIntervalSince1970: date)
+        }
+        set {
+            json["last_error_date"].double = newValue?.timeIntervalSince1970
+        }
     }
 
     /// Optional. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook

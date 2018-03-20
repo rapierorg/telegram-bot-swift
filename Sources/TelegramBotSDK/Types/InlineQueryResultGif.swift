@@ -42,6 +42,12 @@ public struct InlineQueryResultGif: JsonConvertible {
         set { json["gif_height"].int = newValue }
     }
 
+    /// Optional. Duration of the GIF
+    public var gif_duration: Int? {
+        get { return json["gif_duration"].int }
+        set { json["gif_duration"].int = newValue }
+    }
+
     /// URL of the static thumbnail for the result (jpeg or gif)
     public var thumb_url: String {
         get { return json["thumb_url"].stringValue }
@@ -58,6 +64,12 @@ public struct InlineQueryResultGif: JsonConvertible {
     public var caption: String? {
         get { return json["caption"].string }
         set { json["caption"].string = newValue }
+    }
+
+    /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    public var parse_mode: String? {
+        get { return json["parse_mode"].string }
+        set { json["parse_mode"].string = newValue }
     }
 
     /// Optional. Inline keyboard attached to the message

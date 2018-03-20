@@ -11,7 +11,7 @@ public extension TelegramBot {
     /// - Parameters:
     ///     - chat_id: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     ///     - from_chat_id: Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
-    ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+    ///     - disable_notification: Sends the message silently. Users will receive a notification with no sound.
     ///     - message_id: Message identifier in the chat specified in from_chat_id
     /// - Returns: Message on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
     /// - Note: Blocking version of the method.
@@ -35,7 +35,7 @@ public extension TelegramBot {
     /// - Parameters:
     ///     - chat_id: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     ///     - from_chat_id: Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
-    ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+    ///     - disable_notification: Sends the message silently. Users will receive a notification with no sound.
     ///     - message_id: Message identifier in the chat specified in from_chat_id
     /// - Returns: Message on success. Nil on error, in which case `error` contains the details.
     /// - Note: Asynchronous version of the method.

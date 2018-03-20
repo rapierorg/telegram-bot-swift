@@ -36,6 +36,12 @@ public struct InlineQueryResultDocument: JsonConvertible {
         set { json["caption"].string = newValue }
     }
 
+    /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    public var parse_mode: String? {
+        get { return json["parse_mode"].string }
+        set { json["parse_mode"].string = newValue }
+    }
+
     /// A valid URL for the file
     public var document_url: String {
         get { return json["document_url"].stringValue }

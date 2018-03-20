@@ -54,6 +54,52 @@ public struct Chat: JsonConvertible {
         set { json["all_members_are_administrators"].bool = newValue }
     }
 
+    /// Optional. Chat photo. Returned only in getChat.
+    public var photo: ChatPhoto? {
+        get {
+            let value = json["photo"]
+            return value.isNullOrUnknown ? nil : ChatPhoto(json: value)
+        }
+        set {
+            json["photo"] = newValue?.json ?? JSON.null
+        }
+    }
+
+    /// Optional. Description, for supergroups and channel chats. Returned only in getChat.
+    public var description: String? {
+        get { return json["description"].string }
+        set { json["description"].string = newValue }
+    }
+
+    /// Optional. Chat invite link, for supergroups and channel chats. Returned only in getChat.
+    public var invite_link: String? {
+        get { return json["invite_link"].string }
+        set { json["invite_link"].string = newValue }
+    }
+
+    /// Optional. Pinned message, for supergroups and channel chats. Returned only in getChat.
+    public var pinned_message: Message? {
+        get {
+            let value = json["pinned_message"]
+            return value.isNullOrUnknown ? nil : Message(json: value)
+        }
+        set {
+            json["pinned_message"] = newValue?.json ?? JSON.null
+        }
+    }
+
+    /// Optional. For supergroups, name of group sticker set. Returned only in getChat.
+    public var sticker_set_name: String? {
+        get { return json["sticker_set_name"].string }
+        set { json["sticker_set_name"].string = newValue }
+    }
+
+    /// Optional. True, if the bot can change the group sticker set. Returned only in getChat.
+    public var can_set_sticker_set: Bool? {
+        get { return json["can_set_sticker_set"].bool }
+        set { json["can_set_sticker_set"].bool = newValue }
+    }
+
     public init(json: JSON = [:]) {
         self.json = json
     }

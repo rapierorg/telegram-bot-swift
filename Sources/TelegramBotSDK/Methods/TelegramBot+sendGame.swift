@@ -11,7 +11,7 @@ public extension TelegramBot {
     /// - Parameters:
     ///     - chat_id: Unique identifier for the target chat
     ///     - game_short_name: Short name of the game, serves as the unique identifier for the game. Set up your games via Botfather.
-    ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+    ///     - disable_notification: Sends the message silently. Users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
     ///     - reply_markup: A JSON-serialized object for an inline keyboard. If empty, one ‘Play game_title’ button will be shown. If not empty, the first button must launch the game.
     /// - Returns: Message on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
@@ -38,7 +38,7 @@ public extension TelegramBot {
     /// - Parameters:
     ///     - chat_id: Unique identifier for the target chat
     ///     - game_short_name: Short name of the game, serves as the unique identifier for the game. Set up your games via Botfather.
-    ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+    ///     - disable_notification: Sends the message silently. Users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
     ///     - reply_markup: A JSON-serialized object for an inline keyboard. If empty, one ‘Play game_title’ button will be shown. If not empty, the first button must launch the game.
     /// - Returns: Message on success. Nil on error, in which case `error` contains the details.

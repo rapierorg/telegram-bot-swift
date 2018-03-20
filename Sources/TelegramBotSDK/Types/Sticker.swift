@@ -30,7 +30,7 @@ public struct Sticker: JsonConvertible {
         set { json["height"].intValue = newValue }
     }
 
-    /// Optional. Sticker thumbnail in .webp or .jpg format
+    /// Optional. Sticker thumbnail in the .webp or .jpg format
     public var thumb: PhotoSize? {
         get {
             let value = json["thumb"]
@@ -45,6 +45,23 @@ public struct Sticker: JsonConvertible {
     public var emoji: String? {
         get { return json["emoji"].string }
         set { json["emoji"].string = newValue }
+    }
+
+    /// Optional. Name of the sticker set to which the sticker belongs
+    public var set_name: String? {
+        get { return json["set_name"].string }
+        set { json["set_name"].string = newValue }
+    }
+
+    /// Optional. For mask stickers, the position where the mask should be placed
+    public var mask_position: MaskPosition? {
+        get {
+            let value = json["mask_position"]
+            return value.isNullOrUnknown ? nil : MaskPosition(json: value)
+        }
+        set {
+            json["mask_position"] = newValue?.json ?? JSON.null
+        }
     }
 
     /// Optional. File size
