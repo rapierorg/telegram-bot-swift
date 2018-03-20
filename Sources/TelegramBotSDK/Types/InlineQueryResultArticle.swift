@@ -31,6 +31,14 @@ public struct InlineQueryResultArticle: JsonConvertible {
     }
 
     /// Content of the message to be sent
+    public var inputMessageContent: InputMessageContent? {
+        get {
+            fatalError("Not implemented")
+        }
+        set {
+            json["input_message_content"] = newValue.json
+        }
+    }
 
     /// Optional. Inline keyboard attached to the message
     public var replyMarkup: InlineKeyboardMarkup? {
