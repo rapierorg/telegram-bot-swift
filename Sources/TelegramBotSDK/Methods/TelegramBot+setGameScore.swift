@@ -22,22 +22,22 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#setgamescore>
     @discardableResult
     public func setGameScoreSync(
-            user_id: Int64,
+            userId: Int64,
             score: Int,
             force: Bool? = nil,
-            disable_edit_message: Bool? = nil,
-            chat_id: Int64? = nil,
-            message_id: Int? = nil,
-            inline_message_id: String? = nil,
+            disableEditMessage: Bool? = nil,
+            chatId: Int64? = nil,
+            messageId: Int? = nil,
+            inlineMessageId: String? = nil,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("setGameScore", defaultParameters["setGameScore"], parameters, [
-            "user_id": user_id,
+            "user_id": userId,
             "score": score,
             "force": force,
-            "disable_edit_message": disable_edit_message,
-            "chat_id": chat_id,
-            "message_id": message_id,
-            "inline_message_id": inline_message_id])
+            "disable_edit_message": disableEditMessage,
+            "chat_id": chatId,
+            "message_id": messageId,
+            "inline_message_id": inlineMessageId])
     }
 
     /// Use this method to set the score of the specified user in a game. On success, if the message was sent by the bot, returns the edited Message, otherwise returns True. Returns an error, if the new score is not greater than the user's current score in the chat and force is False.
@@ -54,24 +54,24 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#setgamescore>
     public func setGameScoreAsync(
-            user_id: Int64,
+            userId: Int64,
             score: Int,
             force: Bool? = nil,
-            disable_edit_message: Bool? = nil,
-            chat_id: Int64? = nil,
-            message_id: Int? = nil,
-            inline_message_id: String? = nil,
+            disableEditMessage: Bool? = nil,
+            chatId: Int64? = nil,
+            messageId: Int? = nil,
+            inlineMessageId: String? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SetGameScoreCompletion? = nil) {
         return requestAsync("setGameScore", defaultParameters["setGameScore"], parameters, [
-            "user_id": user_id,
+            "user_id": userId,
             "score": score,
             "force": force,
-            "disable_edit_message": disable_edit_message,
-            "chat_id": chat_id,
-            "message_id": message_id,
-            "inline_message_id": inline_message_id],
+            "disable_edit_message": disableEditMessage,
+            "chat_id": chatId,
+            "message_id": messageId,
+            "inline_message_id": inlineMessageId],
             queue: queue, completion: completion)
     }
 }

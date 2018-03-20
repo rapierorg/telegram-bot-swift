@@ -23,14 +23,14 @@ public extension TelegramBot {
     public func setWebhookSync(
             url: String,
             certificate: InputFile? = nil,
-            max_connections: Int? = nil,
-            allowed_updates: [String]? = nil,
+            maxConnections: Int? = nil,
+            allowedUpdates: [String]? = nil,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("setWebhook", defaultParameters["setWebhook"], parameters, [
             "url": url,
             "certificate": certificate,
-            "max_connections": max_connections,
-            "allowed_updates": allowed_updates])
+            "max_connections": maxConnections,
+            "allowed_updates": allowedUpdates])
     }
 
     /// Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns true.
@@ -48,16 +48,16 @@ public extension TelegramBot {
     public func setWebhookAsync(
             url: String,
             certificate: InputFile? = nil,
-            max_connections: Int? = nil,
-            allowed_updates: [String]? = nil,
+            maxConnections: Int? = nil,
+            allowedUpdates: [String]? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SetWebhookCompletion? = nil) {
         return requestAsync("setWebhook", defaultParameters["setWebhook"], parameters, [
             "url": url,
             "certificate": certificate,
-            "max_connections": max_connections,
-            "allowed_updates": allowed_updates],
+            "max_connections": maxConnections,
+            "allowed_updates": allowedUpdates],
             queue: queue, completion: completion)
     }
 }

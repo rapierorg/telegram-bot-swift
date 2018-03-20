@@ -19,16 +19,16 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#answershippingquery>
     @discardableResult
     public func answerShippingQuerySync(
-            shipping_query_id: String,
+            shippingQueryId: String,
             ok: Bool,
-            shipping_options: [ShippingOption]? = nil,
-            error_message: String? = nil,
+            shippingOptions: [ShippingOption]? = nil,
+            errorMessage: String? = nil,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("answerShippingQuery", defaultParameters["answerShippingQuery"], parameters, [
-            "shipping_query_id": shipping_query_id,
+            "shipping_query_id": shippingQueryId,
             "ok": ok,
-            "shipping_options": shipping_options,
-            "error_message": error_message])
+            "shipping_options": shippingOptions,
+            "error_message": errorMessage])
     }
 
     /// If you sent an invoice requesting a shipping address and the parameter is_flexible was specified, the Bot API will send an Update with a shipping_query field to the bot. Use this method to reply to shipping queries. On success, True is returned.
@@ -42,18 +42,18 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#answershippingquery>
     public func answerShippingQueryAsync(
-            shipping_query_id: String,
+            shippingQueryId: String,
             ok: Bool,
-            shipping_options: [ShippingOption]? = nil,
-            error_message: String? = nil,
+            shippingOptions: [ShippingOption]? = nil,
+            errorMessage: String? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: AnswerShippingQueryCompletion? = nil) {
         return requestAsync("answerShippingQuery", defaultParameters["answerShippingQuery"], parameters, [
-            "shipping_query_id": shipping_query_id,
+            "shipping_query_id": shippingQueryId,
             "ok": ok,
-            "shipping_options": shipping_options,
-            "error_message": error_message],
+            "shipping_options": shippingOptions,
+            "error_message": errorMessage],
             queue: queue, completion: completion)
     }
 }

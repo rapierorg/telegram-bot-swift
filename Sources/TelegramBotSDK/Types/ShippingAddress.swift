@@ -13,7 +13,7 @@ public struct ShippingAddress: JsonConvertible {
     public var json: JSON
 
     /// ISO 3166-1 alpha-2 country code
-    public var country_code: String {
+    public var countryCode: String {
         get { return json["country_code"].stringValue }
         set { json["country_code"].stringValue = newValue }
     }
@@ -31,19 +31,19 @@ public struct ShippingAddress: JsonConvertible {
     }
 
     /// First line for the address
-    public var street_line1: String {
+    public var streetLine1: String {
         get { return json["street_line1"].stringValue }
         set { json["street_line1"].stringValue = newValue }
     }
 
     /// Second line for the address
-    public var street_line2: String {
+    public var streetLine2: String {
         get { return json["street_line2"].stringValue }
         set { json["street_line2"].stringValue = newValue }
     }
 
     /// Address post code
-    public var post_code: String {
+    public var postCode: String {
         get { return json["post_code"].stringValue }
         set { json["post_code"].stringValue = newValue }
     }

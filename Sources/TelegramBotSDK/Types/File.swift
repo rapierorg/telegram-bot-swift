@@ -14,19 +14,19 @@ public struct File: JsonConvertible {
     public var json: JSON
 
     /// Unique identifier for this file
-    public var file_id: String {
+    public var fileId: String {
         get { return json["file_id"].stringValue }
         set { json["file_id"].stringValue = newValue }
     }
 
     /// Optional. File size, if known
-    public var file_size: Int? {
+    public var fileSize: Int? {
         get { return json["file_size"].int }
         set { json["file_size"].int = newValue }
     }
 
     /// Optional. File path. Use https://api.telegram.org/file/bot<token>/<file_path> to get the file.
-    public var file_path: String? {
+    public var filePath: String? {
         get { return json["file_path"].string }
         set { json["file_path"].string = newValue }
     }

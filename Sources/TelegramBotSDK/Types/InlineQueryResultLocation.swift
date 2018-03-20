@@ -13,7 +13,7 @@ public struct InlineQueryResultLocation: JsonConvertible {
     public var json: JSON
 
     /// Type of the result, must be location
-    public var type_string: String {
+    public var typeString: String {
         get { return json["type"].stringValue }
         set { json["type"].stringValue = newValue }
     }
@@ -43,13 +43,13 @@ public struct InlineQueryResultLocation: JsonConvertible {
     }
 
     /// Optional. Period in seconds for which the location can be updated, should be between 60 and 86400.
-    public var live_period: Int? {
+    public var livePeriod: Int? {
         get { return json["live_period"].int }
         set { json["live_period"].int = newValue }
     }
 
     /// Optional. Inline keyboard attached to the message
-    public var reply_markup: InlineKeyboardMarkup? {
+    public var replyMarkup: InlineKeyboardMarkup? {
         get {
             let value = json["reply_markup"]
             return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(json: value)
@@ -60,7 +60,7 @@ public struct InlineQueryResultLocation: JsonConvertible {
     }
 
     /// Optional. Content of the message to be sent instead of the location
-    public var input_message_content: InputMessageContent? {
+    public var inputMessageContent: InputMessageContent? {
         get {
             let value = json["input_message_content"]
             return value.isNullOrUnknown ? nil : InputMessageContent(json: value)
@@ -71,19 +71,19 @@ public struct InlineQueryResultLocation: JsonConvertible {
     }
 
     /// Optional. Url of the thumbnail for the result
-    public var thumb_url: String? {
+    public var thumbUrl: String? {
         get { return json["thumb_url"].string }
         set { json["thumb_url"].string = newValue }
     }
 
     /// Optional. Thumbnail width
-    public var thumb_width: Int? {
+    public var thumbWidth: Int? {
         get { return json["thumb_width"].int }
         set { json["thumb_width"].int = newValue }
     }
 
     /// Optional. Thumbnail height
-    public var thumb_height: Int? {
+    public var thumbHeight: Int? {
         get { return json["thumb_height"].int }
         set { json["thumb_height"].int = newValue }
     }

@@ -25,7 +25,7 @@ public struct InputLocationMessageContent: JsonConvertible {
     }
 
     /// Optional. Period in seconds for which the location can be updated, should be between 60 and 86400.
-    public var live_period: Int? {
+    public var livePeriod: Int? {
         get { return json["live_period"].int }
         set { json["live_period"].int = newValue }
     }

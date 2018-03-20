@@ -13,7 +13,7 @@ public struct Message: JsonConvertible {
     public var json: JSON
 
     /// Unique message identifier inside this chat
-    public var message_id: Int {
+    public var messageId: Int {
         get { return json["message_id"].intValue }
         set { json["message_id"].intValue = newValue }
     }
@@ -42,7 +42,7 @@ public struct Message: JsonConvertible {
     }
 
     /// Optional. For forwarded messages, sender of the original message
-    public var forward_from: User? {
+    public var forwardFrom: User? {
         get {
             let value = json["forward_from"]
             return value.isNullOrUnknown ? nil : User(json: value)
@@ -53,7 +53,7 @@ public struct Message: JsonConvertible {
     }
 
     /// Optional. For messages forwarded from channels, information about the original channel
-    public var forward_from_chat: Chat? {
+    public var forwardFromChat: Chat? {
         get {
             let value = json["forward_from_chat"]
             return value.isNullOrUnknown ? nil : Chat(json: value)
@@ -64,19 +64,19 @@ public struct Message: JsonConvertible {
     }
 
     /// Optional. For messages forwarded from channels, identifier of the original message in the channel
-    public var forward_from_message_id: Int? {
+    public var forwardFromMessageId: Int? {
         get { return json["forward_from_message_id"].int }
         set { json["forward_from_message_id"].int = newValue }
     }
 
     /// Optional. For messages forwarded from channels, signature of the post author if present
-    public var forward_signature: String? {
+    public var forwardSignature: String? {
         get { return json["forward_signature"].string }
         set { json["forward_signature"].string = newValue }
     }
 
     /// Optional. For forwarded messages, date the original message was sent in Unix time
-    public var forward_date: Date? {
+    public var forwardDate: Date? {
         get {
             guard let date = json["forward_date"].double else { return nil }
             return Date(timeIntervalSince1970: date)
@@ -87,7 +87,7 @@ public struct Message: JsonConvertible {
     }
 
     /// Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
-    public var reply_to_message: Message? {
+    public var replyToMessage: Message? {
         get {
             let value = json["reply_to_message"]
             return value.isNullOrUnknown ? nil : Message(json: value)
@@ -98,7 +98,7 @@ public struct Message: JsonConvertible {
     }
 
     /// Optional. Date the message was last edited in Unix time
-    public var edit_date: Date? {
+    public var editDate: Date? {
         get {
             guard let date = json["edit_date"].double else { return nil }
             return Date(timeIntervalSince1970: date)
@@ -109,13 +109,13 @@ public struct Message: JsonConvertible {
     }
 
     /// Optional. The unique identifier of a media message group this message belongs to
-    public var media_group_id: String? {
+    public var mediaGroupId: String? {
         get { return json["media_group_id"].string }
         set { json["media_group_id"].string = newValue }
     }
 
     /// Optional. Signature of the post author for messages in channels
-    public var author_signature: String? {
+    public var authorSignature: String? {
         get { return json["author_signature"].string }
         set { json["author_signature"].string = newValue }
     }
@@ -133,7 +133,7 @@ public struct Message: JsonConvertible {
     }
 
     /// Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
-    public var caption_entities: [MessageEntity] {
+    public var captionEntities: [MessageEntity] {
         get { return json["caption_entities"].arrayValue() }
         set { json["caption_entities"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
     }
@@ -211,7 +211,7 @@ public struct Message: JsonConvertible {
     }
 
     /// Optional. Message is a video note, information about the video message
-    public var video_note: VideoNote? {
+    public var videoNote: VideoNote? {
         get {
             let value = json["video_note"]
             return value.isNullOrUnknown ? nil : VideoNote(json: value)
@@ -261,13 +261,13 @@ public struct Message: JsonConvertible {
     }
 
     /// Optional. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
-    public var new_chat_members: [User] {
+    public var newChatMembers: [User] {
         get { return json["new_chat_members"].arrayValue() }
         set { json["new_chat_members"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
     }
 
     /// Optional. A member was removed from the group, information about them (this member may be the bot itself)
-    public var left_chat_member: User? {
+    public var leftChatMember: User? {
         get {
             let value = json["left_chat_member"]
             return value.isNullOrUnknown ? nil : User(json: value)
@@ -278,55 +278,55 @@ public struct Message: JsonConvertible {
     }
 
     /// Optional. A chat title was changed to this value
-    public var new_chat_title: String? {
+    public var newChatTitle: String? {
         get { return json["new_chat_title"].string }
         set { json["new_chat_title"].string = newValue }
     }
 
     /// Optional. A chat photo was change to this value
-    public var new_chat_photo: [PhotoSize] {
+    public var newChatPhoto: [PhotoSize] {
         get { return json["new_chat_photo"].arrayValue() }
         set { json["new_chat_photo"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
     }
 
     /// Optional. Service message: the chat photo was deleted
-    public var delete_chat_photo: Bool? {
+    public var deleteChatPhoto: Bool? {
         get { return json["delete_chat_photo"].bool }
         set { json["delete_chat_photo"].bool = newValue }
     }
 
     /// Optional. Service message: the group has been created
-    public var group_chat_created: Bool? {
+    public var groupChatCreated: Bool? {
         get { return json["group_chat_created"].bool }
         set { json["group_chat_created"].bool = newValue }
     }
 
     /// Optional. Service message: the supergroup has been created. This field can‘t be received in a message coming through updates, because bot can’t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.
-    public var supergroup_chat_created: Bool? {
+    public var supergroupChatCreated: Bool? {
         get { return json["supergroup_chat_created"].bool }
         set { json["supergroup_chat_created"].bool = newValue }
     }
 
     /// Optional. Service message: the channel has been created. This field can‘t be received in a message coming through updates, because bot can’t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.
-    public var channel_chat_created: Bool? {
+    public var channelChatCreated: Bool? {
         get { return json["channel_chat_created"].bool }
         set { json["channel_chat_created"].bool = newValue }
     }
 
     /// Optional. The group has been migrated to a supergroup with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
-    public var migrate_to_chat_id: Int64? {
+    public var migrateToChatId: Int64? {
         get { return json["migrate_to_chat_id"].int64 }
         set { json["migrate_to_chat_id"].int64 = newValue }
     }
 
     /// Optional. The supergroup has been migrated from a group with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
-    public var migrate_from_chat_id: Int64? {
+    public var migrateFromChatId: Int64? {
         get { return json["migrate_from_chat_id"].int64 }
         set { json["migrate_from_chat_id"].int64 = newValue }
     }
 
     /// Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
-    public var pinned_message: Message? {
+    public var pinnedMessage: Message? {
         get {
             let value = json["pinned_message"]
             return value.isNullOrUnknown ? nil : Message(json: value)
@@ -348,7 +348,7 @@ public struct Message: JsonConvertible {
     }
 
     /// Optional. Message is a service message about a successful payment, information about the payment. More about payments »
-    public var successful_payment: SuccessfulPayment? {
+    public var successfulPayment: SuccessfulPayment? {
         get {
             let value = json["successful_payment"]
             return value.isNullOrUnknown ? nil : SuccessfulPayment(json: value)
@@ -359,7 +359,7 @@ public struct Message: JsonConvertible {
     }
 
     /// Optional. The domain name of the website on which the user has logged in. More about Telegram Login »
-    public var connected_website: String? {
+    public var connectedWebsite: String? {
         get { return json["connected_website"].string }
         set { json["connected_website"].string = newValue }
     }

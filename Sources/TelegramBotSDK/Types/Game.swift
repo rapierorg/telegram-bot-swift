@@ -37,7 +37,7 @@ public struct Game: JsonConvertible {
     }
 
     /// Optional. Special entities that appear in text, such as usernames, URLs, bot commands, etc.
-    public var text_entities: [MessageEntity] {
+    public var textEntities: [MessageEntity] {
         get { return json["text_entities"].arrayValue() }
         set { json["text_entities"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
     }

@@ -13,13 +13,13 @@ public struct ChatPhoto: JsonConvertible {
     public var json: JSON
 
     /// Unique file identifier of small (160x160) chat photo. This file_id can be used only for photo download.
-    public var small_file_id: String {
+    public var smallFileId: String {
         get { return json["small_file_id"].stringValue }
         set { json["small_file_id"].stringValue = newValue }
     }
 
     /// Unique file identifier of big (640x640) chat photo. This file_id can be used only for photo download.
-    public var big_file_id: String {
+    public var bigFileId: String {
         get { return json["big_file_id"].stringValue }
         set { json["big_file_id"].stringValue = newValue }
     }

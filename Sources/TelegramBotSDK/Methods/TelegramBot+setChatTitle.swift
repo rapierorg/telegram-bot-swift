@@ -18,11 +18,11 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#setchattitle>
     @discardableResult
     public func setChatTitleSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             title: String,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("setChatTitle", defaultParameters["setChatTitle"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "title": title])
     }
 
@@ -36,13 +36,13 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#setchattitle>
     public func setChatTitleAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             title: String,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SetChatTitleCompletion? = nil) {
         return requestAsync("setChatTitle", defaultParameters["setChatTitle"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "title": title],
             queue: queue, completion: completion)
     }

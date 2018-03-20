@@ -18,11 +18,11 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#setchatphoto>
     @discardableResult
     public func setChatPhotoSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             photo: InputFile,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("setChatPhoto", defaultParameters["setChatPhoto"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "photo": photo])
     }
 
@@ -36,13 +36,13 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#setchatphoto>
     public func setChatPhotoAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             photo: InputFile,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SetChatPhotoCompletion? = nil) {
         return requestAsync("setChatPhoto", defaultParameters["setChatPhoto"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "photo": photo],
             queue: queue, completion: completion)
     }

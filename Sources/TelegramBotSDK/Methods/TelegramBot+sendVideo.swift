@@ -26,30 +26,30 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendvideo>
     @discardableResult
     public func sendVideoSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             video: FileInfo,
             duration: Int? = nil,
             width: Int? = nil,
             height: Int? = nil,
             caption: String? = nil,
-            parse_mode: String? = nil,
-            supports_streaming: Bool? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            parseMode: String? = nil,
+            supportsStreaming: Bool? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendVideo", defaultParameters["sendVideo"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "video": video,
             "duration": duration,
             "width": width,
             "height": height,
             "caption": caption,
-            "parse_mode": parse_mode,
-            "supports_streaming": supports_streaming,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup])
+            "parse_mode": parseMode,
+            "supports_streaming": supportsStreaming,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
@@ -70,32 +70,32 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendvideo>
     public func sendVideoAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             video: FileInfo,
             duration: Int? = nil,
             width: Int? = nil,
             height: Int? = nil,
             caption: String? = nil,
-            parse_mode: String? = nil,
-            supports_streaming: Bool? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            parseMode: String? = nil,
+            supportsStreaming: Bool? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVideoCompletion? = nil) {
         return requestAsync("sendVideo", defaultParameters["sendVideo"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "video": video,
             "duration": duration,
             "width": width,
             "height": height,
             "caption": caption,
-            "parse_mode": parse_mode,
-            "supports_streaming": supports_streaming,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup],
+            "parse_mode": parseMode,
+            "supports_streaming": supportsStreaming,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

@@ -13,7 +13,7 @@ public struct UserProfilePhotos: JsonConvertible {
     public var json: JSON
 
     /// Total number of profile pictures the target user has
-    public var total_count: Int {
+    public var totalCount: Int {
         get { return json["total_count"].intValue }
         set { json["total_count"].intValue = newValue }
     }

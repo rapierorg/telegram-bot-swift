@@ -13,7 +13,7 @@ public struct ReplyKeyboardRemove: JsonConvertible {
     public var json: JSON
 
     /// Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use one_time_keyboard in ReplyKeyboardMarkup)
-    public var remove_keyboard: Bool {
+    public var removeKeyboard: Bool {
         get { return json["remove_keyboard"].boolValue }
         set { json["remove_keyboard"].boolValue = newValue }
     }

@@ -13,7 +13,7 @@ public struct InlineQueryResultPhoto: JsonConvertible {
     public var json: JSON
 
     /// Type of the result, must be photo
-    public var type_string: String {
+    public var typeString: String {
         get { return json["type"].stringValue }
         set { json["type"].stringValue = newValue }
     }
@@ -25,25 +25,25 @@ public struct InlineQueryResultPhoto: JsonConvertible {
     }
 
     /// A valid URL of the photo. Photo must be in jpeg format. Photo size must not exceed 5MB
-    public var photo_url: String {
+    public var photoUrl: String {
         get { return json["photo_url"].stringValue }
         set { json["photo_url"].stringValue = newValue }
     }
 
     /// URL of the thumbnail for the photo
-    public var thumb_url: String {
+    public var thumbUrl: String {
         get { return json["thumb_url"].stringValue }
         set { json["thumb_url"].stringValue = newValue }
     }
 
     /// Optional. Width of the photo
-    public var photo_width: Int? {
+    public var photoWidth: Int? {
         get { return json["photo_width"].int }
         set { json["photo_width"].int = newValue }
     }
 
     /// Optional. Height of the photo
-    public var photo_height: Int? {
+    public var photoHeight: Int? {
         get { return json["photo_height"].int }
         set { json["photo_height"].int = newValue }
     }
@@ -67,13 +67,13 @@ public struct InlineQueryResultPhoto: JsonConvertible {
     }
 
     /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
-    public var parse_mode: String? {
+    public var parseMode: String? {
         get { return json["parse_mode"].string }
         set { json["parse_mode"].string = newValue }
     }
 
     /// Optional. Inline keyboard attached to the message
-    public var reply_markup: InlineKeyboardMarkup? {
+    public var replyMarkup: InlineKeyboardMarkup? {
         get {
             let value = json["reply_markup"]
             return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(json: value)
@@ -84,7 +84,7 @@ public struct InlineQueryResultPhoto: JsonConvertible {
     }
 
     /// Optional. Content of the message to be sent instead of the photo
-    public var input_message_content: InputMessageContent? {
+    public var inputMessageContent: InputMessageContent? {
         get {
             let value = json["input_message_content"]
             return value.isNullOrUnknown ? nil : InputMessageContent(json: value)

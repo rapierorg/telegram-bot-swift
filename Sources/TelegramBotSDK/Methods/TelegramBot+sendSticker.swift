@@ -20,18 +20,18 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendsticker>
     @discardableResult
     public func sendStickerSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             sticker: FileInfo,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendSticker", defaultParameters["sendSticker"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "sticker": sticker,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup])
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to send .webp stickers. On success, the sent Message is returned.
@@ -46,20 +46,20 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendsticker>
     public func sendStickerAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             sticker: FileInfo,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendStickerCompletion? = nil) {
         return requestAsync("sendSticker", defaultParameters["sendSticker"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "sticker": sticker,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup],
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

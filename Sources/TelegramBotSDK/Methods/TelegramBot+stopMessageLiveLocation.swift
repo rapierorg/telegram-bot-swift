@@ -19,16 +19,16 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#stopmessagelivelocation>
     @discardableResult
     public func stopMessageLiveLocationSync(
-            chat_id: ChatId? = nil,
-            message_id: Int? = nil,
-            inline_message_id: String? = nil,
-            reply_markup: InlineKeyboardMarkup? = nil,
+            chatId: ChatId? = nil,
+            messageId: Int? = nil,
+            inlineMessageId: String? = nil,
+            replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
         return requestSync("stopMessageLiveLocation", defaultParameters["stopMessageLiveLocation"], parameters, [
-            "chat_id": chat_id,
-            "message_id": message_id,
-            "inline_message_id": inline_message_id,
-            "reply_markup": reply_markup])
+            "chat_id": chatId,
+            "message_id": messageId,
+            "inline_message_id": inlineMessageId,
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to stop updating a live location message sent by the bot or via the bot (for inline bots) before live_period expires. On success, if the message was sent by the bot, the sent Message is returned, otherwise True is returned.
@@ -42,18 +42,18 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#stopmessagelivelocation>
     public func stopMessageLiveLocationAsync(
-            chat_id: ChatId? = nil,
-            message_id: Int? = nil,
-            inline_message_id: String? = nil,
-            reply_markup: InlineKeyboardMarkup? = nil,
+            chatId: ChatId? = nil,
+            messageId: Int? = nil,
+            inlineMessageId: String? = nil,
+            replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: StopMessageLiveLocationCompletion? = nil) {
         return requestAsync("stopMessageLiveLocation", defaultParameters["stopMessageLiveLocation"], parameters, [
-            "chat_id": chat_id,
-            "message_id": message_id,
-            "inline_message_id": inline_message_id,
-            "reply_markup": reply_markup],
+            "chat_id": chatId,
+            "message_id": messageId,
+            "inline_message_id": inlineMessageId,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

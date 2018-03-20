@@ -22,22 +22,22 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#createnewstickerset>
     @discardableResult
     public func createNewStickerSetSync(
-            user_id: Int64,
+            userId: Int64,
             name: String,
             title: String,
-            png_sticker: FileInfo,
+            pngSticker: FileInfo,
             emojis: String,
-            contains_masks: Bool? = nil,
-            mask_position: MaskPosition? = nil,
+            containsMasks: Bool? = nil,
+            maskPosition: MaskPosition? = nil,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("createNewStickerSet", defaultParameters["createNewStickerSet"], parameters, [
-            "user_id": user_id,
+            "user_id": userId,
             "name": name,
             "title": title,
-            "png_sticker": png_sticker,
+            "png_sticker": pngSticker,
             "emojis": emojis,
-            "contains_masks": contains_masks,
-            "mask_position": mask_position])
+            "contains_masks": containsMasks,
+            "mask_position": maskPosition])
     }
 
     /// Use this method to create new sticker set owned by a user. The bot will be able to edit the created sticker set. Returns True on success.
@@ -54,24 +54,24 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#createnewstickerset>
     public func createNewStickerSetAsync(
-            user_id: Int64,
+            userId: Int64,
             name: String,
             title: String,
-            png_sticker: FileInfo,
+            pngSticker: FileInfo,
             emojis: String,
-            contains_masks: Bool? = nil,
-            mask_position: MaskPosition? = nil,
+            containsMasks: Bool? = nil,
+            maskPosition: MaskPosition? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: CreateNewStickerSetCompletion? = nil) {
         return requestAsync("createNewStickerSet", defaultParameters["createNewStickerSet"], parameters, [
-            "user_id": user_id,
+            "user_id": userId,
             "name": name,
             "title": title,
-            "png_sticker": png_sticker,
+            "png_sticker": pngSticker,
             "emojis": emojis,
-            "contains_masks": contains_masks,
-            "mask_position": mask_position],
+            "contains_masks": containsMasks,
+            "mask_position": maskPosition],
             queue: queue, completion: completion)
     }
 }

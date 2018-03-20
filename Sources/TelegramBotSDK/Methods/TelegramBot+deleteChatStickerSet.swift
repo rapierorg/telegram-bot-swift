@@ -16,10 +16,10 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#deletechatstickerset>
     @discardableResult
     public func deleteChatStickerSetSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("deleteChatStickerSet", defaultParameters["deleteChatStickerSet"], parameters, [
-            "chat_id": chat_id])
+            "chat_id": chatId])
     }
 
     /// Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. Returns True on success.
@@ -30,12 +30,12 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#deletechatstickerset>
     public func deleteChatStickerSetAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: DeleteChatStickerSetCompletion? = nil) {
         return requestAsync("deleteChatStickerSet", defaultParameters["deleteChatStickerSet"], parameters, [
-            "chat_id": chat_id],
+            "chat_id": chatId],
             queue: queue, completion: completion)
     }
 }

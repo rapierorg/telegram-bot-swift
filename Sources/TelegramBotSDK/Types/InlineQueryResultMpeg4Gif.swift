@@ -13,7 +13,7 @@ public struct InlineQueryResultMpeg4Gif: JsonConvertible {
     public var json: JSON
 
     /// Type of the result, must be mpeg4_gif
-    public var type_string: String {
+    public var typeString: String {
         get { return json["type"].stringValue }
         set { json["type"].stringValue = newValue }
     }
@@ -25,31 +25,31 @@ public struct InlineQueryResultMpeg4Gif: JsonConvertible {
     }
 
     /// A valid URL for the MP4 file. File size must not exceed 1MB
-    public var mpeg4_url: String {
+    public var mpeg4Url: String {
         get { return json["mpeg4_url"].stringValue }
         set { json["mpeg4_url"].stringValue = newValue }
     }
 
     /// Optional. Video width
-    public var mpeg4_width: Int? {
+    public var mpeg4Width: Int? {
         get { return json["mpeg4_width"].int }
         set { json["mpeg4_width"].int = newValue }
     }
 
     /// Optional. Video height
-    public var mpeg4_height: Int? {
+    public var mpeg4Height: Int? {
         get { return json["mpeg4_height"].int }
         set { json["mpeg4_height"].int = newValue }
     }
 
     /// Optional. Video duration
-    public var mpeg4_duration: Int? {
+    public var mpeg4Duration: Int? {
         get { return json["mpeg4_duration"].int }
         set { json["mpeg4_duration"].int = newValue }
     }
 
     /// URL of the static thumbnail (jpeg or gif) for the result
-    public var thumb_url: String {
+    public var thumbUrl: String {
         get { return json["thumb_url"].stringValue }
         set { json["thumb_url"].stringValue = newValue }
     }
@@ -67,13 +67,13 @@ public struct InlineQueryResultMpeg4Gif: JsonConvertible {
     }
 
     /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
-    public var parse_mode: String? {
+    public var parseMode: String? {
         get { return json["parse_mode"].string }
         set { json["parse_mode"].string = newValue }
     }
 
     /// Optional. Inline keyboard attached to the message
-    public var reply_markup: InlineKeyboardMarkup? {
+    public var replyMarkup: InlineKeyboardMarkup? {
         get {
             let value = json["reply_markup"]
             return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(json: value)
@@ -84,7 +84,7 @@ public struct InlineQueryResultMpeg4Gif: JsonConvertible {
     }
 
     /// Optional. Content of the message to be sent instead of the video animation
-    public var input_message_content: InputMessageContent? {
+    public var inputMessageContent: InputMessageContent? {
         get {
             let value = json["input_message_content"]
             return value.isNullOrUnknown ? nil : InputMessageContent(json: value)

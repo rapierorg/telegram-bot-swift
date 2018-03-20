@@ -13,7 +13,7 @@ public struct Sticker: JsonConvertible {
     public var json: JSON
 
     /// Unique identifier for this file
-    public var file_id: String {
+    public var fileId: String {
         get { return json["file_id"].stringValue }
         set { json["file_id"].stringValue = newValue }
     }
@@ -48,13 +48,13 @@ public struct Sticker: JsonConvertible {
     }
 
     /// Optional. Name of the sticker set to which the sticker belongs
-    public var set_name: String? {
+    public var setName: String? {
         get { return json["set_name"].string }
         set { json["set_name"].string = newValue }
     }
 
     /// Optional. For mask stickers, the position where the mask should be placed
-    public var mask_position: MaskPosition? {
+    public var maskPosition: MaskPosition? {
         get {
             let value = json["mask_position"]
             return value.isNullOrUnknown ? nil : MaskPosition(json: value)
@@ -65,7 +65,7 @@ public struct Sticker: JsonConvertible {
     }
 
     /// Optional. File size
-    public var file_size: Int? {
+    public var fileSize: Int? {
         get { return json["file_size"].int }
         set { json["file_size"].int = newValue }
     }

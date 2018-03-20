@@ -25,13 +25,13 @@ public struct ShippingQuery: JsonConvertible {
     }
 
     /// Bot specified invoice payload
-    public var invoice_payload: String {
+    public var invoicePayload: String {
         get { return json["invoice_payload"].stringValue }
         set { json["invoice_payload"].stringValue = newValue }
     }
 
     /// User specified shipping address
-    public var shipping_address: ShippingAddress {
+    public var shippingAddress: ShippingAddress {
         get { return ShippingAddress(json: json["shipping_address"]) }
         set { json["shipping_address"] = newValue.json }
     }

@@ -22,22 +22,22 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendvideonote>
     @discardableResult
     public func sendVideoNoteSync(
-            chat_id: ChatId,
-            video_note: FileInfo,
+            chatId: ChatId,
+            videoNote: FileInfo,
             duration: Int? = nil,
             length: Int? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendVideoNote", defaultParameters["sendVideoNote"], parameters, [
-            "chat_id": chat_id,
-            "video_note": video_note,
+            "chat_id": chatId,
+            "video_note": videoNote,
             "duration": duration,
             "length": length,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup])
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup])
     }
 
     /// As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent Message is returned.
@@ -54,24 +54,24 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendvideonote>
     public func sendVideoNoteAsync(
-            chat_id: ChatId,
-            video_note: FileInfo,
+            chatId: ChatId,
+            videoNote: FileInfo,
             duration: Int? = nil,
             length: Int? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVideoNoteCompletion? = nil) {
         return requestAsync("sendVideoNote", defaultParameters["sendVideoNote"], parameters, [
-            "chat_id": chat_id,
-            "video_note": video_note,
+            "chat_id": chatId,
+            "video_note": videoNote,
             "duration": duration,
             "length": length,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup],
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

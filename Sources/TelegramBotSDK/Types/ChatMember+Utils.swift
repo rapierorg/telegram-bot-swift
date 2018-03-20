@@ -25,8 +25,8 @@ extension ChatMember {
 	
 	/// The member's status in the chat. Can be “creator”, “administrator”, “member”, “left” or “kicked”.
 	public var status: Status {
-		get { return Status(rawValue: status_string) ?? .unknown }
-		set { status_string = newValue.rawValue }
+		get { return Status(rawValue: statusString) ?? .unknown }
+		set { statusString = newValue.rawValue }
 	}
 }
 

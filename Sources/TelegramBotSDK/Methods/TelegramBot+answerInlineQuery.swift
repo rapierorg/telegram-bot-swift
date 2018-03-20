@@ -24,22 +24,22 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#answerinlinequery>
     @discardableResult
     public func answerInlineQuerySync(
-            inline_query_id: String,
+            inlineQueryId: String,
             results: [InlineQueryResult],
-            cache_time: Int? = nil,
-            is_personal: Bool? = nil,
-            next_offset: String? = nil,
-            switch_pm_text: String? = nil,
-            switch_pm_parameter: String? = nil,
+            cacheTime: Int? = nil,
+            isPersonal: Bool? = nil,
+            nextOffset: String? = nil,
+            switchPmText: String? = nil,
+            switchPmParameter: String? = nil,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("answerInlineQuery", defaultParameters["answerInlineQuery"], parameters, [
-            "inline_query_id": inline_query_id,
+            "inline_query_id": inlineQueryId,
             "results": results,
-            "cache_time": cache_time,
-            "is_personal": is_personal,
-            "next_offset": next_offset,
-            "switch_pm_text": switch_pm_text,
-            "switch_pm_parameter": switch_pm_parameter])
+            "cache_time": cacheTime,
+            "is_personal": isPersonal,
+            "next_offset": nextOffset,
+            "switch_pm_text": switchPmText,
+            "switch_pm_parameter": switchPmParameter])
     }
 
     /// Use this method to send answers to an inline query. On success, True is returned.
@@ -58,24 +58,24 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#answerinlinequery>
     public func answerInlineQueryAsync(
-            inline_query_id: String,
+            inlineQueryId: String,
             results: [InlineQueryResult],
-            cache_time: Int? = nil,
-            is_personal: Bool? = nil,
-            next_offset: String? = nil,
-            switch_pm_text: String? = nil,
-            switch_pm_parameter: String? = nil,
+            cacheTime: Int? = nil,
+            isPersonal: Bool? = nil,
+            nextOffset: String? = nil,
+            switchPmText: String? = nil,
+            switchPmParameter: String? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: AnswerInlineQueryCompletion? = nil) {
         return requestAsync("answerInlineQuery", defaultParameters["answerInlineQuery"], parameters, [
-            "inline_query_id": inline_query_id,
+            "inline_query_id": inlineQueryId,
             "results": results,
-            "cache_time": cache_time,
-            "is_personal": is_personal,
-            "next_offset": next_offset,
-            "switch_pm_text": switch_pm_text,
-            "switch_pm_parameter": switch_pm_parameter],
+            "cache_time": cacheTime,
+            "is_personal": isPersonal,
+            "next_offset": nextOffset,
+            "switch_pm_text": switchPmText,
+            "switch_pm_parameter": switchPmParameter],
             queue: queue, completion: completion)
     }
 }

@@ -23,13 +23,13 @@ public extension TelegramBot {
             offset: Int? = nil,
             limit: Int? = nil,
             timeout: Int? = nil,
-            allowed_updates: [String]? = nil,
+            allowedUpdates: [String]? = nil,
             _ parameters: [String: Any?] = [:]) -> [Update]? {
         return requestSync("getUpdates", defaultParameters["getUpdates"], parameters, [
             "offset": offset,
             "limit": limit,
             "timeout": timeout,
-            "allowed_updates": allowed_updates])
+            "allowed_updates": allowedUpdates])
     }
 
     /// Use this method to receive incoming updates using long polling (wiki). An Array of Update objects is returned.
@@ -47,7 +47,7 @@ public extension TelegramBot {
             offset: Int? = nil,
             limit: Int? = nil,
             timeout: Int? = nil,
-            allowed_updates: [String]? = nil,
+            allowedUpdates: [String]? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: GetUpdatesCompletion? = nil) {
@@ -55,7 +55,7 @@ public extension TelegramBot {
             "offset": offset,
             "limit": limit,
             "timeout": timeout,
-            "allowed_updates": allowed_updates],
+            "allowed_updates": allowedUpdates],
             queue: queue, completion: completion)
     }
 }

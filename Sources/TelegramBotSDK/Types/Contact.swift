@@ -13,25 +13,25 @@ public struct Contact: JsonConvertible {
     public var json: JSON
 
     /// Contact's phone number
-    public var phone_number: String {
+    public var phoneNumber: String {
         get { return json["phone_number"].stringValue }
         set { json["phone_number"].stringValue = newValue }
     }
 
     /// Contact's first name
-    public var first_name: String {
+    public var firstName: String {
         get { return json["first_name"].stringValue }
         set { json["first_name"].stringValue = newValue }
     }
 
     /// Optional. Contact's last name
-    public var last_name: String? {
+    public var lastName: String? {
         get { return json["last_name"].string }
         set { json["last_name"].string = newValue }
     }
 
     /// Optional. Contact's user identifier in Telegram
-    public var user_id: Int64? {
+    public var userId: Int64? {
         get { return json["user_id"].int64 }
         set { json["user_id"].int64 = newValue }
     }

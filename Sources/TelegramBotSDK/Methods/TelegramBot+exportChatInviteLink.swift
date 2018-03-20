@@ -16,10 +16,10 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#exportchatinvitelink>
     @discardableResult
     public func exportChatInviteLinkSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             _ parameters: [String: Any?] = [:]) -> String? {
         return requestSync("exportChatInviteLink", defaultParameters["exportChatInviteLink"], parameters, [
-            "chat_id": chat_id])
+            "chat_id": chatId])
     }
 
     /// Use this method to generate a new invite link for a chat; any previously generated link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the new invite link as String on success.
@@ -30,12 +30,12 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#exportchatinvitelink>
     public func exportChatInviteLinkAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: ExportChatInviteLinkCompletion? = nil) {
         return requestAsync("exportChatInviteLink", defaultParameters["exportChatInviteLink"], parameters, [
-            "chat_id": chat_id],
+            "chat_id": chatId],
             queue: queue, completion: completion)
     }
 }

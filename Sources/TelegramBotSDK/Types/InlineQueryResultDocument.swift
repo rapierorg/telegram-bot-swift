@@ -13,7 +13,7 @@ public struct InlineQueryResultDocument: JsonConvertible {
     public var json: JSON
 
     /// Type of the result, must be document
-    public var type_string: String {
+    public var typeString: String {
         get { return json["type"].stringValue }
         set { json["type"].stringValue = newValue }
     }
@@ -37,19 +37,19 @@ public struct InlineQueryResultDocument: JsonConvertible {
     }
 
     /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
-    public var parse_mode: String? {
+    public var parseMode: String? {
         get { return json["parse_mode"].string }
         set { json["parse_mode"].string = newValue }
     }
 
     /// A valid URL for the file
-    public var document_url: String {
+    public var documentUrl: String {
         get { return json["document_url"].stringValue }
         set { json["document_url"].stringValue = newValue }
     }
 
     /// Mime type of the content of the file, either “application/pdf” or “application/zip”
-    public var mime_type: String {
+    public var mimeType: String {
         get { return json["mime_type"].stringValue }
         set { json["mime_type"].stringValue = newValue }
     }
@@ -61,7 +61,7 @@ public struct InlineQueryResultDocument: JsonConvertible {
     }
 
     /// Optional. Inline keyboard attached to the message
-    public var reply_markup: InlineKeyboardMarkup? {
+    public var replyMarkup: InlineKeyboardMarkup? {
         get {
             let value = json["reply_markup"]
             return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(json: value)
@@ -72,7 +72,7 @@ public struct InlineQueryResultDocument: JsonConvertible {
     }
 
     /// Optional. Content of the message to be sent instead of the file
-    public var input_message_content: InputMessageContent? {
+    public var inputMessageContent: InputMessageContent? {
         get {
             let value = json["input_message_content"]
             return value.isNullOrUnknown ? nil : InputMessageContent(json: value)
@@ -83,19 +83,19 @@ public struct InlineQueryResultDocument: JsonConvertible {
     }
 
     /// Optional. URL of the thumbnail (jpeg only) for the file
-    public var thumb_url: String? {
+    public var thumbUrl: String? {
         get { return json["thumb_url"].string }
         set { json["thumb_url"].string = newValue }
     }
 
     /// Optional. Thumbnail width
-    public var thumb_width: Int? {
+    public var thumbWidth: Int? {
         get { return json["thumb_width"].int }
         set { json["thumb_width"].int = newValue }
     }
 
     /// Optional. Thumbnail height
-    public var thumb_height: Int? {
+    public var thumbHeight: Int? {
         get { return json["thumb_height"].int }
         set { json["thumb_height"].int = newValue }
     }

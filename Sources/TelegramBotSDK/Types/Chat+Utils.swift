@@ -24,8 +24,8 @@ extension Chat {
 	
 	/// Type of chat, can be either “private”, “group”, “supergroup” or “channel”
 	public var type: ChatType {
-		get { return ChatType(rawValue: type_string) ?? .unknown }
-		set { type_string = newValue.rawValue }
+		get { return ChatType(rawValue: typeString) ?? .unknown }
+		set { typeString = newValue.rawValue }
 	}
 }
 

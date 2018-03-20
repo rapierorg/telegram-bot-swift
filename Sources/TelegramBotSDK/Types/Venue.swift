@@ -31,7 +31,7 @@ public struct Venue: JsonConvertible {
     }
 
     /// Optional. Foursquare identifier of the venue
-    public var foursquare_id: String? {
+    public var foursquareId: String? {
         get { return json["foursquare_id"].string }
         set { json["foursquare_id"].string = newValue }
     }

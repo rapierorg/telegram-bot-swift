@@ -20,16 +20,16 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#getgamehighscores>
     @discardableResult
     public func getGameHighScoresSync(
-            user_id: Int64,
-            chat_id: Int64? = nil,
-            message_id: Int? = nil,
-            inline_message_id: String? = nil,
+            userId: Int64,
+            chatId: Int64? = nil,
+            messageId: Int? = nil,
+            inlineMessageId: String? = nil,
             _ parameters: [String: Any?] = [:]) -> [GameHighScore]? {
         return requestSync("getGameHighScores", defaultParameters["getGameHighScores"], parameters, [
-            "user_id": user_id,
-            "chat_id": chat_id,
-            "message_id": message_id,
-            "inline_message_id": inline_message_id])
+            "user_id": userId,
+            "chat_id": chatId,
+            "message_id": messageId,
+            "inline_message_id": inlineMessageId])
     }
 
     /// Use this method to get data for high score tables. Will return the score of the specified user and several of his neighbors in a game. On success, returns an Array of GameHighScore objects.
@@ -44,18 +44,18 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#getgamehighscores>
     public func getGameHighScoresAsync(
-            user_id: Int64,
-            chat_id: Int64? = nil,
-            message_id: Int? = nil,
-            inline_message_id: String? = nil,
+            userId: Int64,
+            chatId: Int64? = nil,
+            messageId: Int? = nil,
+            inlineMessageId: String? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: GetGameHighScoresCompletion? = nil) {
         return requestAsync("getGameHighScores", defaultParameters["getGameHighScores"], parameters, [
-            "user_id": user_id,
-            "chat_id": chat_id,
-            "message_id": message_id,
-            "inline_message_id": inline_message_id],
+            "user_id": userId,
+            "chat_id": chatId,
+            "message_id": messageId,
+            "inline_message_id": inlineMessageId],
             queue: queue, completion: completion)
     }
 }

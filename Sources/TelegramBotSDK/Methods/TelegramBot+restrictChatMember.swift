@@ -22,22 +22,22 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#restrictchatmember>
     @discardableResult
     public func restrictChatMemberSync(
-            chat_id: ChatId,
-            user_id: Int64,
-            until_date: Int? = nil,
-            can_send_messages: Bool? = nil,
-            can_send_media_messages: Bool? = nil,
-            can_send_other_messages: Bool? = nil,
-            can_add_web_page_previews: Bool? = nil,
+            chatId: ChatId,
+            userId: Int64,
+            untilDate: Int? = nil,
+            canSendMessages: Bool? = nil,
+            canSendMediaMessages: Bool? = nil,
+            canSendOtherMessages: Bool? = nil,
+            canAddWebPagePreviews: Bool? = nil,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("restrictChatMember", defaultParameters["restrictChatMember"], parameters, [
-            "chat_id": chat_id,
-            "user_id": user_id,
-            "until_date": until_date,
-            "can_send_messages": can_send_messages,
-            "can_send_media_messages": can_send_media_messages,
-            "can_send_other_messages": can_send_other_messages,
-            "can_add_web_page_previews": can_add_web_page_previews])
+            "chat_id": chatId,
+            "user_id": userId,
+            "until_date": untilDate,
+            "can_send_messages": canSendMessages,
+            "can_send_media_messages": canSendMediaMessages,
+            "can_send_other_messages": canSendOtherMessages,
+            "can_add_web_page_previews": canAddWebPagePreviews])
     }
 
     /// Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass True for all boolean parameters to lift restrictions from a user. Returns True on success.
@@ -54,24 +54,24 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#restrictchatmember>
     public func restrictChatMemberAsync(
-            chat_id: ChatId,
-            user_id: Int64,
-            until_date: Int? = nil,
-            can_send_messages: Bool? = nil,
-            can_send_media_messages: Bool? = nil,
-            can_send_other_messages: Bool? = nil,
-            can_add_web_page_previews: Bool? = nil,
+            chatId: ChatId,
+            userId: Int64,
+            untilDate: Int? = nil,
+            canSendMessages: Bool? = nil,
+            canSendMediaMessages: Bool? = nil,
+            canSendOtherMessages: Bool? = nil,
+            canAddWebPagePreviews: Bool? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: RestrictChatMemberCompletion? = nil) {
         return requestAsync("restrictChatMember", defaultParameters["restrictChatMember"], parameters, [
-            "chat_id": chat_id,
-            "user_id": user_id,
-            "until_date": until_date,
-            "can_send_messages": can_send_messages,
-            "can_send_media_messages": can_send_media_messages,
-            "can_send_other_messages": can_send_other_messages,
-            "can_add_web_page_previews": can_add_web_page_previews],
+            "chat_id": chatId,
+            "user_id": userId,
+            "until_date": untilDate,
+            "can_send_messages": canSendMessages,
+            "can_send_media_messages": canSendMediaMessages,
+            "can_send_other_messages": canSendOtherMessages,
+            "can_add_web_page_previews": canAddWebPagePreviews],
             queue: queue, completion: completion)
     }
 }

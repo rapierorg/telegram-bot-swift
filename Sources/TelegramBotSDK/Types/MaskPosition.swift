@@ -19,13 +19,13 @@ public struct MaskPosition: JsonConvertible {
     }
 
     /// Shift by X-axis measured in widths of the mask scaled to the face size, from left to right. For example, choosing -1.0 will place mask just to the left of the default mask position.
-    public var x_shift: Float {
+    public var xShift: Float {
         get { return json["x_shift"].floatValue }
         set { json["x_shift"].floatValue = newValue }
     }
 
     /// Shift by Y-axis measured in heights of the mask scaled to the face size, from top to bottom. For example, 1.0 will place the mask just below the default mask position.
-    public var y_shift: Float {
+    public var yShift: Float {
         get { return json["y_shift"].floatValue }
         set { json["y_shift"].floatValue = newValue }
     }

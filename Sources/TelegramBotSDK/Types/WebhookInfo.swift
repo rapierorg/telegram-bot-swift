@@ -19,19 +19,19 @@ public struct WebhookInfo: JsonConvertible {
     }
 
     /// True, if a custom certificate was provided for webhook certificate checks
-    public var has_custom_certificate: Bool {
+    public var hasCustomCertificate: Bool {
         get { return json["has_custom_certificate"].boolValue }
         set { json["has_custom_certificate"].boolValue = newValue }
     }
 
     /// Number of updates awaiting delivery
-    public var pending_update_count: Int {
+    public var pendingUpdateCount: Int {
         get { return json["pending_update_count"].intValue }
         set { json["pending_update_count"].intValue = newValue }
     }
 
     /// Optional. Unix time for the most recent error that happened when trying to deliver an update via webhook
-    public var last_error_date: Date? {
+    public var lastErrorDate: Date? {
         get {
             guard let date = json["last_error_date"].double else { return nil }
             return Date(timeIntervalSince1970: date)
@@ -42,19 +42,19 @@ public struct WebhookInfo: JsonConvertible {
     }
 
     /// Optional. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook
-    public var last_error_message: String? {
+    public var lastErrorMessage: String? {
         get { return json["last_error_message"].string }
         set { json["last_error_message"].string = newValue }
     }
 
     /// Optional. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
-    public var max_connections: Int? {
+    public var maxConnections: Int? {
         get { return json["max_connections"].int }
         set { json["max_connections"].int = newValue }
     }
 
     /// Optional. A list of update types the bot is subscribed to. Defaults to all update types
-    public var allowed_updates: [String] {
+    public var allowedUpdates: [String] {
         get { return json["allowed_updates"].arrayValue() }
         set { json["allowed_updates"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
     }

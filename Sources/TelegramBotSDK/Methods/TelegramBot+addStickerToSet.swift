@@ -20,18 +20,18 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#addstickertoset>
     @discardableResult
     public func addStickerToSetSync(
-            user_id: Int64,
+            userId: Int64,
             name: String,
-            png_sticker: FileInfo,
+            pngSticker: FileInfo,
             emojis: String,
-            mask_position: MaskPosition? = nil,
+            maskPosition: MaskPosition? = nil,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("addStickerToSet", defaultParameters["addStickerToSet"], parameters, [
-            "user_id": user_id,
+            "user_id": userId,
             "name": name,
-            "png_sticker": png_sticker,
+            "png_sticker": pngSticker,
             "emojis": emojis,
-            "mask_position": mask_position])
+            "mask_position": maskPosition])
     }
 
     /// Use this method to add a new sticker to a set created by the bot. Returns True on success.
@@ -46,20 +46,20 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#addstickertoset>
     public func addStickerToSetAsync(
-            user_id: Int64,
+            userId: Int64,
             name: String,
-            png_sticker: FileInfo,
+            pngSticker: FileInfo,
             emojis: String,
-            mask_position: MaskPosition? = nil,
+            maskPosition: MaskPosition? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: AddStickerToSetCompletion? = nil) {
         return requestAsync("addStickerToSet", defaultParameters["addStickerToSet"], parameters, [
-            "user_id": user_id,
+            "user_id": userId,
             "name": name,
-            "png_sticker": png_sticker,
+            "png_sticker": pngSticker,
             "emojis": emojis,
-            "mask_position": mask_position],
+            "mask_position": maskPosition],
             queue: queue, completion: completion)
     }
 }

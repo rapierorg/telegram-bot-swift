@@ -19,14 +19,14 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#kickchatmember>
     @discardableResult
     public func kickChatMemberSync(
-            chat_id: ChatId,
-            user_id: Int64,
-            until_date: Int? = nil,
+            chatId: ChatId,
+            userId: Int64,
+            untilDate: Int? = nil,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("kickChatMember", defaultParameters["kickChatMember"], parameters, [
-            "chat_id": chat_id,
-            "user_id": user_id,
-            "until_date": until_date])
+            "chat_id": chatId,
+            "user_id": userId,
+            "until_date": untilDate])
     }
 
     /// Use this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
@@ -40,16 +40,16 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#kickchatmember>
     public func kickChatMemberAsync(
-            chat_id: ChatId,
-            user_id: Int64,
-            until_date: Int? = nil,
+            chatId: ChatId,
+            userId: Int64,
+            untilDate: Int? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: KickChatMemberCompletion? = nil) {
         return requestAsync("kickChatMember", defaultParameters["kickChatMember"], parameters, [
-            "chat_id": chat_id,
-            "user_id": user_id,
-            "until_date": until_date],
+            "chat_id": chatId,
+            "user_id": userId,
+            "until_date": untilDate],
             queue: queue, completion: completion)
     }
 }
