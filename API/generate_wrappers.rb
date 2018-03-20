@@ -204,7 +204,7 @@ def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_opt
                   "        }\n"\
                   "    }\n"\
       else
-        out.write "    public var inputMessageContent: InputMessageContent? {\n"\
+        out.write "    public var inputMessageContent: InputMessageContent {\n"\
                   "        get {\n"\
                   "            fatalError(\"Not implemented\")\n"\
                   "        }\n"\

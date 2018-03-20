@@ -31,7 +31,7 @@ public struct InlineQueryResultArticle: JsonConvertible {
     }
 
     /// Content of the message to be sent
-    public var inputMessageContent: InputMessageContent? {
+    public var inputMessageContent: InputMessageContent {
         get {
             fatalError("Not implemented")
         }
