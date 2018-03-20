@@ -39,8 +39,6 @@ def make_getter_name(type_name, var_name, var_type, var_desc)
   else
       if var_name == 'type' && var_type == 'String' then
           return 'type_string'
-          #elsif var_name.include?('date') && var_desc.include?('Unix time') then
-          #return var_name + '_unix'
       end
       return var_name
   end
