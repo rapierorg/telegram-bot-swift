@@ -48,7 +48,7 @@ extension SwiftyJSON.JSON {
 		return result
 	}
 	
-	func twoDArrayValue<T>() -> [[T]] {
+    func twoDArrayValue<T>() -> [[T]] where T: JsonConvertible {
 		let json = arrayValue
 		var result = [[T]]()
 		result.reserveCapacity(json.count)
@@ -56,9 +56,7 @@ extension SwiftyJSON.JSON {
 			var row = [T]()
 			row.reserveCapacity(rowJson.count)
 			for columnJson in rowJson.arrayValue {
-				guard let value = columnJson.rawValue as? T else {
-					continue
-				}
+                let value = T(json: columnJson)
 				row.append(value)
 			}
 			result.append(row)
