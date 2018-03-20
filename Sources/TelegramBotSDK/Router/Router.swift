@@ -139,9 +139,9 @@ public class Router {
             case .from: return message.from != nil
             case .forward_from: return message.forward_from != nil
             case .forward_from_chat: return message.forward_from_chat != nil
-            case .forward_date: return message.forward_date_unix != nil
+            case .forward_date: return message.forward_date != nil
             case .reply_to_message: return message.reply_to_message != nil
-            case .edit_date: return message.edit_date_unix != nil
+            case .edit_date: return message.edit_date != nil
             case .text: return message.text != nil
             case .entities: return !message.entities.isEmpty
             case .audio: return message.audio != nil

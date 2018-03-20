@@ -39,8 +39,6 @@ def make_getter_name(type_name, var_name, var_type, var_desc)
   else
       if var_name == 'type' && var_type == 'String' then
           return 'type_string'
-      elsif var_name.include?('date') && var_desc.include?('Unix time') then
-          return var_name + '_unix'
       end
       return var_name
   end
@@ -69,21 +67,40 @@ def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_opt
               "        set { json[\"#{var_name}\"].stringValue = newValue }\n"\
               "    }\n"
   when ['Integer', true]
-    is64bit = var_name.include?("user_id") || var_name.include?("chat_id") || var_desc.include?("64 bit integer") ||
-              (type_name == 'User' && var_name == 'id')
-    suffix = is64bit ? '64' : ''
-    out.write "    public var #{getter_name}: Int#{suffix}? {\n"\
-              "        get { return json[\"#{var_name}\"].int#{suffix} }\n"\
-              "        set { json[\"#{var_name}\"].int#{suffix} = newValue }\n"\
-              "    }\n"
+    if var_name.include?('date') && var_desc.include?('Unix time') then
+      out.write "    public var #{getter_name}: Date? {\n"\
+      "        get {\n"\
+      "            guard let date = json[\"#{var_name}\"].double else { return nil }\n"\
+      "            return Date(timeIntervalSince1970: date)\n"\
+      "        }\n"\
+      "        set {\n"\
+      "            json[\"#{var_name}\"].double = newValue?.timeIntervalSince1970\n"\
+      "        }\n"\
+      "    }\n"
+    else
+      is64bit = var_name.include?("user_id") || var_name.include?("chat_id") || var_desc.include?("64 bit integer") ||
+                (type_name == 'User' && var_name == 'id')
+      suffix = is64bit ? '64' : ''
+      out.write "    public var #{getter_name}: Int#{suffix}? {\n"\
+                "        get { return json[\"#{var_name}\"].int#{suffix} }\n"\
+                "        set { json[\"#{var_name}\"].int#{suffix} = newValue }\n"\
+                "    }\n"
+    end
   when ['Integer', false]
-    is64bit = var_name.include?("user_id") || var_name.include?("chat_id") || var_desc.include?("64 bit integer") ||
-              (type_name == 'User' && var_name == 'id')
-    suffix = is64bit ? '64' : ''
-    out.write "    public var #{getter_name}: Int#{suffix} {\n"\
-              "        get { return json[\"#{var_name}\"].int#{suffix}Value }\n"\
-              "        set { json[\"#{var_name}\"].int#{suffix}Value = newValue }\n"\
-              "    }\n"
+    if var_name.include?('date') && var_desc.include?('Unix time') then
+      out.write "    public var #{getter_name}: Date {\n"\
+      "        get { return Date(timeIntervalSince1970: json[\"#{var_name}\"].doubleValue) }\n"\
+      "        set { json[\"#{var_name}\"].double = newValue.timeIntervalSince1970 }\n"\
+      "    }\n"
+    else
+      is64bit = var_name.include?("user_id") || var_name.include?("chat_id") || var_desc.include?("64 bit integer") ||
+                (type_name == 'User' && var_name == 'id')
+      suffix = is64bit ? '64' : ''
+      out.write "    public var #{getter_name}: Int#{suffix} {\n"\
+                "        get { return json[\"#{var_name}\"].int#{suffix}Value }\n"\
+                "        set { json[\"#{var_name}\"].int#{suffix}Value = newValue }\n"\
+                "    }\n"
+    end
   when ['Float number', true], ['Float', true]
     out.write "    public var #{getter_name}: Float? {\n"\
               "        get { return json[\"#{var_name}\"].float }\n"\
@@ -191,7 +208,7 @@ def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_opt
   return init_params
 end
 
-def make_swift_type_name(var_name, var_type)
+def make_swift_type_name(var_name, var_type, var_desc)
   array_prefix = 'Array of '
   downcase_array_prefix = array_prefix.downcase
   if var_type.start_with?(array_prefix) || var_type.start_with?(downcase_array_prefix) then
@@ -199,13 +216,16 @@ def make_swift_type_name(var_name, var_type)
     var_type.slice! downcase_array_prefix
     return "[#{var_type}]"
   end
-  
+
   case var_type
   when 'Boolean', 'True'
     return 'Bool'
   when 'Integer'
+
     if var_name.include?('user_id') || var_name.include?('chat_id') then
       return 'Int64'
+    elsif var_name.include?('date') && var_desc.include?('Unix time') then
+      return 'Date'
     else
       return 'Int'
     end
@@ -364,7 +384,7 @@ def generate_method(f, node)
     description, current_node = fetch_description(current_node)
 
     result_type = deduce_result_type(description)
-    result_type =  make_swift_type_name('', result_type)
+    result_type =  make_swift_type_name('', result_type, '')
     out.write "    typealias #{completion_name} = (_ result: #{result_type}?, _ error: DataTaskError?) -> ()\n"\
       "\n"
 
@@ -385,7 +405,7 @@ def generate_method(f, node)
       var_desc = td[3].text
       f.write "PARAM: #{var_name} [#{var_type}#{var_optional ? '?' : ''}]: #{var_desc}\n"
 
-      swift_type_name = make_swift_type_name(var_name, var_type)
+      swift_type_name = make_swift_type_name(var_name, var_type, var_desc)
       param = make_request_parameter(method_name, swift_type_name, var_name, var_type, var_optional, var_desc)
       value = make_request_value(method_name, swift_type_name, var_name, var_type, var_optional, var_desc)
 
