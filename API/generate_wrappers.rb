@@ -226,7 +226,7 @@ def make_swift_type_name(var_name, var_type, var_desc)
 
     if var_name.include?('user_id') || var_name.include?('chat_id') then
       return 'Int64'
-    elsif var_name.include?('date') then
+    elsif var_name.include?('date') && var_desc.include?('Unix time') then
       return 'Date'
     else
       return 'Int'
