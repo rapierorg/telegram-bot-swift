@@ -4,7 +4,7 @@
 import Foundation
 import SwiftyJSON
 
-/// Contains information about why a request was unsuccessfull.
+/// Contains information about why a request was unsuccessful.
 ///
 /// - SeeAlso: <https://core.telegram.org/bots/api#responseparameters>
 

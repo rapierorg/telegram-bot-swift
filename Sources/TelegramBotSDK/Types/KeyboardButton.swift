@@ -12,7 +12,7 @@ public struct KeyboardButton: JsonConvertible {
     /// Original JSON for fields not yet added to Swift structures.
     public var json: JSON
 
-    /// Text of the button. If none of the optional fields are used, it will be sent to the bot as a message when the button is pressed
+    /// Text of the button. If none of the optional fields are used, it will be sent as a message when the button is pressed
     public var text: String {
         get { return json["text"].stringValue }
         set { json["text"].stringValue = newValue }

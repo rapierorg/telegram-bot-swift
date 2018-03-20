@@ -18,6 +18,12 @@ public struct User: JsonConvertible {
         set { json["id"].int64Value = newValue }
     }
 
+    /// True, if this user is a bot
+    public var is_bot: Bool {
+        get { return json["is_bot"].boolValue }
+        set { json["is_bot"].boolValue = newValue }
+    }
+
     /// User‘s or bot’s first name
     public var first_name: String {
         get { return json["first_name"].stringValue }
@@ -34,6 +40,12 @@ public struct User: JsonConvertible {
     public var username: String? {
         get { return json["username"].string }
         set { json["username"].string = newValue }
+    }
+
+    /// Optional. IETF language tag of the user's language
+    public var language_code: String? {
+        get { return json["language_code"].string }
+        set { json["language_code"].string = newValue }
     }
 
     public init(json: JSON = [:]) {

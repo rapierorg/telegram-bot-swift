@@ -5,6 +5,7 @@ import Foundation
 import SwiftyJSON
 
 /// Represents a link to a page containing an embedded video player or a video file. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the video.
+/// If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you must replace its content using input_message_content.
 ///
 /// - SeeAlso: <https://core.telegram.org/bots/api#inlinequeryresultvideo>
 
@@ -54,6 +55,12 @@ public struct InlineQueryResultVideo: JsonConvertible {
         set { json["caption"].string = newValue }
     }
 
+    /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    public var parse_mode: String? {
+        get { return json["parse_mode"].string }
+        set { json["parse_mode"].string = newValue }
+    }
+
     /// Optional. Video width
     public var video_width: Int? {
         get { return json["video_width"].int }
@@ -89,7 +96,7 @@ public struct InlineQueryResultVideo: JsonConvertible {
         }
     }
 
-    /// Optional. Content of the message to be sent instead of the video
+    /// Optional. Content of the message to be sent instead of the video. This field is required if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
     public var input_message_content: InputMessageContent? {
         get {
             let value = json["input_message_content"]

@@ -59,6 +59,14 @@ public struct InlineKeyboardButton: JsonConvertible {
         }
     }
 
+    /// Optional. Specify True, to send a Pay button.
+    /// 
+    /// NOTE: This type of button must always be the first button in the first row.
+    public var pay: Bool? {
+        get { return json["pay"].bool }
+        set { json["pay"].bool = newValue }
+    }
+
     public init(json: JSON = [:]) {
         self.json = json
     }

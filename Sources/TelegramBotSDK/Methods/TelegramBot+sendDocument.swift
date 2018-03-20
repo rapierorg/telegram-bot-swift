@@ -12,7 +12,8 @@ public extension TelegramBot {
     ///     - chat_id: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     ///     - document: File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
     ///     - caption: Document caption (may also be used when resending documents by file_id), 0-200 characters
-    ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+    ///     - parse_mode: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    ///     - disable_notification: Sends the message silently. Users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
     ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
     /// - Returns: Message on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
@@ -24,6 +25,7 @@ public extension TelegramBot {
             chat_id: ChatId,
             document: FileInfo,
             caption: String? = nil,
+            parse_mode: String? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
             reply_markup: ReplyMarkup? = nil,
@@ -32,6 +34,7 @@ public extension TelegramBot {
             "chat_id": chat_id,
             "document": document,
             "caption": caption,
+            "parse_mode": parse_mode,
             "disable_notification": disable_notification,
             "reply_to_message_id": reply_to_message_id,
             "reply_markup": reply_markup])
@@ -42,7 +45,8 @@ public extension TelegramBot {
     ///     - chat_id: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     ///     - document: File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
     ///     - caption: Document caption (may also be used when resending documents by file_id), 0-200 characters
-    ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+    ///     - parse_mode: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    ///     - disable_notification: Sends the message silently. Users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
     ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
     /// - Returns: Message on success. Nil on error, in which case `error` contains the details.
@@ -53,6 +57,7 @@ public extension TelegramBot {
             chat_id: ChatId,
             document: FileInfo,
             caption: String? = nil,
+            parse_mode: String? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
             reply_markup: ReplyMarkup? = nil,
@@ -63,6 +68,7 @@ public extension TelegramBot {
             "chat_id": chat_id,
             "document": document,
             "caption": caption,
+            "parse_mode": parse_mode,
             "disable_notification": disable_notification,
             "reply_to_message_id": reply_to_message_id,
             "reply_markup": reply_markup],
