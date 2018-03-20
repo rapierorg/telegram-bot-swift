@@ -12,11 +12,19 @@ import SwiftyJSON
 ///
 /// - SeeAlso: <https://core.telegram.org/bots/api#inputmessagecontent>
 
-public struct InputMessageContent: JsonConvertible {
+public protocol InputMessageContent: JsonConvertible {
     /// Original JSON for fields not yet added to Swift structures.
-    public var json: JSON
+    var json: JSON { get set }
+}
 
-    public init(json: JSON = [:]) {
-        self.json = json
-    }
+extension InputTextMessageContent: InputMessageContent {
+}
+
+extension InputLocationMessageContent: InputMessageContent {
+}
+
+extension InputVenueMessageContent: InputMessageContent {
+}
+
+extension InputContactMessageContent: InputMessageContent {
 }
