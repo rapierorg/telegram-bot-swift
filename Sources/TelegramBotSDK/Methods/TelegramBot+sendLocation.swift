@@ -10,9 +10,10 @@ public extension TelegramBot {
     /// Use this method to send point on the map. On success, the sent Message is returned.
     /// - Parameters:
     ///     - chat_id: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    ///     - latitude: Latitude of location
-    ///     - longitude: Longitude of location
-    ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+    ///     - latitude: Latitude of the location
+    ///     - longitude: Longitude of the location
+    ///     - live_period: Period in seconds for which the location will be updated (see Live Locations, should be between 60 and 86400.
+    ///     - disable_notification: Sends the message silently. Users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
     ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
     /// - Returns: Message on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
@@ -24,6 +25,7 @@ public extension TelegramBot {
             chat_id: ChatId,
             latitude: Float,
             longitude: Float,
+            live_period: Int? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
             reply_markup: ReplyMarkup? = nil,
@@ -32,6 +34,7 @@ public extension TelegramBot {
             "chat_id": chat_id,
             "latitude": latitude,
             "longitude": longitude,
+            "live_period": live_period,
             "disable_notification": disable_notification,
             "reply_to_message_id": reply_to_message_id,
             "reply_markup": reply_markup])
@@ -40,9 +43,10 @@ public extension TelegramBot {
     /// Use this method to send point on the map. On success, the sent Message is returned.
     /// - Parameters:
     ///     - chat_id: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    ///     - latitude: Latitude of location
-    ///     - longitude: Longitude of location
-    ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+    ///     - latitude: Latitude of the location
+    ///     - longitude: Longitude of the location
+    ///     - live_period: Period in seconds for which the location will be updated (see Live Locations, should be between 60 and 86400.
+    ///     - disable_notification: Sends the message silently. Users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
     ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
     /// - Returns: Message on success. Nil on error, in which case `error` contains the details.
@@ -53,6 +57,7 @@ public extension TelegramBot {
             chat_id: ChatId,
             latitude: Float,
             longitude: Float,
+            live_period: Int? = nil,
             disable_notification: Bool? = nil,
             reply_to_message_id: Int? = nil,
             reply_markup: ReplyMarkup? = nil,
@@ -63,6 +68,7 @@ public extension TelegramBot {
             "chat_id": chat_id,
             "latitude": latitude,
             "longitude": longitude,
+            "live_period": live_period,
             "disable_notification": disable_notification,
             "reply_to_message_id": reply_to_message_id,
             "reply_markup": reply_markup],

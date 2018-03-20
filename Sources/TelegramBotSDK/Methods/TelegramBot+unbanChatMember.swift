@@ -7,9 +7,9 @@ import Dispatch
 public extension TelegramBot {
     typealias UnbanChatMemberCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
-    /// Use this method to unban a previously kicked user in a supergroup. The user will not return to the group automatically, but will be able to join via link, etc. The bot must be an administrator in the group for this to work. Returns True on success.
+    /// Use this method to unban a previously kicked user in a supergroup or channel. The user will not return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. Returns True on success.
     /// - Parameters:
-    ///     - chat_id: Unique identifier for the target group or username of the target supergroup (in the format @supergroupusername)
+    ///     - chat_id: Unique identifier for the target group or username of the target supergroup or channel (in the format @username)
     ///     - user_id: Unique identifier of the target user
     /// - Returns: Bool on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
     /// - Note: Blocking version of the method.
@@ -25,9 +25,9 @@ public extension TelegramBot {
             "user_id": user_id])
     }
 
-    /// Use this method to unban a previously kicked user in a supergroup. The user will not return to the group automatically, but will be able to join via link, etc. The bot must be an administrator in the group for this to work. Returns True on success.
+    /// Use this method to unban a previously kicked user in a supergroup or channel. The user will not return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. Returns True on success.
     /// - Parameters:
-    ///     - chat_id: Unique identifier for the target group or username of the target supergroup (in the format @supergroupusername)
+    ///     - chat_id: Unique identifier for the target group or username of the target supergroup or channel (in the format @username)
     ///     - user_id: Unique identifier of the target user
     /// - Returns: Bool on success. Nil on error, in which case `error` contains the details.
     /// - Note: Asynchronous version of the method.
