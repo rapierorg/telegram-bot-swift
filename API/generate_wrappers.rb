@@ -193,6 +193,26 @@ def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_opt
                   "        set { json[\"#{var_name}\"] = JSON.initFrom(newValue) }\n"\
                   "    }\n"
       end
+    elsif var_type.start_with?("InputMessageContent")
+      if var_optional then
+        out.write "    public var inputMessageContent: InputMessageContent? {\n"\
+                  "        get {\n"\
+                  "            fatalError(\"Not implemented\")\n"\
+                  "        }\n"\
+                  "        set {\n"\
+                  "            json[\"input_message_content\"] = newValue?.json ?? JSON.null\n"\
+                  "        }\n"\
+                  "    }\n"\
+      else
+        out.write "    public var inputMessageContent: InputMessageContent? {\n"\
+                  "        get {\n"\
+                  "            fatalError(\"Not implemented\")\n"\
+                  "        }\n"\
+                  "        set {\n"\
+                  "            json[\"input_message_content\"] = newValue.json\n"\
+                  "        }\n"\
+                  "    }\n"\
+      end
     else
       if var_optional then
         out.write "    public var #{getter_name}: #{var_type}? {\n"\
@@ -512,7 +532,7 @@ def main
       next unless title.split.count == 1
 
       # These types are complex and created manually:
-      next unless !['InlineQueryResult', 'InputFile', 'InputMedia'].include?(title)
+      next unless !['InlineQueryResult', 'InputFile', 'InputMedia', 'InputMessageContent'].include?(title)
 
       kind = (title.chars.first == title.chars.first.upcase) ? :type : :method
 

@@ -31,10 +31,6 @@ public struct InlineQueryResultArticle: JsonConvertible {
     }
 
     /// Content of the message to be sent
-    public var inputMessageContent: InputMessageContent {
-        get { return InputMessageContent(json: json["input_message_content"]) }
-        set { json["input_message_content"] = newValue.json }
-    }
 
     /// Optional. Inline keyboard attached to the message
     public var replyMarkup: InlineKeyboardMarkup? {
