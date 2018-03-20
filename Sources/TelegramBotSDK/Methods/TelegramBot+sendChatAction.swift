@@ -19,11 +19,11 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
     @discardableResult
     public func sendChatActionSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             action: String,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("sendChatAction", defaultParameters["sendChatAction"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "action": action])
     }
 
@@ -38,13 +38,13 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
     public func sendChatActionAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             action: String,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendChatActionCompletion? = nil) {
         return requestAsync("sendChatAction", defaultParameters["sendChatAction"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "action": action],
             queue: queue, completion: completion)
     }

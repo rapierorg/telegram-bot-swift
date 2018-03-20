@@ -16,10 +16,10 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#unpinchatmessage>
     @discardableResult
     public func unpinChatMessageSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("unpinChatMessage", defaultParameters["unpinChatMessage"], parameters, [
-            "chat_id": chat_id])
+            "chat_id": chatId])
     }
 
     /// Use this method to unpin a message in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
@@ -30,12 +30,12 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#unpinchatmessage>
     public func unpinChatMessageAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: UnpinChatMessageCompletion? = nil) {
         return requestAsync("unpinChatMessage", defaultParameters["unpinChatMessage"], parameters, [
-            "chat_id": chat_id],
+            "chat_id": chatId],
             queue: queue, completion: completion)
     }
 }

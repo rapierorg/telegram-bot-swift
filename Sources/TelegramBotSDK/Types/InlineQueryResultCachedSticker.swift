@@ -13,7 +13,7 @@ public struct InlineQueryResultCachedSticker: JsonConvertible {
     public var json: JSON
 
     /// Type of the result, must be sticker
-    public var type_string: String {
+    public var typeString: String {
         get { return json["type"].stringValue }
         set { json["type"].stringValue = newValue }
     }
@@ -25,13 +25,13 @@ public struct InlineQueryResultCachedSticker: JsonConvertible {
     }
 
     /// A valid file identifier of the sticker
-    public var sticker_file_id: String {
+    public var stickerFileId: String {
         get { return json["sticker_file_id"].stringValue }
         set { json["sticker_file_id"].stringValue = newValue }
     }
 
     /// Optional. Inline keyboard attached to the message
-    public var reply_markup: InlineKeyboardMarkup? {
+    public var replyMarkup: InlineKeyboardMarkup? {
         get {
             let value = json["reply_markup"]
             return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(json: value)
@@ -42,7 +42,7 @@ public struct InlineQueryResultCachedSticker: JsonConvertible {
     }
 
     /// Optional. Content of the message to be sent instead of the sticker
-    public var input_message_content: InputMessageContent? {
+    public var inputMessageContent: InputMessageContent? {
         get {
             let value = json["input_message_content"]
             return value.isNullOrUnknown ? nil : InputMessageContent(json: value)

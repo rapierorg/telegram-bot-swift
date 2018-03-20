@@ -23,12 +23,12 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#deletemessage>
     @discardableResult
     public func deleteMessageSync(
-            chat_id: ChatId,
-            message_id: Int,
+            chatId: ChatId,
+            messageId: Int,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("deleteMessage", defaultParameters["deleteMessage"], parameters, [
-            "chat_id": chat_id,
-            "message_id": message_id])
+            "chat_id": chatId,
+            "message_id": messageId])
     }
 
     /// Use this method to delete a message, including service messages, with the following limitations:
@@ -46,14 +46,14 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#deletemessage>
     public func deleteMessageAsync(
-            chat_id: ChatId,
-            message_id: Int,
+            chatId: ChatId,
+            messageId: Int,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: DeleteMessageCompletion? = nil) {
         return requestAsync("deleteMessage", defaultParameters["deleteMessage"], parameters, [
-            "chat_id": chat_id,
-            "message_id": message_id],
+            "chat_id": chatId,
+            "message_id": messageId],
             queue: queue, completion: completion)
     }
 }

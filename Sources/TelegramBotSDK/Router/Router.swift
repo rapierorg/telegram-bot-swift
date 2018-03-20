@@ -137,11 +137,11 @@ public class Router {
                 }
                 return false
             case .from: return message.from != nil
-            case .forward_from: return message.forward_from != nil
-            case .forward_from_chat: return message.forward_from_chat != nil
-            case .forward_date: return message.forward_date != nil
-            case .reply_to_message: return message.reply_to_message != nil
-            case .edit_date: return message.edit_date != nil
+            case .forward_from: return message.forwardFrom != nil
+            case .forward_from_chat: return message.forwardFromChat != nil
+            case .forward_date: return message.forwardDate != nil
+            case .reply_to_message: return message.replyToMessage != nil
+            case .edit_date: return message.editDate != nil
             case .text: return message.text != nil
             case .entities: return !message.entities.isEmpty
             case .audio: return message.audio != nil
@@ -154,26 +154,26 @@ public class Router {
             case .contact: return message.contact != nil
             case .location: return message.location != nil
             case .venue: return message.venue != nil
-            case .new_chat_members: return message.new_chat_members.count > 0
-            case .left_chat_member: return message.left_chat_member != nil
-            case .new_chat_title: return message.new_chat_title != nil
-            case .new_chat_photo: return !message.new_chat_photo.isEmpty
-            case .delete_chat_photo: return message.delete_chat_photo ?? false
-            case .group_chat_created: return message.group_chat_created ?? false
-            case .supergroup_chat_created: return message.supergroup_chat_created ?? false
-            case .channel_chat_created: return message.channel_chat_created ?? false
-            case .migrate_to_chat_id: return message.migrate_to_chat_id != nil
-            case .migrate_from_chat_id: return message.migrate_from_chat_id != nil
-            case .pinned_message: return message.pinned_message != nil
+            case .new_chat_members: return message.newChatMembers.count > 0
+            case .left_chat_member: return message.leftChatMember != nil
+            case .new_chat_title: return message.newChatTitle != nil
+            case .new_chat_photo: return !message.newChatPhoto.isEmpty
+            case .delete_chat_photo: return message.deleteChatPhoto ?? false
+            case .group_chat_created: return message.groupChatCreated ?? false
+            case .supergroup_chat_created: return message.supergroupChatCreated ?? false
+            case .channel_chat_created: return message.channelChatCreated ?? false
+            case .migrate_to_chat_id: return message.migrateToChatId != nil
+            case .migrate_from_chat_id: return message.migrateFromChatId != nil
+            case .pinned_message: return message.pinnedMessage != nil
             default: break
             }
         } else {
             switch contentType {
             case .callback_query(let data):
                 if let data = data {
-                    return update.callback_query?.data == data
+                    return update.callbackQuery?.data == data
                 }
-                return update.callback_query != nil
+                return update.callbackQuery != nil
             default: break
             }
         }

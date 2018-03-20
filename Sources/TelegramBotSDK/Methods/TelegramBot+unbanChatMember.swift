@@ -17,12 +17,12 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#unbanchatmember>
     @discardableResult
     public func unbanChatMemberSync(
-            chat_id: ChatId,
-            user_id: Int64,
+            chatId: ChatId,
+            userId: Int64,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("unbanChatMember", defaultParameters["unbanChatMember"], parameters, [
-            "chat_id": chat_id,
-            "user_id": user_id])
+            "chat_id": chatId,
+            "user_id": userId])
     }
 
     /// Use this method to unban a previously kicked user in a supergroup or channel. The user will not return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. Returns True on success.
@@ -34,14 +34,14 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#unbanchatmember>
     public func unbanChatMemberAsync(
-            chat_id: ChatId,
-            user_id: Int64,
+            chatId: ChatId,
+            userId: Int64,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: UnbanChatMemberCompletion? = nil) {
         return requestAsync("unbanChatMember", defaultParameters["unbanChatMember"], parameters, [
-            "chat_id": chat_id,
-            "user_id": user_id],
+            "chat_id": chatId,
+            "user_id": userId],
             queue: queue, completion: completion)
     }
 }

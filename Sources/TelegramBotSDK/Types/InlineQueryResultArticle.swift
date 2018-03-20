@@ -13,7 +13,7 @@ public struct InlineQueryResultArticle: JsonConvertible {
     public var json: JSON
 
     /// Type of the result, must be article
-    public var type_string: String {
+    public var typeString: String {
         get { return json["type"].stringValue }
         set { json["type"].stringValue = newValue }
     }
@@ -31,13 +31,13 @@ public struct InlineQueryResultArticle: JsonConvertible {
     }
 
     /// Content of the message to be sent
-    public var input_message_content: InputMessageContent {
+    public var inputMessageContent: InputMessageContent {
         get { return InputMessageContent(json: json["input_message_content"]) }
         set { json["input_message_content"] = newValue.json }
     }
 
     /// Optional. Inline keyboard attached to the message
-    public var reply_markup: InlineKeyboardMarkup? {
+    public var replyMarkup: InlineKeyboardMarkup? {
         get {
             let value = json["reply_markup"]
             return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(json: value)
@@ -54,7 +54,7 @@ public struct InlineQueryResultArticle: JsonConvertible {
     }
 
     /// Optional. Pass True, if you don't want the URL to be shown in the message
-    public var hide_url: Bool? {
+    public var hideUrl: Bool? {
         get { return json["hide_url"].bool }
         set { json["hide_url"].bool = newValue }
     }
@@ -66,19 +66,19 @@ public struct InlineQueryResultArticle: JsonConvertible {
     }
 
     /// Optional. Url of the thumbnail for the result
-    public var thumb_url: String? {
+    public var thumbUrl: String? {
         get { return json["thumb_url"].string }
         set { json["thumb_url"].string = newValue }
     }
 
     /// Optional. Thumbnail width
-    public var thumb_width: Int? {
+    public var thumbWidth: Int? {
         get { return json["thumb_width"].int }
         set { json["thumb_width"].int = newValue }
     }
 
     /// Optional. Thumbnail height
-    public var thumb_height: Int? {
+    public var thumbHeight: Int? {
         get { return json["thumb_height"].int }
         set { json["thumb_height"].int = newValue }
     }

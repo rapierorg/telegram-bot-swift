@@ -17,12 +17,12 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#uploadstickerfile>
     @discardableResult
     public func uploadStickerFileSync(
-            user_id: Int64,
-            png_sticker: InputFile,
+            userId: Int64,
+            pngSticker: InputFile,
             _ parameters: [String: Any?] = [:]) -> File? {
         return requestSync("uploadStickerFile", defaultParameters["uploadStickerFile"], parameters, [
-            "user_id": user_id,
-            "png_sticker": png_sticker])
+            "user_id": userId,
+            "png_sticker": pngSticker])
     }
 
     /// Use this method to upload a .png file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.
@@ -34,14 +34,14 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#uploadstickerfile>
     public func uploadStickerFileAsync(
-            user_id: Int64,
-            png_sticker: InputFile,
+            userId: Int64,
+            pngSticker: InputFile,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: UploadStickerFileCompletion? = nil) {
         return requestAsync("uploadStickerFile", defaultParameters["uploadStickerFile"], parameters, [
-            "user_id": user_id,
-            "png_sticker": png_sticker],
+            "user_id": userId,
+            "png_sticker": pngSticker],
             queue: queue, completion: completion)
     }
 }

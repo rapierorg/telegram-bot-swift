@@ -13,7 +13,7 @@ public struct ChosenInlineResult: JsonConvertible {
     public var json: JSON
 
     /// The unique identifier for the result that was chosen
-    public var result_id: String {
+    public var resultId: String {
         get { return json["result_id"].stringValue }
         set { json["result_id"].stringValue = newValue }
     }
@@ -36,7 +36,7 @@ public struct ChosenInlineResult: JsonConvertible {
     }
 
     /// Optional. Identifier of the sent inline message. Available only if there is an inline keyboard attached to the message. Will be also received in callback queries and can be used to edit the message.
-    public var inline_message_id: String? {
+    public var inlineMessageId: String? {
         get { return json["inline_message_id"].string }
         set { json["inline_message_id"].string = newValue }
     }

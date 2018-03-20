@@ -16,10 +16,10 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#getchatadministrators>
     @discardableResult
     public func getChatAdministratorsSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             _ parameters: [String: Any?] = [:]) -> [ChatMember]? {
         return requestSync("getChatAdministrators", defaultParameters["getChatAdministrators"], parameters, [
-            "chat_id": chat_id])
+            "chat_id": chatId])
     }
 
     /// Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
@@ -30,12 +30,12 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#getchatadministrators>
     public func getChatAdministratorsAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: GetChatAdministratorsCompletion? = nil) {
         return requestAsync("getChatAdministrators", defaultParameters["getChatAdministrators"], parameters, [
-            "chat_id": chat_id],
+            "chat_id": chatId],
             queue: queue, completion: completion)
     }
 }

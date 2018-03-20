@@ -23,24 +23,24 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendvoice>
     @discardableResult
     public func sendVoiceSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             voice: FileInfo,
             caption: String? = nil,
-            parse_mode: String? = nil,
+            parseMode: String? = nil,
             duration: Int? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendVoice", defaultParameters["sendVoice"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "voice": voice,
             "caption": caption,
-            "parse_mode": parse_mode,
+            "parse_mode": parseMode,
             "duration": duration,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup])
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
@@ -58,26 +58,26 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendvoice>
     public func sendVoiceAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             voice: FileInfo,
             caption: String? = nil,
-            parse_mode: String? = nil,
+            parseMode: String? = nil,
             duration: Int? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVoiceCompletion? = nil) {
         return requestAsync("sendVoice", defaultParameters["sendVoice"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "voice": voice,
             "caption": caption,
-            "parse_mode": parse_mode,
+            "parse_mode": parseMode,
             "duration": duration,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup],
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

@@ -25,7 +25,7 @@ public struct Invoice: JsonConvertible {
     }
 
     /// Unique bot deep-linking parameter that can be used to generate this invoice
-    public var start_parameter: String {
+    public var startParameter: String {
         get { return json["start_parameter"].stringValue }
         set { json["start_parameter"].stringValue = newValue }
     }
@@ -37,7 +37,7 @@ public struct Invoice: JsonConvertible {
     }
 
     /// Total price in the smallest units of the currency (integer, not float/double). For example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
-    public var total_amount: Int {
+    public var totalAmount: Int {
         get { return json["total_amount"].intValue }
         set { json["total_amount"].intValue = newValue }
     }

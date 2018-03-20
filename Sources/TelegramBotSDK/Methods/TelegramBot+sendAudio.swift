@@ -26,28 +26,28 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendaudio>
     @discardableResult
     public func sendAudioSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             audio: FileInfo,
             caption: String? = nil,
-            parse_mode: String? = nil,
+            parseMode: String? = nil,
             duration: Int? = nil,
             performer: String? = nil,
             title: String? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendAudio", defaultParameters["sendAudio"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "audio": audio,
             "caption": caption,
-            "parse_mode": parse_mode,
+            "parse_mode": parseMode,
             "duration": duration,
             "performer": performer,
             "title": title,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup])
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
@@ -68,30 +68,30 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendaudio>
     public func sendAudioAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             audio: FileInfo,
             caption: String? = nil,
-            parse_mode: String? = nil,
+            parseMode: String? = nil,
             duration: Int? = nil,
             performer: String? = nil,
             title: String? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendAudioCompletion? = nil) {
         return requestAsync("sendAudio", defaultParameters["sendAudio"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "audio": audio,
             "caption": caption,
-            "parse_mode": parse_mode,
+            "parse_mode": parseMode,
             "duration": duration,
             "performer": performer,
             "title": title,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup],
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

@@ -13,7 +13,7 @@ public struct Audio: JsonConvertible {
     public var json: JSON
 
     /// Unique identifier for this file
-    public var file_id: String {
+    public var fileId: String {
         get { return json["file_id"].stringValue }
         set { json["file_id"].stringValue = newValue }
     }
@@ -37,13 +37,13 @@ public struct Audio: JsonConvertible {
     }
 
     /// Optional. MIME type of the file as defined by sender
-    public var mime_type: String? {
+    public var mimeType: String? {
         get { return json["mime_type"].string }
         set { json["mime_type"].string = newValue }
     }
 
     /// Optional. File size
-    public var file_size: Int? {
+    public var fileSize: Int? {
         get { return json["file_size"].int }
         set { json["file_size"].int = newValue }
     }

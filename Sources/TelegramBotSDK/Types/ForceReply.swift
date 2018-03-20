@@ -13,7 +13,7 @@ public struct ForceReply: JsonConvertible {
     public var json: JSON
 
     /// Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'
-    public var force_reply: Bool {
+    public var forceReply: Bool {
         get { return json["force_reply"].boolValue }
         set { json["force_reply"].boolValue = newValue }
     }

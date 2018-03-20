@@ -13,7 +13,7 @@ public struct InlineQueryResultCachedVideo: JsonConvertible {
     public var json: JSON
 
     /// Type of the result, must be video
-    public var type_string: String {
+    public var typeString: String {
         get { return json["type"].stringValue }
         set { json["type"].stringValue = newValue }
     }
@@ -25,7 +25,7 @@ public struct InlineQueryResultCachedVideo: JsonConvertible {
     }
 
     /// A valid file identifier for the video file
-    public var video_file_id: String {
+    public var videoFileId: String {
         get { return json["video_file_id"].stringValue }
         set { json["video_file_id"].stringValue = newValue }
     }
@@ -49,13 +49,13 @@ public struct InlineQueryResultCachedVideo: JsonConvertible {
     }
 
     /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
-    public var parse_mode: String? {
+    public var parseMode: String? {
         get { return json["parse_mode"].string }
         set { json["parse_mode"].string = newValue }
     }
 
     /// Optional. Inline keyboard attached to the message
-    public var reply_markup: InlineKeyboardMarkup? {
+    public var replyMarkup: InlineKeyboardMarkup? {
         get {
             let value = json["reply_markup"]
             return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(json: value)
@@ -66,7 +66,7 @@ public struct InlineQueryResultCachedVideo: JsonConvertible {
     }
 
     /// Optional. Content of the message to be sent instead of the video
-    public var input_message_content: InputMessageContent? {
+    public var inputMessageContent: InputMessageContent? {
         get {
             let value = json["input_message_content"]
             return value.isNullOrUnknown ? nil : InputMessageContent(json: value)

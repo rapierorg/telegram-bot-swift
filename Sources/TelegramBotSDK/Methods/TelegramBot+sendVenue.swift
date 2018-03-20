@@ -24,26 +24,26 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendvenue>
     @discardableResult
     public func sendVenueSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             latitude: Float,
             longitude: Float,
             title: String,
             address: String,
-            foursquare_id: String? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            foursquareId: String? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendVenue", defaultParameters["sendVenue"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "latitude": latitude,
             "longitude": longitude,
             "title": title,
             "address": address,
-            "foursquare_id": foursquare_id,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup])
+            "foursquare_id": foursquareId,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to send information about a venue. On success, the sent Message is returned.
@@ -62,28 +62,28 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendvenue>
     public func sendVenueAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             latitude: Float,
             longitude: Float,
             title: String,
             address: String,
-            foursquare_id: String? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            foursquareId: String? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVenueCompletion? = nil) {
         return requestAsync("sendVenue", defaultParameters["sendVenue"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "latitude": latitude,
             "longitude": longitude,
             "title": title,
             "address": address,
-            "foursquare_id": foursquare_id,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup],
+            "foursquare_id": foursquareId,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

@@ -13,7 +13,7 @@ public struct InlineKeyboardMarkup: JsonConvertible {
     public var json: JSON
 
     /// Array of button rows, each represented by an Array of InlineKeyboardButton objects
-    public var inline_keyboard: [[InlineKeyboardButton]] {
+    public var inlineKeyboard: [[InlineKeyboardButton]] {
         get { return json["inline_keyboard"].twoDArrayValue() }
         set {
             var rowsJson = [JSON]()

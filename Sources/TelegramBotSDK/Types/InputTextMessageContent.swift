@@ -13,19 +13,19 @@ public struct InputTextMessageContent: JsonConvertible {
     public var json: JSON
 
     /// Text of the message to be sent, 1-4096 characters
-    public var message_text: String {
+    public var messageText: String {
         get { return json["message_text"].stringValue }
         set { json["message_text"].stringValue = newValue }
     }
 
     /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-    public var parse_mode: String? {
+    public var parseMode: String? {
         get { return json["parse_mode"].string }
         set { json["parse_mode"].string = newValue }
     }
 
     /// Optional. Disables link previews for links in the sent message
-    public var disable_web_page_preview: Bool? {
+    public var disableWebPagePreview: Bool? {
         get { return json["disable_web_page_preview"].bool }
         set { json["disable_web_page_preview"].bool = newValue }
     }

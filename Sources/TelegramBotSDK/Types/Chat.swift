@@ -19,7 +19,7 @@ public struct Chat: JsonConvertible {
     }
 
     /// Type of chat, can be either “private”, “group”, “supergroup” or “channel”
-    public var type_string: String {
+    public var typeString: String {
         get { return json["type"].stringValue }
         set { json["type"].stringValue = newValue }
     }
@@ -37,19 +37,19 @@ public struct Chat: JsonConvertible {
     }
 
     /// Optional. First name of the other party in a private chat
-    public var first_name: String? {
+    public var firstName: String? {
         get { return json["first_name"].string }
         set { json["first_name"].string = newValue }
     }
 
     /// Optional. Last name of the other party in a private chat
-    public var last_name: String? {
+    public var lastName: String? {
         get { return json["last_name"].string }
         set { json["last_name"].string = newValue }
     }
 
     /// Optional. True if a group has ‘All Members Are Admins’ enabled.
-    public var all_members_are_administrators: Bool? {
+    public var allMembersAreAdministrators: Bool? {
         get { return json["all_members_are_administrators"].bool }
         set { json["all_members_are_administrators"].bool = newValue }
     }
@@ -72,13 +72,13 @@ public struct Chat: JsonConvertible {
     }
 
     /// Optional. Chat invite link, for supergroups and channel chats. Returned only in getChat.
-    public var invite_link: String? {
+    public var inviteLink: String? {
         get { return json["invite_link"].string }
         set { json["invite_link"].string = newValue }
     }
 
     /// Optional. Pinned message, for supergroups and channel chats. Returned only in getChat.
-    public var pinned_message: Message? {
+    public var pinnedMessage: Message? {
         get {
             let value = json["pinned_message"]
             return value.isNullOrUnknown ? nil : Message(json: value)
@@ -89,13 +89,13 @@ public struct Chat: JsonConvertible {
     }
 
     /// Optional. For supergroups, name of group sticker set. Returned only in getChat.
-    public var sticker_set_name: String? {
+    public var stickerSetName: String? {
         get { return json["sticker_set_name"].string }
         set { json["sticker_set_name"].string = newValue }
     }
 
     /// Optional. True, if the bot can change the group sticker set. Returned only in getChat.
-    public var can_set_sticker_set: Bool? {
+    public var canSetStickerSet: Bool? {
         get { return json["can_set_sticker_set"].bool }
         set { json["can_set_sticker_set"].bool = newValue }
     }

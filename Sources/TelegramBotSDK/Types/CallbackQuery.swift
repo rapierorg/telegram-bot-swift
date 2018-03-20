@@ -36,13 +36,13 @@ public struct CallbackQuery: JsonConvertible {
     }
 
     /// Optional. Identifier of the message sent via the bot in inline mode, that originated the query.
-    public var inline_message_id: String? {
+    public var inlineMessageId: String? {
         get { return json["inline_message_id"].string }
         set { json["inline_message_id"].string = newValue }
     }
 
     /// Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in games.
-    public var chat_instance: String {
+    public var chatInstance: String {
         get { return json["chat_instance"].stringValue }
         set { json["chat_instance"].stringValue = newValue }
     }
@@ -54,7 +54,7 @@ public struct CallbackQuery: JsonConvertible {
     }
 
     /// Optional. Short name of a Game to be returned, serves as the unique identifier for the game
-    public var game_short_name: String? {
+    public var gameShortName: String? {
         get { return json["game_short_name"].string }
         set { json["game_short_name"].string = newValue }
     }

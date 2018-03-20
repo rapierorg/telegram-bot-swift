@@ -22,22 +22,22 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#senddocument>
     @discardableResult
     public func sendDocumentSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             document: FileInfo,
             caption: String? = nil,
-            parse_mode: String? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            parseMode: String? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendDocument", defaultParameters["sendDocument"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "document": document,
             "caption": caption,
-            "parse_mode": parse_mode,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup])
+            "parse_mode": parseMode,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
@@ -54,24 +54,24 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#senddocument>
     public func sendDocumentAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             document: FileInfo,
             caption: String? = nil,
-            parse_mode: String? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            parseMode: String? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendDocumentCompletion? = nil) {
         return requestAsync("sendDocument", defaultParameters["sendDocument"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "document": document,
             "caption": caption,
-            "parse_mode": parse_mode,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup],
+            "parse_mode": parseMode,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

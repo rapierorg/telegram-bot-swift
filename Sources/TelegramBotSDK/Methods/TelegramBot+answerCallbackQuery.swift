@@ -22,18 +22,18 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#answercallbackquery>
     @discardableResult
     public func answerCallbackQuerySync(
-            callback_query_id: String,
+            callbackQueryId: String,
             text: String? = nil,
-            show_alert: Bool? = nil,
+            showAlert: Bool? = nil,
             url: String? = nil,
-            cache_time: Int? = nil,
+            cacheTime: Int? = nil,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("answerCallbackQuery", defaultParameters["answerCallbackQuery"], parameters, [
-            "callback_query_id": callback_query_id,
+            "callback_query_id": callbackQueryId,
             "text": text,
-            "show_alert": show_alert,
+            "show_alert": showAlert,
             "url": url,
-            "cache_time": cache_time])
+            "cache_time": cacheTime])
     }
 
     /// Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
@@ -50,20 +50,20 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#answercallbackquery>
     public func answerCallbackQueryAsync(
-            callback_query_id: String,
+            callbackQueryId: String,
             text: String? = nil,
-            show_alert: Bool? = nil,
+            showAlert: Bool? = nil,
             url: String? = nil,
-            cache_time: Int? = nil,
+            cacheTime: Int? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: AnswerCallbackQueryCompletion? = nil) {
         return requestAsync("answerCallbackQuery", defaultParameters["answerCallbackQuery"], parameters, [
-            "callback_query_id": callback_query_id,
+            "callback_query_id": callbackQueryId,
             "text": text,
-            "show_alert": show_alert,
+            "show_alert": showAlert,
             "url": url,
-            "cache_time": cache_time],
+            "cache_time": cacheTime],
             queue: queue, completion: completion)
     }
 }

@@ -13,7 +13,7 @@ public struct InputMediaPhoto: JsonConvertible {
     public var json: JSON
 
     /// Type of the result, must be photo
-    public var type_string: String {
+    public var typeString: String {
         get { return json["type"].stringValue }
         set { json["type"].stringValue = newValue }
     }
@@ -31,7 +31,7 @@ public struct InputMediaPhoto: JsonConvertible {
     }
 
     /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
-    public var parse_mode: String? {
+    public var parseMode: String? {
         get { return json["parse_mode"].string }
         set { json["parse_mode"].string = newValue }
     }

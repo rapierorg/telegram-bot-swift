@@ -22,22 +22,22 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendlocation>
     @discardableResult
     public func sendLocationSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             latitude: Float,
             longitude: Float,
-            live_period: Int? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            livePeriod: Int? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendLocation", defaultParameters["sendLocation"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "latitude": latitude,
             "longitude": longitude,
-            "live_period": live_period,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup])
+            "live_period": livePeriod,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to send point on the map. On success, the sent Message is returned.
@@ -54,24 +54,24 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendlocation>
     public func sendLocationAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             latitude: Float,
             longitude: Float,
-            live_period: Int? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            livePeriod: Int? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendLocationCompletion? = nil) {
         return requestAsync("sendLocation", defaultParameters["sendLocation"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "latitude": latitude,
             "longitude": longitude,
-            "live_period": live_period,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup],
+            "live_period": livePeriod,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

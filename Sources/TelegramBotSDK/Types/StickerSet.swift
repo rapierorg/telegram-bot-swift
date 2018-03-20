@@ -25,7 +25,7 @@ public struct StickerSet: JsonConvertible {
     }
 
     /// True, if the sticker set contains masks
-    public var contains_masks: Bool {
+    public var containsMasks: Bool {
         get { return json["contains_masks"].boolValue }
         set { json["contains_masks"].boolValue = newValue }
     }

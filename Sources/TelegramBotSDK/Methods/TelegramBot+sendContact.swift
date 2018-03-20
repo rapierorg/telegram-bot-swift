@@ -22,22 +22,22 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendcontact>
     @discardableResult
     public func sendContactSync(
-            chat_id: ChatId,
-            phone_number: String,
-            first_name: String,
-            last_name: String? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            chatId: ChatId,
+            phoneNumber: String,
+            firstName: String,
+            lastName: String? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendContact", defaultParameters["sendContact"], parameters, [
-            "chat_id": chat_id,
-            "phone_number": phone_number,
-            "first_name": first_name,
-            "last_name": last_name,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup])
+            "chat_id": chatId,
+            "phone_number": phoneNumber,
+            "first_name": firstName,
+            "last_name": lastName,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to send phone contacts. On success, the sent Message is returned.
@@ -54,24 +54,24 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendcontact>
     public func sendContactAsync(
-            chat_id: ChatId,
-            phone_number: String,
-            first_name: String,
-            last_name: String? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            chatId: ChatId,
+            phoneNumber: String,
+            firstName: String,
+            lastName: String? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendContactCompletion? = nil) {
         return requestAsync("sendContact", defaultParameters["sendContact"], parameters, [
-            "chat_id": chat_id,
-            "phone_number": phone_number,
-            "first_name": first_name,
-            "last_name": last_name,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup],
+            "chat_id": chatId,
+            "phone_number": phoneNumber,
+            "first_name": firstName,
+            "last_name": lastName,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

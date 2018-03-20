@@ -14,7 +14,7 @@ public struct InlineQueryResultVideo: JsonConvertible {
     public var json: JSON
 
     /// Type of the result, must be video
-    public var type_string: String {
+    public var typeString: String {
         get { return json["type"].stringValue }
         set { json["type"].stringValue = newValue }
     }
@@ -26,19 +26,19 @@ public struct InlineQueryResultVideo: JsonConvertible {
     }
 
     /// A valid URL for the embedded video player or video file
-    public var video_url: String {
+    public var videoUrl: String {
         get { return json["video_url"].stringValue }
         set { json["video_url"].stringValue = newValue }
     }
 
     /// Mime type of the content of video url, “text/html” or “video/mp4”
-    public var mime_type: String {
+    public var mimeType: String {
         get { return json["mime_type"].stringValue }
         set { json["mime_type"].stringValue = newValue }
     }
 
     /// URL of the thumbnail (jpeg only) for the video
-    public var thumb_url: String {
+    public var thumbUrl: String {
         get { return json["thumb_url"].stringValue }
         set { json["thumb_url"].stringValue = newValue }
     }
@@ -56,25 +56,25 @@ public struct InlineQueryResultVideo: JsonConvertible {
     }
 
     /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
-    public var parse_mode: String? {
+    public var parseMode: String? {
         get { return json["parse_mode"].string }
         set { json["parse_mode"].string = newValue }
     }
 
     /// Optional. Video width
-    public var video_width: Int? {
+    public var videoWidth: Int? {
         get { return json["video_width"].int }
         set { json["video_width"].int = newValue }
     }
 
     /// Optional. Video height
-    public var video_height: Int? {
+    public var videoHeight: Int? {
         get { return json["video_height"].int }
         set { json["video_height"].int = newValue }
     }
 
     /// Optional. Video duration in seconds
-    public var video_duration: Int? {
+    public var videoDuration: Int? {
         get { return json["video_duration"].int }
         set { json["video_duration"].int = newValue }
     }
@@ -86,7 +86,7 @@ public struct InlineQueryResultVideo: JsonConvertible {
     }
 
     /// Optional. Inline keyboard attached to the message
-    public var reply_markup: InlineKeyboardMarkup? {
+    public var replyMarkup: InlineKeyboardMarkup? {
         get {
             let value = json["reply_markup"]
             return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(json: value)
@@ -97,7 +97,7 @@ public struct InlineQueryResultVideo: JsonConvertible {
     }
 
     /// Optional. Content of the message to be sent instead of the video. This field is required if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
-    public var input_message_content: InputMessageContent? {
+    public var inputMessageContent: InputMessageContent? {
         get {
             let value = json["input_message_content"]
             return value.isNullOrUnknown ? nil : InputMessageContent(json: value)

@@ -21,20 +21,20 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#editmessagelivelocation>
     @discardableResult
     public func editMessageLiveLocationSync(
-            chat_id: ChatId? = nil,
-            message_id: Int? = nil,
-            inline_message_id: String? = nil,
+            chatId: ChatId? = nil,
+            messageId: Int? = nil,
+            inlineMessageId: String? = nil,
             latitude: Float,
             longitude: Float,
-            reply_markup: InlineKeyboardMarkup? = nil,
+            replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
         return requestSync("editMessageLiveLocation", defaultParameters["editMessageLiveLocation"], parameters, [
-            "chat_id": chat_id,
-            "message_id": message_id,
-            "inline_message_id": inline_message_id,
+            "chat_id": chatId,
+            "message_id": messageId,
+            "inline_message_id": inlineMessageId,
             "latitude": latitude,
             "longitude": longitude,
-            "reply_markup": reply_markup])
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to edit live location messages sent by the bot or via the bot (for inline bots). A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.
@@ -50,22 +50,22 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#editmessagelivelocation>
     public func editMessageLiveLocationAsync(
-            chat_id: ChatId? = nil,
-            message_id: Int? = nil,
-            inline_message_id: String? = nil,
+            chatId: ChatId? = nil,
+            messageId: Int? = nil,
+            inlineMessageId: String? = nil,
             latitude: Float,
             longitude: Float,
-            reply_markup: InlineKeyboardMarkup? = nil,
+            replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: EditMessageLiveLocationCompletion? = nil) {
         return requestAsync("editMessageLiveLocation", defaultParameters["editMessageLiveLocation"], parameters, [
-            "chat_id": chat_id,
-            "message_id": message_id,
-            "inline_message_id": inline_message_id,
+            "chat_id": chatId,
+            "message_id": messageId,
+            "inline_message_id": inlineMessageId,
             "latitude": latitude,
             "longitude": longitude,
-            "reply_markup": reply_markup],
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

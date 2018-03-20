@@ -19,13 +19,13 @@ public struct KeyboardButton: JsonConvertible {
     }
 
     /// Optional. If True, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only
-    public var request_contact: Bool? {
+    public var requestContact: Bool? {
         get { return json["request_contact"].bool }
         set { json["request_contact"].bool = newValue }
     }
 
     /// Optional. If True, the user's current location will be sent when the button is pressed. Available in private chats only
-    public var request_location: Bool? {
+    public var requestLocation: Bool? {
         get { return json["request_location"].bool }
         set { json["request_location"].bool = newValue }
     }

@@ -13,7 +13,7 @@ public struct InlineQueryResultContact: JsonConvertible {
     public var json: JSON
 
     /// Type of the result, must be contact
-    public var type_string: String {
+    public var typeString: String {
         get { return json["type"].stringValue }
         set { json["type"].stringValue = newValue }
     }
@@ -25,25 +25,25 @@ public struct InlineQueryResultContact: JsonConvertible {
     }
 
     /// Contact's phone number
-    public var phone_number: String {
+    public var phoneNumber: String {
         get { return json["phone_number"].stringValue }
         set { json["phone_number"].stringValue = newValue }
     }
 
     /// Contact's first name
-    public var first_name: String {
+    public var firstName: String {
         get { return json["first_name"].stringValue }
         set { json["first_name"].stringValue = newValue }
     }
 
     /// Optional. Contact's last name
-    public var last_name: String? {
+    public var lastName: String? {
         get { return json["last_name"].string }
         set { json["last_name"].string = newValue }
     }
 
     /// Optional. Inline keyboard attached to the message
-    public var reply_markup: InlineKeyboardMarkup? {
+    public var replyMarkup: InlineKeyboardMarkup? {
         get {
             let value = json["reply_markup"]
             return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(json: value)
@@ -54,7 +54,7 @@ public struct InlineQueryResultContact: JsonConvertible {
     }
 
     /// Optional. Content of the message to be sent instead of the contact
-    public var input_message_content: InputMessageContent? {
+    public var inputMessageContent: InputMessageContent? {
         get {
             let value = json["input_message_content"]
             return value.isNullOrUnknown ? nil : InputMessageContent(json: value)
@@ -65,19 +65,19 @@ public struct InlineQueryResultContact: JsonConvertible {
     }
 
     /// Optional. Url of the thumbnail for the result
-    public var thumb_url: String? {
+    public var thumbUrl: String? {
         get { return json["thumb_url"].string }
         set { json["thumb_url"].string = newValue }
     }
 
     /// Optional. Thumbnail width
-    public var thumb_width: Int? {
+    public var thumbWidth: Int? {
         get { return json["thumb_width"].int }
         set { json["thumb_width"].int = newValue }
     }
 
     /// Optional. Thumbnail height
-    public var thumb_height: Int? {
+    public var thumbHeight: Int? {
         get { return json["thumb_height"].int }
         set { json["thumb_height"].int = newValue }
     }

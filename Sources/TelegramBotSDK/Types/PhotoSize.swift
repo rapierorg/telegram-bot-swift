@@ -13,7 +13,7 @@ public struct PhotoSize: JsonConvertible {
     public var json: JSON
 
     /// Unique identifier for this file
-    public var file_id: String {
+    public var fileId: String {
         get { return json["file_id"].stringValue }
         set { json["file_id"].stringValue = newValue }
     }
@@ -31,7 +31,7 @@ public struct PhotoSize: JsonConvertible {
     }
 
     /// Optional. File size
-    public var file_size: Int? {
+    public var fileSize: Int? {
         get { return json["file_size"].int }
         set { json["file_size"].int = newValue }
     }

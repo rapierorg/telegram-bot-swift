@@ -13,7 +13,7 @@ public struct InlineQueryResultGif: JsonConvertible {
     public var json: JSON
 
     /// Type of the result, must be gif
-    public var type_string: String {
+    public var typeString: String {
         get { return json["type"].stringValue }
         set { json["type"].stringValue = newValue }
     }
@@ -25,31 +25,31 @@ public struct InlineQueryResultGif: JsonConvertible {
     }
 
     /// A valid URL for the GIF file. File size must not exceed 1MB
-    public var gif_url: String {
+    public var gifUrl: String {
         get { return json["gif_url"].stringValue }
         set { json["gif_url"].stringValue = newValue }
     }
 
     /// Optional. Width of the GIF
-    public var gif_width: Int? {
+    public var gifWidth: Int? {
         get { return json["gif_width"].int }
         set { json["gif_width"].int = newValue }
     }
 
     /// Optional. Height of the GIF
-    public var gif_height: Int? {
+    public var gifHeight: Int? {
         get { return json["gif_height"].int }
         set { json["gif_height"].int = newValue }
     }
 
     /// Optional. Duration of the GIF
-    public var gif_duration: Int? {
+    public var gifDuration: Int? {
         get { return json["gif_duration"].int }
         set { json["gif_duration"].int = newValue }
     }
 
     /// URL of the static thumbnail for the result (jpeg or gif)
-    public var thumb_url: String {
+    public var thumbUrl: String {
         get { return json["thumb_url"].stringValue }
         set { json["thumb_url"].stringValue = newValue }
     }
@@ -67,13 +67,13 @@ public struct InlineQueryResultGif: JsonConvertible {
     }
 
     /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
-    public var parse_mode: String? {
+    public var parseMode: String? {
         get { return json["parse_mode"].string }
         set { json["parse_mode"].string = newValue }
     }
 
     /// Optional. Inline keyboard attached to the message
-    public var reply_markup: InlineKeyboardMarkup? {
+    public var replyMarkup: InlineKeyboardMarkup? {
         get {
             let value = json["reply_markup"]
             return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(json: value)
@@ -84,7 +84,7 @@ public struct InlineQueryResultGif: JsonConvertible {
     }
 
     /// Optional. Content of the message to be sent instead of the GIF animation
-    public var input_message_content: InputMessageContent? {
+    public var inputMessageContent: InputMessageContent? {
         get {
             let value = json["input_message_content"]
             return value.isNullOrUnknown ? nil : InputMessageContent(json: value)

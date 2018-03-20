@@ -19,16 +19,16 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#forwardmessage>
     @discardableResult
     public func forwardMessageSync(
-            chat_id: ChatId,
-            from_chat_id: ChatId,
-            disable_notification: Bool? = nil,
-            message_id: Int,
+            chatId: ChatId,
+            fromChatId: ChatId,
+            disableNotification: Bool? = nil,
+            messageId: Int,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("forwardMessage", defaultParameters["forwardMessage"], parameters, [
-            "chat_id": chat_id,
-            "from_chat_id": from_chat_id,
-            "disable_notification": disable_notification,
-            "message_id": message_id])
+            "chat_id": chatId,
+            "from_chat_id": fromChatId,
+            "disable_notification": disableNotification,
+            "message_id": messageId])
     }
 
     /// Use this method to forward messages of any kind. On success, the sent Message is returned.
@@ -42,18 +42,18 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#forwardmessage>
     public func forwardMessageAsync(
-            chat_id: ChatId,
-            from_chat_id: ChatId,
-            disable_notification: Bool? = nil,
-            message_id: Int,
+            chatId: ChatId,
+            fromChatId: ChatId,
+            disableNotification: Bool? = nil,
+            messageId: Int,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: ForwardMessageCompletion? = nil) {
         return requestAsync("forwardMessage", defaultParameters["forwardMessage"], parameters, [
-            "chat_id": chat_id,
-            "from_chat_id": from_chat_id,
-            "disable_notification": disable_notification,
-            "message_id": message_id],
+            "chat_id": chatId,
+            "from_chat_id": fromChatId,
+            "disable_notification": disableNotification,
+            "message_id": messageId],
             queue: queue, completion: completion)
     }
 }

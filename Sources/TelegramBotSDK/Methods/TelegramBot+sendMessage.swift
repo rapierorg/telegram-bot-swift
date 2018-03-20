@@ -22,22 +22,22 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
     @discardableResult
     public func sendMessageSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             text: String,
-            parse_mode: String? = nil,
-            disable_web_page_preview: Bool? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            parseMode: String? = nil,
+            disableWebPagePreview: Bool? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendMessage", defaultParameters["sendMessage"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "text": text,
-            "parse_mode": parse_mode,
-            "disable_web_page_preview": disable_web_page_preview,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup])
+            "parse_mode": parseMode,
+            "disable_web_page_preview": disableWebPagePreview,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to send text messages. On success, the sent Message is returned.
@@ -54,24 +54,24 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
     public func sendMessageAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             text: String,
-            parse_mode: String? = nil,
-            disable_web_page_preview: Bool? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            parseMode: String? = nil,
+            disableWebPagePreview: Bool? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendMessageCompletion? = nil) {
         return requestAsync("sendMessage", defaultParameters["sendMessage"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "text": text,
-            "parse_mode": parse_mode,
-            "disable_web_page_preview": disable_web_page_preview,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup],
+            "parse_mode": parseMode,
+            "disable_web_page_preview": disableWebPagePreview,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

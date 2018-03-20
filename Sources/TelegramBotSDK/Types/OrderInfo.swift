@@ -19,7 +19,7 @@ public struct OrderInfo: JsonConvertible {
     }
 
     /// Optional. User's phone number
-    public var phone_number: String? {
+    public var phoneNumber: String? {
         get { return json["phone_number"].string }
         set { json["phone_number"].string = newValue }
     }
@@ -31,7 +31,7 @@ public struct OrderInfo: JsonConvertible {
     }
 
     /// Optional. User shipping address
-    public var shipping_address: ShippingAddress? {
+    public var shippingAddress: ShippingAddress? {
         get {
             let value = json["shipping_address"]
             return value.isNullOrUnknown ? nil : ShippingAddress(json: value)

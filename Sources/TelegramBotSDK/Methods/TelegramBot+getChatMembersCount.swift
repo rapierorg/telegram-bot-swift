@@ -16,10 +16,10 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#getchatmemberscount>
     @discardableResult
     public func getChatMembersCountSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             _ parameters: [String: Any?] = [:]) -> Int? {
         return requestSync("getChatMembersCount", defaultParameters["getChatMembersCount"], parameters, [
-            "chat_id": chat_id])
+            "chat_id": chatId])
     }
 
     /// Use this method to get the number of members in a chat. Returns Int on success.
@@ -30,12 +30,12 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#getchatmemberscount>
     public func getChatMembersCountAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: GetChatMembersCountCompletion? = nil) {
         return requestAsync("getChatMembersCount", defaultParameters["getChatMembersCount"], parameters, [
-            "chat_id": chat_id],
+            "chat_id": chatId],
             queue: queue, completion: completion)
     }
 }

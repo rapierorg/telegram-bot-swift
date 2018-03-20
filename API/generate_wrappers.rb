@@ -28,6 +28,14 @@ import Dispatch
 
 EOT
 
+def camelize(name)
+  camelized = name.split('_').collect(&:capitalize).join
+  unless camelized.empty?
+    camelized[0] = camelized[0].downcase
+  end
+  return camelized
+end
+
 # Some of the variables have more convenient manually created helper methods,
 # rename the original strings to something else
 def make_getter_name(type_name, var_name, var_type, var_desc)
@@ -252,11 +260,11 @@ def make_swift_type_name(var_name, var_type, var_desc)
 end
 
 def make_request_parameter(request_name, swift_type_name, var_name, var_type, var_optional, var_desc)
-  return {"#{var_name}": "#{swift_type_name}#{var_optional ? '? = nil' : ''}"}
+  return {"#{camelize(var_name)}": "#{swift_type_name}#{var_optional ? '? = nil' : ''}"}
 end
 
 def make_request_value(request_name, swift_type_name, var_name, var_type, var_optional, var_desc)
-  return {"#{var_name}": "#{var_name}"}
+  return {"#{var_name}": "#{camelize(var_name)}"}
 end
 
 def deduce_result_type(description)
@@ -342,6 +350,7 @@ def generate_type(f, node)
       f.write "PARAM: #{var_name} [#{var_type}#{var_optional ? '?' : ''}]: #{var_desc}\n"
 
       getter_name = make_getter_name(type_name, var_name, var_type, var_desc)
+      getter_name = camelize(getter_name)
 
       out.write "\n"
       init_params = write_getter_setter(out, getter_name, type_name, var_name, var_type, var_optional, var_desc)

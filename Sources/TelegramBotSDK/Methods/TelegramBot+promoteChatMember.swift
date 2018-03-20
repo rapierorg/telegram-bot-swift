@@ -25,28 +25,28 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#promotechatmember>
     @discardableResult
     public func promoteChatMemberSync(
-            chat_id: ChatId,
-            user_id: Int64,
-            can_change_info: Bool? = nil,
-            can_post_messages: Bool? = nil,
-            can_edit_messages: Bool? = nil,
-            can_delete_messages: Bool? = nil,
-            can_invite_users: Bool? = nil,
-            can_restrict_members: Bool? = nil,
-            can_pin_messages: Bool? = nil,
-            can_promote_members: Bool? = nil,
+            chatId: ChatId,
+            userId: Int64,
+            canChangeInfo: Bool? = nil,
+            canPostMessages: Bool? = nil,
+            canEditMessages: Bool? = nil,
+            canDeleteMessages: Bool? = nil,
+            canInviteUsers: Bool? = nil,
+            canRestrictMembers: Bool? = nil,
+            canPinMessages: Bool? = nil,
+            canPromoteMembers: Bool? = nil,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("promoteChatMember", defaultParameters["promoteChatMember"], parameters, [
-            "chat_id": chat_id,
-            "user_id": user_id,
-            "can_change_info": can_change_info,
-            "can_post_messages": can_post_messages,
-            "can_edit_messages": can_edit_messages,
-            "can_delete_messages": can_delete_messages,
-            "can_invite_users": can_invite_users,
-            "can_restrict_members": can_restrict_members,
-            "can_pin_messages": can_pin_messages,
-            "can_promote_members": can_promote_members])
+            "chat_id": chatId,
+            "user_id": userId,
+            "can_change_info": canChangeInfo,
+            "can_post_messages": canPostMessages,
+            "can_edit_messages": canEditMessages,
+            "can_delete_messages": canDeleteMessages,
+            "can_invite_users": canInviteUsers,
+            "can_restrict_members": canRestrictMembers,
+            "can_pin_messages": canPinMessages,
+            "can_promote_members": canPromoteMembers])
     }
 
     /// Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote a user. Returns True on success.
@@ -66,30 +66,30 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#promotechatmember>
     public func promoteChatMemberAsync(
-            chat_id: ChatId,
-            user_id: Int64,
-            can_change_info: Bool? = nil,
-            can_post_messages: Bool? = nil,
-            can_edit_messages: Bool? = nil,
-            can_delete_messages: Bool? = nil,
-            can_invite_users: Bool? = nil,
-            can_restrict_members: Bool? = nil,
-            can_pin_messages: Bool? = nil,
-            can_promote_members: Bool? = nil,
+            chatId: ChatId,
+            userId: Int64,
+            canChangeInfo: Bool? = nil,
+            canPostMessages: Bool? = nil,
+            canEditMessages: Bool? = nil,
+            canDeleteMessages: Bool? = nil,
+            canInviteUsers: Bool? = nil,
+            canRestrictMembers: Bool? = nil,
+            canPinMessages: Bool? = nil,
+            canPromoteMembers: Bool? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: PromoteChatMemberCompletion? = nil) {
         return requestAsync("promoteChatMember", defaultParameters["promoteChatMember"], parameters, [
-            "chat_id": chat_id,
-            "user_id": user_id,
-            "can_change_info": can_change_info,
-            "can_post_messages": can_post_messages,
-            "can_edit_messages": can_edit_messages,
-            "can_delete_messages": can_delete_messages,
-            "can_invite_users": can_invite_users,
-            "can_restrict_members": can_restrict_members,
-            "can_pin_messages": can_pin_messages,
-            "can_promote_members": can_promote_members],
+            "chat_id": chatId,
+            "user_id": userId,
+            "can_change_info": canChangeInfo,
+            "can_post_messages": canPostMessages,
+            "can_edit_messages": canEditMessages,
+            "can_delete_messages": canDeleteMessages,
+            "can_invite_users": canInviteUsers,
+            "can_restrict_members": canRestrictMembers,
+            "can_pin_messages": canPinMessages,
+            "can_promote_members": canPromoteMembers],
             queue: queue, completion: completion)
     }
 }

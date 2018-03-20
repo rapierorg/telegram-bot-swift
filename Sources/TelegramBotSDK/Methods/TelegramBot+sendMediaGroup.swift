@@ -19,16 +19,16 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendmediagroup>
     @discardableResult
     public func sendMediaGroupSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             media: [InputMedia],
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
             _ parameters: [String: Any?] = [:]) -> [Message]? {
         return requestSync("sendMediaGroup", defaultParameters["sendMediaGroup"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "media": media,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id])
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId])
     }
 
     /// Use this method to send a group of photos or videos as an album. On success, an array of the sent Messages is returned.
@@ -42,18 +42,18 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendmediagroup>
     public func sendMediaGroupAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             media: [InputMedia],
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendMediaGroupCompletion? = nil) {
         return requestAsync("sendMediaGroup", defaultParameters["sendMediaGroup"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "media": media,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id],
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId],
             queue: queue, completion: completion)
     }
 }

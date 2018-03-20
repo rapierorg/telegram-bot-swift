@@ -18,14 +18,14 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#pinchatmessage>
     @discardableResult
     public func pinChatMessageSync(
-            chat_id: ChatId,
-            message_id: Int,
-            disable_notification: Bool? = nil,
+            chatId: ChatId,
+            messageId: Int,
+            disableNotification: Bool? = nil,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("pinChatMessage", defaultParameters["pinChatMessage"], parameters, [
-            "chat_id": chat_id,
-            "message_id": message_id,
-            "disable_notification": disable_notification])
+            "chat_id": chatId,
+            "message_id": messageId,
+            "disable_notification": disableNotification])
     }
 
     /// Use this method to pin a message in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
@@ -38,16 +38,16 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#pinchatmessage>
     public func pinChatMessageAsync(
-            chat_id: ChatId,
-            message_id: Int,
-            disable_notification: Bool? = nil,
+            chatId: ChatId,
+            messageId: Int,
+            disableNotification: Bool? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: PinChatMessageCompletion? = nil) {
         return requestAsync("pinChatMessage", defaultParameters["pinChatMessage"], parameters, [
-            "chat_id": chat_id,
-            "message_id": message_id,
-            "disable_notification": disable_notification],
+            "chat_id": chatId,
+            "message_id": messageId,
+            "disable_notification": disableNotification],
             queue: queue, completion: completion)
     }
 }

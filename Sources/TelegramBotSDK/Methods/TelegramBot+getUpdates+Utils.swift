@@ -65,7 +65,7 @@ extension TelegramBot {
             return nil
         }
         
-        let nextUpdateId = update.update_id + 1
+        let nextUpdateId = update.updateId + 1
         if nextOffset == nil || nextUpdateId > nextOffset! {
             nextOffset = nextUpdateId
         }

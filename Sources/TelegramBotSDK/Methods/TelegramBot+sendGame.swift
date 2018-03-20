@@ -20,18 +20,18 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendgame>
     @discardableResult
     public func sendGameSync(
-            chat_id: Int64,
-            game_short_name: String,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: InlineKeyboardMarkup? = nil,
+            chatId: Int64,
+            gameShortName: String,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendGame", defaultParameters["sendGame"], parameters, [
-            "chat_id": chat_id,
-            "game_short_name": game_short_name,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup])
+            "chat_id": chatId,
+            "game_short_name": gameShortName,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to send a game. On success, the sent Message is returned.
@@ -46,20 +46,20 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendgame>
     public func sendGameAsync(
-            chat_id: Int64,
-            game_short_name: String,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: InlineKeyboardMarkup? = nil,
+            chatId: Int64,
+            gameShortName: String,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendGameCompletion? = nil) {
         return requestAsync("sendGame", defaultParameters["sendGame"], parameters, [
-            "chat_id": chat_id,
-            "game_short_name": game_short_name,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup],
+            "chat_id": chatId,
+            "game_short_name": gameShortName,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

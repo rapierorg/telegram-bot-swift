@@ -22,22 +22,22 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendphoto>
     @discardableResult
     public func sendPhotoSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             photo: FileInfo,
             caption: String? = nil,
-            parse_mode: String? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            parseMode: String? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendPhoto", defaultParameters["sendPhoto"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "photo": photo,
             "caption": caption,
-            "parse_mode": parse_mode,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup])
+            "parse_mode": parseMode,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to send photos. On success, the sent Message is returned.
@@ -54,24 +54,24 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendphoto>
     public func sendPhotoAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             photo: FileInfo,
             caption: String? = nil,
-            parse_mode: String? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            parseMode: String? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendPhotoCompletion? = nil) {
         return requestAsync("sendPhoto", defaultParameters["sendPhoto"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "photo": photo,
             "caption": caption,
-            "parse_mode": parse_mode,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup],
+            "parse_mode": parseMode,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

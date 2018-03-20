@@ -17,10 +17,10 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#deletechatphoto>
     @discardableResult
     public func deleteChatPhotoSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("deleteChatPhoto", defaultParameters["deleteChatPhoto"], parameters, [
-            "chat_id": chat_id])
+            "chat_id": chatId])
     }
 
     /// Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
@@ -32,12 +32,12 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#deletechatphoto>
     public func deleteChatPhotoAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: DeleteChatPhotoCompletion? = nil) {
         return requestAsync("deleteChatPhoto", defaultParameters["deleteChatPhoto"], parameters, [
-            "chat_id": chat_id],
+            "chat_id": chatId],
             queue: queue, completion: completion)
     }
 }
