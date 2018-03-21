@@ -99,8 +99,7 @@ public struct InlineQueryResultVideo: JsonConvertible {
     /// Optional. Content of the message to be sent instead of the video. This field is required if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
     public var inputMessageContent: InputMessageContent? {
         get {
-            let value = json["input_message_content"]
-            return value.isNullOrUnknown ? nil : InputMessageContent(json: value)
+            fatalError("Not implemented")
         }
         set {
             json["input_message_content"] = newValue?.json ?? JSON.null

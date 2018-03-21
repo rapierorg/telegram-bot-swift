@@ -44,8 +44,7 @@ public struct InlineQueryResultCachedSticker: JsonConvertible {
     /// Optional. Content of the message to be sent instead of the sticker
     public var inputMessageContent: InputMessageContent? {
         get {
-            let value = json["input_message_content"]
-            return value.isNullOrUnknown ? nil : InputMessageContent(json: value)
+            fatalError("Not implemented")
         }
         set {
             json["input_message_content"] = newValue?.json ?? JSON.null
