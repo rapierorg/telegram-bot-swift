@@ -26,7 +26,7 @@ public extension TelegramBot {
             messageId: Int? = nil,
             inlineMessageId: String? = nil,
             text: String,
-            parseMode: String? = nil,
+            parseMode: ParseMode? = nil,
             disableWebPagePreview: Bool? = nil,
             replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
@@ -35,7 +35,7 @@ public extension TelegramBot {
             "message_id": messageId,
             "inline_message_id": inlineMessageId,
             "text": text,
-            "parse_mode": parseMode,
+            "parse_mode": parseMode?.rawValue,
             "disable_web_page_preview": disableWebPagePreview,
             "reply_markup": replyMarkup])
     }
@@ -58,7 +58,7 @@ public extension TelegramBot {
             messageId: Int? = nil,
             inlineMessageId: String? = nil,
             text: String,
-            parseMode: String? = nil,
+            parseMode: ParseMode? = nil,
             disableWebPagePreview: Bool? = nil,
             replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:],
@@ -69,7 +69,7 @@ public extension TelegramBot {
             "message_id": messageId,
             "inline_message_id": inlineMessageId,
             "text": text,
-            "parse_mode": parseMode,
+            "parse_mode": parseMode?.rawValue,
             "disable_web_page_preview": disableWebPagePreview,
             "reply_markup": replyMarkup],
             queue: queue, completion: completion)

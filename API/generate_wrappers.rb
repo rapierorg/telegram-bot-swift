@@ -43,12 +43,15 @@ def make_getter_name(type_name, var_name, var_type, var_desc)
   #when ['Chat', 'type']
   #    return 'type_string'
   when ['ChatMember', 'status']
-      return 'status_string'
+    return 'status_string'
   else
-      if var_name == 'type' && var_type == 'String' then
-          return 'type_string'
-      end
-      return var_name
+    if var_name == 'type' && var_type == 'String' then
+        return 'type_string'
+    end
+    if var_name == 'parse_mode' && var_type == 'String' then
+      return 'parse_mode_string'
+    end
+    return var_name
   end
 end
 
@@ -245,6 +248,10 @@ def make_swift_type_name(var_name, var_type, var_desc)
     return "[#{var_type}]"
   end
 
+  if is_enum(var_name) then
+    return var_name.split('_').collect(&:capitalize).join
+  end
+
   case var_type
   when 'Boolean', 'True'
     return 'Bool'
@@ -283,8 +290,22 @@ def make_request_parameter(request_name, swift_type_name, var_name, var_type, va
   return {"#{camelize(var_name)}": "#{swift_type_name}#{var_optional ? '? = nil' : ''}"}
 end
 
-def make_request_value(request_name, swift_type_name, var_name, var_type, var_optional, var_desc)
-  return {"#{var_name}": "#{camelize(var_name)}"}
+def make_request_value(request_name, swift_type_name, var_name, var_type, var_optional, var_desc, is_enum)
+  if is_enum then
+    if var_optional then
+      suffix = "?.rawValue"
+    else
+      suffix = ".rawValue"
+    end
+  else
+    suffix = ""
+  end
+  return {"#{var_name}": "#{camelize(var_name)}#{suffix}"}
+end
+
+def is_enum(var_name)
+  enum_names = ["parse_mode"]
+  return enum_names.include?(var_name)
 end
 
 def deduce_result_type(description)
@@ -432,11 +453,12 @@ def generate_method(f, node)
       var_type = td[1].text
       var_optional = td[2].text.strip != 'Yes'
       var_desc = td[3].text
+
       f.write "PARAM: #{var_name} [#{var_type}#{var_optional ? '?' : ''}]: #{var_desc}\n"
 
       swift_type_name = make_swift_type_name(var_name, var_type, var_desc)
       param = make_request_parameter(method_name, swift_type_name, var_name, var_type, var_optional, var_desc)
-      value = make_request_value(method_name, swift_type_name, var_name, var_type, var_optional, var_desc)
+      value = make_request_value(method_name, swift_type_name, var_name, var_type, var_optional, var_desc, is_enum(var_name))
 
       # Accumulate init params to pass them to constructor
       all_params.merge!(param)
