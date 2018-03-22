@@ -14,7 +14,7 @@ import Foundation
 
 extension MessageEntity {
     // Type name is a reserved Swift word
-    public enum MType: String {
+    public enum MessageEntityType: String {
         case mention
         case hashtag
         case botCommand = "bot_command"
@@ -29,8 +29,8 @@ extension MessageEntity {
     }
     
     /// Type of the entity. Can be mention (@username), hashtag, bot_command, url, email, bold (bold text), italic (italic text), code (monowidth string), pre (monowidth block), text_link (for clickable text URLs), text_mention (for users without usernames)
-    public var type: METype {
-        get { return METype(rawValue:  json["type"].string ?? "") }
+    public var type: MessageEntityType {
+        get { return MessageEntityType(rawValue:  json["type"].string ?? "") }
         set { json["type"].string = newValue?.rawValue }
     }
 }
