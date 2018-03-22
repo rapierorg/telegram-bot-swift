@@ -65,17 +65,17 @@ class RequestTests: XCTestCase {
 	//
 	
 	func testSendMessage() {
-		let response = bot.sendMessageSync(chat_id: chatId, text: "testSendMessage1: this is a simple message")
+        let response = bot.sendMessageSync(chatId: chatId, text: "testSendMessage1: this is a simple message")
 		check(response)
 		
-		let messageId = response!.message_id
-		check( bot.sendMessageSync(chat_id: chatId, text: "testSendMessage2: a reply to previous message", ["reply_to_message_id": messageId]) )
+		let messageId = response!.messageId
+		check( bot.sendMessageSync(chatId: chatId, text: "testSendMessage2: a reply to previous message", ["reply_to_message_id": messageId]) )
 
-		check( bot.sendMessageSync(chat_id: chatId, text: "testSendMessage3: url without preview: http://google.com", ["disable_web_page_preview": true]) )
+        check( bot.sendMessageSync(chatId: chatId, text: "testSendMessage3: url without preview: http://google.com", ["disable_web_page_preview": true]) )
 
-		check( bot.sendMessageSync(chat_id: chatId, text: "testSendMessage4: markdown: *bold* _italic_ [link](http://google.com)", ["parse_mode": "Markdown"]) )
+        check( bot.sendMessageSync(chatId: chatId, text: "testSendMessage4: markdown: *bold* _italic_ [link](http://google.com)", ["parse_mode": "Markdown"]) )
 
-		check( bot.sendMessageSync(chat_id: chatId, text: "testSendMessage5: html: <b>bold</b> <i>italic</i>\n<code>void main() {\n  return 0;\n}</code>", ["parse_mode": "HTML"]) )
+		check( bot.sendMessageSync(chatId: chatId, text: "testSendMessage5: html: <b>bold</b> <i>italic</i>\n<code>void main() {\n  return 0;\n}</code>", parseMode: .html) )
 	}
 	
 	func testShowKeyboardWithText() {
@@ -84,7 +84,7 @@ class RequestTests: XCTestCase {
 			[ "Button 1", "Button 2" ],
 			[ "Button 3", "Button 4" ]
 		]
-		check( bot.sendMessageSync(chat_id: chatId, text: "Here is a keyboard", ["reply_markup": markup]) )
+		check( bot.sendMessageSync(chatId: chatId, text: "Here is a keyboard", ["reply_markup": markup]) )
 	}
 	
 	func testShowKeyboardWithButtons() {
@@ -98,27 +98,27 @@ class RequestTests: XCTestCase {
 
 		var button3 = KeyboardButton()
 		button3.text = "Share Contact"
-		button3.request_contact = true
+		button3.requestContact = true
 		
 		var button4 = KeyboardButton()
 		button4.text = "Share Location"
-		button4.request_location = true
+		button4.requestLocation = true
 		
 		markup.keyboard = [
 			[ button1, button2 ],
 			[ button3, button4 ]
 		]
-		check( bot.sendMessageSync(chat_id: chatId, text: "Here is a keyboard", ["reply_markup": markup]) )
+		check( bot.sendMessageSync(chatId: chatId, text: "Here is a keyboard", ["reply_markup": markup]) )
 	}
 	
 	func testHideKeyboard() {
 		let markup = ReplyKeyboardRemove()
-		check( bot.sendMessageSync(chat_id: chatId, text: "Removing the keyboard", ["reply_markup": markup]) )
+		check( bot.sendMessageSync(chatId: chatId, text: "Removing the keyboard", ["reply_markup": markup]) )
 	}
 	
 	func testForceReply() {
 		let markup = ForceReply()
-		check( bot.sendMessageSync(chat_id: chatId, text: "Force reply", ["reply_markup": markup]) )
+		check( bot.sendMessageSync(chatId: chatId, text: "Force reply", ["reply_markup": markup]) )
 	}
 	
 	//
@@ -126,7 +126,7 @@ class RequestTests: XCTestCase {
 	//
 	
 	func testForwardMessage() {
-		check( bot.forwardMessageSync(chat_id: chatId, from_chat_id: chatId, message_id: messageId) )
+		check( bot.forwardMessageSync(chatId: chatId, fromChatId: chatId, messageId: messageId) )
 	}
 	
 	//
@@ -135,7 +135,7 @@ class RequestTests: XCTestCase {
 	
 	func testSendLocation() {
 		check( bot.sendChatActionSync(chat_id: chatId, action: .find_location) )
-		check( bot.sendLocationSync(chat_id: chatId, latitude: 50.4501, longitude: 30.5234) )
+		check( bot.sendLocationSync(chatId: chatId, latitude: 50.4501, longitude: 30.5234) )
 	}
 	
     //
@@ -153,7 +153,7 @@ class RequestTests: XCTestCase {
             return
         }
         let inputFile = InputFile(filename: "test.jpg", data: imageData)
-        bot.sendPhotoSync(chat_id: chatId, photo: inputFile)
+        bot.sendPhotoSync(chatId: chatId, photo: inputFile)
     }
     
 	// Helper functions
