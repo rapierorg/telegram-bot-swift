@@ -8,6 +8,7 @@
 import Foundation
 
 extension MessageEntity {
+    // Type name is a reserved Swift word
     public enum METype: String {
         case mention
         case hashtag
