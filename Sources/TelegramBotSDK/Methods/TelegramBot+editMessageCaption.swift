@@ -25,7 +25,7 @@ public extension TelegramBot {
             messageId: Int? = nil,
             inlineMessageId: String? = nil,
             caption: String? = nil,
-            parseMode: String? = nil,
+            parseMode: ParseMode? = nil,
             replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
         return requestSync("editMessageCaption", defaultParameters["editMessageCaption"], parameters, [
@@ -33,7 +33,7 @@ public extension TelegramBot {
             "message_id": messageId,
             "inline_message_id": inlineMessageId,
             "caption": caption,
-            "parse_mode": parseMode,
+            "parse_mode": parseMode?.rawValue,
             "reply_markup": replyMarkup])
     }
 
@@ -54,7 +54,7 @@ public extension TelegramBot {
             messageId: Int? = nil,
             inlineMessageId: String? = nil,
             caption: String? = nil,
-            parseMode: String? = nil,
+            parseMode: ParseMode? = nil,
             replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
@@ -64,7 +64,7 @@ public extension TelegramBot {
             "message_id": messageId,
             "inline_message_id": inlineMessageId,
             "caption": caption,
-            "parse_mode": parseMode,
+            "parse_mode": parseMode?.rawValue,
             "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }

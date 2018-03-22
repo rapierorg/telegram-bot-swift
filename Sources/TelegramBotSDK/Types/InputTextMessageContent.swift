@@ -19,7 +19,7 @@ public struct InputTextMessageContent: JsonConvertible {
     }
 
     /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-    public var parseMode: String? {
+    public var parseModeString: String? {
         get { return json["parse_mode"].string }
         set { json["parse_mode"].string = newValue }
     }

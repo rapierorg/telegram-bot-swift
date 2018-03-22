@@ -24,7 +24,7 @@ public extension TelegramBot {
     public func sendMessageSync(
             chatId: ChatId,
             text: String,
-            parseMode: String? = nil,
+            parseMode: ParseMode? = nil,
             disableWebPagePreview: Bool? = nil,
             disableNotification: Bool? = nil,
             replyToMessageId: Int? = nil,
@@ -33,7 +33,7 @@ public extension TelegramBot {
         return requestSync("sendMessage", defaultParameters["sendMessage"], parameters, [
             "chat_id": chatId,
             "text": text,
-            "parse_mode": parseMode,
+            "parse_mode": parseMode?.rawValue,
             "disable_web_page_preview": disableWebPagePreview,
             "disable_notification": disableNotification,
             "reply_to_message_id": replyToMessageId,
@@ -56,7 +56,7 @@ public extension TelegramBot {
     public func sendMessageAsync(
             chatId: ChatId,
             text: String,
-            parseMode: String? = nil,
+            parseMode: ParseMode? = nil,
             disableWebPagePreview: Bool? = nil,
             disableNotification: Bool? = nil,
             replyToMessageId: Int? = nil,
@@ -67,7 +67,7 @@ public extension TelegramBot {
         return requestAsync("sendMessage", defaultParameters["sendMessage"], parameters, [
             "chat_id": chatId,
             "text": text,
-            "parse_mode": parseMode,
+            "parse_mode": parseMode?.rawValue,
             "disable_web_page_preview": disableWebPagePreview,
             "disable_notification": disableNotification,
             "reply_to_message_id": replyToMessageId,
