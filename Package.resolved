@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/IBM-Swift/SwiftyJSON.git",
         "state": {
           "branch": null,
-          "revision": "7d78e6a9907a5ab23e3f8d4d4ce3e2101abeec9d",
-          "version": "15.0.6"
+          "revision": "7eb6c83f91c519c19e6a507d604c9176d5ae5b15",
+          "version": "17.0.1"
         }
       }
     ]
