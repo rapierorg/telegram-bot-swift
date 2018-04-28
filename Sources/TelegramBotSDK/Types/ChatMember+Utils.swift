@@ -11,7 +11,7 @@
 //
 
 import Foundation
-import SwiftyJSON
+
 
 extension ChatMember {
 	public enum Status: String {

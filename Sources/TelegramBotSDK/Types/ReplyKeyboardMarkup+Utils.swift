@@ -11,16 +11,16 @@
 //
 
 import Foundation
-import SwiftyJSON
+
 
 extension ReplyKeyboardMarkup {
     /// Array of button rows, each represented by an Array of Strings
     public var keyboard_strings: [[String]] {
         get {
-            return json["keyboard"].twoDArrayValue()
+            return internalJson["keyboard"].twoDArrayValue()
         }
         set {
-            json["keyboard"] = JSON(newValue)
+            internalJson["keyboard"] = JSON(newValue)
         }
     }
 }

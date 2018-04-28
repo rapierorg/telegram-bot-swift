@@ -56,13 +56,13 @@ extension TelegramBot {
 	
 	/// Perform synchronous request.
 	/// - Returns: array of JsonConvertibles on success. Nil on error, in which case `lastError` contains the details.
-	public func requestSync<Result>(_ endpoint: String, _ parameters: [String: Any?]?...) -> [Result]? where Result: JsonConvertible {
+	internal func requestSync<Result>(_ endpoint: String, _ parameters: [String: Any?]?...) -> [Result]? where Result: JsonConvertible {
 		return requestSync(endpoint, mergeParameters(parameters))
 	}
 	
 	/// Perform asynchronous request.
 	/// - Returns: JsonConvertible on success. Nil on error, in which case `error` contains the details.
-	public func requestAsync<Result>(_ endpoint: String, _ parameters: [String: Any?] = [:], queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: Result?, _ error: DataTaskError?) -> ())?) where Result: JsonConvertible {
+	internal func requestAsync<Result>(_ endpoint: String, _ parameters: [String: Any?] = [:], queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: Result?, _ error: DataTaskError?) -> ())?) where Result: InternalJsonConvertible {
 		
 		startDataTaskForEndpoint(endpoint, parameters: parameters) {
 			json, error in
@@ -78,13 +78,13 @@ extension TelegramBot {
 	
 	/// Perform asynchronous request.
 	/// - Returns: JsonConvertible on success. Nil on error, in which case `error` contains the details.
-	public func requestAsync<Result>(_ endpoint: String, _ parameters: [String: Any?]?..., queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: Result?, _ error: DataTaskError?) -> ())?) where Result: JsonConvertible {
+	internal func requestAsync<Result>(_ endpoint: String, _ parameters: [String: Any?]?..., queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: Result?, _ error: DataTaskError?) -> ())?) where Result: JsonConvertible {
 		requestAsync(endpoint, mergeParameters(parameters), queue: queue, completion: completion)
 	}
 	
 	/// Perform asynchronous request.
 	/// - Returns: array of JsonConvertibles on success. Nil on error, in which case `error` contains the details.
-	public func requestAsync<Result>(_ endpoint: String, _ parameters: [String: Any?] = [:], queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: [Result]?, _ error: DataTaskError?) -> ())?) where Result: JsonConvertible {
+	internal func requestAsync<Result>(_ endpoint: String, _ parameters: [String: Any?] = [:], queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: [Result]?, _ error: DataTaskError?) -> ())?) where Result: InternalJsonConvertible {
 		
 		startDataTaskForEndpoint(endpoint, parameters: parameters) {
 			json, error in
@@ -104,7 +104,7 @@ extension TelegramBot {
 	
 	/// Perform asynchronous request.
 	/// - Returns: array of JsonConvertibles on success. Nil on error, in which case `error` contains the details.
-	public func requestAsync<Result>(_ endpoint: String, _ parameters: [String: Any?]?..., queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: [Result]?, _ error: DataTaskError?) -> ())?) where Result: JsonConvertible {
+	internal func requestAsync<Result>(_ endpoint: String, _ parameters: [String: Any?]?..., queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: [Result]?, _ error: DataTaskError?) -> ())?) where Result: JsonConvertible {
 		return requestAsync(endpoint, mergeParameters(parameters), queue: queue, completion: completion)
 	}
 	

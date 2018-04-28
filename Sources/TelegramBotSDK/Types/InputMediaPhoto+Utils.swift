@@ -15,7 +15,7 @@ import Foundation
 extension InputMediaPhoto {
     /// Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
     public var parseMode: TelegramBot.ParseMode? {
-        get { return TelegramBot.ParseMode(rawValue:  json["parse_mode"].string ?? "") }
-        set { json["parse_mode"].string = newValue?.rawValue }
+        get { return TelegramBot.ParseMode(rawValue:  internalJson["parse_mode"].string ?? "") }
+        set { internalJson["parse_mode"].string = newValue?.rawValue }
     }
 }
