@@ -14,7 +14,11 @@ import Foundation
 
 
 extension String: JsonConvertible, InternalJsonConvertible {
-    public init(json: JSON) {
+    public init(jsonObject: Any) {
+        self.init(json: JSON(jsonObject))
+    }
+
+    internal init(json: JSON) {
         self = json.stringValue
     }
 

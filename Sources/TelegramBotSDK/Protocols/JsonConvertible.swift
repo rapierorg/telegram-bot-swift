@@ -15,6 +15,7 @@ import Foundation
 
 public protocol JsonConvertible: CustomStringConvertible, CustomDebugStringConvertible {
 	var json: Any { get set }
+    init(jsonObject: Any)
 	//func prettyPrint()
 }
 

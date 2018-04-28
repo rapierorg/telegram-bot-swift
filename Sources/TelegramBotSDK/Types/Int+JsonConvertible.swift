@@ -14,6 +14,10 @@ import Foundation
 
 
 extension Int: JsonConvertible, InternalJsonConvertible {
+    public init(jsonObject: Any) {
+        self.init(json: JSON(jsonObject))
+    }
+
 	internal init(json: JSON) {
 		self = json.intValue
 	}

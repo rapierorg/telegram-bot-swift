@@ -203,7 +203,7 @@ def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_opt
                   "            fatalError(\"Not implemented\")\n"\
                   "        }\n"\
                   "        set {\n"\
-                  "            internalJson[\"input_message_content\"] = newValue?.internalJson ?? JSON.null\n"\
+                  "            internalJson[\"input_message_content\"] = JSON(newValue?.json ?? JSON.null)\n"\
                   "        }\n"\
                   "    }\n"\
       else
@@ -212,7 +212,7 @@ def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_opt
                   "            fatalError(\"Not implemented\")\n"\
                   "        }\n"\
                   "        set {\n"\
-                  "            internalJson[\"input_message_content\"] = newValue.internalJson\n"\
+                  "            internalJson[\"input_message_content\"] = JSON(newValue.json)\n"\
                   "        }\n"\
                   "    }\n"\
       end
@@ -419,6 +419,9 @@ def generate_type(f, node)
     out.write "\n"\
         "    internal init(json: JSON = #{params}) {\n"\
         "        self.internalJson = JSON(json)\n"\
+        "    }\n"\
+        "    public init(jsonObject: Any) {\n"\
+        "        self.internalJson = JSON(jsonObject)\n"\
         "    }\n"
 
     out.write "}\n"

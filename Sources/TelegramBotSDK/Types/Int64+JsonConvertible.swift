@@ -14,6 +14,10 @@ import Foundation
 
 
 extension Int64: JsonConvertible, InternalJsonConvertible {
+    public init(jsonObject: Any) {
+        self.init(json: JSON(jsonObject))
+    }
+
     public init(json: JSON) {
         self = json.int64Value
     }

@@ -86,4 +86,7 @@ public struct InlineQueryResultCachedVideo: JsonConvertible, InternalJsonConvert
     internal init(json: JSON = [:]) {
         self.internalJson = JSON(json)
     }
+    public init(jsonObject: Any) {
+        self.internalJson = JSON(jsonObject)
+    }
 }
