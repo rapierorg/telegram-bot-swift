@@ -24,8 +24,8 @@ extension Bool: JsonConvertible {
         }
     }
 
-	public init(json: Any) {
-		self = JSON(json).boolValue
+    public init(jsonObject: Any) {
+		self = JSON(jsonObject).boolValue
 	}
 	
 	public var internalJson: JSON {

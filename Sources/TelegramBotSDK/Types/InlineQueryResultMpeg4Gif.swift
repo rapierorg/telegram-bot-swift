@@ -104,4 +104,7 @@ public struct InlineQueryResultMpeg4Gif: JsonConvertible, InternalJsonConvertibl
     internal init(json: JSON = [:]) {
         self.internalJson = JSON(json)
     }
+    public init(jsonObject: Any) {
+        self.internalJson = JSON(jsonObject)
+    }
 }

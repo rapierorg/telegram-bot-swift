@@ -35,4 +35,7 @@ public struct ForceReply: JsonConvertible, InternalJsonConvertible {
     internal init(json: JSON = ["force_reply": true]) {
         self.internalJson = JSON(json)
     }
+    public init(jsonObject: Any) {
+        self.internalJson = JSON(jsonObject)
+    }
 }

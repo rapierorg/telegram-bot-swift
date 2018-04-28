@@ -80,4 +80,7 @@ public struct InlineQueryResultCachedMpeg4Gif: JsonConvertible, InternalJsonConv
     internal init(json: JSON = [:]) {
         self.internalJson = JSON(json)
     }
+    public init(jsonObject: Any) {
+        self.internalJson = JSON(jsonObject)
+    }
 }
