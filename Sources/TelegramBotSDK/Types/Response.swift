@@ -11,38 +11,47 @@
 //
 
 import Foundation
-import SwiftyJSON
+
 
 /// Response to Bot API request.
-public struct Response: JsonConvertible {
+public struct Response: JsonConvertible, InternalJsonConvertible {
+
 	/// Original JSON for fields not yet added to Swift structures
-	public var json: JSON
+    public var json: Any {
+        get {
+            return internalJson.object
+        }
+        set {
+            internalJson = JSON(newValue)
+        }
+    }
+    internal var internalJson: JSON
 	
 	/// If `ok` equals true, the request was successful and the result of the query can be found in the `result` field. In case of an unsuccessful request, ‘ok’ equals false and the error is explained in the ‘errorDescription’.
 	public var ok: Bool {
-		get { return json["ok"].boolValue }
-		set { json["ok"].boolValue = newValue }
+		get { return internalJson["ok"].boolValue }
+		set { internalJson["ok"].boolValue = newValue }
 	}
 		
     /// *Optional.* Error description.
 	public var description: String? {
-		get { return json["description"].string }
-		set { json["description"].string = newValue }
+		get { return internalJson["description"].string }
+		set { internalJson["description"].string = newValue }
 	}
 		
     /// *Optional.* Error code. Its contents are subject to change in the future.
 	public var error_code: Int? {
-		get { return json["error_code"].int }
-		set { json["error_code"].int = newValue }
+		get { return internalJson["error_code"].int }
+		set { internalJson["error_code"].int = newValue }
 	}
 		
     /// *Optional.* Result.
 	public var result: JSON {
-		get { return json["result"] }
-		set { json["result"] = newValue }
+		get { return internalJson["result"] }
+		set { internalJson["result"] = newValue }
 	}
 	
-	public init(json: JSON = [:]) {
-		self.json = json
+	internal init(json: JSON = [:]) {
+		self.internalJson = json
 	}
 }

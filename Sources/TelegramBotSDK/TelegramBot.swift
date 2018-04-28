@@ -12,7 +12,7 @@
 
 import Foundation
 import Dispatch
-import SwiftyJSON
+
 import CCurl
 
 public class TelegramBot {

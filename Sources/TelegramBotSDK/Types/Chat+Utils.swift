@@ -11,7 +11,7 @@
 //
 
 import Foundation
-import SwiftyJSON
+
 
 extension Chat {
 	public enum ChatType: String {

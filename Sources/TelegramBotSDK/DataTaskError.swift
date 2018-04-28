@@ -11,7 +11,7 @@
 //
 
 import Foundation
-import SwiftyJSON
+
 import CCurl
 
 /// Telegram DataTask errors
