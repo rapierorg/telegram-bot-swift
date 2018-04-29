@@ -31,7 +31,7 @@ public struct Update: JsonConvertible, InternalJsonConvertible {
     public var message: Message? {
         get {
             let value = internalJson["message"]
-            return value.isNullOrUnknown ? nil : Message(json: value)
+            return value.isNullOrUnknown ? nil : Message(internalJson: value)
         }
         set {
             internalJson["message"] = newValue?.internalJson ?? JSON.null
@@ -42,7 +42,7 @@ public struct Update: JsonConvertible, InternalJsonConvertible {
     public var editedMessage: Message? {
         get {
             let value = internalJson["edited_message"]
-            return value.isNullOrUnknown ? nil : Message(json: value)
+            return value.isNullOrUnknown ? nil : Message(internalJson: value)
         }
         set {
             internalJson["edited_message"] = newValue?.internalJson ?? JSON.null
@@ -53,7 +53,7 @@ public struct Update: JsonConvertible, InternalJsonConvertible {
     public var channelPost: Message? {
         get {
             let value = internalJson["channel_post"]
-            return value.isNullOrUnknown ? nil : Message(json: value)
+            return value.isNullOrUnknown ? nil : Message(internalJson: value)
         }
         set {
             internalJson["channel_post"] = newValue?.internalJson ?? JSON.null
@@ -64,7 +64,7 @@ public struct Update: JsonConvertible, InternalJsonConvertible {
     public var editedChannelPost: Message? {
         get {
             let value = internalJson["edited_channel_post"]
-            return value.isNullOrUnknown ? nil : Message(json: value)
+            return value.isNullOrUnknown ? nil : Message(internalJson: value)
         }
         set {
             internalJson["edited_channel_post"] = newValue?.internalJson ?? JSON.null
@@ -75,7 +75,7 @@ public struct Update: JsonConvertible, InternalJsonConvertible {
     public var inlineQuery: InlineQuery? {
         get {
             let value = internalJson["inline_query"]
-            return value.isNullOrUnknown ? nil : InlineQuery(json: value)
+            return value.isNullOrUnknown ? nil : InlineQuery(internalJson: value)
         }
         set {
             internalJson["inline_query"] = newValue?.internalJson ?? JSON.null
@@ -86,7 +86,7 @@ public struct Update: JsonConvertible, InternalJsonConvertible {
     public var chosenInlineResult: ChosenInlineResult? {
         get {
             let value = internalJson["chosen_inline_result"]
-            return value.isNullOrUnknown ? nil : ChosenInlineResult(json: value)
+            return value.isNullOrUnknown ? nil : ChosenInlineResult(internalJson: value)
         }
         set {
             internalJson["chosen_inline_result"] = newValue?.internalJson ?? JSON.null
@@ -97,7 +97,7 @@ public struct Update: JsonConvertible, InternalJsonConvertible {
     public var callbackQuery: CallbackQuery? {
         get {
             let value = internalJson["callback_query"]
-            return value.isNullOrUnknown ? nil : CallbackQuery(json: value)
+            return value.isNullOrUnknown ? nil : CallbackQuery(internalJson: value)
         }
         set {
             internalJson["callback_query"] = newValue?.internalJson ?? JSON.null
@@ -108,7 +108,7 @@ public struct Update: JsonConvertible, InternalJsonConvertible {
     public var shippingQuery: ShippingQuery? {
         get {
             let value = internalJson["shipping_query"]
-            return value.isNullOrUnknown ? nil : ShippingQuery(json: value)
+            return value.isNullOrUnknown ? nil : ShippingQuery(internalJson: value)
         }
         set {
             internalJson["shipping_query"] = newValue?.internalJson ?? JSON.null
@@ -119,7 +119,7 @@ public struct Update: JsonConvertible, InternalJsonConvertible {
     public var preCheckoutQuery: PreCheckoutQuery? {
         get {
             let value = internalJson["pre_checkout_query"]
-            return value.isNullOrUnknown ? nil : PreCheckoutQuery(json: value)
+            return value.isNullOrUnknown ? nil : PreCheckoutQuery(internalJson: value)
         }
         set {
             internalJson["pre_checkout_query"] = newValue?.internalJson ?? JSON.null

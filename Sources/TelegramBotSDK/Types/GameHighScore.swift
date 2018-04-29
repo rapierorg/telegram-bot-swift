@@ -28,7 +28,7 @@ public struct GameHighScore: JsonConvertible, InternalJsonConvertible {
 
     /// User
     public var user: User {
-        get { return User(json: internalJson["user"]) }
+        get { return User(internalJson: internalJson["user"]) }
         set { internalJson["user"] = JSON(newValue.json) }
     }
 

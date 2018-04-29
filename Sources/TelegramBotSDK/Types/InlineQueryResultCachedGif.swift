@@ -60,7 +60,7 @@ public struct InlineQueryResultCachedGif: JsonConvertible, InternalJsonConvertib
     public var replyMarkup: InlineKeyboardMarkup? {
         get {
             let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(json: value)
+            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
         }
         set {
             internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null

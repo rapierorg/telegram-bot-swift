@@ -30,7 +30,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var from: User? {
         get {
             let value = internalJson["from"]
-            return value.isNullOrUnknown ? nil : User(json: value)
+            return value.isNullOrUnknown ? nil : User(internalJson: value)
         }
         set {
             internalJson["from"] = newValue?.internalJson ?? JSON.null
@@ -45,7 +45,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
 
     /// Conversation the message belongs to
     public var chat: Chat {
-        get { return Chat(json: internalJson["chat"]) }
+        get { return Chat(internalJson: internalJson["chat"]) }
         set { internalJson["chat"] = JSON(newValue.json) }
     }
 
@@ -53,7 +53,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var forwardFrom: User? {
         get {
             let value = internalJson["forward_from"]
-            return value.isNullOrUnknown ? nil : User(json: value)
+            return value.isNullOrUnknown ? nil : User(internalJson: value)
         }
         set {
             internalJson["forward_from"] = newValue?.internalJson ?? JSON.null
@@ -64,7 +64,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var forwardFromChat: Chat? {
         get {
             let value = internalJson["forward_from_chat"]
-            return value.isNullOrUnknown ? nil : Chat(json: value)
+            return value.isNullOrUnknown ? nil : Chat(internalJson: value)
         }
         set {
             internalJson["forward_from_chat"] = newValue?.internalJson ?? JSON.null
@@ -98,7 +98,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var replyToMessage: Message? {
         get {
             let value = internalJson["reply_to_message"]
-            return value.isNullOrUnknown ? nil : Message(json: value)
+            return value.isNullOrUnknown ? nil : Message(internalJson: value)
         }
         set {
             internalJson["reply_to_message"] = newValue?.internalJson ?? JSON.null
@@ -150,7 +150,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var audio: Audio? {
         get {
             let value = internalJson["audio"]
-            return value.isNullOrUnknown ? nil : Audio(json: value)
+            return value.isNullOrUnknown ? nil : Audio(internalJson: value)
         }
         set {
             internalJson["audio"] = newValue?.internalJson ?? JSON.null
@@ -161,7 +161,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var document: Document? {
         get {
             let value = internalJson["document"]
-            return value.isNullOrUnknown ? nil : Document(json: value)
+            return value.isNullOrUnknown ? nil : Document(internalJson: value)
         }
         set {
             internalJson["document"] = newValue?.internalJson ?? JSON.null
@@ -172,7 +172,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var game: Game? {
         get {
             let value = internalJson["game"]
-            return value.isNullOrUnknown ? nil : Game(json: value)
+            return value.isNullOrUnknown ? nil : Game(internalJson: value)
         }
         set {
             internalJson["game"] = newValue?.internalJson ?? JSON.null
@@ -189,7 +189,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var sticker: Sticker? {
         get {
             let value = internalJson["sticker"]
-            return value.isNullOrUnknown ? nil : Sticker(json: value)
+            return value.isNullOrUnknown ? nil : Sticker(internalJson: value)
         }
         set {
             internalJson["sticker"] = newValue?.internalJson ?? JSON.null
@@ -200,7 +200,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var video: Video? {
         get {
             let value = internalJson["video"]
-            return value.isNullOrUnknown ? nil : Video(json: value)
+            return value.isNullOrUnknown ? nil : Video(internalJson: value)
         }
         set {
             internalJson["video"] = newValue?.internalJson ?? JSON.null
@@ -211,7 +211,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var voice: Voice? {
         get {
             let value = internalJson["voice"]
-            return value.isNullOrUnknown ? nil : Voice(json: value)
+            return value.isNullOrUnknown ? nil : Voice(internalJson: value)
         }
         set {
             internalJson["voice"] = newValue?.internalJson ?? JSON.null
@@ -222,7 +222,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var videoNote: VideoNote? {
         get {
             let value = internalJson["video_note"]
-            return value.isNullOrUnknown ? nil : VideoNote(json: value)
+            return value.isNullOrUnknown ? nil : VideoNote(internalJson: value)
         }
         set {
             internalJson["video_note"] = newValue?.internalJson ?? JSON.null
@@ -239,7 +239,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var contact: Contact? {
         get {
             let value = internalJson["contact"]
-            return value.isNullOrUnknown ? nil : Contact(json: value)
+            return value.isNullOrUnknown ? nil : Contact(internalJson: value)
         }
         set {
             internalJson["contact"] = newValue?.internalJson ?? JSON.null
@@ -250,7 +250,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var location: Location? {
         get {
             let value = internalJson["location"]
-            return value.isNullOrUnknown ? nil : Location(json: value)
+            return value.isNullOrUnknown ? nil : Location(internalJson: value)
         }
         set {
             internalJson["location"] = newValue?.internalJson ?? JSON.null
@@ -261,7 +261,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var venue: Venue? {
         get {
             let value = internalJson["venue"]
-            return value.isNullOrUnknown ? nil : Venue(json: value)
+            return value.isNullOrUnknown ? nil : Venue(internalJson: value)
         }
         set {
             internalJson["venue"] = newValue?.internalJson ?? JSON.null
@@ -278,7 +278,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var leftChatMember: User? {
         get {
             let value = internalJson["left_chat_member"]
-            return value.isNullOrUnknown ? nil : User(json: value)
+            return value.isNullOrUnknown ? nil : User(internalJson: value)
         }
         set {
             internalJson["left_chat_member"] = newValue?.internalJson ?? JSON.null
@@ -337,7 +337,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var pinnedMessage: Message? {
         get {
             let value = internalJson["pinned_message"]
-            return value.isNullOrUnknown ? nil : Message(json: value)
+            return value.isNullOrUnknown ? nil : Message(internalJson: value)
         }
         set {
             internalJson["pinned_message"] = newValue?.internalJson ?? JSON.null
@@ -348,7 +348,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var invoice: Invoice? {
         get {
             let value = internalJson["invoice"]
-            return value.isNullOrUnknown ? nil : Invoice(json: value)
+            return value.isNullOrUnknown ? nil : Invoice(internalJson: value)
         }
         set {
             internalJson["invoice"] = newValue?.internalJson ?? JSON.null
@@ -359,7 +359,7 @@ public struct Message: JsonConvertible, InternalJsonConvertible {
     public var successfulPayment: SuccessfulPayment? {
         get {
             let value = internalJson["successful_payment"]
-            return value.isNullOrUnknown ? nil : SuccessfulPayment(json: value)
+            return value.isNullOrUnknown ? nil : SuccessfulPayment(internalJson: value)
         }
         set {
             internalJson["successful_payment"] = newValue?.internalJson ?? JSON.null

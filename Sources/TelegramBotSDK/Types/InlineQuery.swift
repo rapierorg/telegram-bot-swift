@@ -28,7 +28,7 @@ public struct InlineQuery: JsonConvertible, InternalJsonConvertible {
 
     /// Sender
     public var from: User {
-        get { return User(json: internalJson["from"]) }
+        get { return User(internalJson: internalJson["from"]) }
         set { internalJson["from"] = JSON(newValue.json) }
     }
 
@@ -36,7 +36,7 @@ public struct InlineQuery: JsonConvertible, InternalJsonConvertible {
     public var location: Location? {
         get {
             let value = internalJson["location"]
-            return value.isNullOrUnknown ? nil : Location(json: value)
+            return value.isNullOrUnknown ? nil : Location(internalJson: value)
         }
         set {
             internalJson["location"] = newValue?.internalJson ?? JSON.null

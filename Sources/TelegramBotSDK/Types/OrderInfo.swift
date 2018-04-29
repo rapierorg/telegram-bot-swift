@@ -42,7 +42,7 @@ public struct OrderInfo: JsonConvertible, InternalJsonConvertible {
     public var shippingAddress: ShippingAddress? {
         get {
             let value = internalJson["shipping_address"]
-            return value.isNullOrUnknown ? nil : ShippingAddress(json: value)
+            return value.isNullOrUnknown ? nil : ShippingAddress(internalJson: value)
         }
         set {
             internalJson["shipping_address"] = newValue?.internalJson ?? JSON.null

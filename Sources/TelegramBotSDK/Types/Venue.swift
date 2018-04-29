@@ -22,7 +22,7 @@ public struct Venue: JsonConvertible, InternalJsonConvertible {
 
     /// Venue location
     public var location: Location {
-        get { return Location(json: internalJson["location"]) }
+        get { return Location(internalJson: internalJson["location"]) }
         set { internalJson["location"] = JSON(newValue.json) }
     }
 

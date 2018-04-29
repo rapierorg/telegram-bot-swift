@@ -54,7 +54,7 @@ public struct Game: JsonConvertible, InternalJsonConvertible {
     public var animation: Animation? {
         get {
             let value = internalJson["animation"]
-            return value.isNullOrUnknown ? nil : Animation(json: value)
+            return value.isNullOrUnknown ? nil : Animation(internalJson: value)
         }
         set {
             internalJson["animation"] = newValue?.internalJson ?? JSON.null

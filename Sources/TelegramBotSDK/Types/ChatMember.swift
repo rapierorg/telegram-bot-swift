@@ -22,7 +22,7 @@ public struct ChatMember: JsonConvertible, InternalJsonConvertible {
 
     /// Information about the user
     public var user: User {
-        get { return User(json: internalJson["user"]) }
+        get { return User(internalJson: internalJson["user"]) }
         set { internalJson["user"] = JSON(newValue.json) }
     }
 

@@ -28,7 +28,7 @@ public struct PreCheckoutQuery: JsonConvertible, InternalJsonConvertible {
 
     /// User who sent the query
     public var from: User {
-        get { return User(json: internalJson["from"]) }
+        get { return User(internalJson: internalJson["from"]) }
         set { internalJson["from"] = JSON(newValue.json) }
     }
 
@@ -60,7 +60,7 @@ public struct PreCheckoutQuery: JsonConvertible, InternalJsonConvertible {
     public var orderInfo: OrderInfo? {
         get {
             let value = internalJson["order_info"]
-            return value.isNullOrUnknown ? nil : OrderInfo(json: value)
+            return value.isNullOrUnknown ? nil : OrderInfo(internalJson: value)
         }
         set {
             internalJson["order_info"] = newValue?.internalJson ?? JSON.null

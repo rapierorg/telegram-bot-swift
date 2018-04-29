@@ -28,7 +28,7 @@ public struct ShippingQuery: JsonConvertible, InternalJsonConvertible {
 
     /// User who sent the query
     public var from: User {
-        get { return User(json: internalJson["from"]) }
+        get { return User(internalJson: internalJson["from"]) }
         set { internalJson["from"] = JSON(newValue.json) }
     }
 
@@ -40,7 +40,7 @@ public struct ShippingQuery: JsonConvertible, InternalJsonConvertible {
 
     /// User specified shipping address
     public var shippingAddress: ShippingAddress {
-        get { return ShippingAddress(json: internalJson["shipping_address"]) }
+        get { return ShippingAddress(internalJson: internalJson["shipping_address"]) }
         set { internalJson["shipping_address"] = JSON(newValue.json) }
     }
 

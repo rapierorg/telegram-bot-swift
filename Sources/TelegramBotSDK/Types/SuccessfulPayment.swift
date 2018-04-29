@@ -48,7 +48,7 @@ public struct SuccessfulPayment: JsonConvertible, InternalJsonConvertible {
     public var orderInfo: OrderInfo? {
         get {
             let value = internalJson["order_info"]
-            return value.isNullOrUnknown ? nil : OrderInfo(json: value)
+            return value.isNullOrUnknown ? nil : OrderInfo(internalJson: value)
         }
         set {
             internalJson["order_info"] = newValue?.internalJson ?? JSON.null
