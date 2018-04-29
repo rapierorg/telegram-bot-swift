@@ -68,7 +68,7 @@ extension TelegramBot {
 			json, error in
 			var result: Result?
 			if error == nil {
-				result = Result(jsonObject: json)
+				result = Result(jsonObject: json.object)
 			}
 			queue.async() {
 				completion?(result, error)
@@ -92,7 +92,7 @@ extension TelegramBot {
 			if error == nil {
 				resultArray.reserveCapacity(json.count)
 				for resultJson in json.arrayValue {
-					let result = Result(jsonObject: resultJson)
+					let result = Result(jsonObject: resultJson.object)
 					resultArray.append(result)
 				}
 			}
