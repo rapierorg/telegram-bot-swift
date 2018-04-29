@@ -21,7 +21,7 @@ public enum MessageOrBool: JsonConvertible, InternalJsonConvertible {
     case message(Message)
     case bool(Bool)
     
-    public init(json: JSON) {
+    internal init(json: JSON) {
         if nil != json.bool {
             self = .bool(Bool(jsonObject: json.object))
         } else {

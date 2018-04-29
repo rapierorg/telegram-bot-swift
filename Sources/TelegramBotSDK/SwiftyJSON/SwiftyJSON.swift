@@ -47,7 +47,7 @@ public enum SwiftyJSONError: Error {
 
  See http://www.json.org
  */
-public enum Type :Int{
+internal enum Type :Int{
 
     case number
     case string
@@ -60,7 +60,7 @@ public enum Type :Int{
 
 // MARK: - JSON Base
 
-public struct JSON {
+internal struct JSON {
 
 
     /**
@@ -503,9 +503,9 @@ public func >(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
     }
 }
 
-public struct JSONGenerator : IteratorProtocol {
+internal struct JSONGenerator : IteratorProtocol {
 
-    public typealias Element = (String, JSON)
+    internal typealias Element = (String, JSON)
 
     private let type: Type
     private var dictionayGenerate: DictionaryIterator<String, Any>?
@@ -1444,7 +1444,7 @@ extension JSON {
 //MARK: - Comparable
 extension JSON : Swift.Comparable {}
 
-public func ==(lhs: JSON, rhs: JSON) -> Bool {
+internal func ==(lhs: JSON, rhs: JSON) -> Bool {
 
     switch (lhs.type, rhs.type) {
     case (.number, .number):
@@ -1472,7 +1472,7 @@ public func ==(lhs: JSON, rhs: JSON) -> Bool {
     }
 }
 
-public func <=(lhs: JSON, rhs: JSON) -> Bool {
+internal func <=(lhs: JSON, rhs: JSON) -> Bool {
 
     switch (lhs.type, rhs.type) {
     case (.number, .number):
@@ -1500,7 +1500,7 @@ public func <=(lhs: JSON, rhs: JSON) -> Bool {
     }
 }
 
-public func >=(lhs: JSON, rhs: JSON) -> Bool {
+internal func >=(lhs: JSON, rhs: JSON) -> Bool {
 
     switch (lhs.type, rhs.type) {
     case (.number, .number):
@@ -1528,7 +1528,7 @@ public func >=(lhs: JSON, rhs: JSON) -> Bool {
     }
 }
 
-public func >(lhs: JSON, rhs: JSON) -> Bool {
+internal func >(lhs: JSON, rhs: JSON) -> Bool {
 
     switch (lhs.type, rhs.type) {
     case (.number, .number):
@@ -1540,7 +1540,7 @@ public func >(lhs: JSON, rhs: JSON) -> Bool {
     }
 }
 
-public func <(lhs: JSON, rhs: JSON) -> Bool {
+internal func <(lhs: JSON, rhs: JSON) -> Bool {
 
     switch (lhs.type, rhs.type) {
     case (.number, .number):
