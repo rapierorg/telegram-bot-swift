@@ -108,10 +108,10 @@ public struct Chat: JsonConvertible, InternalJsonConvertible {
         set { internalJson["can_set_sticker_set"].bool = newValue }
     }
 
-    internal init(json: JSON = [:]) {
-        self.internalJson = json
+    internal init(internalJson: JSON = [:]) {
+        self.internalJson = internalJson
     }
-    public init(jsonObject: Any) {
-        self.internalJson = JSON(jsonObject)
+    public init(json: Any) {
+        self.internalJson = JSON(json)
     }
 }

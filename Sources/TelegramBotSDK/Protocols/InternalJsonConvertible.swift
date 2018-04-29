@@ -1,5 +1,5 @@
 //
-// JSON+JsonConvertible.swift
+// JsonConvertible.swift
 //
 // This source file is part of the Telegram Bot SDK for Swift (unofficial).
 //
@@ -12,18 +12,7 @@
 
 import Foundation
 
-
-extension JSON: InternalJsonConvertible {
-	public init(internalJson: JSON) {
-		self = internalJson
-	}
-	
-	public var internalJson: JSON {
-		get {
-			return self
-		}
-		set {
-			self = newValue
-		}
-	}
+internal protocol InternalJsonConvertible {
+    init(internalJson: JSON)
+    var internalJson: JSON { get set }
 }

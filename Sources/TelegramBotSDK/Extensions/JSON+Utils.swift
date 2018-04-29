@@ -43,7 +43,7 @@ extension JSON {
 		var result = [T]()
 		result.reserveCapacity(jsonArray.count)
 		for jsonItem in jsonArray {
-			result.append(T(json: jsonItem))
+			result.append(T(internalJson: jsonItem))
 		}
 		return result
 	}
@@ -56,7 +56,7 @@ extension JSON {
 			var row = [T]()
 			row.reserveCapacity(rowJson.count)
 			for columnJson in rowJson.arrayValue {
-                let value = T(json: columnJson)
+                let value = T(internalJson: columnJson)
 				row.append(value)
 			}
 			result.append(row)

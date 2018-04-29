@@ -417,11 +417,11 @@ def generate_type(f, node)
     end
 
     out.write "\n"\
-        "    internal init(json: JSON = #{params}) {\n"\
-        "        self.internalJson = json\n"\
+        "    internal init(internalJson: JSON = #{params}) {\n"\
+        "        self.internalJson = internalJson\n"\
         "    }\n"\
-        "    public init(jsonObject: Any) {\n"\
-        "        self.internalJson = JSON(jsonObject)\n"\
+        "    public init(json: Any) {\n"\
+        "        self.internalJson = JSON(json)\n"\
         "    }\n"
 
     out.write "}\n"

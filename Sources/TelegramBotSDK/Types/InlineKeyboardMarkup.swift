@@ -39,10 +39,10 @@ public struct InlineKeyboardMarkup: JsonConvertible, InternalJsonConvertible {
         }
     }
 
-    internal init(json: JSON = [:]) {
-        self.internalJson = json
+    internal init(internalJson: JSON = [:]) {
+        self.internalJson = internalJson
     }
-    public init(jsonObject: Any) {
-        self.internalJson = JSON(jsonObject)
+    public init(json: Any) {
+        self.internalJson = JSON(json)
     }
 }

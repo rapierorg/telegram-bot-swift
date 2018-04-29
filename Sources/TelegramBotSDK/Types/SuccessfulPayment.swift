@@ -67,10 +67,10 @@ public struct SuccessfulPayment: JsonConvertible, InternalJsonConvertible {
         set { internalJson["provider_payment_charge_id"].stringValue = newValue }
     }
 
-    internal init(json: JSON = [:]) {
-        self.internalJson = json
+    internal init(internalJson: JSON = [:]) {
+        self.internalJson = internalJson
     }
-    public init(jsonObject: Any) {
-        self.internalJson = JSON(jsonObject)
+    public init(json: Any) {
+        self.internalJson = JSON(json)
     }
 }
