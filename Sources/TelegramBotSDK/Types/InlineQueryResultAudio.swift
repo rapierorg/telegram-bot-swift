@@ -90,7 +90,7 @@ public struct InlineQueryResultAudio: JsonConvertible, InternalJsonConvertible {
     }
 
     internal init(json: JSON = [:]) {
-        self.internalJson = JSON(json)
+        self.internalJson = json
     }
     public init(jsonObject: Any) {
         self.internalJson = JSON(jsonObject)
