@@ -15,19 +15,19 @@ import Foundation
 public protocol JsonConvertible: CustomStringConvertible, CustomDebugStringConvertible {
 	var json: Any { get set }
     init(json: Any)
-	//func prettyPrint()
+	func prettyPrint()
 }
 
 extension JsonConvertible {
 	public var description: String {
-		return ""//json.rawString() ?? ""
+		return JSON(json).rawString() ?? ""
 	}
 	
 	public var debugDescription: String {
-		return ""//json.debugDescription
+		return JSON(json).debugDescription
 	}
 	
 	public func prettyPrint() {
-		//internalJson.prettyPrint()
+		JSON(json).prettyPrint()
 	}
 }
