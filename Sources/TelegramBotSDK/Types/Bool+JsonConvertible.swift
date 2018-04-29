@@ -28,7 +28,7 @@ extension Bool: JsonConvertible {
 		self = JSON(jsonObject).boolValue
 	}
 	
-	public var internalJson: JSON {
+	internal var internalJson: JSON {
 		get {
 			return JSON(self)
 		}

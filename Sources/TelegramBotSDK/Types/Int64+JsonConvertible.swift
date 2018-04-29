@@ -18,7 +18,7 @@ extension Int64: JsonConvertible, InternalJsonConvertible {
         self.init(json: JSON(jsonObject))
     }
 
-    public init(json: JSON) {
+    internal init(json: JSON) {
         self = json.int64Value
     }
 

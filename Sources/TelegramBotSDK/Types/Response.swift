@@ -49,7 +49,7 @@ public struct Response: JsonConvertible, InternalJsonConvertible {
 	}
 		
     /// *Optional.* Result.
-	public var result: JSON {
+	internal var result: JSON {
 		get { return internalJson["result"] }
 		set { internalJson["result"] = newValue }
 	}
