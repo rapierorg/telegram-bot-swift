@@ -15,8 +15,8 @@ import Foundation
 
 /// Response to Bot API request.
 public struct Response: JsonConvertible, InternalJsonConvertible {
-    public init(jsonObject: Any) {
-        self.init(json: JSON(jsonObject))
+    public init(json: Any) {
+        self.init(internalJson: JSON(json))
     }
 
 	/// Original JSON for fields not yet added to Swift structures
@@ -54,7 +54,7 @@ public struct Response: JsonConvertible, InternalJsonConvertible {
 		set { internalJson["result"] = newValue }
 	}
 	
-	internal init(json: JSON = [:]) {
-		self.internalJson = json
+	internal init(internalJson: JSON = [:]) {
+		self.internalJson = internalJson
 	}
 }

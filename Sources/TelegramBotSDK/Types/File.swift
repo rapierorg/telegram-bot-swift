@@ -39,10 +39,10 @@ public struct File: JsonConvertible, InternalJsonConvertible {
         set { internalJson["file_path"].string = newValue }
     }
 
-    internal init(json: JSON = [:]) {
-        self.internalJson = json
+    internal init(internalJson: JSON = [:]) {
+        self.internalJson = internalJson
     }
-    public init(jsonObject: Any) {
-        self.internalJson = JSON(jsonObject)
+    public init(json: Any) {
+        self.internalJson = JSON(json)
     }
 }

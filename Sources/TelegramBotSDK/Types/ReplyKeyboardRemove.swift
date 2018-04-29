@@ -34,10 +34,10 @@ public struct ReplyKeyboardRemove: JsonConvertible, InternalJsonConvertible {
         set { internalJson["selective"].bool = newValue }
     }
 
-    internal init(json: JSON = ["remove_keyboard": true]) {
-        self.internalJson = json
+    internal init(internalJson: JSON = ["remove_keyboard": true]) {
+        self.internalJson = internalJson
     }
-    public init(jsonObject: Any) {
-        self.internalJson = JSON(jsonObject)
+    public init(json: Any) {
+        self.internalJson = JSON(json)
     }
 }

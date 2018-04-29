@@ -14,18 +14,18 @@ import Foundation
 
 
 public enum MessageOrBool: JsonConvertible, InternalJsonConvertible {
-    public init(jsonObject: Any) {
-        self.init(json: JSON(jsonObject))
+    public init(json: Any) {
+        self.init(internalJson: JSON(json))
     }
 
     case message(Message)
     case bool(Bool)
     
-    internal init(json: JSON) {
-        if nil != json.bool {
-            self = .bool(Bool(jsonObject: json.object))
+    internal init(internalJson: JSON) {
+        if nil != internalJson.bool {
+            self = .bool(Bool(json: internalJson.object))
         } else {
-            self = .message(Message(json: json))
+            self = .message(Message(internalJson: internalJson))
         }
     }
 

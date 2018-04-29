@@ -12,10 +12,9 @@
 
 import Foundation
 
-
 public protocol JsonConvertible: CustomStringConvertible, CustomDebugStringConvertible {
 	var json: Any { get set }
-    init(jsonObject: Any)
+    init(json: Any)
 	//func prettyPrint()
 }
 
@@ -31,9 +30,4 @@ extension JsonConvertible {
 	public func prettyPrint() {
 		//internalJson.prettyPrint()
 	}
-}
-
-internal protocol InternalJsonConvertible {
-    init(json: JSON)
-    var internalJson: JSON { get set }
 }

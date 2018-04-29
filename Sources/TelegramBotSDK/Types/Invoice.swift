@@ -50,10 +50,10 @@ public struct Invoice: JsonConvertible, InternalJsonConvertible {
         set { internalJson["total_amount"].intValue = newValue }
     }
 
-    internal init(json: JSON = [:]) {
-        self.internalJson = json
+    internal init(internalJson: JSON = [:]) {
+        self.internalJson = internalJson
     }
-    public init(jsonObject: Any) {
-        self.internalJson = JSON(jsonObject)
+    public init(json: Any) {
+        self.internalJson = JSON(json)
     }
 }

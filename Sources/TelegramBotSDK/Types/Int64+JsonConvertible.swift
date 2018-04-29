@@ -14,12 +14,12 @@ import Foundation
 
 
 extension Int64: JsonConvertible, InternalJsonConvertible {
-    public init(jsonObject: Any) {
-        self.init(json: JSON(jsonObject))
+    public init(json: Any) {
+        self.init(internalJson: JSON(json))
     }
 
-    internal init(json: JSON) {
-        self = json.int64Value
+    internal init(internalJson: JSON) {
+        self = internalJson.int64Value
     }
 
     public var json: Any {

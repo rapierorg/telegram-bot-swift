@@ -38,10 +38,10 @@ public struct KeyboardButton: JsonConvertible, InternalJsonConvertible {
         set { internalJson["request_location"].bool = newValue }
     }
 
-    internal init(json: JSON = [:]) {
-        self.internalJson = json
+    internal init(internalJson: JSON = [:]) {
+        self.internalJson = internalJson
     }
-    public init(jsonObject: Any) {
-        self.internalJson = JSON(jsonObject)
+    public init(json: Any) {
+        self.internalJson = JSON(json)
     }
 }
