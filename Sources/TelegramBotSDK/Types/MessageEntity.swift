@@ -48,7 +48,7 @@ public struct MessageEntity: JsonConvertible, InternalJsonConvertible {
     public var user: User? {
         get {
             let value = internalJson["user"]
-            return value.isNullOrUnknown ? nil : User(json: value)
+            return value.isNullOrUnknown ? nil : User(internalJson: value)
         }
         set {
             internalJson["user"] = newValue?.internalJson ?? JSON.null

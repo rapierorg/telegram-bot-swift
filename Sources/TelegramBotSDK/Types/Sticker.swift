@@ -42,7 +42,7 @@ public struct Sticker: JsonConvertible, InternalJsonConvertible {
     public var thumb: PhotoSize? {
         get {
             let value = internalJson["thumb"]
-            return value.isNullOrUnknown ? nil : PhotoSize(json: value)
+            return value.isNullOrUnknown ? nil : PhotoSize(internalJson: value)
         }
         set {
             internalJson["thumb"] = newValue?.internalJson ?? JSON.null
@@ -65,7 +65,7 @@ public struct Sticker: JsonConvertible, InternalJsonConvertible {
     public var maskPosition: MaskPosition? {
         get {
             let value = internalJson["mask_position"]
-            return value.isNullOrUnknown ? nil : MaskPosition(json: value)
+            return value.isNullOrUnknown ? nil : MaskPosition(internalJson: value)
         }
         set {
             internalJson["mask_position"] = newValue?.internalJson ?? JSON.null

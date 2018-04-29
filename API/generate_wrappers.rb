@@ -221,7 +221,7 @@ def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_opt
         out.write "    public var #{getter_name}: #{var_type}? {\n"\
                   "        get {\n"\
                   "            let value = internalJson[\"#{var_name}\"]\n"\
-                  "            return value.isNullOrUnknown ? nil : #{var_type}(json: value)\n"\
+                  "            return value.isNullOrUnknown ? nil : #{var_type}(internalJson: value)\n"\
                   "        }\n"\
                   "        set {\n"\
                   "            internalJson[\"#{var_name}\"] = newValue?.internalJson ?? JSON.null\n"\
@@ -229,7 +229,7 @@ def write_getter_setter(out, getter_name, type_name, var_name, var_type, var_opt
                   "    }\n"
       else
         out.write "    public var #{getter_name}: #{var_type} {\n"\
-                  "        get { return #{var_type}(json: internalJson[\"#{var_name}\"]) }\n"\
+                  "        get { return #{var_type}(internalJson: internalJson[\"#{var_name}\"]) }\n"\
                   "        set { internalJson[\"#{var_name}\"] = JSON(newValue.json) }\n"\
                   "    }\n"
       end

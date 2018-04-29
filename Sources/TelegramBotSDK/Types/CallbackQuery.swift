@@ -28,7 +28,7 @@ public struct CallbackQuery: JsonConvertible, InternalJsonConvertible {
 
     /// Sender
     public var from: User {
-        get { return User(json: internalJson["from"]) }
+        get { return User(internalJson: internalJson["from"]) }
         set { internalJson["from"] = JSON(newValue.json) }
     }
 
@@ -36,7 +36,7 @@ public struct CallbackQuery: JsonConvertible, InternalJsonConvertible {
     public var message: Message? {
         get {
             let value = internalJson["message"]
-            return value.isNullOrUnknown ? nil : Message(json: value)
+            return value.isNullOrUnknown ? nil : Message(internalJson: value)
         }
         set {
             internalJson["message"] = newValue?.internalJson ?? JSON.null

@@ -66,7 +66,7 @@ public struct Chat: JsonConvertible, InternalJsonConvertible {
     public var photo: ChatPhoto? {
         get {
             let value = internalJson["photo"]
-            return value.isNullOrUnknown ? nil : ChatPhoto(json: value)
+            return value.isNullOrUnknown ? nil : ChatPhoto(internalJson: value)
         }
         set {
             internalJson["photo"] = newValue?.internalJson ?? JSON.null
@@ -89,7 +89,7 @@ public struct Chat: JsonConvertible, InternalJsonConvertible {
     public var pinnedMessage: Message? {
         get {
             let value = internalJson["pinned_message"]
-            return value.isNullOrUnknown ? nil : Message(json: value)
+            return value.isNullOrUnknown ? nil : Message(internalJson: value)
         }
         set {
             internalJson["pinned_message"] = newValue?.internalJson ?? JSON.null

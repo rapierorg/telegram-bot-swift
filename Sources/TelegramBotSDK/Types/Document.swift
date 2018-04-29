@@ -30,7 +30,7 @@ public struct Document: JsonConvertible, InternalJsonConvertible {
     public var thumb: PhotoSize? {
         get {
             let value = internalJson["thumb"]
-            return value.isNullOrUnknown ? nil : PhotoSize(json: value)
+            return value.isNullOrUnknown ? nil : PhotoSize(internalJson: value)
         }
         set {
             internalJson["thumb"] = newValue?.internalJson ?? JSON.null

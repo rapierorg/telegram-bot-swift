@@ -60,7 +60,7 @@ public struct InlineKeyboardButton: JsonConvertible, InternalJsonConvertible {
     public var callbackGame: CallbackGame? {
         get {
             let value = internalJson["callback_game"]
-            return value.isNullOrUnknown ? nil : CallbackGame(json: value)
+            return value.isNullOrUnknown ? nil : CallbackGame(internalJson: value)
         }
         set {
             internalJson["callback_game"] = newValue?.internalJson ?? JSON.null
