@@ -15,7 +15,7 @@ import Foundation
 
 import Glibc
 
-public class LclJSONSerialization {
+internal class LclJSONSerialization {
 
     
     /* Determines whether the given object can be converted to JSON.
