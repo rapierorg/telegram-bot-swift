@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TelegramBot
+import TelegramBotSDK
 
 let token = readToken(from: "WORD_REVERSE_BOT_TOKEN")
 
@@ -74,7 +74,7 @@ class Controller {
             "To reverse words, use /word_reverse word1 word2 word3..."
         
         context.respondPrivatelyAsync(helpText,
-            groupText: "\(from.first_name), please find usage instructions in a personal message.")
+            groupText: "\(from.firstName), please find usage instructions in a personal message.")
 		return true
     }
     
@@ -85,7 +85,7 @@ class Controller {
             "No settings are available for this bot."
         
         context.respondPrivatelyAsync(settingsText,
-            groupText: "\(from.first_name), please find a list of settings in a personal message.")
+            groupText: "\(from.firstName), please find a list of settings in a personal message.")
 		return true
     }
 
@@ -100,7 +100,7 @@ class Controller {
 		
         let text = context.args.scanRestOfString()
 	
-        context.respondAsync(String(text.characters.reversed()))
+        context.respondAsync(String(text.reversed()))
 		return true
     }
     
