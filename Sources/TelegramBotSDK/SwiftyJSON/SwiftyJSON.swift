@@ -26,16 +26,16 @@ import CoreFoundation
 // MARK: - Error
 
 ///Error domain
-public let ErrorDomain: String = "SwiftyJSONErrorDomain"
+internal let ErrorDomain: String = "SwiftyJSONErrorDomain"
 
 ///Error code
-public let ErrorUnsupportedType: Int = 999
-public let ErrorIndexOutOfBounds: Int = 900
-public let ErrorWrongType: Int = 901
-public let ErrorNotExist: Int = 500
-public let ErrorInvalidJSON: Int = 490
+internal let ErrorUnsupportedType: Int = 999
+internal let ErrorIndexOutOfBounds: Int = 900
+internal let ErrorWrongType: Int = 901
+internal let ErrorNotExist: Int = 500
+internal let ErrorInvalidJSON: Int = 490
 
-public enum SwiftyJSONError: Error {
+internal enum SwiftyJSONError: Error {
     case empty
     case errorInvalidJSON(String)
 }
@@ -408,7 +408,7 @@ extension JSON : Collection, Sequence {
     }
 }
 
-public struct JSONIndex: Equatable, Comparable {
+internal struct JSONIndex: Equatable, Comparable {
     let arrayIndex: Array<Any>.Index?
     let dictionaryIndex: DictionaryIndex<String, Any>?
     let type: Type
@@ -432,7 +432,7 @@ public struct JSONIndex: Equatable, Comparable {
     }
 }
 
-public func ==(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
+internal func ==(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
     switch (lhs.type, rhs.type) {
     case (.array, .array):
         return lhs.arrayIndex == rhs.arrayIndex
@@ -443,7 +443,7 @@ public func ==(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
     }
 }
 
-public func <(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
+internal func <(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
     switch (lhs.type, rhs.type) {
     case (.array, .array):
         guard let lhsArrayIndex = lhs.arrayIndex,
@@ -458,7 +458,7 @@ public func <(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
     }
 }
 
-public func <=(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
+internal func <=(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
     switch (lhs.type, rhs.type) {
     case (.array, .array):
         guard let lhsArrayIndex = lhs.arrayIndex,
@@ -473,7 +473,7 @@ public func <=(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
     }
 }
 
-public func >=(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
+internal func >=(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
     switch (lhs.type, rhs.type) {
     case (.array, .array):
         guard let lhsArrayIndex = lhs.arrayIndex,
@@ -488,7 +488,7 @@ public func >=(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
     }
 }
 
-public func >(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
+internal func >(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
     switch (lhs.type, rhs.type) {
     case (.array, .array):
         guard let lhsArrayIndex = lhs.arrayIndex,
@@ -548,23 +548,23 @@ internal struct JSONGenerator : IteratorProtocol {
 /**
  *  To mark both String and Int can be used in subscript.
  */
-public enum JSONKey {
+internal enum JSONKey {
     case index(Int)
     case key(String)
 }
 
-public protocol JSONSubscriptType {
+internal protocol JSONSubscriptType {
     var jsonKey:JSONKey { get }
 }
 
 extension Int: JSONSubscriptType {
-    public var jsonKey:JSONKey {
+    internal var jsonKey:JSONKey {
         return JSONKey.index(self)
     }
 }
 
 extension String: JSONSubscriptType {
-    public var jsonKey:JSONKey {
+    internal var jsonKey:JSONKey {
         return JSONKey.key(self)
     }
 }
