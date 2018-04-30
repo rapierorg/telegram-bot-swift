@@ -11,24 +11,23 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 public protocol JsonConvertible: CustomStringConvertible, CustomDebugStringConvertible {
-	init(json: JSON)
-	var json: JSON { get set }
+	var json: Any { get set }
+    init(json: Any)
 	func prettyPrint()
 }
 
 extension JsonConvertible {
 	public var description: String {
-		return json.rawString() ?? ""
+		return JSON(json).rawString() ?? ""
 	}
 	
 	public var debugDescription: String {
-		return json.debugDescription
+		return JSON(json).debugDescription
 	}
 	
 	public func prettyPrint() {
-		json.prettyPrint()
+		JSON(json).prettyPrint()
 	}
 }

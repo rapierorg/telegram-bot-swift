@@ -11,9 +11,9 @@
 //
 
 import Foundation
-import SwiftyJSON
 
-extension SwiftyJSON.JSON {
+
+extension JSON {
     /// - Returns: True if json is empty or of unknown type
     public var isNullOrUnknown: Bool {
         return type == .null || type == .unknown
@@ -29,26 +29,26 @@ extension SwiftyJSON.JSON {
     // https://bugs.swift.org/browse/SR-2505
     //init<T>(_ from: [T]) where T: JsonConvertible {
     // Workaround:
-    static func initFrom<T>(_ from: [T]) -> JSON where T: JsonConvertible {
+    static func initFrom<T>(_ from: [T]) -> JSON where T: InternalJsonConvertible {
 		var jsonArray = [JSON]()
 		jsonArray.reserveCapacity(from.count)
 		for item in from {
-			jsonArray.append(item.json)
+			jsonArray.append(item.internalJson)
 		}
         return JSON(jsonArray)
 	}
 	
-	func arrayValue<T>() -> [T] where T: JsonConvertible {
+	func customArrayValue<T>() -> [T] where T: InternalJsonConvertible {
 		let jsonArray: [JSON] = arrayValue
 		var result = [T]()
 		result.reserveCapacity(jsonArray.count)
 		for jsonItem in jsonArray {
-			result.append(T(json: jsonItem))
+			result.append(T(internalJson: jsonItem))
 		}
 		return result
 	}
 	
-    func twoDArrayValue<T>() -> [[T]] where T: JsonConvertible {
+    func twoDArrayValue<T>() -> [[T]] where T: InternalJsonConvertible {
 		let json = arrayValue
 		var result = [[T]]()
 		result.reserveCapacity(json.count)
@@ -56,7 +56,7 @@ extension SwiftyJSON.JSON {
 			var row = [T]()
 			row.reserveCapacity(rowJson.count)
 			for columnJson in rowJson.arrayValue {
-                let value = T(json: columnJson)
+                let value = T(internalJson: columnJson)
 				row.append(value)
 			}
 			result.append(row)

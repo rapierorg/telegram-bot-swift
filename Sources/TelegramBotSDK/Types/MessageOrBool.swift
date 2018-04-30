@@ -11,29 +11,42 @@
 //
 
 import Foundation
-import SwiftyJSON
 
-public enum MessageOrBool: JsonConvertible {
+
+public enum MessageOrBool: JsonConvertible, InternalJsonConvertible {
+    public init(json: Any) {
+        self.init(internalJson: JSON(json))
+    }
+
     case message(Message)
     case bool(Bool)
     
-    public init(json: JSON) {
-        if nil != json.bool {
-            self = .bool(Bool(json: json))
+    internal init(internalJson: JSON) {
+        if nil != internalJson.bool {
+            self = .bool(Bool(json: internalJson.object))
         } else {
-            self = .message(Message(json: json))
+            self = .message(Message(internalJson: internalJson))
+        }
+    }
+
+    public var json: Any {
+        get {
+            return internalJson.object
+        }
+        set {
+            internalJson = JSON(newValue)
         }
     }
     
-    public var json: JSON {
+    internal var internalJson: JSON {
         get {
             switch self {
-            case .message(let message): return message.json
-            case .bool(let bool): return bool.json
+            case .message(let message): return message.internalJson
+            case .bool(let bool): return bool.internalJson
             }
         }
         set {
-            self = MessageOrBool(json: json)
+            self = MessageOrBool(json: internalJson)
         }
     }
 }
