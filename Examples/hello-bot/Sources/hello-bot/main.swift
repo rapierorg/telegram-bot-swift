@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TelegramBot
+import TelegramBotSDK
 
 let token = readToken(from: "HELLO_BOT_TOKEN")
 
@@ -19,20 +19,22 @@ router["help"] = { context in
 
 	let helpText = "Usage: /greet"
     context.respondPrivatelyAsync(helpText,
-        groupText: "\(from.first_name), please find usage instructions in a personal message.")
+        groupText: "\(from.firstName), please find usage instructions in a personal message.")
 	return true
 }
 
 router["greet"] = { context in
 	guard let from = context.message?.from else { return false }
-    context.respondAsync("Hello, \(from.first_name)!")
+    context.respondAsync("Hello, \(from.firstName)!")
 	return true
 }
 
-router[.new_chat_member] = { context in
-	guard let user = context.message?.new_chat_member else { return false }
-	guard user.id != bot.user.id else { return false }
-	context.respondAsync("Welcome, \(user.first_name)!")
+router[.newChatMembers] = { context in
+	guard let users = context.message?.newChatMembers else { return false }
+    for user in users {
+        guard user.id != bot.user.id else { return false }
+        context.respondAsync("Welcome, \(user.firstName)!")
+    }
 	return true
 }
 
