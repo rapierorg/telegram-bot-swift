@@ -35,21 +35,21 @@ Word reverse bot.
 Trivial bot:
 
 ```swift
-import TelegramBot
+import TelegramBotSDK
 
 let bot = TelegramBot(token: "my token")
 let router = Router(bot: bot)
 
 router["greet"] = { context in
     guard let from = context.message?.from else { return false }
-    context.respondAsync("Hello, \(from.first_name)!")
+    context.respondAsync("Hello, \(from.firstName)!")
     return true
 }
 
-router[.new_chat_member] = { context in
+router[.newChatMembers] = { context in
 	guard let user = context.message?.new_chat_member else { return false }
 	guard user.id != bot.user.id else { return false }
-	context.respondAsync("Welcome, \(user.first_name)!")
+	context.respondAsync("Welcome, \(user.firstName)!")
 	return true
 }
 
@@ -111,8 +111,24 @@ import PackageDescription
 
 let package = Package(
     name: "hello-bot",
+    products: [
+        // Products define the executables and libraries produced by a package, and make them visible to other packages.
+        .executable(
+            name: "hello-bot",
+            targets: ["hello-bot"]
+        ),
+    ],
     dependencies: [
-        .Package(url: "https://github.com/zmeyc/telegram-bot-swift.git", majorVersion: 0)
+        // Dependencies declare other packages that this package depends on.
+        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/zmeyc/telegram-bot-swift.git", .branch("dev")),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages which this package depends on.
+        .target(
+            name: "hello-bot",
+            dependencies: ["TelegramBotSDK"]),
     ]
 )
 ```
@@ -121,7 +137,7 @@ Create `Sources/main.swift`:
 
 ```swift
 import Foundation
-import TelegramBot
+import TelegramBotSDK
 
 let token = readToken(from: "HELLO_BOT_TOKEN")
 let bot = TelegramBot(token: token)
@@ -129,7 +145,7 @@ let bot = TelegramBot(token: token)
 while let update = bot.nextUpdateSync() {
     if let message = update.message, let from = message.from, let text = message.text {
         bot.sendMessageAsync(chat_id: from.id,
-                             text: "Hi \(from.first_name)! You said: \(text).\n")
+                             text: "Hi \(from.firstName)! You said: \(text).\n")
     }
 }
 
@@ -159,7 +175,7 @@ swift build
 And run it:
 
 ```
-.build/debug/hello-bot
+./.build/x86_64-apple-macosx10.10/debug/hello-bot
 ```
 
 More details are available on Wiki: [New Bot](https://github.com/zmeyc/telegram-bot-swift/wiki/New-Bot).
@@ -272,7 +288,7 @@ bot.sendMessageAsync(chatId, "Text") // will also work
 
 ```swift
 let markup = ForceReply()
-bot.sendMessageAsync(chat_id: chatId, text: "Force reply",
+bot.sendMessageAsync(chatId: chatId, text: "Force reply",
     reply_markup: markup, disable_notification: true)
 ```
 
@@ -280,7 +296,7 @@ If you ever encounter a situation when parameter hasn't been added to method sig
 
 ```swift
 let markup = ForceReply()
-bot.sendMessageAsync(chat_id: chatId, text: "Force reply",
+bot.sendMessageAsync(chatId: chatId, text: "Force reply",
     ["reply_markup": markup, "disable_notification": true])
 ```
 
