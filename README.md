@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-3.0-orange.svg" alt="Swift" /></a>
+    <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-4.0-orange.svg" alt="Swift" /></a>
     <a href="https://telegram.me/swiftsdkchat"><img src="https://img.shields.io/badge/Chat-Telegram-lightgrey.svg" alt="Chat" /></a>
     <a href="https://swift.org"><img src="https://img.shields.io/badge/OS-OS%20X%2C%20Linux-lightgrey.svg" alt="Platform" /></a>
     <a href="https://tldrlegal.com/license/mit-license"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License" /></a>
@@ -47,10 +47,12 @@ router["greet"] = { context in
 }
 
 router[.newChatMembers] = { context in
-	guard let user = context.message?.new_chat_member else { return false }
-	guard user.id != bot.user.id else { return false }
-	context.respondAsync("Welcome, \(user.firstName)!")
-	return true
+    guard let users = context.message?.newChatMembers else { return false }
+    for user in users {
+        guard user.id != bot.user.id else { return false }
+        context.respondAsync("Welcome, \(user.firstName)!")
+    }
+    return true
 }
 
 while let update = bot.nextUpdateSync() {
@@ -70,9 +72,9 @@ Join our chat in Telegram: [swiftsdkchat](https://telegram.me/swiftsdkchat).
 
 ## Prerequisites
 
-On OS X, use the latest Xcode 8 release.
+On OS X, use the latest Xcode 9 release.
 
-On Linux, install `Swift 3.0.2 Preview 1` or newer. Note that `shopster-bot` example won't build on Linux because GRDB doesn't support Linux yet, but otherwise the library should be functional.
+On Linux, install `Swift 4.0` or newer. Note that `shopster-bot` example won't build on Linux because GRDB doesn't support Linux yet, but otherwise the library should be functional.
 
 ## Getting started
 
@@ -200,19 +202,19 @@ Press CMD-R to start the bot.
 
 ### Type and request names
 
-SDK type and request names closely mirror [original Telegram ones](https://core.telegram.org/bots/api). We decided not to use camel case naming and opted to use Telegram's snake_case instead.
+SDK type and request names closely mirror [original Telegram ones](https://core.telegram.org/bots/api).
 
 Swift types and enums were added where appropriate:
  
 
 ```swift
-if entity.type == .bot_command { ... }
+if entity.type == .botCommand { ... }
 ```
 
 In most cases raw methods accepting strings are also available. They can be used as fallbacks if required enum case is not added yet:
 
 ```swift
-if entity.type_string == "bot_command" { ... }
+if entity.typeString == "bot_command" { ... }
 ```
 
 To allow accessing fields which are still missing in SDK, every data type has `json` member with original json structure:
@@ -280,7 +282,7 @@ bot.sendLocationAsync(chat_id: chatId, latitude: 50.4501, longitude: 30.5234)
 Exception to this are `sendMessageSync/Async` and `respondSync/Async` functions which are used very often. Parameter names can be omitted in them:
 
 ```swift
-bot.sendMessageAsync(chat_id: chatId, text: "Text")
+bot.sendMessageAsync(chatId: chatId, text: "Text")
 bot.sendMessageAsync(chatId, "Text") // will also work
 ```
 
@@ -529,10 +531,12 @@ Router can handle other event types as well. For example, when new user joins th
 
 ```swift
 router[.new_chat_member] = { context in
-        guard let user = context.message.new_chat_member else { return false }
-        guard user.id != bot.user.id else { return false } // Don't greet self
-        context.respondAsync("Welcome, \(user.first_name)!")
-        return true
+    guard let users = context.message?.newChatMembers else { return false }
+    for user in users {
+        guard user.id != bot.user.id else { return false }
+        context.respondAsync("Welcome, \(user.firstName)!")
+    }
+    return true
 }
 ```
 
