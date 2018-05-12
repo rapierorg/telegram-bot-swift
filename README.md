@@ -35,7 +35,7 @@ Word reverse bot.
 Trivial bot:
 
 ```swift
-import TelegramBot
+import TelegramBotSDK
 
 let bot = TelegramBot(token: "my token")
 let router = Router(bot: bot)
@@ -121,7 +121,7 @@ Create `Sources/main.swift`:
 
 ```swift
 import Foundation
-import TelegramBot
+import TelegramBotSDK
 
 let token = readToken(from: "HELLO_BOT_TOKEN")
 let bot = TelegramBot(token: token)
