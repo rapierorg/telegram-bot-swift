@@ -422,6 +422,9 @@ def generate_type(f, node)
         "    }\n"\
         "    public init(json: Any) {\n"\
         "        self.internalJson = JSON(json)\n"\
+        "    }\n"\
+        "    public init(data: Data) {\n"\
+        "        self.internalJson = JSON(data: data)\n"\
         "    }\n"
 
     out.write "}\n"
