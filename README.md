@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-3.0-orange.svg" alt="Swift" /></a>
+    <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-4.0-orange.svg" alt="Swift" /></a>
     <a href="https://telegram.me/swiftsdkchat"><img src="https://img.shields.io/badge/Chat-Telegram-lightgrey.svg" alt="Chat" /></a>
     <a href="https://swift.org"><img src="https://img.shields.io/badge/OS-OS%20X%2C%20Linux-lightgrey.svg" alt="Platform" /></a>
     <a href="https://tldrlegal.com/license/mit-license"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License" /></a>
@@ -35,22 +35,24 @@ Word reverse bot.
 Trivial bot:
 
 ```swift
-import TelegramBot
+import TelegramBotSDK
 
 let bot = TelegramBot(token: "my token")
 let router = Router(bot: bot)
 
 router["greet"] = { context in
     guard let from = context.message?.from else { return false }
-    context.respondAsync("Hello, \(from.first_name)!")
+    context.respondAsync("Hello, \(from.firstName)!")
     return true
 }
 
-router[.new_chat_member] = { context in
-	guard let user = context.message?.new_chat_member else { return false }
-	guard user.id != bot.user.id else { return false }
-	context.respondAsync("Welcome, \(user.first_name)!")
-	return true
+router[.newChatMembers] = { context in
+    guard let users = context.message?.newChatMembers else { return false }
+    for user in users {
+        guard user.id != bot.user.id else { return false }
+        context.respondAsync("Welcome, \(user.firstName)!")
+    }
+    return true
 }
 
 while let update = bot.nextUpdateSync() {
@@ -70,9 +72,9 @@ Join our chat in Telegram: [swiftsdkchat](https://telegram.me/swiftsdkchat).
 
 ## Prerequisites
 
-On OS X, use the latest Xcode 8 release.
+On OS X, use the latest Xcode 9 release.
 
-On Linux, install `Swift 3.0.2 Preview 1` or newer. Note that `shopster-bot` example won't build on Linux because GRDB doesn't support Linux yet, but otherwise the library should be functional.
+On Linux, install `Swift 4.0` or newer. Note that `shopster-bot` example won't build on Linux because GRDB doesn't support Linux yet, but otherwise the library should be functional.
 
 ## Getting started
 
@@ -111,8 +113,24 @@ import PackageDescription
 
 let package = Package(
     name: "hello-bot",
+    products: [
+        // Products define the executables and libraries produced by a package, and make them visible to other packages.
+        .executable(
+            name: "hello-bot",
+            targets: ["hello-bot"]
+        ),
+    ],
     dependencies: [
-        .Package(url: "https://github.com/zmeyc/telegram-bot-swift.git", majorVersion: 0)
+        // Dependencies declare other packages that this package depends on.
+        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/zmeyc/telegram-bot-swift.git", .branch("dev")),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages which this package depends on.
+        .target(
+            name: "hello-bot",
+            dependencies: ["TelegramBotSDK"]),
     ]
 )
 ```
@@ -121,7 +139,7 @@ Create `Sources/main.swift`:
 
 ```swift
 import Foundation
-import TelegramBot
+import TelegramBotSDK
 
 let token = readToken(from: "HELLO_BOT_TOKEN")
 let bot = TelegramBot(token: token)
@@ -129,7 +147,7 @@ let bot = TelegramBot(token: token)
 while let update = bot.nextUpdateSync() {
     if let message = update.message, let from = message.from, let text = message.text {
         bot.sendMessageAsync(chat_id: from.id,
-                             text: "Hi \(from.first_name)! You said: \(text).\n")
+                             text: "Hi \(from.firstName)! You said: \(text).\n")
     }
 }
 
@@ -159,7 +177,7 @@ swift build
 And run it:
 
 ```
-.build/debug/hello-bot
+./.build/x86_64-apple-macosx10.10/debug/hello-bot
 ```
 
 More details are available on Wiki: [New Bot](https://github.com/zmeyc/telegram-bot-swift/wiki/New-Bot).
@@ -184,19 +202,19 @@ Press CMD-R to start the bot.
 
 ### Type and request names
 
-SDK type and request names closely mirror [original Telegram ones](https://core.telegram.org/bots/api). We decided not to use camel case naming and opted to use Telegram's snake_case instead.
+SDK type and request names closely mirror [original Telegram ones](https://core.telegram.org/bots/api).
 
 Swift types and enums were added where appropriate:
  
 
 ```swift
-if entity.type == .bot_command { ... }
+if entity.type == .botCommand { ... }
 ```
 
 In most cases raw methods accepting strings are also available. They can be used as fallbacks if required enum case is not added yet:
 
 ```swift
-if entity.type_string == "bot_command" { ... }
+if entity.typeString == "bot_command" { ... }
 ```
 
 To allow accessing fields which are still missing in SDK, every data type has `json` member with original json structure:
@@ -264,7 +282,7 @@ bot.sendLocationAsync(chat_id: chatId, latitude: 50.4501, longitude: 30.5234)
 Exception to this are `sendMessageSync/Async` and `respondSync/Async` functions which are used very often. Parameter names can be omitted in them:
 
 ```swift
-bot.sendMessageAsync(chat_id: chatId, text: "Text")
+bot.sendMessageAsync(chatId: chatId, text: "Text")
 bot.sendMessageAsync(chatId, "Text") // will also work
 ```
 
@@ -272,7 +290,7 @@ bot.sendMessageAsync(chatId, "Text") // will also work
 
 ```swift
 let markup = ForceReply()
-bot.sendMessageAsync(chat_id: chatId, text: "Force reply",
+bot.sendMessageAsync(chatId: chatId, text: "Force reply",
     reply_markup: markup, disable_notification: true)
 ```
 
@@ -280,7 +298,7 @@ If you ever encounter a situation when parameter hasn't been added to method sig
 
 ```swift
 let markup = ForceReply()
-bot.sendMessageAsync(chat_id: chatId, text: "Force reply",
+bot.sendMessageAsync(chatId: chatId, text: "Force reply",
     ["reply_markup": markup, "disable_notification": true])
 ```
 
@@ -513,10 +531,12 @@ Router can handle other event types as well. For example, when new user joins th
 
 ```swift
 router[.new_chat_member] = { context in
-        guard let user = context.message.new_chat_member else { return false }
-        guard user.id != bot.user.id else { return false } // Don't greet self
-        context.respondAsync("Welcome, \(user.first_name)!")
-        return true
+    guard let users = context.message?.newChatMembers else { return false }
+    for user in users {
+        guard user.id != bot.user.id else { return false }
+        context.respondAsync("Welcome, \(user.firstName)!")
+    }
+    return true
 }
 ```
 
