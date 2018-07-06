@@ -81,4 +81,7 @@ public struct InlineKeyboardButton: JsonConvertible, InternalJsonConvertible {
     public init(json: Any) {
         self.internalJson = JSON(json)
     }
+    public init(data: Data) {
+        self.internalJson = JSON(data: data)
+    }
 }
