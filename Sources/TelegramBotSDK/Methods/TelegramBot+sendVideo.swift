@@ -15,7 +15,9 @@ public extension TelegramBot {
     ///     - width: Video width
     ///     - height: Video height
     ///     - caption: Video caption (may also be used when resending videos by file_id), 0-200 characters
-    ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+    ///     - parse_mode: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    ///     - supports_streaming: Pass True, if the uploaded video is suitable for streaming
+    ///     - disable_notification: Sends the message silently. Users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
     ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
     /// - Returns: Message on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
@@ -24,26 +26,30 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendvideo>
     @discardableResult
     public func sendVideoSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             video: FileInfo,
             duration: Int? = nil,
             width: Int? = nil,
             height: Int? = nil,
             caption: String? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            parseMode: ParseMode? = nil,
+            supportsStreaming: Bool? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendVideo", defaultParameters["sendVideo"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "video": video,
             "duration": duration,
             "width": width,
             "height": height,
             "caption": caption,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup])
+            "parse_mode": parseMode?.rawValue,
+            "supports_streaming": supportsStreaming,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
@@ -54,7 +60,9 @@ public extension TelegramBot {
     ///     - width: Video width
     ///     - height: Video height
     ///     - caption: Video caption (may also be used when resending videos by file_id), 0-200 characters
-    ///     - disable_notification: Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+    ///     - parse_mode: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    ///     - supports_streaming: Pass True, if the uploaded video is suitable for streaming
+    ///     - disable_notification: Sends the message silently. Users will receive a notification with no sound.
     ///     - reply_to_message_id: If the message is a reply, ID of the original message
     ///     - reply_markup: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
     /// - Returns: Message on success. Nil on error, in which case `error` contains the details.
@@ -62,28 +70,32 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendvideo>
     public func sendVideoAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             video: FileInfo,
             duration: Int? = nil,
             width: Int? = nil,
             height: Int? = nil,
             caption: String? = nil,
-            disable_notification: Bool? = nil,
-            reply_to_message_id: Int? = nil,
-            reply_markup: ReplyMarkup? = nil,
+            parseMode: ParseMode? = nil,
+            supportsStreaming: Bool? = nil,
+            disableNotification: Bool? = nil,
+            replyToMessageId: Int? = nil,
+            replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVideoCompletion? = nil) {
         return requestAsync("sendVideo", defaultParameters["sendVideo"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "video": video,
             "duration": duration,
             "width": width,
             "height": height,
             "caption": caption,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup],
+            "parse_mode": parseMode?.rawValue,
+            "supports_streaming": supportsStreaming,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

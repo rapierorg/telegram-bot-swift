@@ -15,7 +15,7 @@ import Foundation
 public class TaskAssociatedData {
     /// If no networking errors occur and the data returned by the server
     /// is parsed successfully, this handler will be called
-    public var completion: TelegramBot.DataTaskCompletion?
+    internal var completion: TelegramBot.DataTaskCompletion?
     
     /// Current number of reconnect attempts
     public var retryCount: Int = 0

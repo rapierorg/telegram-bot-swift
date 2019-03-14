@@ -17,12 +17,12 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#getchatmember>
     @discardableResult
     public func getChatMemberSync(
-            chat_id: ChatId,
-            user_id: Int64,
+            chatId: ChatId,
+            userId: Int64,
             _ parameters: [String: Any?] = [:]) -> ChatMember? {
         return requestSync("getChatMember", defaultParameters["getChatMember"], parameters, [
-            "chat_id": chat_id,
-            "user_id": user_id])
+            "chat_id": chatId,
+            "user_id": userId])
     }
 
     /// Use this method to get information about a member of a chat. Returns a ChatMember object on success.
@@ -34,14 +34,14 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#getchatmember>
     public func getChatMemberAsync(
-            chat_id: ChatId,
-            user_id: Int64,
+            chatId: ChatId,
+            userId: Int64,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: GetChatMemberCompletion? = nil) {
         return requestAsync("getChatMember", defaultParameters["getChatMember"], parameters, [
-            "chat_id": chat_id,
-            "user_id": user_id],
+            "chat_id": chatId,
+            "user_id": userId],
             queue: queue, completion: completion)
     }
 }

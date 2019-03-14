@@ -11,14 +11,24 @@
 //
 
 import Foundation
-import SwiftyJSON
+
 
 extension Bool: JsonConvertible {
-	public init(json: JSON) {
-		self = json.boolValue
+
+    public var json: Any {
+        get {
+            return self
+        }
+        set {
+            internalJson = JSON(newValue)
+        }
+    }
+
+    public init(json: Any) {
+		self = JSON(json).boolValue
 	}
 	
-	public var json: JSON {
+	internal var internalJson: JSON {
 		get {
 			return JSON(self)
 		}

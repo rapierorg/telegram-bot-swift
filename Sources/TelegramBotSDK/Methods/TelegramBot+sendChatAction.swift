@@ -12,18 +12,18 @@ public extension TelegramBot {
     /// We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
     /// - Parameters:
     ///     - chat_id: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    ///     - action: Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.
+    ///     - action: Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data, record_video_note or upload_video_note for video notes.
     /// - Returns: Bool on success. Nil on error, in which case `TelegramBot.lastError` contains the details.
     /// - Note: Blocking version of the method.
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
     @discardableResult
     public func sendChatActionSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             action: String,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("sendChatAction", defaultParameters["sendChatAction"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "action": action])
     }
 
@@ -32,19 +32,19 @@ public extension TelegramBot {
     /// We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
     /// - Parameters:
     ///     - chat_id: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    ///     - action: Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.
+    ///     - action: Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data, record_video_note or upload_video_note for video notes.
     /// - Returns: Bool on success. Nil on error, in which case `error` contains the details.
     /// - Note: Asynchronous version of the method.
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
     public func sendChatActionAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             action: String,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendChatActionCompletion? = nil) {
         return requestAsync("sendChatAction", defaultParameters["sendChatAction"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "action": action],
             queue: queue, completion: completion)
     }

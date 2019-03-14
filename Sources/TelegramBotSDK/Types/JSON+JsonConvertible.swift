@@ -11,14 +11,14 @@
 //
 
 import Foundation
-import SwiftyJSON
 
-extension JSON: JsonConvertible {
-	public init(json: JSON) {
-		self = json
+
+extension JSON: InternalJsonConvertible {
+	public init(internalJson: JSON) {
+		self = internalJson
 	}
 	
-	public var json: JSON {
+	public var internalJson: JSON {
 		get {
 			return self
 		}

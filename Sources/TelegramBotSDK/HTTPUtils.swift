@@ -12,6 +12,7 @@
 
 import Foundation
 
+
 public class HTTPUtils {
     /// Encodes keys and values in a dictionary for using with
     /// `application/x-www-form-urlencoded` Content-Type and
@@ -30,10 +31,6 @@ public class HTTPUtils {
                 continue
             }
             
-            guard let keyString = String(key) else {
-                continue
-            }
-            
             var valueString: String
             
             if let boolValue = value as? Bool {
@@ -42,6 +39,19 @@ public class HTTPUtils {
                 }
                 // If true, add "key=" to encoded string
                 valueString = "true"
+            } else if let arrayValue = value as? [InternalJsonConvertible] {
+                
+                let jsonArray = arrayValue.map({ (jsonObject) -> JSON in
+                    return jsonObject.internalJson
+                })
+                
+                let jsonConvertible = JSON(jsonArray)
+                
+                if let resultString = jsonConvertible.internalJson.rawString(options: JSONSerialization.WritingOptions()) {
+                    valueString = String(describing: resultString)
+                } else {
+                    continue
+                }
             } else {
                 valueString = String(describing: value)
             }
@@ -49,7 +59,7 @@ public class HTTPUtils {
             if !result.isEmpty {
                 result += "&"
             }
-            let keyUrlencoded = keyString.formUrlencode()
+            let keyUrlencoded = key.formUrlencode()
             let valueUrlencoded = valueString.formUrlencode()
             result += "\(keyUrlencoded)=\(valueUrlencoded)"
         }
@@ -109,16 +119,12 @@ public class HTTPUtils {
                 continue
             }
             
-            guard let keyString = String(key) else {
-                continue
-            }
-            
             body.append(boundary1)
             if let inputFile = value as? InputFile {
                 let filename = inputFile.filename
                 let mimetype = inputFile.mimeType ?? mimeType(for: filename)
                 let data = inputFile.data
-                guard let contentDisposition = "Content-Disposition: form-data; name=\"\(keyString)\"; filename=\"\(filename)\"\r\n".data(using: .utf8) else {
+                guard let contentDisposition = "Content-Disposition: form-data; name=\"\(key)\"; filename=\"\(filename)\"\r\n".data(using: .utf8) else {
                     return nil
                 }
                 body.append(contentDisposition)
@@ -142,7 +148,7 @@ public class HTTPUtils {
                     valueString = String(describing: value)
                 }
                 
-                guard let contentDisposition = "Content-Disposition: form-data; name=\"\(keyString)\"\r\n\r\n".data(using: .utf8) else {
+                guard let contentDisposition = "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8) else {
                     return nil
                 }
                 body.append(contentDisposition)

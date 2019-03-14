@@ -12,11 +12,11 @@
 
 import Foundation
 import Dispatch
-import SwiftyJSON
+
 import CCurl
 
 public class TelegramBot {
-    public typealias DataTaskCompletion = (_ json: JSON, _ error: DataTaskError?)->()
+    internal typealias DataTaskCompletion = (_ json: JSON, _ error: DataTaskError?)->()
 
 	public typealias RequestParameters = [String: Any?]
 	
@@ -148,13 +148,13 @@ public class TelegramBot {
     
     /// Initiates a request to the server. Used for implementing
     /// specific requests (getMe, getStatus etc).
-    public func startDataTaskForEndpoint(_ endpoint: String, completion: @escaping DataTaskCompletion) {
+    internal func startDataTaskForEndpoint(_ endpoint: String, completion: @escaping DataTaskCompletion) {
         startDataTaskForEndpoint(endpoint, parameters: [:], completion: completion)
     }
     
     /// Initiates a request to the server. Used for implementing
     /// specific requests.
-    public func startDataTaskForEndpoint(_ endpoint: String, parameters: [String: Any?], completion: @escaping DataTaskCompletion) {
+    internal func startDataTaskForEndpoint(_ endpoint: String, parameters: [String: Any?], completion: @escaping DataTaskCompletion) {
         let endpointUrl = urlForEndpoint(endpoint)
         
         // If parameters contain values of type InputFile, use  multipart/form-data for sending them.
@@ -251,7 +251,7 @@ public class TelegramBot {
         }
         let data = callbackData.data
         let json = JSON(data: data)
-        let telegramResponse = Response(json: json)
+        let telegramResponse = Response(internalJson: json)
         
         guard httpCode == 200 else {
             completion(nil, .invalidStatusCode(statusCode: httpCode, telegramResponse: telegramResponse, data: data))

@@ -18,22 +18,22 @@ extension TelegramBot {
     @discardableResult
     public func reportErrorSync(chatId: Int64, text: String, errorDescription: String) -> Message? {
 		logger("ERROR: \(errorDescription)")
-		return sendMessageSync(chat_id: chatId, text: text)
+		return sendMessageSync(chatId: chatId, text: text)
     }
 	
     @discardableResult
 	public func reportErrorSync(chatId: Int64, errorDescription: String) -> Message? {
 		logger("ERROR: \(errorDescription)")
-		return sendMessageSync(chat_id: chatId, text: TelegramBot.unhandledErrorText)
+		return sendMessageSync(chatId: chatId, text: TelegramBot.unhandledErrorText)
 	}
 	
 	public func reportErrorAsync(chatId: Int64, text: String, errorDescription: String, completion: SendMessageCompletion? = nil) {
 		logger("ERROR: \(errorDescription)")
-		sendMessageAsync(chat_id: chatId, text: text, completion: completion)
+		sendMessageAsync(chatId: chatId, text: text, completion: completion)
 	}
 	
 	public func reportErrorAsync(chatId: Int64, errorDescription: String, completion: SendMessageCompletion? = nil) {
 		logger("ERROR: \(errorDescription)")
-		sendMessageAsync(chat_id: chatId, text: TelegramBot.unhandledErrorText, completion: completion)
+		sendMessageAsync(chatId: chatId, text: TelegramBot.unhandledErrorText, completion: completion)
 	}
 }
