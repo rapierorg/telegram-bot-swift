@@ -18,12 +18,12 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#getuserprofilephotos>
     @discardableResult
     public func getUserProfilePhotosSync(
-            user_id: Int64,
+            userId: Int64,
             offset: Int? = nil,
             limit: Int? = nil,
             _ parameters: [String: Any?] = [:]) -> UserProfilePhotos? {
         return requestSync("getUserProfilePhotos", defaultParameters["getUserProfilePhotos"], parameters, [
-            "user_id": user_id,
+            "user_id": userId,
             "offset": offset,
             "limit": limit])
     }
@@ -38,14 +38,14 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#getuserprofilephotos>
     public func getUserProfilePhotosAsync(
-            user_id: Int64,
+            userId: Int64,
             offset: Int? = nil,
             limit: Int? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: GetUserProfilePhotosCompletion? = nil) {
         return requestAsync("getUserProfilePhotos", defaultParameters["getUserProfilePhotos"], parameters, [
-            "user_id": user_id,
+            "user_id": userId,
             "offset": offset,
             "limit": limit],
             queue: queue, completion: completion)

@@ -22,8 +22,8 @@ public class Context {
 	/// otherwise it will be empty. For paths supported by Router the message is guaranteed to exist.
 	public var message: Message? {
         return update.message ??
-            update.edited_message ??
-            update.callback_query?.message
+            update.editedMessage ??
+            update.callbackQuery?.message
     }
 
     /// Command starts with slash (useful if you want to skip commands not starting with slash in group chats)
@@ -36,12 +36,12 @@ public class Context {
         return message.chat.type == .private_chat
     }
 	public var chatId: Int64? { return message?.chat.id ??
-        update.callback_query?.message?.chat.id
+        update.callbackQuery?.message?.chat.id
     }
 	public var fromId: Int64? {
         return update.message?.from?.id ??
-            (update.edited_message?.from?.id ??
-            update.callback_query?.from.id)
+            (update.editedMessage?.from?.id ??
+            update.callbackQuery?.from.id)
     }
     public var properties: [String: AnyObject]
 	
@@ -111,12 +111,12 @@ public class Context {
 	public func respondPrivatelySync(_ userText: String, groupText: String) -> (userMessage: Message?, groupMessage: Message?) {
 		var userMessage: Message?
 		if let fromId = fromId {
-			userMessage = bot.sendMessageSync(chat_id: fromId, text: userText)
+			userMessage = bot.sendMessageSync(chatId: fromId, text: userText)
 		}
 		var groupMessage: Message? = nil
 		if !privateChat {
             if let chatId = chatId {
-                groupMessage = bot.sendMessageSync(chat_id: chatId, text: groupText)
+                groupMessage = bot.sendMessageSync(chatId: chatId, text: groupText)
             } else {
                 assertionFailure("respondPrivatelySync() used when update.message is nil")
                 bot.lastError = nil
@@ -131,11 +131,11 @@ public class Context {
 	                                  onDidSendToUser userCompletion: TelegramBot.SendMessageCompletion? = nil,
 	                                  onDidSendToGroup groupCompletion: TelegramBot.SendMessageCompletion? = nil) {
 		if let fromId = fromId {
-			bot.sendMessageAsync(chat_id: fromId, text: userText, completion: userCompletion)
+			bot.sendMessageAsync(chatId: fromId, text: userText, completion: userCompletion)
 		}
 		if !privateChat {
             if let chatId = chatId {
-                bot.sendMessageAsync(chat_id: chatId, text: groupText, completion: groupCompletion)
+                bot.sendMessageAsync(chatId: chatId, text: groupText, completion: groupCompletion)
             } else {
                 assertionFailure("respondPrivatelyAsync() used when update.message is nil")
             }

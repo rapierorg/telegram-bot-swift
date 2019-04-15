@@ -42,7 +42,7 @@ public class Command {
         self.options = options
         let finalName: String
         if !options.contains(.exactMatch) && name.hasPrefix("/") {
-            finalName = name.substring(from: name.index(after: name.startIndex))
+            finalName = String(name[name.index(after: name.startIndex)...])
             print("WARNING: Command name shouldn't start with '/', the slash is added automatically if needed")
         } else {
             finalName = name
@@ -96,7 +96,7 @@ public class Command {
                 
                 let processedWord: String
                 if isFirstWord && firstWordStartsWithSlash {
-                    processedWord = word.substring(from: word.index(after: word.startIndex))
+                    processedWord = String(word[word.index(after: word.startIndex)...])
                 } else {
                     processedWord = word
                 }

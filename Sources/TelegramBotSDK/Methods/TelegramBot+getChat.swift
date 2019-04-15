@@ -16,10 +16,10 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#getchat>
     @discardableResult
     public func getChatSync(
-            chat_id: ChatId,
+            chatId: ChatId,
             _ parameters: [String: Any?] = [:]) -> Chat? {
         return requestSync("getChat", defaultParameters["getChat"], parameters, [
-            "chat_id": chat_id])
+            "chat_id": chatId])
     }
 
     /// Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.
@@ -30,12 +30,12 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#getchat>
     public func getChatAsync(
-            chat_id: ChatId,
+            chatId: ChatId,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: GetChatCompletion? = nil) {
         return requestAsync("getChat", defaultParameters["getChat"], parameters, [
-            "chat_id": chat_id],
+            "chat_id": chatId],
             queue: queue, completion: completion)
     }
 }

@@ -22,22 +22,22 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#editmessagetext>
     @discardableResult
     public func editMessageTextSync(
-            chat_id: ChatId? = nil,
-            message_id: Int? = nil,
-            inline_message_id: String? = nil,
+            chatId: ChatId? = nil,
+            messageId: Int? = nil,
+            inlineMessageId: String? = nil,
             text: String,
-            parse_mode: String? = nil,
-            disable_web_page_preview: Bool? = nil,
-            reply_markup: InlineKeyboardMarkup? = nil,
+            parseMode: ParseMode? = nil,
+            disableWebPagePreview: Bool? = nil,
+            replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
         return requestSync("editMessageText", defaultParameters["editMessageText"], parameters, [
-            "chat_id": chat_id,
-            "message_id": message_id,
-            "inline_message_id": inline_message_id,
+            "chat_id": chatId,
+            "message_id": messageId,
+            "inline_message_id": inlineMessageId,
             "text": text,
-            "parse_mode": parse_mode,
-            "disable_web_page_preview": disable_web_page_preview,
-            "reply_markup": reply_markup])
+            "parse_mode": parseMode?.rawValue,
+            "disable_web_page_preview": disableWebPagePreview,
+            "reply_markup": replyMarkup])
     }
 
     /// Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
@@ -54,24 +54,24 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#editmessagetext>
     public func editMessageTextAsync(
-            chat_id: ChatId? = nil,
-            message_id: Int? = nil,
-            inline_message_id: String? = nil,
+            chatId: ChatId? = nil,
+            messageId: Int? = nil,
+            inlineMessageId: String? = nil,
             text: String,
-            parse_mode: String? = nil,
-            disable_web_page_preview: Bool? = nil,
-            reply_markup: InlineKeyboardMarkup? = nil,
+            parseMode: ParseMode? = nil,
+            disableWebPagePreview: Bool? = nil,
+            replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: EditMessageTextCompletion? = nil) {
         return requestAsync("editMessageText", defaultParameters["editMessageText"], parameters, [
-            "chat_id": chat_id,
-            "message_id": message_id,
-            "inline_message_id": inline_message_id,
+            "chat_id": chatId,
+            "message_id": messageId,
+            "inline_message_id": inlineMessageId,
             "text": text,
-            "parse_mode": parse_mode,
-            "disable_web_page_preview": disable_web_page_preview,
-            "reply_markup": reply_markup],
+            "parse_mode": parseMode?.rawValue,
+            "disable_web_page_preview": disableWebPagePreview,
+            "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
 }

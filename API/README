@@ -1,0 +1,14 @@
+Install Xcode Commandline Tools (for compiling nokogiri):
+
+xcode-select --install
+
+Install dependencies:
+
+gem install bundler
+bundle install
+
+Regenerate Telegram Bot classes from documentation:
+
+./download_api_docs.sh
+ruby generate_wrappers.rb
+
