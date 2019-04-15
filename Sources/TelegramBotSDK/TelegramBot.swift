@@ -167,7 +167,7 @@ public class TelegramBot {
         }
 
         let contentType: String
-        let requestDataOrNil: Data?
+        var requestDataOrNil: Data?
         if hasAttachments {
             let boundary = HTTPUtils.generateBoundaryString()
             contentType = "multipart/form-data; boundary=\(boundary)"
