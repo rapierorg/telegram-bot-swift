@@ -74,7 +74,7 @@ Join our chat in Telegram: [swiftsdkchat](https://telegram.me/swiftsdkchat).
 
 On OS X, use the latest Xcode 9 release.
 
-On Linux, install `Swift 4.0` or newer. Note that `shopster-bot` example won't build on Linux because GRDB doesn't support Linux yet, but otherwise the library should be functional.
+On Linux, install `Swift 4.2` or newer. Note that `shopster-bot` example won't build on Linux because GRDB doesn't support Linux yet, but otherwise the library should be functional.
 
 ## Getting started
 
@@ -123,7 +123,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/zmeyc/telegram-bot-swift.git", .branch("dev")),
+        .package(url: "https://github.com/zmeyc/telegram-bot-swift.git", from: "1.1.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.

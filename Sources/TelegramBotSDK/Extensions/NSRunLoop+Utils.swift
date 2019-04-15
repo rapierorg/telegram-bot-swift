@@ -16,7 +16,7 @@ import Dispatch
 public extension RunLoop {
 	public func waitForSemaphore(_ sem: DispatchSemaphore) {
 		repeat {
-            run(mode: RunLoopMode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: 0.01))
+            run(mode: .default, before: Date(timeIntervalSinceNow: 0.01))
 		} while .success != sem.wait(timeout: DispatchTime.now())
 	}
 }
