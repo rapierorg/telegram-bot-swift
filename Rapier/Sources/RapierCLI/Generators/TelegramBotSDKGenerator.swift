@@ -1,4 +1,5 @@
 import Foundation
+import Rapier
 
 private struct Context {
     let directory: String

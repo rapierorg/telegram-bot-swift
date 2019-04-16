@@ -1,6 +1,6 @@
 import Foundation
 
-protocol CodeGenerator {
+public protocol CodeGenerator {
     init(directory: String)
     
     func start() throws
@@ -14,18 +14,4 @@ protocol CodeGenerator {
     func afterGeneratingMethods() throws
 
     func finish() throws
-}
-
-struct FieldInfo {
-    var type: String
-    var isArray: Bool
-    var isOptional: Bool
-}
-
-struct TypeInfo {
-    var fields: [String: FieldInfo] = [:]
-}
-
-struct MethodInfo {
-    var parameters: [String: FieldInfo] = [:]
 }

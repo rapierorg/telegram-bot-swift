@@ -1,7 +1,7 @@
 .build/
 Packages/
 *_TOKEN
-TelegramBotSDK.xcodeproj
+*.xcodeproj
 test_bot_token.txt
 API/api.html
 API/api.txt
