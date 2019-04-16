@@ -8,7 +8,7 @@ private func main() throws -> Int32 {
     
     try rapier.parseYml()
     
-    let generator = OverviewGenerator(directory: "/Users/cipi1965/Downloads/tests/")
+    let generator = TelegramBotSDKGenerator(directory: "/Users/cipi1965/Downloads/tests/")
     try rapier.generate(generator: generator)
     
     return 0

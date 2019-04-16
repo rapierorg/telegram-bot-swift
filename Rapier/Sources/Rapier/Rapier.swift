@@ -70,12 +70,16 @@ open class Rapier {
     
     private func parseMethod(props: [Yaml: Yaml]) throws {
         guard let methodName = props["method"]?.string else { throw RapierError.expectedField(name: "method", parent: nil) }
+        guard let result = props["result"]?.string else { throw RapierError.missingReturn(parent: methodName)}
+        
+        let resultField = parseType(field: result)
+        
         guard let fieldsDictionary = props["parameters"]?.dictionary else {
-            methods[methodName] = MethodInfo(parameters: [:])
+            methods[methodName] = MethodInfo(parameters: [:], result: resultField)
             return
         }
         let fields = try parseFields(fieldsDictionary, parent: methodName)
-        let methodInfo = MethodInfo(parameters: fields)
+        let methodInfo = MethodInfo(parameters: fields, result: resultField)
         methods[methodName] = methodInfo
     }
     
@@ -83,20 +87,25 @@ open class Rapier {
         var fields: [String: FieldInfo] = [:]
         try fieldsDictionary.forEach { key, value in
             guard let fieldName = key.string else { throw RapierError.fieldNameIsNotString(parent: parent) }
-            guard var fieldType = value.string else { throw RapierError.fieldTypeIsNotString(parent: parent) }
+            guard let fieldType = value.string else { throw RapierError.fieldTypeIsNotString(parent: parent) }
             
-            let isOptional = fieldType.hasSuffix("?")
-            if isOptional {
-                fieldType = String(fieldType.dropLast())
-            }
-            
-            let isArray = fieldType.hasSuffix("[]")
-            if isArray {
-                fieldType = String(fieldType.dropLast(2))
-            }
-            
-            fields[fieldName] = FieldInfo(type: fieldType, isArray: isArray, isOptional: isOptional)
+            fields[fieldName] = parseType(field: fieldType)
         }
         return fields
+    }
+    
+    private func parseType(field: String) -> FieldInfo {
+        var fieldType = field
+        let isOptional = fieldType.hasSuffix("?")
+        if isOptional {
+            fieldType = String(fieldType.dropLast())
+        }
+        
+        let isArray = fieldType.hasSuffix("[]")
+        if isArray {
+            fieldType = String(fieldType.dropLast(2))
+        }
+        
+        return FieldInfo(type: fieldType, isArray: isArray, isOptional: isOptional)
     }
 }
