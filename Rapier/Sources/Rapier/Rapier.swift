@@ -106,6 +106,11 @@ open class Rapier {
             fieldType = String(fieldType.dropLast(2))
         }
         
-        return FieldInfo(type: fieldType, isArray: isArray, isOptional: isOptional)
+        let isArrayOfArray = fieldType.hasSuffix("[]")
+        if isArrayOfArray {
+            fieldType = String(fieldType.dropLast(2))
+        }
+        
+        return FieldInfo(type: fieldType, isArray: isArray, isArrayOfArray: isArrayOfArray, isOptional: isOptional)
     }
 }

@@ -21,7 +21,7 @@ extension RapierError: LocalizedError {
                 return "Expected field named '\(name)'"
             }
         case let .missingReturn(parent):
-            return "'\(parent)': Missing return property"
+            return "'\(parent)': Missing result property"
         case let .fieldNameIsNotString(parent):
             return "'\(parent)': field name is not a string"
         case let .fieldTypeIsNotString(parent):
