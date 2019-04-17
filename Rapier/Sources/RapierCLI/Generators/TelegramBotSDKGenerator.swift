@@ -160,13 +160,13 @@ class TelegramBotSDKGenerator: CodeGenerator {
     
     private func saveTypes() throws {
         let dir = URL(fileURLWithPath: context.directory, isDirectory: true)
-        let file = dir.appendingPathComponent("types.swift", isDirectory: false)
+        let file = dir.appendingPathComponent("Types.swift", isDirectory: false)
         try context.outTypes.write(to: file, atomically: true, encoding: .utf8)
     }
     
     private func saveMethods() throws {
         let dir = URL(fileURLWithPath: context.directory, isDirectory: true)
-        let file = dir.appendingPathComponent("methods.swift", isDirectory: false)
+        let file = dir.appendingPathComponent("Methods.swift", isDirectory: false)
         try context.outMethods.write(to: file, atomically: true, encoding: .utf8)
     }
     
