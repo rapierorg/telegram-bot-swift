@@ -4,11 +4,15 @@ import Yaml
 import Rapier
 
 private func main() throws -> Int32 {
-    let rapier = Rapier(ymlFile: "/Users/cipi1965/Downloads/tests/telegram.yml")
+    guard CommandLine.arguments.count == 3 else {
+        print("Usage: rapier <yaml path> <output path>")
+        return 1
+    }
+    let rapier = Rapier(ymlFile: CommandLine.arguments[1])
     
     try rapier.parseYml()
     
-    let generator = TelegramBotSDKGenerator(directory: "/Users/cipi1965/Downloads/tests/")
+    let generator = TelegramBotSDKGenerator(directory: CommandLine.arguments[2])
     try rapier.generate(generator: generator)
     
     return 0
