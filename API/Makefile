@@ -1,12 +1,12 @@
 all: build
 
 build:
-	./generate_wrappers.rb
+	mkdir -p out
+	swift run --package-path ../Rapier rapier TelegramAPIDefinition.yml out
 
 rebuild: clean build
 
 clean:
-	rm -f out/Types/*
-	rm -f out/Methods/*
+	rm -f out/*
 
 .PHONY: all build rebuild clean
