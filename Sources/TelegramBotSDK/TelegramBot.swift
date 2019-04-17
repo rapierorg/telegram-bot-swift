@@ -164,6 +164,13 @@ public class TelegramBot {
                 hasAttachments = true
                 break
             }
+            
+            if value is InputFileOrString {
+                if case let InputFileOrString.inputFile(_) = (value as! InputFileOrString) {
+                    hasAttachments = true
+                    break
+                }
+            }
         }
 
         let contentType: String
