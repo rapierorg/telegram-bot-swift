@@ -55,7 +55,10 @@ class TelegramBotSDKGenerator: CodeGenerator {
             }
             
         }
-        let initParamsString = allInitParams.joined(separator: ", ")
+        var initParamsString = allInitParams.joined(separator: ", ")
+        if initParamsString.isEmpty {
+            initParamsString = "[:]"
+        }
         context.outTypes.append("""
             internal init(internalJson: JSON = \(initParamsString)) {
                 self.internalJson = internalJson
@@ -106,29 +109,37 @@ class TelegramBotSDKGenerator: CodeGenerator {
             return #""\#(fieldName)": \#(fieldName.camelized())"#
         }
         
-        let fieldsString = fields.joined(separator: ",\n        ")
-        let arrayFieldsString = arrayFields.joined(separator: ",\n")
+        var fieldsString = fields.joined(separator: ",\n        ")
+        var arrayFieldsString = arrayFields.joined(separator: ",\n")
         
         let completionName = (name.first?.uppercased() ?? "") + name.dropFirst() + "Completion"
         let resultSwiftType = buildSwiftType(fieldInfo: info.result)
+        
+        if !fieldsString.isEmpty {
+            fieldsString.append(",")
+        }
+        
+        if arrayFieldsString.isEmpty {
+            arrayFieldsString = ":"
+        }
         
         let method = """
             typealias \(completionName) = (_ result: \(resultSwiftType), _ error: DataTaskError?) -> ()
         
             @discardableResult
-            public func \(name)Sync(
-                    \(fieldsString),
-                    _ parameters: [String: Any?] = [:]) -> Bool? {
-                return requestSync("addStickerToSet", defaultParameters["addStickerToSet"], parameters, [
+            func \(name)Sync(
+                    \(fieldsString)
+                    _ parameters: [String: Any?] = [:]) -> \(resultSwiftType) {
+                return requestSync("\(name)", defaultParameters["\(name)"], parameters, [
                     \(arrayFieldsString)])
             }
 
-            public func \(name)Async(
+            func \(name)Async(
                     \(fieldsString)
                     _ parameters: [String: Any?] = [:],
                     queue: DispatchQueue = .main,
                     completion: \(completionName)? = nil) {
-                return requestAsync("addStickerToSet", defaultParameters["addStickerToSet"], parameters, [
+                return requestAsync("\(name)", defaultParameters["\(name)"], parameters, [
                     \(arrayFieldsString)],
                     queue: queue, completion: completion)
             }
@@ -313,7 +324,7 @@ class TelegramBotSDKGenerator: CodeGenerator {
             } else if fieldInfo.isArray {
                 if fieldInfo.isOptional {
                     return """
-                        public var \(fieldName): [\(fieldInfo.type)] {
+                        public var \(fieldName.camelized()): [\(fieldInfo.type)] {
                             get { return internalJson["\(fieldName)"].customArrayValue() }
                             set { internalJson["\(fieldName)"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
                         }\n\n
@@ -349,6 +360,12 @@ class TelegramBotSDKGenerator: CodeGenerator {
                             }
                         }\n\n
                     """
+                }
+            } else if fieldInfo.type == "InputFileOrString" {
+                if fieldInfo.isOptional {
+                    return "public var \(fieldName.camelized()): InputFileOrString? = nil\n\n"
+                } else {
+                    return "public var \(fieldName.camelized()): InputFileOrString\n\n"
                 }
             } else {
                 if fieldInfo.isOptional {
