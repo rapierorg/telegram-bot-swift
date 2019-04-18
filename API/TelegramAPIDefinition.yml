@@ -55,7 +55,7 @@ fields:
     invite_link: String?
     pinned_message: Message?
     sticker_set_name: String?
-    can_set_sticker_set: Boolean?
+    can_set_sticker_set: Bool?
 
 ---
 type: Message
@@ -93,8 +93,8 @@ fields:
     poll: Poll?
     new_chat_members: User[]?
     left_chat_member: User?
-    new_chat_title: String
-    new_chat_photo: PhotoSize[]
+    new_chat_title: String?
+    new_chat_photo: PhotoSize[]?
     delete_chat_photo: Bool?
     group_chat_created: Bool?
     supergroup_chat_created: Bool?
@@ -105,7 +105,7 @@ fields:
     invoice: Invoice?
     successful_payment: SuccessfulPayment?
     connected_website: String?
-    passport_data: PassportData?
+#    passport_data: PassportData?
 
 ---
 type: MessageEntity
@@ -330,7 +330,7 @@ type: InputMediaVideo
 fields:
     type: String
     media: String
-    thumb: FileInfo?
+    thumb: InputFileOrString?
     caption: String?
     parse_mode: String?
     width: Int?
@@ -343,7 +343,7 @@ type: InputMediaAnimation
 fields:
     type: String
     media: String
-    thumb: FileInfo?
+    thumb: InputFileOrString?
     caption: String?
     parse_mode: String?
     width: Int?
@@ -355,7 +355,7 @@ type: InputMediaAudio
 fields:
     type: String
     media: String
-    thumb: FileInfo?
+    thumb: InputFileOrString?
     caption: String?
     parse_mode: String?
     duration: Int?
@@ -367,7 +367,7 @@ type: InputMediaDocument
 fields:
     type: String
     media: String
-    thumb: FileInfo?
+    thumb: InputFileOrString?
     caption: String?
     parse_mode: String?
 
@@ -454,6 +454,21 @@ fields:
     parse_mode: String?
     reply_markup: InlineKeyboardMarkup?
     input_message_content: InputMessageContent?
+
+---
+type: InlineQueryResultLocation
+fields:
+    type: String
+    id: String
+    latitude: Float
+    longitude: Float
+    title: String
+    live_period: Int?
+    reply_markup: InlineKeyboardMarkup?
+    input_message_content: InputMessageContent?
+    thumb_url: String?
+    thumb_width: Int?
+    thumb_height: Int?
 
 ---
 type: InlineQueryResultMpeg4Gif
@@ -789,6 +804,9 @@ fields:
     animation: Animation?
 
 ---
+type: CallbackGame
+
+---
 type: GameHighScore
 fields:
     position: Int
@@ -798,11 +816,11 @@ fields:
 ---
 method: getUpdates
 parameters:
-    offset: Int?
+    offset: Int64?
     limit: Int?
     timeout: Int?
     allowed_updates: String[]?
-result: Update[]
+result: Update[]?
 
 ---
 method: setWebhook
@@ -811,31 +829,31 @@ parameters:
     certificate: FileInfo?
     max_connections: Int?
     allowed_updates: String[]?
-result: Bool
+result: Bool?
 
 ---
 method: deleteWebhook
-result: WebhookInfo
+result: WebhookInfo?
 
 ---
 method: getWebhookInfo
-result: WebhookInfo
+result: WebhookInfo?
 
 ---
 method: getMe
-result: User
+result: User?
 
 ---
 method: sendMessage
 parameters:
-    chat_id: ChatId
     text: String
+    chat_id: ChatId
     parse_mode: String?
     disable_web_page_preview: Bool?
     disable_notification: Bool?
     reply_to_message_id: Int?
     reply_markup: ReplyMarkup?
-result: Message
+result: Message?
 
 ---
 method: forwardMessage
@@ -844,7 +862,7 @@ parameters:
     from_chat_id: ChatId
     disable_notification: Bool?
     message_id: Int
-result: Message
+result: Message?
 
 ---
 method: sendPhoto
@@ -856,7 +874,7 @@ parameters:
     disable_notification: Bool?
     reply_to_message_id: Int?
     reply_markup: ReplyMarkup?
-result: Message
+result: Message?
 
 ---
 method: sendAudio
@@ -872,7 +890,7 @@ parameters:
     disable_notification: Bool?
     reply_to_message_id: Int?
     reply_markup: ReplyMarkup
-result: Message
+result: Message?
 
 ---
 method: sendDocument
@@ -885,7 +903,7 @@ parameters:
     disable_notification: Bool?
     reply_to_message_id: Int?
     reply_markup: ReplyMarkup?
-result: Message
+result: Message?
 
 ---
 method: sendVideo
@@ -895,14 +913,14 @@ parameters:
     duration: Int?
     width: Int?
     height: Int?
-    thumb: FileInfo?
+    thumb: InputFileOrString?
     caption: String?
     parse_mode: String?
     supports_streaming: Bool?
     disable_notification: Bool?
     reply_to_message_id: Int?
     reply_markup: ReplyMarkup?
-result: Message
+result: Message?
 
 ---
 method: sendAnimation
@@ -918,7 +936,7 @@ parameters:
     disable_notification: Bool?
     reply_to_message_id: Int?
     reply_markup: ReplyMarkup?
-result: Message
+result: Message?
 
 ---
 method: sendVoice
@@ -931,7 +949,7 @@ parameters:
     disable_notification: Bool?
     reply_to_message_id: Bool?
     reply_markup: ReplyMarkup?
-result: Message
+result: Message?
 
 ---
 method: sendVideoNote
@@ -944,7 +962,7 @@ parameters:
     disable_notification: Bool?
     reply_to_message_id: Int?
     reply_markup: ReplyMarkup?
-result: Message
+result: Message?
 
 ---
 method: sendMediaGroup
@@ -953,7 +971,7 @@ parameters:
     media: InputMedia[]
     disable_notification: Bool?
     reply_to_message_id: Int?
-result: Message
+result: Message?
 
 ---
 method: sendLocation
@@ -965,7 +983,7 @@ parameters:
     disable_notification: Bool?
     reply_to_message_id: Int?
     reply_markup: ReplyMarkup?
-result: Message
+result: Message?
 
 ---
 method: editMessageLiveLocation
@@ -976,7 +994,7 @@ parameters:
     latitude: Float
     longitude: Float
     reply_markup: ReplyMarkup?
-result: MessageOrBool
+result: MessageOrBool?
 
 ---
 method: stopMessageLiveLocation
@@ -985,7 +1003,7 @@ parameters:
     message_id: Int?
     inline_message_id: String?
     reply_markup: ReplyMarkup?
-result: MessageOrBool
+result: MessageOrBool?
 
 ---
 method: sendVenue
@@ -1000,7 +1018,7 @@ parameters:
     disable_notification: Bool?
     reply_to_message_id: Int?
     reply_markup: ReplyMarkup?
-result: Message
+result: Message?
 
 ---
 method: sendContact
@@ -1013,7 +1031,7 @@ parameters:
     disable_notification: Bool?
     reply_to_message_id: Int?
     reply_markup: ReplyMarkup?
-result: Message
+result: Message?
 
 ---
 method: sendPoll
@@ -1024,14 +1042,14 @@ parameters:
     disable_notification: Bool?
     reply_to_message_id: Int?
     reply_markup: ReplyMarkup?
-result: Message
+result: Message?
 
 ---
 method: sendChatAction
 parameters:
     chat_id: ChatId
     action: String
-result: Bool
+result: Bool?
 
 ---
 method: getUserProfilePhotos
@@ -1039,13 +1057,13 @@ parameters:
     user_id: Int64
     offset: Int?
     limit: Int?
-result: UserProfilePhotos
+result: UserProfilePhotos?
 
 ---
 method: getFile
 parameters:
     file_id: String
-result: File
+result: File?
 
 ---
 method: kickChatMember
@@ -1053,14 +1071,14 @@ parameters:
     chat_id: ChatId
     user_id: Int64
     until_date: Int?
-result: Bool
+result: Bool?
 
 ---
 method: unbanChatMember
 parameters:
     chat_id: ChatId
     user_id: Int64
-result: Bool
+result: Bool?
 
 ---
 method: restrictChatMember
@@ -1072,7 +1090,7 @@ parameters:
     can_send_media_messages: Bool?
     can_send_other_messages: Bool?
     can_add_web_page_previews: Bool?
-result: Bool
+result: Bool?
 
 ---
 method: promoteChatMember
@@ -1087,40 +1105,40 @@ parameters:
     can_restrict_members: Bool?
     can_pin_messages: Bool?
     can_promote_members: Bool?
-result: Bool
+result: Bool?
 
 ---
 method: exportChatInviteLink
 parameters:
     chat_id: ChatId
-result: String
+result: String?
 
 ---
 method: setChatPhoto
 parameters:
     chat_id: ChatId
     photo: FileInfo
-result: Bool
+result: Bool?
 
 ---
 method: deleteChatPhoto
 parameters:
     chat_id: ChatId
-result: Bool
+result: Bool?
 
 ---
 method: setChatTitle
 parameters:
     chat_id: ChatId
     title: String
-result: Bool
+result: Bool?
 
 ---
 method: setChatDescription
 parameters:
     chat_id: ChatId
     description: String
-result: Bool
+result: Bool?
 
 ---
 method: pinChatMessage
@@ -1128,57 +1146,57 @@ parameters:
     chat_id: ChatId
     message_id: Int
     disable_notification: Bool?
-result: Bool
+result: Bool?
 
 ---
 method: unpinChatMessage
 parameters:
     chat_id: ChatId
-result: Bool
+result: Bool?
 
 ---
 method: leaveChat
 parameters:
     chat_id: ChatId
-result: Bool
+result: Bool?
 
 ---
 method: getChat
 parameters:
     chat_id: ChatId
-result: Chat
+result: Chat?
 
 ---
 method: getChatAdministrators
 parameters:
     chat_id: ChatId
-result: ChatMember[]
+result: ChatMember[]?
 
 ---
 method: getChatMembersCount
 parameters:
     chat_id: ChatId
-result: Int
+result: Int?
 
 ---
 method: getChatMember
 parameters:
     chat_id: ChatId
     user_id: Int
-result: ChatMember
+result: ChatMember?
 
 ---
 method: setCharStickerSet
 parameters:
     chat_id: ChatId
     sticker_set_name: String
-result: Bool
+result: Bool?
 
 ---
 method: deleteChatStickerSet
 parameters:
     chat_id: ChatId
-result: Bool
+result: Bool?
 
 ---
 method: answerCallbackQuery
@@ -1188,7 +1206,7 @@ parameters:
     show_alert: Bool?
     url: String?
     cache_time: Int?
-result: Bool
+result: Bool?
 
 ---
 method: editMessageText
@@ -1200,7 +1218,7 @@ parameters:
     parse_mode: String?
     disable_web_page_preview: Bool?
     reply_markup: ReplyMarkup?
-result: MessageOrBool
+result: MessageOrBool?
 
 ---
 method: editMessageCaption
@@ -1211,7 +1229,7 @@ parameters:
     caption: String?
     parse_mode: String?
     reply_markup: ReplyMarkup?
-result: MessageOrBool
+result: MessageOrBool?
 
 ---
 method: editMessageMedia
@@ -1221,7 +1239,7 @@ parameters:
     inline_message_id: String?
     media: InputMedia
     reply_markup: InlineKeyboardMarkup?
-result: MessageOrBool
+result: MessageOrBool?
 
 ---
 method: editMessageReplyMarkup
@@ -1230,7 +1248,7 @@ parameters:
     message_id: Int?
     inline_message_id: String?
     reply_markup: ReplyMarkup?
-result: MessageOrBool
+result: MessageOrBool?
 
 ---
 method: stopPoll
@@ -1238,14 +1256,14 @@ parameters:
     chat_id: ChatId
     message_id: Int
     reply_markup: InlineKeyboardMarkup?
-result: Poll
+result: Poll?
 
 ---
 method: deleteMessage
 parameters:
     chat_id: ChatId
     message_id: Int
-result: Bool
+result: Bool?
 
 ---
 method: sendSticker
@@ -1255,20 +1273,20 @@ parameters:
     disable_notification: Bool?
     reply_to_message_id: Int?
     reply_markup: ReplyMarkup?
-result: Message
+result: Message?
 
 ---
 method: getStickerSet
 parameters:
     name: String
-result: StickerSet
+result: StickerSet?
 
 ---
 method: uploadStickerFile
 parameters:
     user_id: Int64
     png_sticker: FileInfo
-result: File
+result: File?
 
 ---
 method: createNewStickerSet
@@ -1280,7 +1298,7 @@ parameters:
     emojis: String
     contains_masks: Bool?
     mask_position: Bool?
-result: Bool
+result: Bool?
 
 ---
 method: addStickerToSet
@@ -1290,20 +1308,20 @@ parameters:
     png_sticker: FileInfo
     emojis: String
     mask_position: MaskPosition?
-result: Bool
+result: Bool?
 
 ---
 method: setStickerPositionInSet
 parameters:
     sticker: String
     position: Int
-result: Bool
+result: Bool?
 
 ---
 method: deleteStickerFromSet
 parameters:
     sticker: String
-result: Bool
+result: Bool?
 
 ---
 method: answerInlineQuery
@@ -1315,7 +1333,7 @@ parameters:
     next_offset: String?
     switch_pm_text: String?
     switch_pm_parameter: String?
-result: Bool
+result: Bool?
 
 ---
 method: sendInvoice
@@ -1343,7 +1361,7 @@ parameters:
     disable_notification: Bool?
     reply_to_message_id: Int?
     reply_markup: InlineKeyboardMarkup?
-result: Message
+result: Message?
 
 ---
 method: answerShippingQuery
@@ -1352,7 +1370,7 @@ parameters:
     ok: Bool
     shipping_options: ShippingOption[]?
     error_message: String?
-result: Bool
+result: Bool?
 
 ---
 method: answerPreCheckoutQuery
@@ -1360,7 +1378,7 @@ parameters:
     pre_checkout_query_id: String
     ok: Bool
     error_message: String?
-result: Bool
+result: Bool?
 
 ---
 method: sendGame
@@ -1370,7 +1388,7 @@ parameters:
     disable_notification: Bool?
     reply_to_message_id: Int?
     reply_markup: InlineKeyboardMarkup?
-result: Message
+result: Message?
 
 ---
 method: setGameScore
@@ -1382,7 +1400,7 @@ parameters:
     chat_id: Int64?
     message_id: Int?
     inline_message_id: Int?
-result: MessageOrBool
+result: MessageOrBool?
 
 ---
 method: getGameHighScores
@@ -1391,4 +1409,4 @@ parameters:
     chat_id: Int64?
     message_id: Int?
     inline_message_id: String?
-result: GameHighScore[]
+result: GameHighScore[]?
