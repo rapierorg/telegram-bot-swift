@@ -43,7 +43,7 @@ public struct Response: JsonConvertible, InternalJsonConvertible {
 	}
 		
     /// *Optional.* Error code. Its contents are subject to change in the future.
-	public var error_code: Int? {
+	public var errorCode: Int? {
 		get { return internalJson["error_code"].int }
 		set { internalJson["error_code"].int = newValue }
 	}
