@@ -63,6 +63,9 @@ class TelegramBotSDKGenerator: CodeGenerator {
             internal init(internalJson: JSON = \(initParamsString)) {
                 self.internalJson = internalJson
             }
+            public init() {
+                self.internalJson = JSON()
+            }
             public init(json: Any) {
                 self.internalJson = JSON(json)
             }
