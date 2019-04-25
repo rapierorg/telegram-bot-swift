@@ -80,7 +80,7 @@ class RequestTests: XCTestCase {
 	
 	func testShowKeyboardWithText() {
 		var markup = ReplyKeyboardMarkup()
-		markup.keyboard_strings = [
+		markup.keyboardStrings = [
 			[ "Button 1", "Button 2" ],
 			[ "Button 3", "Button 4" ]
 		]

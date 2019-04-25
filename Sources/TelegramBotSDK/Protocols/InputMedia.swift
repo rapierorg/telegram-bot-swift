@@ -20,3 +20,12 @@ extension InputMediaPhoto: InputMedia {
 
 extension InputMediaVideo: InputMedia {
 }
+
+extension InputMediaAudio: InputMedia {
+}
+
+extension InputMediaDocument: InputMedia {
+}
+
+extension InputMediaAnimation: InputMedia {
+}

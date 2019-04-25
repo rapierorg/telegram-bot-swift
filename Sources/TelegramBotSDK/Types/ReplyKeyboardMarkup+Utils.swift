@@ -15,7 +15,7 @@ import Foundation
 
 extension ReplyKeyboardMarkup {
     /// Array of button rows, each represented by an Array of Strings
-    public var keyboard_strings: [[String]] {
+    public var keyboardStrings: [[String]] {
         get {
             return internalJson["keyboard"].twoDArrayValue()
         }
