@@ -187,26 +187,17 @@ class TelegramBotSDKGenerator: CodeGenerator {
     }
     
     private func buildFieldTemplate(fieldName: String, fieldInfo: FieldInfo) -> String? {
-        switch (fieldInfo.type, fieldInfo.isOptional) {
-        case ("String", _):
+        let type = fieldInfo.type
+        let isOptional = fieldInfo.isOptional
+        
+        switch (type, isOptional) {
+        case ("String", _), ("Int", _), ("Int64", _), ("Float", _), ("Bool", _):
+            var swiftyJsonPropertyType = fieldInfo.type.lowercased()
+            
             return """
-                public var \(fieldName.camelized()): String\(fieldInfo.isOptional ? "?" : "") {
-                    get { return internalJson["\(fieldName)"].string\(fieldInfo.isOptional ? "" : "Value") }
-                    set { internalJson["\(fieldName)"].string\(fieldInfo.isOptional ? "" : "Value") = newValue }
-                }\n\n
-            """
-        case ("Int", _):
-            return """
-                public var \(fieldName.camelized()): Int\(fieldInfo.isOptional ? "?" : "") {
-                    get { return internalJson["\(fieldName)"].int\(fieldInfo.isOptional ? "" : "Value") }
-                    set { internalJson["\(fieldName)"].int\(fieldInfo.isOptional ? "" : "Value") = newValue }
-                }\n\n
-            """
-        case ("Int64", _):
-            return """
-                public var \(fieldName.camelized()): Int64\(fieldInfo.isOptional ? "?" : "") {
-                    get { return internalJson["\(fieldName)"].int64\(fieldInfo.isOptional ? "" : "Value") }
-                    set { internalJson["\(fieldName)"].int64\(fieldInfo.isOptional ? "" : "Value") = newValue }
+                public var \(fieldName.camelized()): \(type)\(isOptional ? "?" : "") {
+                    get { return internalJson["\(fieldName)"].\(swiftyJsonPropertyType)\(isOptional ? "" : "Value") }
+                    set { internalJson["\(fieldName)"].\(swiftyJsonPropertyType)\(isOptional ? "" : "Value") = newValue }
                 }\n\n
             """
         case ("Date", true):
@@ -226,20 +217,6 @@ class TelegramBotSDKGenerator: CodeGenerator {
             public var \(fieldName.camelized()): Date {
                     get { return Date(timeIntervalSince1970: internalJson["\(fieldName)"].doubleValue) }
                     set { internalJson["\(fieldName)"].double = newValue.timeIntervalSince1970 }
-                }\n\n
-            """
-        case ("Float", _):
-            return """
-                public var \(fieldName.camelized()): Float\(fieldInfo.isOptional ? "?" : "") {
-                    get { return internalJson["\(fieldName)"].float\(fieldInfo.isOptional ? "" : "Value") }
-                    set { internalJson["\(fieldName)"].float\(fieldInfo.isOptional ? "" : "Value") = newValue }
-                }\n\n
-            """
-        case ("Bool", _):
-            return """
-                public var \(fieldName.camelized()): Bool\(fieldInfo.isOptional ? "?" : "") {
-                    get { return internalJson["\(fieldName)"].bool\(fieldInfo.isOptional ? "" : "Value") }
-                    set { internalJson["\(fieldName)"].bool\(fieldInfo.isOptional ? "" : "Value") = newValue }
                 }\n\n
             """
         case (_, _):
