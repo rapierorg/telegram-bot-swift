@@ -1,8 +1,10 @@
 <p align="center">
-    <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-4.0-orange.svg" alt="Swift" /></a>
+    <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-5.0-orange.svg" alt="Swift" /></a>
     <a href="https://telegram.me/swiftsdkchat"><img src="https://img.shields.io/badge/Chat-Telegram-lightgrey.svg" alt="Chat" /></a>
     <a href="https://swift.org"><img src="https://img.shields.io/badge/OS-OS%20X%2C%20Linux-lightgrey.svg" alt="Platform" /></a>
     <a href="https://tldrlegal.com/license/mit-license"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License" /></a>
+    <a href="https://travis-ci.org/rapierorg/telegram-bot-swift"><img src="https://travis-ci.org/rapierorg/telegram-bot-swift.svg?branch=master" alt="Build Status" /></a>
+
 </p>
 
 <p align="center">
