@@ -3,8 +3,12 @@ os:
   - osx
 language: generic
 sudo: required
-dist: trusty
+dist: xenial
 osx_image: xcode10.2
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
 env:
   - SWIFT_VERSION=5.0.1
 install:
