@@ -76,7 +76,7 @@ Join our chat in Telegram: [swiftsdkchat](https://telegram.me/swiftsdkchat).
 
 On OS X, use the latest Xcode 9 release.
 
-On Linux, install `Swift 4.2` or newer. Note that `shopster-bot` example won't build on Linux because GRDB doesn't support Linux yet, but otherwise the library should be functional.
+On Linux, install `Swift 4.2` or newer and `libcurl4-openssl-dev` package. Note that `shopster-bot` example won't build on Linux because GRDB doesn't support Linux yet, but otherwise the library should be functional.
 
 ## Getting started
 
