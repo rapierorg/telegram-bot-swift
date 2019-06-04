@@ -187,47 +187,17 @@ class TelegramBotSDKGenerator: CodeGenerator {
     }
     
     private func buildFieldTemplate(fieldName: String, fieldInfo: FieldInfo) -> String? {
-        switch (fieldInfo.type, fieldInfo.isOptional) {
-        case ("String", true):
+        let type = fieldInfo.type
+        let isOptional = fieldInfo.isOptional
+        
+        switch (type, isOptional) {
+        case ("String", _), ("Int", _), ("Int64", _), ("Float", _), ("Bool", _):
+            var swiftyJsonPropertyType = fieldInfo.type.lowercased()
+            
             return """
-                public var \(fieldName.camelized()): String? {
-                    get { return internalJson["\(fieldName)"].string }
-                    set { internalJson["\(fieldName)"].string = newValue }
-                }\n\n
-            """
-        case ("String", false):
-            return """
-                public var \(fieldName.camelized()): String {
-                    get { return internalJson["\(fieldName)"].stringValue }
-                    set { internalJson["\(fieldName)"].stringValue = newValue }
-                }\n\n
-            """
-        case ("Int", true):
-            return """
-                public var \(fieldName.camelized()): Int? {
-                    get { return internalJson["\(fieldName)"].int }
-                    set { internalJson["\(fieldName)"].int = newValue }
-                }\n\n
-            """
-        case ("Int", false):
-            return """
-                public var \(fieldName.camelized()): Int {
-                    get { return internalJson["\(fieldName)"].intValue }
-                    set { internalJson["\(fieldName)"].intValue = newValue }
-                }\n\n
-            """
-        case ("Int64", true):
-            return """
-                public var \(fieldName.camelized()): Int64? {
-                    get { return internalJson["\(fieldName)"].int64 }
-                    set { internalJson["\(fieldName)"].int64 = newValue }
-                }\n\n
-            """
-        case ("Int64", false):
-            return """
-                public var \(fieldName.camelized()): Int64 {
-                    get { return internalJson["\(fieldName)"].int64Value }
-                    set { internalJson["\(fieldName)"].int64Value = newValue }
+                public var \(fieldName.camelized()): \(type)\(isOptional ? "?" : "") {
+                    get { return internalJson["\(fieldName)"].\(swiftyJsonPropertyType)\(isOptional ? "" : "Value") }
+                    set { internalJson["\(fieldName)"].\(swiftyJsonPropertyType)\(isOptional ? "" : "Value") = newValue }
                 }\n\n
             """
         case ("Date", true):
@@ -247,34 +217,6 @@ class TelegramBotSDKGenerator: CodeGenerator {
             public var \(fieldName.camelized()): Date {
                     get { return Date(timeIntervalSince1970: internalJson["\(fieldName)"].doubleValue) }
                     set { internalJson["\(fieldName)"].double = newValue.timeIntervalSince1970 }
-                }\n\n
-            """
-        case ("Float", true):
-            return """
-                public var \(fieldName.camelized()): Float? {
-                    get { return internalJson["\(fieldName)"].float }
-                    set { internalJson["\(fieldName)"].float = newValue }
-                }\n\n
-            """
-        case ("Float", false):
-            return """
-                public var \(fieldName.camelized()): Float {
-                    get { return internalJson["\(fieldName)"].floatValue }
-                    set { internalJson["\(fieldName)"].floatValue = newValue }
-                }\n\n
-            """
-        case ("Bool", true):
-            return """
-                public var \(fieldName.camelized()): Bool? {
-                    get { return internalJson["\(fieldName)"].bool }
-                    set { internalJson["\(fieldName)"].bool = newValue }
-                }\n\n
-            """
-        case ("Bool", false):
-            return """
-                public var \(fieldName.camelized()): Bool {
-                    get { return internalJson["\(fieldName)"].boolValue }
-                    set { internalJson["\(fieldName)"].boolValue = newValue }
                 }\n\n
             """
         case (_, _):
