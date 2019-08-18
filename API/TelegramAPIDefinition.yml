@@ -49,11 +49,11 @@ fields:
     username: String?
     first_name: String?
     last_name: String?
-    all_members_are_administrators: Bool?
     photo: ChatPhoto?
     description: String?
     invite_link: String?
     pinned_message: Message?
+    permissions: ChatPermissions?
     sticker_set_name: String?
     can_set_sticker_set: Bool?
 
@@ -312,19 +312,32 @@ fields:
     status: String
     until_date: Date?
     can_be_edited: Bool?
-    can_change_info: Bool?
     can_post_messages: Bool?
     can_edit_messages: Bool?
     can_delete_messages: Bool?
-    can_invite_users: Bool?
     can_restrict_members: Bool?
-    can_pin_messages: Bool?
     can_promote_members: Bool?
+    can_change_info: Bool?
+    can_invite_users: Bool?
+    can_pin_messages: Bool?
     is_member: Bool?
     can_send_messages: Bool?
     can_send_media_messages: Bool?
+    can_send_polls: Bool?
     can_send_other_messages: Bool?
     can_add_web_page_previews: Bool?
+
+---
+type: ChatPermissions
+fields:
+    can_send_messages: Bool?
+    can_send_media_messages: Bool?
+    can_send_polls: Bool?
+    can_send_other_messages: Bool?
+    can_add_web_page_previews: Bool?
+    can_change_info: Bool?
+    can_invite_users: Bool?
+    can_pin_messages: Bool?
 
 ---
 type: ResponseParameters
@@ -392,6 +405,7 @@ fields:
     file_id: String
     width: Int
     height: Int
+    is_animated: Bool
     thumb: PhotoSize?
     emoji: String?
     set_name: String?
@@ -403,6 +417,7 @@ type: StickerSet
 fields:
     name: String
     title: String
+    is_animated: Bool
     contains_masks: Bool
     stickers: Sticker[]
 
@@ -1101,10 +1116,7 @@ parameters:
     chat_id: ChatId
     user_id: Int64
     until_date: Date?
-    can_send_messages: Bool?
-    can_send_media_messages: Bool?
-    can_send_other_messages: Bool?
-    can_add_web_page_previews: Bool?
+    permissions: ChatPermissions
 result: Bool?
 
 ---
@@ -1120,6 +1132,13 @@ parameters:
     can_restrict_members: Bool?
     can_pin_messages: Bool?
     can_promote_members: Bool?
+result: Bool?
+
+---
+method: setChatPermissions
+parameters:
+    chat_id: ChatId
+    permissions: ChatPermissions
 result: Bool?
 
 ---
