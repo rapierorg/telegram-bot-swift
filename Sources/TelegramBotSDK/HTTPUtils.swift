@@ -120,6 +120,7 @@ public class HTTPUtils {
             }
             
             body.append(boundary1)
+            
             if let inputFile = value as? InputFile {
                 let filename = inputFile.filename
                 let mimetype = inputFile.mimeType ?? mimeType(for: filename)
@@ -134,7 +135,22 @@ public class HTTPUtils {
                 body.append(mimeType)
                 body.append(data)
                 body.append("\r\n".data(using: .utf8)!)
-                
+            } else if let inputFileOrString = value as? InputFileOrString {
+                if case InputFileOrString.inputFile(let inputFile) = inputFileOrString {
+                    let filename = inputFile.filename
+                    let mimetype = inputFile.mimeType ?? mimeType(for: filename)
+                    let data = inputFile.data
+                    guard let contentDisposition = "Content-Disposition: form-data; name=\"\(key)\"; filename=\"\(filename)\"\r\n".data(using: .utf8) else {
+                        return nil
+                    }
+                    body.append(contentDisposition)
+                    guard let mimeType = "Content-Type: \(mimetype)\r\n\r\n".data(using: .utf8) else {
+                        return nil
+                    }
+                    body.append(mimeType)
+                    body.append(data)
+                    body.append("\r\n".data(using: .utf8)!)
+                }
             } else {
                 var valueString: String
                 

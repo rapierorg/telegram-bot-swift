@@ -35,7 +35,7 @@ public class TelegramBot {
     public var autoReconnect: Bool = true
 
     /// Offset for long polling.
-    public var nextOffset: Int?
+    public var nextOffset: Int64?
 
     /// Number of updates to fetch by default.
     public var defaultUpdatesLimit: Int = 100
@@ -163,6 +163,13 @@ public class TelegramBot {
             if value is InputFile {
                 hasAttachments = true
                 break
+            }
+            
+            if value is InputFileOrString {
+                if case let InputFileOrString.inputFile(_) = (value as! InputFileOrString) {
+                    hasAttachments = true
+                    break
+                }
             }
         }
 
