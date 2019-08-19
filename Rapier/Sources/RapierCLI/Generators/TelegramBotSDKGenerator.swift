@@ -190,33 +190,35 @@ class TelegramBotSDKGenerator: CodeGenerator {
         let type = fieldInfo.type
         let isOptional = fieldInfo.isOptional
         
+        let jsonName = fieldName.replacingOccurrences(of: "_string", with: "")
+        
         switch (type, isOptional) {
         case ("String", _), ("Int", _), ("Int64", _), ("Float", _), ("Bool", _):
-            var swiftyJsonPropertyType = fieldInfo.type.lowercased()
+            let swiftyJsonPropertyType = fieldInfo.type.lowercased()
             
             return """
                 public var \(fieldName.camelized()): \(type)\(isOptional ? "?" : "") {
-                    get { return internalJson["\(fieldName)"].\(swiftyJsonPropertyType)\(isOptional ? "" : "Value") }
-                    set { internalJson["\(fieldName)"].\(swiftyJsonPropertyType)\(isOptional ? "" : "Value") = newValue }
+                    get { return internalJson["\(jsonName)"].\(swiftyJsonPropertyType)\(isOptional ? "" : "Value") }
+                    set { internalJson["\(jsonName)"].\(swiftyJsonPropertyType)\(isOptional ? "" : "Value") = newValue }
                 }\n\n
             """
         case ("Date", true):
             return """
                 public var \(fieldName.camelized()): Date? {
                     get {
-                        guard let date = internalJson["\(fieldName)"].double else { return nil }
+                        guard let date = internalJson["\(jsonName)"].double else { return nil }
                         return Date(timeIntervalSince1970: date)
                     }
                     set {
-                        internalJson["\(fieldName)"].double = newValue?.timeIntervalSince1970
+                        internalJson["\(jsonName)"].double = newValue?.timeIntervalSince1970
                     }
                 }\n\n
             """
         case ("Date", false):
             return """
             public var \(fieldName.camelized()): Date {
-                    get { return Date(timeIntervalSince1970: internalJson["\(fieldName)"].doubleValue) }
-                    set { internalJson["\(fieldName)"].double = newValue.timeIntervalSince1970 }
+                    get { return Date(timeIntervalSince1970: internalJson["\(jsonName)"].doubleValue) }
+                    set { internalJson["\(jsonName)"].double = newValue.timeIntervalSince1970 }
                 }\n\n
             """
         case (_, _):
@@ -224,10 +226,10 @@ class TelegramBotSDKGenerator: CodeGenerator {
                 if fieldInfo.isOptional {
                     return """
                         public var \(fieldName.camelized()): [[\(fieldInfo.type)]] {
-                            get { return internalJson["\(fieldName)"].twoDArrayValue() }
+                            get { return internalJson["\(jsonName)"].twoDArrayValue() }
                             set {
                                 if newValue.isEmpty {
-                                    json["\(fieldName)"] = JSON.null
+                                    json["\(jsonName)"] = JSON.null
                                     return
                                 }\n"\
                                 var rowsJson = [JSON]()
@@ -241,14 +243,14 @@ class TelegramBotSDKGenerator: CodeGenerator {
                                     }
                                     rowsJson.append(JSON(colsJson))
                                 }
-                                internalJson["\(fieldName)"] = JSON(rowsJson)
+                                internalJson["\(jsonName)"] = JSON(rowsJson)
                             }
                         }\n\n
                     """
                 } else {
                     return """
                         public var \(fieldName.camelized()): [[\(fieldInfo.type)]] {
-                            get { return internalJson["\(fieldName)"].twoDArrayValue() }
+                            get { return internalJson["\(jsonName)"].twoDArrayValue() }
                             set {
                                 var rowsJson = [JSON]()
                                 rowsJson.reserveCapacity(newValue.count)
@@ -261,7 +263,7 @@ class TelegramBotSDKGenerator: CodeGenerator {
                                     }
                                     rowsJson.append(JSON(colsJson))
                                 }
-                                internalJson["\(fieldName)"] = JSON(rowsJson)
+                                internalJson["\(jsonName)"] = JSON(rowsJson)
                             }
                         }\n\n
                     """
@@ -270,15 +272,15 @@ class TelegramBotSDKGenerator: CodeGenerator {
                 if fieldInfo.isOptional {
                     return """
                         public var \(fieldName.camelized()): [\(fieldInfo.type)] {
-                            get { return internalJson["\(fieldName)"].customArrayValue() }
-                            set { internalJson["\(fieldName)"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
+                            get { return internalJson["\(jsonName)"].customArrayValue() }
+                            set { internalJson["\(jsonName)"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
                         }\n\n
                     """
                 } else {
                     return """
                         public var \(fieldName.camelized()): [\(fieldInfo.type)] {
-                            get { return internalJson["\(fieldName)"].customArrayValue() }
-                            set { internalJson["\(fieldName)"] = JSON.initFrom(newValue) }
+                            get { return internalJson["\(jsonName)"].customArrayValue() }
+                            set { internalJson["\(jsonName)"] = JSON.initFrom(newValue) }
                         }\n\n
                     """
                 }
@@ -317,19 +319,19 @@ class TelegramBotSDKGenerator: CodeGenerator {
                     return """
                         public var \(fieldName.camelized()): \(fieldInfo.type)? {
                             get {
-                                let value = internalJson["\(fieldName)"]
+                                let value = internalJson["\(jsonName)"]
                                 return value.isNullOrUnknown ? nil : \(fieldInfo.type)(internalJson: value)
                             }
                             set {
-                                internalJson["\(fieldName)"] = newValue?.internalJson ?? JSON.null
+                                internalJson["\(jsonName)"] = newValue?.internalJson ?? JSON.null
                             }
                         }\n\n
                     """
                 } else {
                     return """
                         public var \(fieldName.camelized()): \(fieldInfo.type) {
-                            get { return \(fieldInfo.type)(internalJson: internalJson["\(fieldName)"]) }
-                            set { internalJson["\(fieldName)"] = JSON(newValue.json) }
+                            get { return \(fieldInfo.type)(internalJson: internalJson["\(jsonName)"]) }
+                            set { internalJson["\(jsonName)"] = JSON(newValue.json) }
                         }\n\n
                     """
                 }
