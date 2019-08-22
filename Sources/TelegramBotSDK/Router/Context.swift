@@ -58,50 +58,50 @@ public class Context {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
     @discardableResult
     public func respondSync(_ text: String,
-                            parse_mode: String? = nil,
-                            disable_web_page_preview: Bool? = nil,
-                            disable_notification: Bool? = nil,
-                            reply_to_message_id: Int? = nil,
-                            reply_markup: ReplyMarkup? = nil,
+                            parseMode: String? = nil,
+                            disableWebPagePreview: Bool? = nil,
+                            disableNotification: Bool? = nil,
+                            replyToMessageId: Int? = nil,
+                            replyMarkup: ReplyMarkup? = nil,
                             _ parameters: [String: Any?] = [:]) -> Message? {
-        guard let chat_id = chatId else {
+        guard let chatId = chatId else {
             assertionFailure("respondSync() used when update.message is nil")
             bot.lastError = nil
             return nil
         }
         return bot.requestSync("sendMessage", bot.defaultParameters["sendMessage"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "text": text,
-            "parse_mode": parse_mode,
-            "disable_web_page_preview": disable_web_page_preview,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup])
+            "parse_mode": parseMode,
+            "disable_web_page_preview": disableWebPagePreview,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup])
     }
     
     /// Sends a message to current chat.
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
 	public func respondAsync(_ text: String,
-	                         parse_mode: String? = nil,
-	                         disable_web_page_preview: Bool? = nil,
-	                         disable_notification: Bool? = nil,
-	                         reply_to_message_id: Int? = nil,
-	                         reply_markup: ReplyMarkup? = nil,
+	                         parseMode: String? = nil,
+	                         disableWebPagePreview: Bool? = nil,
+	                         disableNotification: Bool? = nil,
+	                         replyToMessageId: Int? = nil,
+	                         replyMarkup: ReplyMarkup? = nil,
 	                         _ parameters: [String: Any?] = [:],
 	                         queue: DispatchQueue = .main,
 	                         completion: TelegramBot.SendMessageCompletion? = nil) {
-        guard let chat_id = chatId else {
+        guard let chatId = chatId else {
             assertionFailure("respondAsync() used when update.message is nil")
             return
         }
         return bot.requestAsync("sendMessage", bot.defaultParameters["sendMessage"], parameters, [
-            "chat_id": chat_id,
+            "chat_id": chatId,
             "text": text,
-            "parse_mode": parse_mode,
-            "disable_web_page_preview": disable_web_page_preview,
-            "disable_notification": disable_notification,
-            "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup],
+            "parse_mode": parseMode,
+            "disable_web_page_preview": disableWebPagePreview,
+            "disable_notification": disableNotification,
+            "reply_to_message_id": replyToMessageId,
+            "reply_markup": replyMarkup],
                             queue: queue, completion: completion)
 	}
 	
