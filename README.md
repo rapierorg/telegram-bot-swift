@@ -111,6 +111,7 @@ swift package init --type executable
 Create `Package.swift`:
 
 ```swift
+// swift-tools-version:5.1
 import PackageDescription
 
 let package = Package(
