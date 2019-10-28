@@ -1,7 +1,7 @@
 import Foundation
 
-extension Scanner {
-    func skipping(_ characters: CharacterSet?, closure: () throws->()) rethrows {
+public extension Scanner {
+    public func skipping(_ characters: CharacterSet?, closure: () throws->()) rethrows {
         let previous = charactersToBeSkipped
         defer { charactersToBeSkipped = previous }
         charactersToBeSkipped = characters
@@ -9,12 +9,12 @@ extension Scanner {
     }
     
     @discardableResult
-    func skipInt() -> Bool {
+    public func skipInt() -> Bool {
         return scanInt() != nil
     }
     
     @discardableResult
-    func skipInt32() -> Bool {
+    public func skipInt32() -> Bool {
         #if os(OSX)
             return scanInt32(nil)
         #else
@@ -23,47 +23,47 @@ extension Scanner {
     }
 
     @discardableResult
-    func skipInt64() -> Bool {
+    public func skipInt64() -> Bool {
         return scanInt64() != nil
     }
     
     @discardableResult
-    func skipUInt64() -> Bool {
+    public func skipUInt64() -> Bool {
         return scanUInt64() != nil
     }
     
     @discardableResult
-    func skipFloat() -> Bool {
+    public func skipFloat() -> Bool {
         return scanFloat() != nil
     }
     
     @discardableResult
-    func skipDouble() -> Bool {
+    public func skipDouble() -> Bool {
         return scanDouble() != nil
     }
     
     @discardableResult
-    func skipHexUInt32() -> Bool {
+    public func skipHexUInt32() -> Bool {
         return scanHexUInt32() != nil
     }
     
     @discardableResult
-    func skipHexUInt64() -> Bool {
+    public func skipHexUInt64() -> Bool {
         return scanHexUInt64() != nil
     }
     
     @discardableResult
-    func skipHexFloat() -> Bool {
+    public func skipHexFloat() -> Bool {
         return scanHexFloat() != nil
     }
     
     @discardableResult
-    func skipHexDouble() -> Bool {
+    public func skipHexDouble() -> Bool {
         return scanHexDouble() != nil
     }
 
     @discardableResult
-    func skipString(_ string: String) -> Bool {
+    public func skipString(_ string: String) -> Bool {
         #if true
         return scanString(string) != nil
         #else
@@ -82,21 +82,21 @@ extension Scanner {
     }
 
     @discardableResult
-    func skipCharacters(from: CharacterSet) -> Bool {
+    public func skipCharacters(from: CharacterSet) -> Bool {
         return scanCharacters(from: from) != nil
     }
     
     @discardableResult
-    func skipUpTo(_ string: String) -> Bool {
+    public func skipUpTo(_ string: String) -> Bool {
         return scanUpTo(string) != nil
     }
 
     @discardableResult
-    func skipUpToCharacters(from set: CharacterSet) -> Bool {
+    public func skipUpToCharacters(from set: CharacterSet) -> Bool {
         return scanUpToCharacters(from: set) != nil
     }
 
-    func peekUtf16CodeUnit() -> UTF16.CodeUnit? {
+    public func peekUtf16CodeUnit() -> UTF16.CodeUnit? {
         let originalScanLocation = scanLocation
         defer { scanLocation = originalScanLocation }
         
@@ -113,7 +113,7 @@ extension Scanner {
         return string.utf16[index]
     }
     
-    var scanLocationInCharacters: Int {
+    public var scanLocationInCharacters: Int {
         let utf16 = string.utf16
         guard let to16 = utf16.index(utf16.startIndex, offsetBy: scanLocation, limitedBy: utf16.endIndex),
             let to = String.Index(to16, within: string) else {
@@ -132,17 +132,17 @@ extension Scanner {
         return to
     }
     
-    var parsedText: Substring {
+    public var parsedText: Substring {
         guard let index = currentCharacterIndex else { return "" }
         return string[..<index]
     }
 
-    var textToParse: Substring {
+    public var textToParse: Substring {
         guard let index = currentCharacterIndex else { return "" }
         return string[index...]
     }
     
-    var lineBeingParsed: String {
+    public var lineBeingParsed: String {
         let targetLine = self.line()
         var currentLine = 1
         var line = ""
@@ -164,8 +164,8 @@ extension Scanner {
         return line
     }
 
-    // Very slow, do not in use in loops
-    func line() -> Int {
+    /// Very slow, do not in use in loops
+    public func line() -> Int {
         var newLinesCount = 0
         parsedText.forEach {
             if $0 == "\n" || $0 == "\r\n" {
@@ -175,8 +175,8 @@ extension Scanner {
         return 1 + newLinesCount
     }
     
-    // Very slow, do not in use in loops
-    func column() -> Int {
+    /// Very slow, do not in use in loops
+    public func column() -> Int {
         let text = parsedText
         if let range = text.range(of: "\n", options: .backwards) {
             return text.distance(from: range.upperBound, to: text.endIndex) + 1
