@@ -19,10 +19,10 @@ class Item: Record {
     }
     
     required init(row: Row) {
-        itemId = row.value(named: "item_id")
-        chatId = row.value(named: "chat_id")
-        name = row.value(named: "name")
-        purchased = row.value(named: "purchased")
+        itemId = row["item_id"]
+        chatId = row["chat_id"]
+        name = row["name"]
+        purchased = row["purchased"]
         super.init(row: row)
     }
     
@@ -31,13 +31,6 @@ class Item: Record {
         self.name = name
         self.purchased = false
         super.init()
-    }
-    
-    override var persistentDictionary: [String: DatabaseValueConvertible?] {
-        return ["item_id": itemId,
-                "chat_id": chatId,
-                "name": name,
-                "purchased": purchased]
     }
     
     override func didInsert(with rowID: Int64, for column: String?) {
@@ -52,21 +45,21 @@ class Item: Record {
     }
     
     static func allItems(in chatId: Int64) -> [Item] {
-        return DB.queue.inDatabase { db in
-            Item.fetchAll(db, "SELECT * FROM items WHERE chat_id = ?", arguments: [chatId])
+        return try! DB.queue.inDatabase { db in
+            try Item.fetchAll(db, sql: "SELECT * FROM items WHERE chat_id = ?", arguments: [chatId])
         }
     }
     
     static func item(itemId: Int64, from chatId: Int64) throws -> Item? {
-        let item = DB.queue.inDatabase { db in
-            Item.fetchOne(db, "SELECT * FROM items WHERE chat_id = ? AND item_id = ?", arguments: [chatId, itemId])
+        let item = try DB.queue.inDatabase { db in
+            try Item.fetchOne(db, sql: "SELECT * FROM items WHERE chat_id = ? AND item_id = ?", arguments: [chatId, itemId])
         }
         return item
     }
     
     static func deletePurchased(in chatId: Int64) throws {
         try DB.queue.inDatabase { db in
-            try db.execute("DELETE FROM items WHERE chat_id = ? AND purchased = 1", arguments: [chatId])
+            try db.execute(sql: "DELETE FROM items WHERE chat_id = ? AND purchased = 1", arguments: [chatId])
         }
     }
     

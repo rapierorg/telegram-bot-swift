@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TelegramBot
+import TelegramBotSDK
 import GRDB
 
 class Session: Record {
@@ -18,8 +18,8 @@ class Session: Record {
     }
     
     required init(row: Row) {
-        chatId = row.value(named: "chat_id")
-        routerName = row.value(named: "router_name")
+        chatId = row["chat_id"]
+        routerName = row["router_name"]
         super.init(row: row)
     }
 
@@ -29,14 +29,9 @@ class Session: Record {
         super.init()
     }
     
-    override var persistentDictionary: [String: DatabaseValueConvertible?] {
-        return ["chat_id": chatId,
-                "router_name": routerName]
-    }
-    
     static func session(for chatId: Int64) throws -> Session {
         let session: Session = try DB.queue.inDatabase { db in
-            var session = Session.fetchOne(db, key: chatId)
+            var session = try Session.fetchOne(db, key: chatId)
             if session == nil {
                 session = Session(chatId: chatId)
                 try session?.insert(db)

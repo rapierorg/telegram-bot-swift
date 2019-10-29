@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TelegramBot
+import TelegramBotSDK
 
 extension Context {
     var session: Session { return properties["session"] as! Session }

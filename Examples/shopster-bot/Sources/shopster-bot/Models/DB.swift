@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TelegramBot
+import TelegramBotSDK
 import GRDB
 
 class DB {

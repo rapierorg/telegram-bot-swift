@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TelegramBot
+import TelegramBotSDK
 
 print("Checking if database is up to date")
 
@@ -41,7 +41,7 @@ while let update = bot.nextUpdateSync() {
 
     // ChatId is needed for choosing a router associated with particular chat
     guard let chatId = update.message?.chat.id ??
-        update.callback_query?.message?.chat.id else {
+        update.callbackQuery?.message?.chat.id else {
             continue
     }
 

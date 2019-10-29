@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "GRDB",
+        "repositoryURL": "https://github.com/groue/GRDB.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "89bc509170f91e8f593ed1b96cc2ba2c0a236760",
+          "version": "4.5.0"
+        }
+      },
+      {
+        "package": "TelegramBotSDK",
+        "repositoryURL": "/Users/cipi1965/Projects/telegram-bot-swift",
+        "state": {
+          "branch": null,
+          "revision": "4d6e94eb1fcbbe1cbe5f931adc0971b9ebf8449a",
+          "version": "1.2.3"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
