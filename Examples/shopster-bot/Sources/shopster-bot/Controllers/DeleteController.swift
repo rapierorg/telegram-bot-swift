@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TelegramBot
+import TelegramBotSDK
 
 class DeleteController {
     typealias T = DeleteController
@@ -44,17 +44,17 @@ class DeleteController {
     }
     
     func showConfirmationKeyboard(context: Context, text: String) {
-        let replyTo = context.privateChat ? nil : context.message?.message_id
+        let replyTo = context.privateChat ? nil : context.message?.messageId
         
         var markup = ReplyKeyboardMarkup()
         //markup.one_time_keyboard = true
-        markup.resize_keyboard = true
+        markup.resizeKeyboard = true
         markup.selective = replyTo != nil
-        markup.keyboard_strings = [
+        markup.keyboardStrings = [
             [ Commands.cancel[0], Commands.confirmDeletion[0] ]
         ]
         context.respondAsync(text,
-                             reply_to_message_id: replyTo,
-                             reply_markup: markup)
+                             replyToMessageId: replyTo,
+                             replyMarkup: markup)
     }
 }

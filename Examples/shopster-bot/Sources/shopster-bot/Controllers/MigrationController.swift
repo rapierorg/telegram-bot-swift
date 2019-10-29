@@ -16,20 +16,21 @@ class MigrationController {
         
         // v1.0 database
         migrator.registerMigration("createTables") { db in
-            try db.execute(
-                "CREATE TABLE sessions (" +
-                    "chat_id INTEGER PRIMARY KEY, " +
-                    "router_name TEXT NOT NULL" +
-                "); " +
-                "CREATE TABLE items (" +
-                    "item_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "chat_id INTEGER, " +
-                    "name TEXT NOT NULL, " +
-                    "purchased BOOLEAN NOT NULL, " +
-                    "FOREIGN KEY(chat_id) REFERENCES sessions(chat_id) ON DELETE CASCADE" +
-                "); " +
-                "CREATE INDEX items_by_chat_idx ON items (chat_id, item_id); "
-
+            try db.execute(sql:
+                """
+                CREATE TABLE sessions (
+                    chat_id INTEGER PRIMARY KEY,
+                    router_name TEXT NOT NULL
+                );
+                CREATE TABLE items (
+                    item_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    chat_id INTEGER,
+                    name TEXT NOT NULL,
+                    purchased BOOLEAN NOT NULL,
+                    FOREIGN KEY(chat_id) REFERENCES sessions(chat_id) ON DELETE CASCADE
+                );
+                CREATE INDEX items_by_chat_idx ON items (chat_id, item_id);
+                """
             )
         }
         

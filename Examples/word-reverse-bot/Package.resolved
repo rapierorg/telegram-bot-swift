@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "TelegramBotSDK",
+        "repositoryURL": "/Users/cipi1965/Projects/telegram-bot-swift",
+        "state": {
+          "branch": null,
+          "revision": "141be1529345e23c13d57c0ae7aaf0dbc038b815",
+          "version": "1.2.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

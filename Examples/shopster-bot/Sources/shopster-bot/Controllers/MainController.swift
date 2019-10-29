@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TelegramBot
+import TelegramBotSDK
 
 class MainController {
     typealias T = MainController
@@ -20,7 +20,7 @@ class MainController {
             router[Commands.delete] = onDelete
             router[Commands.list] = onList
             router[Commands.support] = onSupport
-            router[.new_chat_member] = onNewChatMember
+            router[.newChatMembers] = onNewChatMember
             router[.callback_query(data: nil)] = onCallbackQuery
         }
     }
@@ -31,13 +31,13 @@ class MainController {
     }
     
     func onStop(context: Context) -> Bool {
-        let replyTo = context.privateChat ? nil : context.message?.message_id
+        let replyTo = context.privateChat ? nil : context.message?.messageId
         
         var markup = ReplyKeyboardRemove()
         markup.selective = replyTo != nil
         context.respondAsync("Stopping.",
-                             reply_to_message_id: replyTo,
-                             reply_markup: markup)
+                             replyToMessageId: replyTo,
+                             replyMarkup: markup)
         return true
     }
 
@@ -76,7 +76,7 @@ class MainController {
     func onList(context: Context) -> Bool {
         guard let markup = itemListInlineKeyboardMarkup(context: context) else { return false }
         context.respondAsync("Item List:",
-                             reply_markup: markup)
+                             replyMarkup: markup)
         return true
     }
 
@@ -95,26 +95,26 @@ class MainController {
         
         var markup = InlineKeyboardMarkup()
         let keyboard = [[button]]
-        markup.inline_keyboard = keyboard
+        markup.inlineKeyboard = keyboard
 
-        context.respondAsync("Please click the button below to join *Zabiyaka Support* group.", parse_mode: "Markdown", reply_markup: markup)
+        context.respondAsync("Please click the button below to join *Zabiyaka Support* group.", parseMode: "Markdown", replyMarkup: markup)
 
         return true
     }
 
     func onNewChatMember(context: Context) -> Bool {
-        guard let newChatMember = context.message?.new_chat_member,
-            newChatMember.id == bot.user.id else { return false }
+        guard let newChatMembers = context.message?.newChatMembers,
+            newChatMembers.first?.id == bot.user.id else { return false }
         
         context.respondAsync("Hi All. I'll maintain your shared shopping list. Type /start to start working with me.")
         return true
     }
     
     func onCallbackQuery(context: Context) throws -> Bool {
-        guard let callback_query = context.update.callback_query else { return false }
-        guard let chatId = callback_query.message?.chat.id else { return false }
-        guard let messageId = callback_query.message?.message_id else { return false }
-        guard let data = callback_query.data else { return false }
+        guard let callbackQuery = context.update.callbackQuery else { return false }
+        guard let chatId = callbackQuery.message?.chat.id else { return false }
+        guard let messageId = callbackQuery.message?.messageId else { return false }
+        guard let data = callbackQuery.data else { return false }
         let scanner = Scanner(string: data)
 
         // "toggle 1234567"
@@ -129,7 +129,7 @@ class MainController {
         try item.save()
         
         if let markup = itemListInlineKeyboardMarkup(context: context) {
-            bot.editMessageReplyMarkupAsync(chat_id: chatId, message_id: messageId, reply_markup: markup)
+            bot.editMessageReplyMarkupAsync(chatId: chatId, messageId: messageId, replyMarkup: markup)
         }
         return true
     }
@@ -137,19 +137,19 @@ class MainController {
     func showMainMenu(context: Context, text: String) throws {
         // Use replies in group chats, otherwise bot won't be able to see the text typed by user.
         // In private chats don't clutter the chat with quoted replies.
-        let replyTo = context.privateChat ? nil : context.message?.message_id
+        let replyTo = context.privateChat ? nil : context.message?.messageId
         
         var markup = ReplyKeyboardMarkup()
         //markup.one_time_keyboard = true
-        markup.resize_keyboard = true
+        markup.resizeKeyboard = true
         markup.selective = replyTo != nil
-        markup.keyboard_strings = [
+        markup.keyboardStrings = [
             [ Commands.add[0], Commands.list[0], Commands.delete[0] ],
             [ Commands.help[0], Commands.support[0] ]
         ]
         context.respondAsync(text,
-            reply_to_message_id: replyTo, // ok to pass nil, it will be ignored
-            reply_markup: markup)
+            replyToMessageId: replyTo, // ok to pass nil, it will be ignored
+            replyMarkup: markup)
         
     }
 
@@ -165,12 +165,12 @@ class MainController {
                 "                                              " +
                 "                                              " +
             "                                              ."
-            button.callback_data = "toggle \(item.itemId!)"
+            button.callbackData = "toggle \(item.itemId!)"
             keyboard.append([button])
         }
         
         var markup = InlineKeyboardMarkup()
-        markup.inline_keyboard = keyboard
+        markup.inlineKeyboard = keyboard
         return markup
     }
 }

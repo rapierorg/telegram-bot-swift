@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TelegramBot
+import TelegramBotSDK
 
 class AddController {
     typealias T = AddController
@@ -46,14 +46,14 @@ class AddController {
         let text = "Type a name to add or /cancel to cancel."
         
         if context.privateChat {
-            context.respondAsync(text, reply_markup: ReplyKeyboardRemove())
+            context.respondAsync(text, replyMarkup: ReplyKeyboardRemove())
         } else {
-            let replyTo = context.message?.message_id
+            let replyTo = context.message?.messageId
             var markup = ForceReply()
             markup.selective = replyTo != nil
             context.respondAsync(text,
-                reply_to_message_id: replyTo,
-                reply_markup: markup)
+                replyToMessageId: replyTo,
+                replyMarkup: markup)
         }
     }
 }
