@@ -18,7 +18,7 @@ import CCurl
 public class TelegramBot {
     internal typealias DataTaskCompletion = (_ json: JSON, _ error: DataTaskError?)->()
 
-	public typealias RequestParameters = [String: Any?]
+    public typealias RequestParameters = [String: Any?]
 	
     /// Telegram server URL.
     public var url = "https://api.telegram.org"
@@ -26,8 +26,8 @@ public class TelegramBot {
     /// Unique authentication token obtained from BotFather.
     public var token: String
 	
-	/// Default request parameters
-	public var defaultParameters = [String: RequestParameters]()
+    /// Default request parameters
+    public var defaultParameters = [String: RequestParameters]()
 	
     /// In case of network errors or server problems,
     /// do not report the errors and try to reconnect
@@ -62,13 +62,13 @@ public class TelegramBot {
     /// - Returns: Seconds to wait before next reconnect attempt. Return `0.0` for instant reconnect.
     public var reconnectDelay: (_ retryCount: Int) -> Double = { retryCount in
         switch retryCount {
-        case 0: return 0.0
-        case 1: return 1.0
-        case 2: return 2.0
-        case 3: return 5.0
-        case 4: return 10.0
-        case 5: return 20.0
-        default: break
+            case 0: return 0.0
+            case 1: return 1.0
+            case 2: return 2.0
+            case 3: return 5.0
+            case 4: return 10.0
+            case 5: return 20.0
+            default: break
         }
         return 30.0
     }
@@ -119,17 +119,16 @@ public class TelegramBot {
     ///
     /// Blocks while fetching updates from the server.
     ///
-	/// - Parameter mineOnly: Ignore commands not addressed to me, i.e. `/command@another_bot`.
+    /// - Parameter mineOnly: Ignore commands not addressed to me, i.e. `/command@another_bot`.
     /// - Returns: `Update`. `Nil` on error, in which case details
     ///   can be obtained from `lastError` property.
-	public func nextUpdateSync(onlyMine: Bool = true) -> Update? {
+    public func nextUpdateSync(onlyMine: Bool = true) -> Update? {
         while let update = nextUpdateSync() {
-			if onlyMine {
-	            if let message = update.message, !message.addressed(to: self) {
-					continue
-				}
-			}
-			
+            if onlyMine {
+                if let message = update.message, !message.addressed(to: self) {
+                    continue
+                }
+            }
             return update
         }
         return nil
