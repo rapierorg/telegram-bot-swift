@@ -54,6 +54,7 @@ fields:
     invite_link: String?
     pinned_message: Message?
     permissions: ChatPermissions?
+    slow_mode_delay: Int?
     sticker_set_name: String?
     can_set_sticker_set: Bool?
 
@@ -120,7 +121,8 @@ fields:
 ---
 type: PhotoSize
 fields:
-    file_id: Int
+    file_id: String
+    file_unique_id: String
     width: Int
     height: Int
     file_size: Int?
@@ -128,7 +130,8 @@ fields:
 ---
 type: Audio
 fields:
-    file_id: Int
+    file_id: String
+    file_unique_id: String
     duration: Int
     performer: String?
     title: String?
@@ -139,7 +142,8 @@ fields:
 ---
 type: Document
 fields:
-    file_id: Int
+    file_id: String
+    file_unique_id: String
     thumb: PhotoSize?
     file_name: String?
     mime_type: String?
@@ -148,7 +152,8 @@ fields:
 ---
 type: Video
 fields:
-    file_id: Int
+    file_id: String
+    file_unique_id: String
     width: Int
     height: Int
     duration: Int
@@ -159,7 +164,8 @@ fields:
 ---
 type: Animation
 fields:
-    file_id: Int
+    file_id: String
+    file_unique_id: String
     width: Int
     height: Int
     duration: Int
@@ -171,7 +177,8 @@ fields:
 ---
 type: Voice
 fields:
-    file_id: Int
+    file_id: String
+    file_unique_id: String
     duration: Int
     mime_type: String?
     file_size: Int?
@@ -179,7 +186,8 @@ fields:
 ---
 type: VideoNote
 fields:
-    file_id: Int
+    file_id: String
+    file_unique_id: String
     length: Int
     duration: Int
     thumb: PhotoSize?
@@ -233,6 +241,7 @@ fields:
 type: File
 fields:
     file_id: String
+    file_unique_id: String
     file_size: Int?
     file_path: String?
 
@@ -303,13 +312,16 @@ fields:
 type: ChatPhoto
 fields:
     small_file_id: String
+    small_file_unique_id: String
     big_file_id: String
+    big_file_unique_id: String
 
 ---
 type: ChatMember
 fields:
     user: User
     status: String
+    custom_title: String?
     until_date: Date?
     can_be_edited: Bool?
     can_post_messages: Bool?
@@ -403,6 +415,7 @@ fields:
 type: Sticker
 fields:
     file_id: String
+    file_unique_id: String
     width: Int
     height: Int
     is_animated: Bool
@@ -1132,6 +1145,14 @@ parameters:
     can_restrict_members: Bool?
     can_pin_messages: Bool?
     can_promote_members: Bool?
+result: Bool?
+
+---
+method: setChatAdministratorCustomTitle
+parameters:
+    chat_id: ChatId
+    user_id: Int
+    custom_title: String
 result: Bool?
 
 ---
