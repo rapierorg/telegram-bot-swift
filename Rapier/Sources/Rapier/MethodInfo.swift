@@ -1,11 +1,12 @@
 import Foundation
 
 public struct MethodInfo {
-    public init(parameters: [String: FieldInfo] = [:], result: FieldInfo) {
+    public init(name: String, parameters: [FieldInfo] = [], result: FieldInfo) {
+        self.name = name
         self.parameters = parameters
         self.result = result
     }
-    
-    public var parameters: [String: FieldInfo]
+    public var name: String
+    public var parameters: [FieldInfo]
     public var result: FieldInfo
 }

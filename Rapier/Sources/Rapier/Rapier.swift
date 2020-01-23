@@ -4,30 +4,30 @@ import Yaml
 open class Rapier {
     public let ymlFile: String
     
-    private var types: [String: TypeInfo] = [:]
-    private var methods: [String: MethodInfo] = [:]
+    private var types: [TypeInfo] = []
+    private var methods: [MethodInfo] = []
     
     public init(ymlFile: String) {
         self.ymlFile = ymlFile
     }
     
     public func clear() {
-        types = [:]
-        methods = [:]
+        types = []
+        methods = []
     }
     
     public func generate(generator: CodeGenerator) throws {
         try generator.start()
         
         try generator.beforeGeneratingTypes()
-        try types.forEach { typeName, typeInfo in
-            try generator.generateType(name: typeName, info: typeInfo)
+        try types.forEach { typeInfo in
+            try generator.generateType(name: typeInfo.name, info: typeInfo)
         }
         try generator.afterGeneratingTypes()
         
         try generator.beforeGeneratingMethods()
-        try methods.forEach { methodName, methodInfo in
-            try generator.generateMethod(name: methodName, info: methodInfo)
+        try methods.forEach { methodInfo in
+            try generator.generateMethod(name: methodInfo.name, info: methodInfo)
         }
         try generator.afterGeneratingMethods()
         
@@ -59,42 +59,45 @@ open class Rapier {
     
     private func parseType(props: [Yaml: Yaml]) throws {
         guard let typeName = props["type"]?.string else { throw RapierError.expectedField(name: "type", parent: nil) }
-        guard let fieldsDictionary = props["fields"]?.dictionary else {
-            types[typeName] = TypeInfo(fields: [:])
+        guard let fieldsArray = props["fields"]?.array else {
+            types.append(TypeInfo(name: typeName, fields: []))
             return
         }
-        let fields = try parseFields(fieldsDictionary, parent: typeName)
-        let typeInfo = TypeInfo(fields: fields)
-        types[typeName] = typeInfo
+        let fields = try parseFields(fieldsArray, parent: typeName)
+        let typeInfo = TypeInfo(name: typeName, fields: fields)
+        types.append(typeInfo)
     }
     
     private func parseMethod(props: [Yaml: Yaml]) throws {
         guard let methodName = props["method"]?.string else { throw RapierError.expectedField(name: "method", parent: nil) }
         guard let result = props["result"]?.string else { throw RapierError.missingReturn(parent: methodName)}
         
-        let resultField = parseType(field: result)
+        let resultField = parseType(name: methodName, field: result)
         
-        guard let fieldsDictionary = props["parameters"]?.dictionary else {
-            methods[methodName] = MethodInfo(parameters: [:], result: resultField)
+        guard let fieldsArray = props["parameters"]?.array else {
+            methods.append(MethodInfo(name: methodName, parameters: [], result: resultField))
             return
         }
-        let fields = try parseFields(fieldsDictionary, parent: methodName)
-        let methodInfo = MethodInfo(parameters: fields, result: resultField)
-        methods[methodName] = methodInfo
+        let fields = try parseFields(fieldsArray, parent: methodName)
+        let methodInfo = MethodInfo(name: methodName, parameters: fields, result: resultField)
+        methods.append(methodInfo)
     }
     
-    private func parseFields(_ fieldsDictionary: [Yaml: Yaml], parent: String) throws -> [String: FieldInfo] {
-        var fields: [String: FieldInfo] = [:]
-        try fieldsDictionary.forEach { key, value in
-            guard let fieldName = key.string else { throw RapierError.fieldNameIsNotString(parent: parent) }
-            guard let fieldType = value.string else { throw RapierError.fieldTypeIsNotString(parent: parent) }
+    private func parseFields(_ fieldsArray: [Yaml], parent: String) throws -> [FieldInfo] {
+        var fields: [FieldInfo] = []
+        try fieldsArray.forEach { item in
+            guard let field = item.dictionary else {
+                throw RapierError.expectedDictionary
+            }
+            guard let fieldName = field.first?.key.string else { throw RapierError.fieldNameIsNotString(parent: parent) }
+            guard let fieldType = field.first?.value.string else { throw RapierError.fieldTypeIsNotString(parent: parent) }
             
-            fields[fieldName] = parseType(field: fieldType)
+            fields.append(parseType(name: fieldName, field: fieldType))
         }
         return fields
     }
     
-    private func parseType(field: String) -> FieldInfo {
+    private func parseType(name: String, field: String) -> FieldInfo {
         var fieldType = field
         let isOptional = fieldType.hasSuffix("?")
         if isOptional {
@@ -111,6 +114,6 @@ open class Rapier {
             fieldType = String(fieldType.dropLast(2))
         }
         
-        return FieldInfo(type: fieldType, isArray: isArray, isArrayOfArray: isArrayOfArray, isOptional: isOptional)
+        return FieldInfo(name: name, type: fieldType, isArray: isArray, isArrayOfArray: isArrayOfArray, isOptional: isOptional)
     }
 }

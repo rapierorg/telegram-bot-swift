@@ -1,9 +1,11 @@
 import Foundation
 
 public struct TypeInfo {
-    public init(fields: [String: FieldInfo] = [:]) {
+    public init(name: String, fields: [FieldInfo] = []) {
+        self.name = name
         self.fields = fields
     }
     
-    public var fields: [String: FieldInfo]
+    public var name: String
+    public var fields: [FieldInfo]
 }

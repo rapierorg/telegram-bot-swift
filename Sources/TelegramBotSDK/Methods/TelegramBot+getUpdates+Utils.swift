@@ -26,7 +26,7 @@ extension TelegramBot {
             var updates: [Update]?
             var retryCount = 0
             while true {
-                updates = getUpdatesSync(limit: defaultUpdatesLimit, offset: nextOffset, timeout: defaultUpdatesTimeout)
+                updates = getUpdatesSync(offset: nextOffset, limit: defaultUpdatesLimit, timeout: defaultUpdatesTimeout)
                 if updates == nil {
                     // Retry on temporary problems
                     if autoReconnect,
