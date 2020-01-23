@@ -29,8 +29,8 @@ class OverviewGenerator: CodeGenerator {
     
     func generateType(name: String, info: TypeInfo) throws {
         context.outTypes.append("\(name)\n")
-        info.fields.sorted { $0.key < $1.key }.forEach { fieldName, fieldInfo in
-            context.outTypes.append("  \(fieldName): \(fieldInfo.type)")
+        info.fields.forEach { fieldInfo in
+            context.outTypes.append("  \(fieldInfo.name): \(fieldInfo.type)")
             if (fieldInfo.isOptional) {
                 context.outTypes.append(" [optional]")
             }
@@ -48,8 +48,8 @@ class OverviewGenerator: CodeGenerator {
     
     func generateMethod(name: String, info: MethodInfo) throws {
         context.outMethods.append("\(name)\n")
-        info.parameters.sorted { $0.key < $1.key }.forEach { fieldName, fieldInfo in
-            context.outMethods.append("  \(fieldName): \(fieldInfo.type)")
+        info.parameters.forEach { fieldInfo in
+            context.outMethods.append("  \(fieldInfo.name): \(fieldInfo.type)")
             if (fieldInfo.isOptional) {
                 context.outMethods.append(" [optional]")
             }

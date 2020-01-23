@@ -44,10 +44,10 @@ class TelegramBotSDKGenerator: CodeGenerator {
             
             """)
         var allInitParams: [String] = []
-        info.fields.sorted { $0.key < $1.key }.forEach { fieldName, fieldInfo in
-            let getterName = makeGetterName(typeName: name, fieldName: fieldName, fieldType: fieldInfo.type)
+        info.fields.forEach { fieldInfo in
+            let getterName = makeGetterName(typeName: name, fieldName: fieldInfo.name, fieldType: fieldInfo.type)
             if fieldInfo.type == "True" {
-                allInitParams.append(#""\#(fieldName)" = true"#)
+                allInitParams.append(#""\#(fieldInfo.name)" = true"#)
             } else {
                 if let field = buildFieldTemplate(fieldName: getterName, fieldInfo: fieldInfo) {
                     context.outTypes.append(field)
@@ -97,10 +97,10 @@ class TelegramBotSDKGenerator: CodeGenerator {
     
     func generateMethod(name: String, info: MethodInfo) throws {
         
-        let parameters = info.parameters.sorted { $0.key < $1.key }
+        let parameters = info.parameters
         
-        let fields: [String] = parameters.map { fieldName, fieldInfo in
-            var result = "\(fieldName.camelized()): \(buildSwiftType(fieldInfo: fieldInfo))"
+        let fields: [String] = parameters.map { fieldInfo in
+            var result = "\(fieldInfo.name.camelized()): \(buildSwiftType(fieldInfo: fieldInfo))"
             if fieldInfo.isOptional {
                 result.append(" = nil")
             }
@@ -108,8 +108,8 @@ class TelegramBotSDKGenerator: CodeGenerator {
             return result
         }
         
-        let arrayFields: [String] = parameters.map { fieldName, _ in
-            return #""\#(fieldName)": \#(fieldName.camelized())"#
+        let arrayFields: [String] = parameters.map { fieldInfo in
+            return #""\#(fieldInfo.name)": \#(fieldInfo.name.camelized())"#
         }
         
         var fieldsString = fields.joined(separator: ",\n        ")

@@ -75,7 +75,7 @@ class RequestTests: XCTestCase {
 
         check( bot.sendMessageSync(chatId: chatId, text: "testSendMessage4: markdown: *bold* _italic_ [link](http://google.com)", ["parse_mode": "Markdown"]) )
 
-		check( bot.sendMessageSync(chatId: chatId, text: "testSendMessage5: html: <b>bold</b> <i>italic</i>\n<code>void main() {\n  return 0;\n}</code>", parseMode: .html) )
+        check( bot.sendMessageSync(chatId: chatId, parseMode: .html, text: "testSendMessage5: html: <b>bold</b> <i>italic</i>\n<code>void main() {\n  return 0;\n}</code>") )
 	}
 	
 	func testShowKeyboardWithText() {

@@ -7,281 +7,281 @@ flags:
 
 type: Update
 fields:
-    update_id: Int64
-    message: Message?
-    edited_message: Message?
-    channel_post: Message?
-    edited_channel_post: Message?
-    inline_query: InlineQuery?
-    chosen_inline_result: ChosenInlineResult?
-    callback_query: CallbackQuery?
-    shipping_query: ShippingQuery?
-    pre_checkout_query: PreCheckoutQuery?
-    poll: Poll
+    - update_id: Int64
+    - message: Message?
+    - edited_message: Message?
+    - channel_post: Message?
+    - edited_channel_post: Message?
+    - inline_query: InlineQuery?
+    - chosen_inline_result: ChosenInlineResult?
+    - callback_query: CallbackQuery?
+    - shipping_query: ShippingQuery?
+    - pre_checkout_query: PreCheckoutQuery?
+    - poll: Poll
 
 ---
 type: WebhookInfo
 fields:
-    url: String
-    has_custom_certificate: Bool
-    pending_update_count: Int
-    last_error_date: Date?
-    last_error_message: String?
-    max_connections: Int?
-    allowed_updates: String[]?
+    - url: String
+    - has_custom_certificate: Bool
+    - pending_update_count: Int
+    - last_error_date: Date?
+    - last_error_message: String?
+    - max_connections: Int?
+    - allowed_updates: String[]?
 
 ---
 type: User
 fields:
-    id: Int64
-    is_bot: Bool
-    first_name: String
-    last_name: String?
-    username: String?
-    language_code: String?
+    - id: Int64
+    - is_bot: Bool
+    - first_name: String
+    - last_name: String?
+    - username: String?
+    - language_code: String?
 
 ---
 type: Chat
 fields:
-    id: Int64
-    type: String
-    title: String?
-    username: String?
-    first_name: String?
-    last_name: String?
-    photo: ChatPhoto?
-    description: String?
-    invite_link: String?
-    pinned_message: Message?
-    permissions: ChatPermissions?
-    slow_mode_delay: Int?
-    sticker_set_name: String?
-    can_set_sticker_set: Bool?
+    - id: Int64
+    - type: String
+    - title: String?
+    - username: String?
+    - first_name: String?
+    - last_name: String?
+    - photo: ChatPhoto?
+    - description: String?
+    - invite_link: String?
+    - pinned_message: Message?
+    - permissions: ChatPermissions?
+    - slow_mode_delay: Int?
+    - sticker_set_name: String?
+    - can_set_sticker_set: Bool?
 
 ---
 type: Message
 fields:
-    message_id: Int
-    from: User?
-    date: Date
-    chat: Chat
-    forward_from: User?
-    forward_from_chat: Chat?
-    forward_from_message_id: Int?
-    forward_signature: String?
-    forward_sender_name: String?
-    forward_date: Date?
-    reply_to_message: Message?
-    edit_date: Date?
-    media_group_id: String?
-    author_signature: String?
-    text: String?
-    entities: MessageEntity[]?
-    caption_entities: MessageEntity[]?
-    audio: Audio?
-    document: Document?
-    animation: Animation?
-    game: Game?
-    photo: PhotoSize[]?
-    sticker: Sticker?
-    video: Video?
-    voice: Voice?
-    video_note: VideoNote?
-    caption: String?
-    contact: Contact?
-    location: Location?
-    venue: Venue?
-    poll: Poll?
-    new_chat_members: User[]?
-    left_chat_member: User?
-    new_chat_title: String?
-    new_chat_photo: PhotoSize[]?
-    delete_chat_photo: Bool?
-    group_chat_created: Bool?
-    supergroup_chat_created: Bool?
-    channel_chat_created: Bool?
-    migrate_to_chat_id: Int64?
-    migrate_from_chat_id: Int64?
-    pinned_message: Message?
-    invoice: Invoice?
-    successful_payment: SuccessfulPayment?
-    connected_website: String?
-#    passport_data: PassportData?
-    reply_markup: InlineKeyboardMarkup?
+    - message_id: Int
+    - from: User?
+    - date: Date
+    - chat: Chat
+    - forward_from: User?
+    - forward_from_chat: Chat?
+    - forward_from_message_id: Int?
+    - forward_signature: String?
+    - forward_sender_name: String?
+    - forward_date: Date?
+    - reply_to_message: Message?
+    - edit_date: Date?
+    - media_group_id: String?
+    - author_signature: String?
+    - text: String?
+    - entities: MessageEntity[]?
+    - caption_entities: MessageEntity[]?
+    - audio: Audio?
+    - document: Document?
+    - animation: Animation?
+    - game: Game?
+    - photo: PhotoSize[]?
+    - sticker: Sticker?
+    - video: Video?
+    - voice: Voice?
+    - video_note: VideoNote?
+    - caption: String?
+    - contact: Contact?
+    - location: Location?
+    - venue: Venue?
+    - poll: Poll?
+    - new_chat_members: User[]?
+    - left_chat_member: User?
+    - new_chat_title: String?
+    - new_chat_photo: PhotoSize[]?
+    - delete_chat_photo: Bool?
+    - group_chat_created: Bool?
+    - supergroup_chat_created: Bool?
+    - channel_chat_created: Bool?
+    - migrate_to_chat_id: Int64?
+    - migrate_from_chat_id: Int64?
+    - pinned_message: Message?
+    - invoice: Invoice?
+    - successful_payment: SuccessfulPayment?
+    - connected_website: String?
+#   - passport_data: PassportData?
+    - reply_markup: InlineKeyboardMarkup?
 
 ---
 type: MessageEntity
 fields:
-    type: String?
-    offset: Int
-    length: Int
-    url: String?
-    user: User?
+    - type: String?
+    - offset: Int
+    - length: Int
+    - url: String?
+    - user: User?
 
 ---
 type: PhotoSize
 fields:
-    file_id: String
-    file_unique_id: String
-    width: Int
-    height: Int
-    file_size: Int?
+    - file_id: String
+    - file_unique_id: String
+    - width: Int
+    - height: Int
+    - file_size: Int?
 
 ---
 type: Audio
 fields:
-    file_id: String
-    file_unique_id: String
-    duration: Int
-    performer: String?
-    title: String?
-    mime_type: String?
-    file_size: Int?
-    thumb: PhotoSize?
+    - file_id: String
+    - file_unique_id: String
+    - duration: Int
+    - performer: String?
+    - title: String?
+    - mime_type: String?
+    - file_size: Int?
+    - thumb: PhotoSize?
 
 ---
 type: Document
 fields:
-    file_id: String
-    file_unique_id: String
-    thumb: PhotoSize?
-    file_name: String?
-    mime_type: String?
-    file_size: Int?
+    - file_id: String
+    - file_unique_id: String
+    - thumb: PhotoSize?
+    - file_name: String?
+    - mime_type: String?
+    - file_size: Int?
 
 ---
 type: Video
 fields:
-    file_id: String
-    file_unique_id: String
-    width: Int
-    height: Int
-    duration: Int
-    thumb: PhotoSize?
-    mime_type: String?
-    file_size: String?
+    - file_id: String
+    - file_unique_id: String
+    - width: Int
+    - height: Int
+    - duration: Int
+    - thumb: PhotoSize?
+    - mime_type: String?
+    - file_size: String?
 
 ---
 type: Animation
 fields:
-    file_id: String
-    file_unique_id: String
-    width: Int
-    height: Int
-    duration: Int
-    thumb: PhotoSize?
-    file_name: String?
-    mime_type: String?
-    file_size: Int?
+    - file_id: String
+    - file_unique_id: String
+    - width: Int
+    - height: Int
+    - duration: Int
+    - thumb: PhotoSize?
+    - file_name: String?
+    - mime_type: String?
+    - file_size: Int?
 
 ---
 type: Voice
 fields:
-    file_id: String
-    file_unique_id: String
-    duration: Int
-    mime_type: String?
-    file_size: Int?
+    - file_id: String
+    - file_unique_id: String
+    - duration: Int
+    - mime_type: String?
+    - file_size: Int?
 
 ---
 type: VideoNote
 fields:
-    file_id: String
-    file_unique_id: String
-    length: Int
-    duration: Int
-    thumb: PhotoSize?
-    file_size: Int?
+    - file_id: String
+    - file_unique_id: String
+    - length: Int
+    - duration: Int
+    - thumb: PhotoSize?
+    - file_size: Int?
 
 ---
 type: Contact
 fields:
-    phone_number: String
-    first_name: String
-    last_name: String?
-    user_id: Int64?
-    vcard: String?
+    - phone_number: String
+    - first_name: String
+    - last_name: String?
+    - user_id: Int64?
+    - vcard: String?
 
 ---
 type: Location
 fields:
-    longitude: Float
-    latitude: Float
+    - longitude: Float
+    - latitude: Float
 
 ---
 type: Venue
 fields:
-    location: Location
-    title: String
-    address: String
-    foursquare_id: String?
-    foursquare_type: String?
+    - location: Location
+    - title: String
+    - address: String
+    - foursquare_id: String?
+    - foursquare_type: String?
 
 ---
 type: PollOption
 fields:
-    text: String
-    voter_count: Int
+    - text: String
+    - voter_count: Int
 
 ---
 type: Poll
 fields:
-    id: String
-    question: String
-    options: PollOption[]
-    is_closed: Bool
+    - id: String
+    - question: String
+    - options: PollOption[]
+    - is_closed: Bool
 
 ---
 type: UserProfilePhotos
 fields:
-    total_count: Int
-    photos: PhotoSize[][]
+    - total_count: Int
+    - photos: PhotoSize[][]
 
 ---
 type: File
 fields:
-    file_id: String
-    file_unique_id: String
-    file_size: Int?
-    file_path: String?
+    - file_id: String
+    - file_unique_id: String
+    - file_size: Int?
+    - file_path: String?
 
 ---
 type: ReplyKeyboardMarkup
 fields:
-    keyboard: KeyboardButton[][]
-    resize_keyboard: Bool?
-    one_time_keyboard: Bool?
-    selective: Bool?
+    - keyboard: KeyboardButton[][]
+    - resize_keyboard: Bool?
+    - one_time_keyboard: Bool?
+    - selective: Bool?
 
 ---
 type: KeyboardButton
 fields:
-    text: String
-    request_contact: Bool?
-    request_location: Bool?
+    - text: String
+    - request_contact: Bool?
+    - request_location: Bool?
 
 ---
 type: ReplyKeyboardRemove
 fields:
-    remove_keyboard: Bool
-    selective: Bool?
+    - remove_keyboard: Bool
+    - selective: Bool?
 
 ---
 type: InlineKeyboardMarkup
 fields:
-    inline_keyboard: InlineKeyboardButton[][]
+    - inline_keyboard: InlineKeyboardButton[][]
 
 ---
 type: InlineKeyboardButton
 fields:
-    text: String
-    url: String?
-    login_url: LoginUrl?
-    callback_data: String?
-    switch_inline_query: String?
-    switch_inline_query_current_chat: String?
-    callback_game: CallbackGame?
-    pay: Bool?
+    - text: String
+    - url: String?
+    - login_url: LoginUrl?
+    - callback_data: String?
+    - switch_inline_query: String?
+    - switch_inline_query_current_chat: String?
+    - callback_game: CallbackGame?
+    - pay: Bool?
 
 ---
 type: LoginUrl
@@ -294,557 +294,557 @@ fields:
 ---
 type: CallbackQuery
 fields:
-    id: String
-    from: User
-    message: Message?
-    inline_message_id: String?
-    chat_instance: String
-    data: String?
-    game_short_name: String?
+    - id: String
+    - from: User
+    - message: Message?
+    - inline_message_id: String?
+    - chat_instance: String
+    - data: String?
+    - game_short_name: String?
 
 ---
 type: ForceReply
 fields:
-    force_reply: Bool
-    selective: Bool?
+    - force_reply: Bool
+    - selective: Bool?
 
 ---
 type: ChatPhoto
 fields:
-    small_file_id: String
-    small_file_unique_id: String
-    big_file_id: String
-    big_file_unique_id: String
+    - small_file_id: String
+    - small_file_unique_id: String
+    - big_file_id: String
+    - big_file_unique_id: String
 
 ---
 type: ChatMember
 fields:
-    user: User
-    status: String
-    custom_title: String?
-    until_date: Date?
-    can_be_edited: Bool?
-    can_post_messages: Bool?
-    can_edit_messages: Bool?
-    can_delete_messages: Bool?
-    can_restrict_members: Bool?
-    can_promote_members: Bool?
-    can_change_info: Bool?
-    can_invite_users: Bool?
-    can_pin_messages: Bool?
-    is_member: Bool?
-    can_send_messages: Bool?
-    can_send_media_messages: Bool?
-    can_send_polls: Bool?
-    can_send_other_messages: Bool?
-    can_add_web_page_previews: Bool?
+    - user: User
+    - status: String
+    - custom_title: String?
+    - until_date: Date?
+    - can_be_edited: Bool?
+    - can_post_messages: Bool?
+    - can_edit_messages: Bool?
+    - can_delete_messages: Bool?
+    - can_restrict_members: Bool?
+    - can_promote_members: Bool?
+    - can_change_info: Bool?
+    - can_invite_users: Bool?
+    - can_pin_messages: Bool?
+    - is_member: Bool?
+    - can_send_messages: Bool?
+    - can_send_media_messages: Bool?
+    - can_send_polls: Bool?
+    - can_send_other_messages: Bool?
+    - can_add_web_page_previews: Bool?
 
 ---
 type: ChatPermissions
 fields:
-    can_send_messages: Bool?
-    can_send_media_messages: Bool?
-    can_send_polls: Bool?
-    can_send_other_messages: Bool?
-    can_add_web_page_previews: Bool?
-    can_change_info: Bool?
-    can_invite_users: Bool?
-    can_pin_messages: Bool?
+    - can_send_messages: Bool?
+    - can_send_media_messages: Bool?
+    - can_send_polls: Bool?
+    - can_send_other_messages: Bool?
+    - can_add_web_page_previews: Bool?
+    - can_change_info: Bool?
+    - can_invite_users: Bool?
+    - can_pin_messages: Bool?
 
 ---
 type: ResponseParameters
 fields:
-    migrate_to_chat_id: Int64?
-    retry_after: Int?
+    - migrate_to_chat_id: Int64?
+    - retry_after: Int?
 
 ---
 type: InputMediaPhoto
 fields:
-    type: String
-    media: String
-    caption: String?
-    parse_mode: String?
+    - type: String
+    - media: String
+    - caption: String?
+    - parse_mode: String?
 
 ---
 type: InputMediaVideo
 fields:
-    type: String
-    media: String
-    thumb: InputFileOrString?
-    caption: String?
-    parse_mode: String?
-    width: Int?
-    height: Int?
-    duration: Int?
-    supports_streaming: Bool?
+    - type: String
+    - media: String
+    - thumb: InputFileOrString?
+    - caption: String?
+    - parse_mode: String?
+    - width: Int?
+    - height: Int?
+    - duration: Int?
+    - supports_streaming: Bool?
 
 ---
 type: InputMediaAnimation
 fields:
-    type: String
-    media: String
-    thumb: InputFileOrString?
-    caption: String?
-    parse_mode: String?
-    width: Int?
-    height: Int?
-    duration: Int?
+    - type: String
+    - media: String
+    - thumb: InputFileOrString?
+    - caption: String?
+    - parse_mode: String?
+    - width: Int?
+    - height: Int?
+    - duration: Int?
 
 ---
 type: InputMediaAudio
 fields:
-    type: String
-    media: String
-    thumb: InputFileOrString?
-    caption: String?
-    parse_mode: String?
-    duration: Int?
-    performer: String?
-    title: String?
+    - type: String
+    - media: String
+    - thumb: InputFileOrString?
+    - caption: String?
+    - parse_mode: String?
+    - duration: Int?
+    - performer: String?
+    - title: String?
 
 ---
 type: InputMediaDocument
 fields:
-    type: String
-    media: String
-    thumb: InputFileOrString?
-    caption: String?
-    parse_mode: String?
+    - type: String
+    - media: String
+    - thumb: InputFileOrString?
+    - caption: String?
+    - parse_mode: String?
 
 ---
 type: Sticker
 fields:
-    file_id: String
-    file_unique_id: String
-    width: Int
-    height: Int
-    is_animated: Bool
-    thumb: PhotoSize?
-    emoji: String?
-    set_name: String?
-    mask_position: MaskPosition?
-    file_size: Int?
+    - file_id: String
+    - file_unique_id: String
+    - width: Int
+    - height: Int
+    - is_animated: Bool
+    - thumb: PhotoSize?
+    - emoji: String?
+    - set_name: String?
+    - mask_position: MaskPosition?
+    - file_size: Int?
 
 ---
 type: StickerSet
 fields:
-    name: String
-    title: String
-    is_animated: Bool
-    contains_masks: Bool
-    stickers: Sticker[]
+    - name: String
+    - title: String
+    - is_animated: Bool
+    - contains_masks: Bool
+    - stickers: Sticker[]
 
 ---
 type: MaskPosition
 fields:
-    point: String
-    x_shift: Float
-    y_shift: Float
-    scale: Float
+    - point: String
+    - x_shift: Float
+    - y_shift: Float
+    - scale: Float
 
 ---
 type: InlineQuery
 fields:
-    id: String
-    from: User
-    location: Location?
-    query: String
-    offset: String
+    - id: String
+    - from: User
+    - location: Location?
+    - query: String
+    - offset: String
 
 ---
 type: InlineQueryResultArticle
 fields:
-    type: String
-    id: String
-    title: String
-    input_message_content: InputMessageContent
-    reply_markup: InlineKeyboardMarkup?
-    url: String?
-    hide_url: Bool?
-    description: String?
-    thumb_url: String?
-    thumb_width: Int?
-    thumb_height: Int?
+    - type: String
+    - id: String
+    - title: String
+    - input_message_content: InputMessageContent
+    - reply_markup: InlineKeyboardMarkup?
+    - url: String?
+    - hide_url: Bool?
+    - description: String?
+    - thumb_url: String?
+    - thumb_width: Int?
+    - thumb_height: Int?
 
 ---
 type: InlineQueryResultPhoto
 fields:
-    type: String
-    id: String
-    photo_url: String
-    thumb_url: String
-    photo_width: Int?
-    photo_height: Int?
-    title: String?
-    description: String?
-    caption: String?
-    parse_mode: String?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
+    - type: String
+    - id: String
+    - photo_url: String
+    - thumb_url: String
+    - photo_width: Int?
+    - photo_height: Int?
+    - title: String?
+    - description: String?
+    - caption: String?
+    - parse_mode: String?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
 
 ---
 type: InlineQueryResultGif
 fields:
-    type: String
-    id: String
-    gif_url: String
-    gif_width: Int?
-    gif_height: Int?
-    gif_duration: Int?
-    thumb_url: String
-    title: String?
-    caption: String?
-    parse_mode: String?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
+    - type: String
+    - id: String
+    - gif_url: String
+    - gif_width: Int?
+    - gif_height: Int?
+    - gif_duration: Int?
+    - thumb_url: String
+    - title: String?
+    - caption: String?
+    - parse_mode: String?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
 
 ---
 type: InlineQueryResultLocation
 fields:
-    type: String
-    id: String
-    latitude: Float
-    longitude: Float
-    title: String
-    live_period: Int?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
-    thumb_url: String?
-    thumb_width: Int?
-    thumb_height: Int?
+    - type: String
+    - id: String
+    - latitude: Float
+    - longitude: Float
+    - title: String
+    - live_period: Int?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
+    - thumb_url: String?
+    - thumb_width: Int?
+    - thumb_height: Int?
 
 ---
 type: InlineQueryResultMpeg4Gif
 fields:
-    type: String
-    id: String
-    mpeg4_url: String
-    mpeg4_width: Int?
-    mpeg4_height: Int?
-    mpeg4_duration: Int?
-    thumb_url: String
-    title: String?
-    caption: String?
-    parse_mode: String?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
+    - type: String
+    - id: String
+    - mpeg4_url: String
+    - mpeg4_width: Int?
+    - mpeg4_height: Int?
+    - mpeg4_duration: Int?
+    - thumb_url: String
+    - title: String?
+    - caption: String?
+    - parse_mode: String?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
 
 ---
 type: InlineQueryResultVideo
 fields:
-    type: String
-    id: String
-    video_url: String
-    mime_type: String
-    thumb_url: String
-    title: String
-    caption: String?
-    parse_mode: String?
-    video_width: Int?
-    video_height: Int?
-    video_duration: Int?
-    description: String?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
+    - type: String
+    - id: String
+    - video_url: String
+    - mime_type: String
+    - thumb_url: String
+    - title: String
+    - caption: String?
+    - parse_mode: String?
+    - video_width: Int?
+    - video_height: Int?
+    - video_duration: Int?
+    - description: String?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
 
 ---
 type: InlineQueryResultAudio
 fields:
-    type: String
-    id: String
-    audio_url: String
-    title: String
-    caption: String?
-    parse_mode: String?
-    performer: String?
-    audio_duration: Int?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
+    - type: String
+    - id: String
+    - audio_url: String
+    - title: String
+    - caption: String?
+    - parse_mode: String?
+    - performer: String?
+    - audio_duration: Int?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
 
 ---
 type: InlineQueryResultVoice
 fields:
-    type: String
-    id: String
-    voice_url: String
-    title: String
-    caption: String?
-    parse_mode: String?
-    voice_duration: Int?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
+    - type: String
+    - id: String
+    - voice_url: String
+    - title: String
+    - caption: String?
+    - parse_mode: String?
+    - voice_duration: Int?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
 
 ---
 type: InlineQueryResultDocument
 fields:
-    type: String
-    id: String
-    title: String
-    caption: String?
-    parse_mode: String?
-    document_url: String
-    mime_type: String
-    description: String?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
-    thumb_url: String?
-    thumb_width: Int?
-    thumb_height: Int?
+    - type: String
+    - id: String
+    - title: String
+    - caption: String?
+    - parse_mode: String?
+    - document_url: String
+    - mime_type: String
+    - description: String?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
+    - thumb_url: String?
+    - thumb_width: Int?
+    - thumb_height: Int?
 
 ---
 type: InlineQueryResultVenue
 fields:
-    type: String
-    id: String
-    latitude: Float
-    longitude: Float
-    title: String
-    address: String
-    foursquare_id: String?
-    foursquare_type: String?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
-    thumb_url: String?
-    thumb_width: Int?
-    thumb_height: Int?
+    - type: String
+    - id: String
+    - latitude: Float
+    - longitude: Float
+    - title: String
+    - address: String
+    - foursquare_id: String?
+    - foursquare_type: String?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
+    - thumb_url: String?
+    - thumb_width: Int?
+    - thumb_height: Int?
 
 ---
 type: InlineQueryResultContact
 fields:
-    type: String
-    id: String
-    phone_number: String
-    first_name: String
-    last_name: String?
-    vcard: String?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
-    thumb_url: String?
-    thumb_width: Int?
-    thumb_height: Int?
+    - type: String
+    - id: String
+    - phone_number: String
+    - first_name: String
+    - last_name: String?
+    - vcard: String?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
+    - thumb_url: String?
+    - thumb_width: Int?
+    - thumb_height: Int?
 
 ---
 type: InlineQueryResultGame
 fields:
-    type: String
-    id: String
-    game_short_name: String
-    reply_markup: InlineKeyboardMarkup?
+    - type: String
+    - id: String
+    - game_short_name: String
+    - reply_markup: InlineKeyboardMarkup?
 
 ---
 type: InlineQueryResultCachedPhoto
 fields:
-    type: String
-    id: String
-    photo_file_id: String
-    title: String?
-    description: String?
-    caption: String?
-    parse_mode: String?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
+    - type: String
+    - id: String
+    - photo_file_id: String
+    - title: String?
+    - description: String?
+    - caption: String?
+    - parse_mode: String?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
 
 ---
 type: InlineQueryResultCachedGif
 fields:
-    type: String
-    id: String
-    gif_file_id: String
-    title: String?
-    caption: String?
-    parse_mode: String?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
+    - type: String
+    - id: String
+    - gif_file_id: String
+    - title: String?
+    - caption: String?
+    - parse_mode: String?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
 
 ---
 type: InlineQueryResultCachedMpeg4Gif
 fields:
-    type: String
-    id: String
-    mpeg4_file_id: String
-    title: String?
-    caption: String?
-    parse_mode: String?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
+    - type: String
+    - id: String
+    - mpeg4_file_id: String
+    - title: String?
+    - caption: String?
+    - parse_mode: String?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
 
 ---
 type: InlineQueryResultCachedSticker
 fields:
-    type: String
-    id: String
-    sticker_file_id: String
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
+    - type: String
+    - id: String
+    - sticker_file_id: String
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
 
 ---
 type: InlineQueryResultCachedDocument
 fields:
-    type: String
-    id: String
-    title: String
-    document_file_id: String
-    description: String?
-    caption: String?
-    parse_mode: String?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
+    - type: String
+    - id: String
+    - title: String
+    - document_file_id: String
+    - description: String?
+    - caption: String?
+    - parse_mode: String?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
 
 ---
 type: InlineQueryResultCachedVideo
 fields:
-    type: String
-    id: String
-    video_file_id: String
-    title: String
-    description: String?
-    caption: String?
-    parse_mode: String?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
+    - type: String
+    - id: String
+    - video_file_id: String
+    - title: String
+    - description: String?
+    - caption: String?
+    - parse_mode: String?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
 
 ---
 type: InlineQueryResultCachedVoice
 fields:
-    type: String
-    id: String
-    voice_file_id: String
-    title: String
-    caption: String?
-    parse_mode: String?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
+    - type: String
+    - id: String
+    - voice_file_id: String
+    - title: String
+    - caption: String?
+    - parse_mode: String?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
 
 ---
 type: InlineQueryResultCachedAudio
 fields:
-    type: String
-    id: String
-    audio_file_id: String
-    caption: String?
-    parse_mode: String?
-    reply_markup: InlineKeyboardMarkup?
-    input_message_content: InputMessageContent?
+    - type: String
+    - id: String
+    - audio_file_id: String
+    - caption: String?
+    - parse_mode: String?
+    - reply_markup: InlineKeyboardMarkup?
+    - input_message_content: InputMessageContent?
 
 ---
 type: InputTextMessageContent
 fields:
-    message_text: String
-    parse_mode: String?
-    disable_web_page_preview: Bool?
+    - message_text: String
+    - parse_mode: String?
+    - disable_web_page_preview: Bool?
 
 ---
 type: InputLocationMessageContent
 fields:
-    latitude: Float
-    longitude: Float
-    live_period: Int?
+    - latitude: Float
+    - longitude: Float
+    - live_period: Int?
 
 ---
 type: InputVenueMessageContent
 fields:
-    latitude: Float
-    longitude: Float
-    title: String
-    address: String
-    foursquare_id: String?
-    foursquare_type: String?
+    - latitude: Float
+    - longitude: Float
+    - title: String
+    - address: String
+    - foursquare_id: String?
+    - foursquare_type: String?
 
 ---
 type: InputContactMessageContent
 fields:
-    phone_number: String
-    first_name: String
-    last_name: String?
-    vcard: String?
+    - phone_number: String
+    - first_name: String
+    - last_name: String?
+    - vcard: String?
 
 ---
 type: ChosenInlineResult
 fields:
-    result_id: String
-    from: User
-    location: Location
-    inline_message_id: String?
-    query: String
+    - result_id: String
+    - from: User
+    - location: Location
+    - inline_message_id: String?
+    - query: String
 
 ---
 type: LabeledPrice
 fields:
-    label: String
-    amount: Int
+    - label: String
+    - amount: Int
 
 ---
 type: Invoice
 fields:
-    title: String
-    description: String
-    start_parameter: String
-    currency: String
-    total_amount: Int
+    - title: String
+    - description: String
+    - start_parameter: String
+    - currency: String
+    - total_amount: Int
 
 ---
 type: ShippingAddress
 fields:
-    country_code: String
-    state: String
-    city: String
-    street_line1: String
-    street_line2: String
-    post_code: String
+    - country_code: String
+    - state: String
+    - city: String
+    - street_line1: String
+    - street_line2: String
+    - post_code: String
 
 ---
 type: OrderInfo
 fields:
-    name: String?
-    phone_number: String?
-    email: String?
-    shipping_address: ShippingAddress?
+    - name: String?
+    - phone_number: String?
+    - email: String?
+    - shipping_address: ShippingAddress?
 
 ---
 type: ShippingOption
 fields:
-    id: String
-    title: String
-    prices: LabeledPrice[]
+    - id: String
+    - title: String
+    - prices: LabeledPrice[]
 
 ---
 type: SuccessfulPayment
 fields:
-    currency: String
-    total_amount: Int
-    invoice_payload: String
-    shipping_option_id: String?
-    order_info: OrderInfo?
-    telegram_payment_charge_id: String
-    provider_payment_charge_id: String
+    - currency: String
+    - total_amount: Int
+    - invoice_payload: String
+    - shipping_option_id: String?
+    - order_info: OrderInfo?
+    - telegram_payment_charge_id: String
+    - provider_payment_charge_id: String
 
 ---
 type: ShippingQuery
 fields:
-    id: String
-    from: User
-    invoice_payload: String
-    shipping_address: ShippingAddress
+    - id: String
+    - from: User
+    - invoice_payload: String
+    - shipping_address: ShippingAddress
 
 ---
 type: PreCheckoutQuery
 fields:
-    id: String
-    from: User
-    currency: Int
-    invoice_payload: String
-    shipping_option_id: String?
-    order_info: OrderInfo?
+    - id: String
+    - from: User
+    - currency: Int
+    - invoice_payload: String
+    - shipping_option_id: String?
+    - order_info: OrderInfo?
 
 ---
 type: Game
 fields:
-    title: String
-    description: String
-    photo: PhotoSize[]
-    text: String?
-    text_entities: MessageEntity[]?
-    animation: Animation?
+    - title: String
+    - description: String
+    - photo: PhotoSize[]
+    - text: String?
+    - text_entities: MessageEntity[]?
+    - animation: Animation?
 
 ---
 type: CallbackGame
@@ -852,26 +852,26 @@ type: CallbackGame
 ---
 type: GameHighScore
 fields:
-    position: Int
-    user: User
-    score: Int
+    - position: Int
+    - user: User
+    - score: Int
 
 ---
 method: getUpdates
 parameters:
-    offset: Int64?
-    limit: Int?
-    timeout: Int?
-    allowed_updates: String[]?
+    - offset: Int64?
+    - limit: Int?
+    - timeout: Int?
+    - allowed_updates: String[]?
 result: Update[]?
 
 ---
 method: setWebhook
 parameters:
-    url: String
-    certificate: FileInfo?
-    max_connections: Int?
-    allowed_updates: String[]?
+    - url: String
+    - certificate: FileInfo?
+    - max_connections: Int?
+    - allowed_updates: String[]?
 result: Bool?
 
 ---
@@ -889,262 +889,262 @@ result: User?
 ---
 method: sendMessage
 parameters:
-    text: String
-    chat_id: ChatId
-    parse_mode: String?
-    disable_web_page_preview: Bool?
-    disable_notification: Bool?
-    reply_to_message_id: Int?
-    reply_markup: InlineKeyboardMarkup?
+    - text: String
+    - chat_id: ChatId
+    - parse_mode: String?
+    - disable_web_page_preview: Bool?
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: InlineKeyboardMarkup?
 result: Message?
 
 ---
 method: forwardMessage
 parameters:
-    chat_id: ChatId
-    from_chat_id: ChatId
-    disable_notification: Bool?
-    message_id: Int
+    - chat_id: ChatId
+    - from_chat_id: ChatId
+    - disable_notification: Bool?
+    - message_id: Int
 result: Message?
 
 ---
 method: sendPhoto
 parameters:
-    chat_id: ChatId
-    photo: FileInfo
-    caption: String?
-    parse_mode: String?
-    disable_notification: Bool?
-    reply_to_message_id: Int?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId
+    - photo: FileInfo
+    - caption: String?
+    - parse_mode: String?
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: InlineKeyboardMarkup?
 result: Message?
 
 ---
 method: sendAudio
 parameters:
-    chat_id: ChatId
-    audio: FileInfo
-    caption: String?
-    parse_mode: String?
-    duration: Int?
-    performer: String?
-    title: String?
-    thumb: FileInfo?
-    disable_notification: Bool?
-    reply_to_message_id: Int?
-    reply_markup: InlineKeyboardMarkup
+    - chat_id: ChatId
+    - audio: FileInfo
+    - caption: String?
+    - parse_mode: String?
+    - duration: Int?
+    - performer: String?
+    - title: String?
+    - thumb: FileInfo?
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: InlineKeyboardMarkup
 result: Message?
 
 ---
 method: sendDocument
 parameters:
-    chat_id: ChatId
-    document: FileInfo
-    thumb: FileInfo?
-    caption: String?
-    parse_mode: String?
-    disable_notification: Bool?
-    reply_to_message_id: Int?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId
+    - document: FileInfo
+    - thumb: FileInfo?
+    - caption: String?
+    - parse_mode: String?
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: InlineKeyboardMarkup?
 result: Message?
 
 ---
 method: sendVideo
 parameters:
-    chat_id: ChatId
-    video: FileInfo
-    duration: Int?
-    width: Int?
-    height: Int?
-    thumb: InputFileOrString?
-    caption: String?
-    parse_mode: String?
-    supports_streaming: Bool?
-    disable_notification: Bool?
-    reply_to_message_id: Int?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId
+    - video: FileInfo
+    - duration: Int?
+    - width: Int?
+    - height: Int?
+    - thumb: InputFileOrString?
+    - caption: String?
+    - parse_mode: String?
+    - supports_streaming: Bool?
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: InlineKeyboardMarkup?
 result: Message?
 
 ---
 method: sendAnimation
 parameters:
-    chat_id: ChatId
-    animation: FileInfo
-    duration: Int?
-    width: Int?
-    height: Int?
-    thumb: FileInfo?
-    caption: String?
-    parse_mode: String?
-    disable_notification: Bool?
-    reply_to_message_id: Int?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId
+    - animation: FileInfo
+    - duration: Int?
+    - width: Int?
+    - height: Int?
+    - thumb: FileInfo?
+    - caption: String?
+    - parse_mode: String?
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: InlineKeyboardMarkup?
 result: Message?
 
 ---
 method: sendVoice
 parameters:
-    chat_id: ChatId
-    voice: FileInfo
-    caption: String?
-    parse_mode: String?
-    duration: Int?
-    disable_notification: Bool?
-    reply_to_message_id: Bool?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId
+    - voice: FileInfo
+    - caption: String?
+    - parse_mode: String?
+    - duration: Int?
+    - disable_notification: Bool?
+    - reply_to_message_id: Bool?
+    - reply_markup: InlineKeyboardMarkup?
 result: Message?
 
 ---
 method: sendVideoNote
 parameters:
-    chat_id: ChatId
-    video_note: FileInfo
-    duration: Int?
-    length: Int?
-    thumb: FileInfo?
-    disable_notification: Bool?
-    reply_to_message_id: Int?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId
+    - video_note: FileInfo
+    - duration: Int?
+    - length: Int?
+    - thumb: FileInfo?
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: InlineKeyboardMarkup?
 result: Message?
 
 ---
 method: sendMediaGroup
 parameters:
-    chat_id: ChatId
-    media: InputMedia[]
-    disable_notification: Bool?
-    reply_to_message_id: Int?
+    - chat_id: ChatId
+    - media: InputMedia[]
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
 result: Message?
 
 ---
 method: sendLocation
 parameters:
-    chat_id: ChatId
-    latitude: Float
-    longitude: Float
-    live_period: Int?
-    disable_notification: Bool?
-    reply_to_message_id: Int?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId
+    - latitude: Float
+    - longitude: Float
+    - live_period: Int?
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: InlineKeyboardMarkup?
 result: Message?
 
 ---
 method: editMessageLiveLocation
 parameters:
-    chat_id: ChatId?
-    message_id: Int?
-    inline_message_id: String?
-    latitude: Float
-    longitude: Float
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId?
+    - message_id: Int?
+    - inline_message_id: String?
+    - latitude: Float
+    - longitude: Float
+    - reply_markup: InlineKeyboardMarkup?
 result: MessageOrBool?
 
 ---
 method: stopMessageLiveLocation
 parameters:
-    chat_id: ChatId?
-    message_id: Int?
-    inline_message_id: String?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId?
+    - message_id: Int?
+    - inline_message_id: String?
+    - reply_markup: InlineKeyboardMarkup?
 result: MessageOrBool?
 
 ---
 method: sendVenue
 parameters:
-    chat_id: ChatId
-    latitude: Float
-    longitude: Float
-    title: String
-    address: String
-    foursquare_id: String?
-    foursquare_type: String?
-    disable_notification: Bool?
-    reply_to_message_id: Int?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId
+    - latitude: Float
+    - longitude: Float
+    - title: String
+    - address: String
+    - foursquare_id: String?
+    - foursquare_type: String?
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: InlineKeyboardMarkup?
 result: Message?
 
 ---
 method: sendContact
 parameters:
-    chat_id: ChatId
-    phone_number: String
-    first_name: String
-    last_name: String?
-    vcard: String?
-    disable_notification: Bool?
-    reply_to_message_id: Int?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId
+    - phone_number: String
+    - first_name: String
+    - last_name: String?
+    - vcard: String?
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: InlineKeyboardMarkup?
 result: Message?
 
 ---
 method: sendPoll
 parameters:
-    chat_id: ChatId
-    question: String
-    options: String[]
-    disable_notification: Bool?
-    reply_to_message_id: Int?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId
+    - question: String
+    - options: String[]
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: InlineKeyboardMarkup?
 result: Message?
 
 ---
 method: sendChatAction
 parameters:
-    chat_id: ChatId
-    action: String
+    - chat_id: ChatId
+    - action: String
 result: Bool?
 
 ---
 method: getUserProfilePhotos
 parameters:
-    user_id: Int64
-    offset: Int?
-    limit: Int?
+    - user_id: Int64
+    - offset: Int?
+    - limit: Int?
 result: UserProfilePhotos?
 
 ---
 method: getFile
 parameters:
-    file_id: String
+    - file_id: String
 result: File?
 
 ---
 method: kickChatMember
 parameters:
-    chat_id: ChatId
-    user_id: Int64
-    until_date: Int?
+    - chat_id: ChatId
+    - user_id: Int64
+    - until_date: Int?
 result: Bool?
 
 ---
 method: unbanChatMember
 parameters:
-    chat_id: ChatId
-    user_id: Int64
+    - chat_id: ChatId
+    - user_id: Int64
 result: Bool?
 
 ---
 method: restrictChatMember
 parameters:
-    chat_id: ChatId
-    user_id: Int64
-    until_date: Date?
-    permissions: ChatPermissions
+    - chat_id: ChatId
+    - user_id: Int64
+    - until_date: Date?
+    - permissions: ChatPermissions
 result: Bool?
 
 ---
 method: promoteChatMember
 parameters:
-    chat_id: ChatId
-    user_id: Int
-    can_change_info: Bool?
-    can_post_messages: Bool?
-    can_edit_messages: Bool?
-    can_delete_messages: Bool?
-    can_invite_users: Bool?
-    can_restrict_members: Bool?
-    can_pin_messages: Bool?
-    can_promote_members: Bool?
+    - chat_id: ChatId
+    - user_id: Int
+    - can_change_info: Bool?
+    - can_post_messages: Bool?
+    - can_edit_messages: Bool?
+    - can_delete_messages: Bool?
+    - can_invite_users: Bool?
+    - can_restrict_members: Bool?
+    - can_pin_messages: Bool?
+    - can_promote_members: Bool?
 result: Bool?
 
 ---
@@ -1158,310 +1158,310 @@ result: Bool?
 ---
 method: setChatPermissions
 parameters:
-    chat_id: ChatId
-    permissions: ChatPermissions
+    - chat_id: ChatId
+    - permissions: ChatPermissions
 result: Bool?
 
 ---
 method: exportChatInviteLink
 parameters:
-    chat_id: ChatId
+    - chat_id: ChatId
 result: String?
 
 ---
 method: setChatPhoto
 parameters:
-    chat_id: ChatId
-    photo: FileInfo
+    - chat_id: ChatId
+    - photo: FileInfo
 result: Bool?
 
 ---
 method: deleteChatPhoto
 parameters:
-    chat_id: ChatId
+    - chat_id: ChatId
 result: Bool?
 
 ---
 method: setChatTitle
 parameters:
-    chat_id: ChatId
-    title: String
+    - chat_id: ChatId
+    - title: String
 result: Bool?
 
 ---
 method: setChatDescription
 parameters:
-    chat_id: ChatId
-    description: String
+    - chat_id: ChatId
+    - description: String
 result: Bool?
 
 ---
 method: pinChatMessage
 parameters:
-    chat_id: ChatId
-    message_id: Int
-    disable_notification: Bool?
+    - chat_id: ChatId
+    - message_id: Int
+    - disable_notification: Bool?
 result: Bool?
 
 ---
 method: unpinChatMessage
 parameters:
-    chat_id: ChatId
+    - chat_id: ChatId
 result: Bool?
 
 ---
 method: leaveChat
 parameters:
-    chat_id: ChatId
+    - chat_id: ChatId
 result: Bool?
 
 ---
 method: getChat
 parameters:
-    chat_id: ChatId
+    - chat_id: ChatId
 result: Chat?
 
 ---
 method: getChatAdministrators
 parameters:
-    chat_id: ChatId
+    - chat_id: ChatId
 result: ChatMember[]?
 
 ---
 method: getChatMembersCount
 parameters:
-    chat_id: ChatId
+    - chat_id: ChatId
 result: Int?
 
 ---
 method: getChatMember
 parameters:
-    chat_id: ChatId
-    user_id: Int
+    - chat_id: ChatId
+    - user_id: Int
 result: ChatMember?
 
 ---
 method: setCharStickerSet
 parameters:
-    chat_id: ChatId
-    sticker_set_name: String
+    - chat_id: ChatId
+    - sticker_set_name: String
 result: Bool?
 
 ---
 method: deleteChatStickerSet
 parameters:
-    chat_id: ChatId
+    - chat_id: ChatId
 result: Bool?
 
 ---
 method: answerCallbackQuery
 parameters:
-    callback_query_id: String
-    text: String?
-    show_alert: Bool?
-    url: String?
-    cache_time: Int?
+    - callback_query_id: String
+    - text: String?
+    - show_alert: Bool?
+    - url: String?
+    - cache_time: Int?
 result: Bool?
 
 ---
 method: editMessageText
 parameters:
-    chat_id: ChatId?
-    message_id: Int?
-    inline_message_id: String?
-    text: String
-    parse_mode: String?
-    disable_web_page_preview: Bool?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId?
+    - message_id: Int?
+    - inline_message_id: String?
+    - text: String
+    - parse_mode: String?
+    - disable_web_page_preview: Bool?
+    - reply_markup: InlineKeyboardMarkup?
 result: MessageOrBool?
 
 ---
 method: editMessageCaption
 parameters:
-    chat_id: ChatId?
-    message_id: Int?
-    inline_message_id: String?
-    caption: String?
-    parse_mode: String?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId?
+    - message_id: Int?
+    - inline_message_id: String?
+    - caption: String?
+    - parse_mode: String?
+    - reply_markup: InlineKeyboardMarkup?
 result: MessageOrBool?
 
 ---
 method: editMessageMedia
 parameters:
-    chat_id: ChatId?
-    message_id: Int?
-    inline_message_id: String?
-    media: InputMedia
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId?
+    - message_id: Int?
+    - inline_message_id: String?
+    - media: InputMedia
+    - reply_markup: InlineKeyboardMarkup?
 result: MessageOrBool?
 
 ---
 method: editMessageReplyMarkup
 parameters:
-    chat_id: ChatId?
-    message_id: Int?
-    inline_message_id: String?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId?
+    - message_id: Int?
+    - inline_message_id: String?
+    - reply_markup: InlineKeyboardMarkup?
 result: MessageOrBool?
 
 ---
 method: stopPoll
 parameters:
-    chat_id: ChatId
-    message_id: Int
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId
+    - message_id: Int
+    - reply_markup: InlineKeyboardMarkup?
 result: Poll?
 
 ---
 method: deleteMessage
 parameters:
-    chat_id: ChatId
-    message_id: Int
+    - chat_id: ChatId
+    - message_id: Int
 result: Bool?
 
 ---
 method: sendSticker
 parameters:
-    chat_id: ChatId
-    sticker: FileInfo
-    disable_notification: Bool?
-    reply_to_message_id: Int?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: ChatId
+    - sticker: FileInfo
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: InlineKeyboardMarkup?
 result: Message?
 
 ---
 method: getStickerSet
 parameters:
-    name: String
+    - name: String
 result: StickerSet?
 
 ---
 method: uploadStickerFile
 parameters:
-    user_id: Int64
-    png_sticker: FileInfo
+    - user_id: Int64
+    - png_sticker: FileInfo
 result: File?
 
 ---
 method: createNewStickerSet
 parameters:
-    user_id: Int64
-    name: String
-    title: String
-    png_sticker: FileInfo
-    emojis: String
-    contains_masks: Bool?
-    mask_position: Bool?
+    - user_id: Int64
+    - name: String
+    - title: String
+    - png_sticker: FileInfo
+    - emojis: String
+    - contains_masks: Bool?
+    - mask_position: Bool?
 result: Bool?
 
 ---
 method: addStickerToSet
 parameters:
-    user_id: Int
-    name: String
-    png_sticker: FileInfo
-    emojis: String
-    mask_position: MaskPosition?
+    - user_id: Int
+    - name: String
+    - png_sticker: FileInfo
+    - emojis: String
+    - mask_position: MaskPosition?
 result: Bool?
 
 ---
 method: setStickerPositionInSet
 parameters:
-    sticker: String
-    position: Int
+    - sticker: String
+    - position: Int
 result: Bool?
 
 ---
 method: deleteStickerFromSet
 parameters:
-    sticker: String
+    - sticker: String
 result: Bool?
 
 ---
 method: answerInlineQuery
 parameters:
-    inline_query_id: String
-    results: InlineQueryResult[]
-    cache_time: Int?
-    is_personal: Bool?
-    next_offset: String?
-    switch_pm_text: String?
-    switch_pm_parameter: String?
+    - inline_query_id: String
+    - results: InlineQueryResult[]
+    - cache_time: Int?
+    - is_personal: Bool?
+    - next_offset: String?
+    - switch_pm_text: String?
+    - switch_pm_parameter: String?
 result: Bool?
 
 ---
 method: sendInvoice
 parameters:
-    chat_id: Int64
-    title: String
-    description: String
-    payload: String
-    provider_token: String
-    start_parameter: String
-    currency: String
-    prices: LabeledPrice[]
-    provider_data: String?
-    photo_url: String?
-    photo_size: Int?
-    photo_width: Int?
-    photo_height: Int?
-    need_name: Bool?
-    need_phone_number: Bool?
-    need_email: Bool?
-    need_shipping_address: Bool?
-    send_phone_number_to_provider: Bool?
-    send_email_to_provider: Bool?
-    is_flexible: Bool?
-    disable_notification: Bool?
-    reply_to_message_id: Int?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: Int64
+    - title: String
+    - description: String
+    - payload: String
+    - provider_token: String
+    - start_parameter: String
+    - currency: String
+    - prices: LabeledPrice[]
+    - provider_data: String?
+    - photo_url: String?
+    - photo_size: Int?
+    - photo_width: Int?
+    - photo_height: Int?
+    - need_name: Bool?
+    - need_phone_number: Bool?
+    - need_email: Bool?
+    - need_shipping_address: Bool?
+    - send_phone_number_to_provider: Bool?
+    - send_email_to_provider: Bool?
+    - is_flexible: Bool?
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: InlineKeyboardMarkup?
 result: Message?
 
 ---
 method: answerShippingQuery
 parameters:
-    shipping_query_id: String
-    ok: Bool
-    shipping_options: ShippingOption[]?
-    error_message: String?
+    - shipping_query_id: String
+    - ok: Bool
+    - shipping_options: ShippingOption[]?
+    - error_message: String?
 result: Bool?
 
 ---
 method: answerPreCheckoutQuery
 parameters:
-    pre_checkout_query_id: String
-    ok: Bool
-    error_message: String?
+    - pre_checkout_query_id: String
+    - ok: Bool
+    - error_message: String?
 result: Bool?
 
 ---
 method: sendGame
 parameters:
-    chat_id: Int64
-    game_short_name: String
-    disable_notification: Bool?
-    reply_to_message_id: Int?
-    reply_markup: InlineKeyboardMarkup?
+    - chat_id: Int64
+    - game_short_name: String
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: InlineKeyboardMarkup?
 result: Message?
 
 ---
 method: setGameScore
 parameters:
-    user_id: Int64
-    score: Int
-    force: Bool?
-    disable_edit_message: Bool?
-    chat_id: Int64?
-    message_id: Int?
-    inline_message_id: Int?
+    - user_id: Int64
+    - score: Int
+    - force: Bool?
+    - disable_edit_message: Bool?
+    - chat_id: Int64?
+    - message_id: Int?
+    - inline_message_id: Int?
 result: MessageOrBool?
 
 ---
 method: getGameHighScores
 parameters:
-    user_id: Int64
-    chat_id: Int64?
-    message_id: Int?
-    inline_message_id: String?
+    - user_id: Int64
+    - chat_id: Int64?
+    - message_id: Int?
+    - inline_message_id: String?
 result: GameHighScore[]?

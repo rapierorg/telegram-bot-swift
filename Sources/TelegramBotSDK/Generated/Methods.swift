@@ -6,206 +6,85 @@ import Dispatch
 
 public extension TelegramBot {
 
-    typealias SendDocumentCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+    typealias GetUpdatesCompletion = (_ result: [Update]?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func sendDocumentSync(
-            caption: String? = nil,
-        chatId: ChatId,
-        disableNotification: Bool? = nil,
-        document: FileInfo,
-        parseMode: String? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        thumb: FileInfo? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
-        return requestSync("sendDocument", defaultParameters["sendDocument"], parameters, [
-            "caption": caption,
-"chat_id": chatId,
-"disable_notification": disableNotification,
-"document": document,
-"parse_mode": parseMode,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"thumb": thumb])
+    func getUpdatesSync(
+            offset: Int64? = nil,
+        limit: Int? = nil,
+        timeout: Int? = nil,
+        allowedUpdates: [String]? = nil,
+            _ parameters: [String: Any?] = [:]) -> [Update]? {
+        return requestSync("getUpdates", defaultParameters["getUpdates"], parameters, [
+            "offset": offset,
+"limit": limit,
+"timeout": timeout,
+"allowed_updates": allowedUpdates])
     }
 
-    func sendDocumentAsync(
-            caption: String? = nil,
-        chatId: ChatId,
-        disableNotification: Bool? = nil,
-        document: FileInfo,
-        parseMode: String? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        thumb: FileInfo? = nil,
+    func getUpdatesAsync(
+            offset: Int64? = nil,
+        limit: Int? = nil,
+        timeout: Int? = nil,
+        allowedUpdates: [String]? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: SendDocumentCompletion? = nil) {
-        return requestAsync("sendDocument", defaultParameters["sendDocument"], parameters, [
-            "caption": caption,
-"chat_id": chatId,
-"disable_notification": disableNotification,
-"document": document,
-"parse_mode": parseMode,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"thumb": thumb],
-            queue: queue, completion: completion)
-    }
-    typealias GetGameHighScoresCompletion = (_ result: [GameHighScore]?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func getGameHighScoresSync(
-            chatId: Int64? = nil,
-        inlineMessageId: String? = nil,
-        messageId: Int? = nil,
-        userId: Int64,
-            _ parameters: [String: Any?] = [:]) -> [GameHighScore]? {
-        return requestSync("getGameHighScores", defaultParameters["getGameHighScores"], parameters, [
-            "chat_id": chatId,
-"inline_message_id": inlineMessageId,
-"message_id": messageId,
-"user_id": userId])
-    }
-
-    func getGameHighScoresAsync(
-            chatId: Int64? = nil,
-        inlineMessageId: String? = nil,
-        messageId: Int? = nil,
-        userId: Int64,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: GetGameHighScoresCompletion? = nil) {
-        return requestAsync("getGameHighScores", defaultParameters["getGameHighScores"], parameters, [
-            "chat_id": chatId,
-"inline_message_id": inlineMessageId,
-"message_id": messageId,
-"user_id": userId],
+            completion: GetUpdatesCompletion? = nil) {
+        return requestAsync("getUpdates", defaultParameters["getUpdates"], parameters, [
+            "offset": offset,
+"limit": limit,
+"timeout": timeout,
+"allowed_updates": allowedUpdates],
             queue: queue, completion: completion)
     }
     typealias SetWebhookCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
     @discardableResult
     func setWebhookSync(
-            allowedUpdates: [String]? = nil,
+            url: String,
         certificate: FileInfo? = nil,
         maxConnections: Int? = nil,
-        url: String,
+        allowedUpdates: [String]? = nil,
             _ parameters: [String: Any?] = [:]) -> Bool? {
         return requestSync("setWebhook", defaultParameters["setWebhook"], parameters, [
-            "allowed_updates": allowedUpdates,
+            "url": url,
 "certificate": certificate,
 "max_connections": maxConnections,
-"url": url])
+"allowed_updates": allowedUpdates])
     }
 
     func setWebhookAsync(
-            allowedUpdates: [String]? = nil,
+            url: String,
         certificate: FileInfo? = nil,
         maxConnections: Int? = nil,
-        url: String,
+        allowedUpdates: [String]? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SetWebhookCompletion? = nil) {
         return requestAsync("setWebhook", defaultParameters["setWebhook"], parameters, [
-            "allowed_updates": allowedUpdates,
+            "url": url,
 "certificate": certificate,
 "max_connections": maxConnections,
-"url": url],
+"allowed_updates": allowedUpdates],
             queue: queue, completion: completion)
     }
-    typealias KickChatMemberCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+    typealias DeleteWebhookCompletion = (_ result: WebhookInfo?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func kickChatMemberSync(
-            chatId: ChatId,
-        untilDate: Int? = nil,
-        userId: Int64,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("kickChatMember", defaultParameters["kickChatMember"], parameters, [
-            "chat_id": chatId,
-"until_date": untilDate,
-"user_id": userId])
+    func deleteWebhookSync(
+            
+            _ parameters: [String: Any?] = [:]) -> WebhookInfo? {
+        return requestSync("deleteWebhook", defaultParameters["deleteWebhook"], parameters, [
+            :])
     }
 
-    func kickChatMemberAsync(
-            chatId: ChatId,
-        untilDate: Int? = nil,
-        userId: Int64,
+    func deleteWebhookAsync(
+            
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: KickChatMemberCompletion? = nil) {
-        return requestAsync("kickChatMember", defaultParameters["kickChatMember"], parameters, [
-            "chat_id": chatId,
-"until_date": untilDate,
-"user_id": userId],
-            queue: queue, completion: completion)
-    }
-    typealias SendChatActionCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func sendChatActionSync(
-            action: String,
-        chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("sendChatAction", defaultParameters["sendChatAction"], parameters, [
-            "action": action,
-"chat_id": chatId])
-    }
-
-    func sendChatActionAsync(
-            action: String,
-        chatId: ChatId,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: SendChatActionCompletion? = nil) {
-        return requestAsync("sendChatAction", defaultParameters["sendChatAction"], parameters, [
-            "action": action,
-"chat_id": chatId],
-            queue: queue, completion: completion)
-    }
-    typealias AnswerInlineQueryCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func answerInlineQuerySync(
-            cacheTime: Int? = nil,
-        inlineQueryId: String,
-        isPersonal: Bool? = nil,
-        nextOffset: String? = nil,
-        results: [InlineQueryResult],
-        switchPmParameter: String? = nil,
-        switchPmText: String? = nil,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("answerInlineQuery", defaultParameters["answerInlineQuery"], parameters, [
-            "cache_time": cacheTime,
-"inline_query_id": inlineQueryId,
-"is_personal": isPersonal,
-"next_offset": nextOffset,
-"results": results,
-"switch_pm_parameter": switchPmParameter,
-"switch_pm_text": switchPmText])
-    }
-
-    func answerInlineQueryAsync(
-            cacheTime: Int? = nil,
-        inlineQueryId: String,
-        isPersonal: Bool? = nil,
-        nextOffset: String? = nil,
-        results: [InlineQueryResult],
-        switchPmParameter: String? = nil,
-        switchPmText: String? = nil,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: AnswerInlineQueryCompletion? = nil) {
-        return requestAsync("answerInlineQuery", defaultParameters["answerInlineQuery"], parameters, [
-            "cache_time": cacheTime,
-"inline_query_id": inlineQueryId,
-"is_personal": isPersonal,
-"next_offset": nextOffset,
-"results": results,
-"switch_pm_parameter": switchPmParameter,
-"switch_pm_text": switchPmText],
+            completion: DeleteWebhookCompletion? = nil) {
+        return requestAsync("deleteWebhook", defaultParameters["deleteWebhook"], parameters, [
+            :],
             queue: queue, completion: completion)
     }
     typealias GetWebhookInfoCompletion = (_ result: WebhookInfo?, _ error: DataTaskError?) -> ()
@@ -227,23 +106,661 @@ public extension TelegramBot {
             :],
             queue: queue, completion: completion)
     }
-    typealias GetStickerSetCompletion = (_ result: StickerSet?, _ error: DataTaskError?) -> ()
+    typealias GetMeCompletion = (_ result: User?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func getStickerSetSync(
-            name: String,
-            _ parameters: [String: Any?] = [:]) -> StickerSet? {
-        return requestSync("getStickerSet", defaultParameters["getStickerSet"], parameters, [
-            "name": name])
+    func getMeSync(
+            
+            _ parameters: [String: Any?] = [:]) -> User? {
+        return requestSync("getMe", defaultParameters["getMe"], parameters, [
+            :])
     }
 
-    func getStickerSetAsync(
-            name: String,
+    func getMeAsync(
+            
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: GetStickerSetCompletion? = nil) {
-        return requestAsync("getStickerSet", defaultParameters["getStickerSet"], parameters, [
-            "name": name],
+            completion: GetMeCompletion? = nil) {
+        return requestAsync("getMe", defaultParameters["getMe"], parameters, [
+            :],
+            queue: queue, completion: completion)
+    }
+    typealias SendMessageCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func sendMessageSync(
+            text: String,
+        chatId: ChatId,
+        parseMode: String? = nil,
+        disableWebPagePreview: Bool? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> Message? {
+        return requestSync("sendMessage", defaultParameters["sendMessage"], parameters, [
+            "text": text,
+"chat_id": chatId,
+"parse_mode": parseMode,
+"disable_web_page_preview": disableWebPagePreview,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
+    }
+
+    func sendMessageAsync(
+            text: String,
+        chatId: ChatId,
+        parseMode: String? = nil,
+        disableWebPagePreview: Bool? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SendMessageCompletion? = nil) {
+        return requestAsync("sendMessage", defaultParameters["sendMessage"], parameters, [
+            "text": text,
+"chat_id": chatId,
+"parse_mode": parseMode,
+"disable_web_page_preview": disableWebPagePreview,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias ForwardMessageCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func forwardMessageSync(
+            chatId: ChatId,
+        fromChatId: ChatId,
+        disableNotification: Bool? = nil,
+        messageId: Int,
+            _ parameters: [String: Any?] = [:]) -> Message? {
+        return requestSync("forwardMessage", defaultParameters["forwardMessage"], parameters, [
+            "chat_id": chatId,
+"from_chat_id": fromChatId,
+"disable_notification": disableNotification,
+"message_id": messageId])
+    }
+
+    func forwardMessageAsync(
+            chatId: ChatId,
+        fromChatId: ChatId,
+        disableNotification: Bool? = nil,
+        messageId: Int,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: ForwardMessageCompletion? = nil) {
+        return requestAsync("forwardMessage", defaultParameters["forwardMessage"], parameters, [
+            "chat_id": chatId,
+"from_chat_id": fromChatId,
+"disable_notification": disableNotification,
+"message_id": messageId],
+            queue: queue, completion: completion)
+    }
+    typealias SendPhotoCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func sendPhotoSync(
+            chatId: ChatId,
+        photo: FileInfo,
+        caption: String? = nil,
+        parseMode: String? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> Message? {
+        return requestSync("sendPhoto", defaultParameters["sendPhoto"], parameters, [
+            "chat_id": chatId,
+"photo": photo,
+"caption": caption,
+"parse_mode": parseMode,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
+    }
+
+    func sendPhotoAsync(
+            chatId: ChatId,
+        photo: FileInfo,
+        caption: String? = nil,
+        parseMode: String? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SendPhotoCompletion? = nil) {
+        return requestAsync("sendPhoto", defaultParameters["sendPhoto"], parameters, [
+            "chat_id": chatId,
+"photo": photo,
+"caption": caption,
+"parse_mode": parseMode,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias SendAudioCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func sendAudioSync(
+            chatId: ChatId,
+        audio: FileInfo,
+        caption: String? = nil,
+        parseMode: String? = nil,
+        duration: Int? = nil,
+        performer: String? = nil,
+        title: String? = nil,
+        thumb: FileInfo? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup,
+            _ parameters: [String: Any?] = [:]) -> Message? {
+        return requestSync("sendAudio", defaultParameters["sendAudio"], parameters, [
+            "chat_id": chatId,
+"audio": audio,
+"caption": caption,
+"parse_mode": parseMode,
+"duration": duration,
+"performer": performer,
+"title": title,
+"thumb": thumb,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
+    }
+
+    func sendAudioAsync(
+            chatId: ChatId,
+        audio: FileInfo,
+        caption: String? = nil,
+        parseMode: String? = nil,
+        duration: Int? = nil,
+        performer: String? = nil,
+        title: String? = nil,
+        thumb: FileInfo? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SendAudioCompletion? = nil) {
+        return requestAsync("sendAudio", defaultParameters["sendAudio"], parameters, [
+            "chat_id": chatId,
+"audio": audio,
+"caption": caption,
+"parse_mode": parseMode,
+"duration": duration,
+"performer": performer,
+"title": title,
+"thumb": thumb,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias SendDocumentCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func sendDocumentSync(
+            chatId: ChatId,
+        document: FileInfo,
+        thumb: FileInfo? = nil,
+        caption: String? = nil,
+        parseMode: String? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> Message? {
+        return requestSync("sendDocument", defaultParameters["sendDocument"], parameters, [
+            "chat_id": chatId,
+"document": document,
+"thumb": thumb,
+"caption": caption,
+"parse_mode": parseMode,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
+    }
+
+    func sendDocumentAsync(
+            chatId: ChatId,
+        document: FileInfo,
+        thumb: FileInfo? = nil,
+        caption: String? = nil,
+        parseMode: String? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SendDocumentCompletion? = nil) {
+        return requestAsync("sendDocument", defaultParameters["sendDocument"], parameters, [
+            "chat_id": chatId,
+"document": document,
+"thumb": thumb,
+"caption": caption,
+"parse_mode": parseMode,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias SendVideoCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func sendVideoSync(
+            chatId: ChatId,
+        video: FileInfo,
+        duration: Int? = nil,
+        width: Int? = nil,
+        height: Int? = nil,
+        thumb: InputFileOrString? = nil,
+        caption: String? = nil,
+        parseMode: String? = nil,
+        supportsStreaming: Bool? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> Message? {
+        return requestSync("sendVideo", defaultParameters["sendVideo"], parameters, [
+            "chat_id": chatId,
+"video": video,
+"duration": duration,
+"width": width,
+"height": height,
+"thumb": thumb,
+"caption": caption,
+"parse_mode": parseMode,
+"supports_streaming": supportsStreaming,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
+    }
+
+    func sendVideoAsync(
+            chatId: ChatId,
+        video: FileInfo,
+        duration: Int? = nil,
+        width: Int? = nil,
+        height: Int? = nil,
+        thumb: InputFileOrString? = nil,
+        caption: String? = nil,
+        parseMode: String? = nil,
+        supportsStreaming: Bool? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SendVideoCompletion? = nil) {
+        return requestAsync("sendVideo", defaultParameters["sendVideo"], parameters, [
+            "chat_id": chatId,
+"video": video,
+"duration": duration,
+"width": width,
+"height": height,
+"thumb": thumb,
+"caption": caption,
+"parse_mode": parseMode,
+"supports_streaming": supportsStreaming,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias SendAnimationCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func sendAnimationSync(
+            chatId: ChatId,
+        animation: FileInfo,
+        duration: Int? = nil,
+        width: Int? = nil,
+        height: Int? = nil,
+        thumb: FileInfo? = nil,
+        caption: String? = nil,
+        parseMode: String? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> Message? {
+        return requestSync("sendAnimation", defaultParameters["sendAnimation"], parameters, [
+            "chat_id": chatId,
+"animation": animation,
+"duration": duration,
+"width": width,
+"height": height,
+"thumb": thumb,
+"caption": caption,
+"parse_mode": parseMode,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
+    }
+
+    func sendAnimationAsync(
+            chatId: ChatId,
+        animation: FileInfo,
+        duration: Int? = nil,
+        width: Int? = nil,
+        height: Int? = nil,
+        thumb: FileInfo? = nil,
+        caption: String? = nil,
+        parseMode: String? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SendAnimationCompletion? = nil) {
+        return requestAsync("sendAnimation", defaultParameters["sendAnimation"], parameters, [
+            "chat_id": chatId,
+"animation": animation,
+"duration": duration,
+"width": width,
+"height": height,
+"thumb": thumb,
+"caption": caption,
+"parse_mode": parseMode,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias SendVoiceCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func sendVoiceSync(
+            chatId: ChatId,
+        voice: FileInfo,
+        caption: String? = nil,
+        parseMode: String? = nil,
+        duration: Int? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Bool? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> Message? {
+        return requestSync("sendVoice", defaultParameters["sendVoice"], parameters, [
+            "chat_id": chatId,
+"voice": voice,
+"caption": caption,
+"parse_mode": parseMode,
+"duration": duration,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
+    }
+
+    func sendVoiceAsync(
+            chatId: ChatId,
+        voice: FileInfo,
+        caption: String? = nil,
+        parseMode: String? = nil,
+        duration: Int? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Bool? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SendVoiceCompletion? = nil) {
+        return requestAsync("sendVoice", defaultParameters["sendVoice"], parameters, [
+            "chat_id": chatId,
+"voice": voice,
+"caption": caption,
+"parse_mode": parseMode,
+"duration": duration,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias SendVideoNoteCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func sendVideoNoteSync(
+            chatId: ChatId,
+        videoNote: FileInfo,
+        duration: Int? = nil,
+        length: Int? = nil,
+        thumb: FileInfo? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> Message? {
+        return requestSync("sendVideoNote", defaultParameters["sendVideoNote"], parameters, [
+            "chat_id": chatId,
+"video_note": videoNote,
+"duration": duration,
+"length": length,
+"thumb": thumb,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
+    }
+
+    func sendVideoNoteAsync(
+            chatId: ChatId,
+        videoNote: FileInfo,
+        duration: Int? = nil,
+        length: Int? = nil,
+        thumb: FileInfo? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SendVideoNoteCompletion? = nil) {
+        return requestAsync("sendVideoNote", defaultParameters["sendVideoNote"], parameters, [
+            "chat_id": chatId,
+"video_note": videoNote,
+"duration": duration,
+"length": length,
+"thumb": thumb,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias SendMediaGroupCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func sendMediaGroupSync(
+            chatId: ChatId,
+        media: [InputMedia],
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+            _ parameters: [String: Any?] = [:]) -> Message? {
+        return requestSync("sendMediaGroup", defaultParameters["sendMediaGroup"], parameters, [
+            "chat_id": chatId,
+"media": media,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId])
+    }
+
+    func sendMediaGroupAsync(
+            chatId: ChatId,
+        media: [InputMedia],
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SendMediaGroupCompletion? = nil) {
+        return requestAsync("sendMediaGroup", defaultParameters["sendMediaGroup"], parameters, [
+            "chat_id": chatId,
+"media": media,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId],
+            queue: queue, completion: completion)
+    }
+    typealias SendLocationCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func sendLocationSync(
+            chatId: ChatId,
+        latitude: Float,
+        longitude: Float,
+        livePeriod: Int? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> Message? {
+        return requestSync("sendLocation", defaultParameters["sendLocation"], parameters, [
+            "chat_id": chatId,
+"latitude": latitude,
+"longitude": longitude,
+"live_period": livePeriod,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
+    }
+
+    func sendLocationAsync(
+            chatId: ChatId,
+        latitude: Float,
+        longitude: Float,
+        livePeriod: Int? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SendLocationCompletion? = nil) {
+        return requestAsync("sendLocation", defaultParameters["sendLocation"], parameters, [
+            "chat_id": chatId,
+"latitude": latitude,
+"longitude": longitude,
+"live_period": livePeriod,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias EditMessageLiveLocationCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func editMessageLiveLocationSync(
+            chatId: ChatId? = nil,
+        messageId: Int? = nil,
+        inlineMessageId: String? = nil,
+        latitude: Float,
+        longitude: Float,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
+        return requestSync("editMessageLiveLocation", defaultParameters["editMessageLiveLocation"], parameters, [
+            "chat_id": chatId,
+"message_id": messageId,
+"inline_message_id": inlineMessageId,
+"latitude": latitude,
+"longitude": longitude,
+"reply_markup": replyMarkup])
+    }
+
+    func editMessageLiveLocationAsync(
+            chatId: ChatId? = nil,
+        messageId: Int? = nil,
+        inlineMessageId: String? = nil,
+        latitude: Float,
+        longitude: Float,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: EditMessageLiveLocationCompletion? = nil) {
+        return requestAsync("editMessageLiveLocation", defaultParameters["editMessageLiveLocation"], parameters, [
+            "chat_id": chatId,
+"message_id": messageId,
+"inline_message_id": inlineMessageId,
+"latitude": latitude,
+"longitude": longitude,
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias StopMessageLiveLocationCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func stopMessageLiveLocationSync(
+            chatId: ChatId? = nil,
+        messageId: Int? = nil,
+        inlineMessageId: String? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
+        return requestSync("stopMessageLiveLocation", defaultParameters["stopMessageLiveLocation"], parameters, [
+            "chat_id": chatId,
+"message_id": messageId,
+"inline_message_id": inlineMessageId,
+"reply_markup": replyMarkup])
+    }
+
+    func stopMessageLiveLocationAsync(
+            chatId: ChatId? = nil,
+        messageId: Int? = nil,
+        inlineMessageId: String? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: StopMessageLiveLocationCompletion? = nil) {
+        return requestAsync("stopMessageLiveLocation", defaultParameters["stopMessageLiveLocation"], parameters, [
+            "chat_id": chatId,
+"message_id": messageId,
+"inline_message_id": inlineMessageId,
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias SendVenueCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func sendVenueSync(
+            chatId: ChatId,
+        latitude: Float,
+        longitude: Float,
+        title: String,
+        address: String,
+        foursquareId: String? = nil,
+        foursquareType: String? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> Message? {
+        return requestSync("sendVenue", defaultParameters["sendVenue"], parameters, [
+            "chat_id": chatId,
+"latitude": latitude,
+"longitude": longitude,
+"title": title,
+"address": address,
+"foursquare_id": foursquareId,
+"foursquare_type": foursquareType,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
+    }
+
+    func sendVenueAsync(
+            chatId: ChatId,
+        latitude: Float,
+        longitude: Float,
+        title: String,
+        address: String,
+        foursquareId: String? = nil,
+        foursquareType: String? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SendVenueCompletion? = nil) {
+        return requestAsync("sendVenue", defaultParameters["sendVenue"], parameters, [
+            "chat_id": chatId,
+"latitude": latitude,
+"longitude": longitude,
+"title": title,
+"address": address,
+"foursquare_id": foursquareId,
+"foursquare_type": foursquareType,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
     typealias SendContactCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
@@ -251,46 +768,181 @@ public extension TelegramBot {
     @discardableResult
     func sendContactSync(
             chatId: ChatId,
-        disableNotification: Bool? = nil,
+        phoneNumber: String,
         firstName: String,
         lastName: String? = nil,
-        phoneNumber: String,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
         vcard: String? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendContact", defaultParameters["sendContact"], parameters, [
             "chat_id": chatId,
-"disable_notification": disableNotification,
+"phone_number": phoneNumber,
 "first_name": firstName,
 "last_name": lastName,
-"phone_number": phoneNumber,
-"reply_markup": replyMarkup,
+"vcard": vcard,
+"disable_notification": disableNotification,
 "reply_to_message_id": replyToMessageId,
-"vcard": vcard])
+"reply_markup": replyMarkup])
     }
 
     func sendContactAsync(
             chatId: ChatId,
-        disableNotification: Bool? = nil,
+        phoneNumber: String,
         firstName: String,
         lastName: String? = nil,
-        phoneNumber: String,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
         vcard: String? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendContactCompletion? = nil) {
         return requestAsync("sendContact", defaultParameters["sendContact"], parameters, [
             "chat_id": chatId,
-"disable_notification": disableNotification,
+"phone_number": phoneNumber,
 "first_name": firstName,
 "last_name": lastName,
-"phone_number": phoneNumber,
-"reply_markup": replyMarkup,
+"vcard": vcard,
+"disable_notification": disableNotification,
 "reply_to_message_id": replyToMessageId,
-"vcard": vcard],
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias SendPollCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func sendPollSync(
+            chatId: ChatId,
+        question: String,
+        options: [String],
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> Message? {
+        return requestSync("sendPoll", defaultParameters["sendPoll"], parameters, [
+            "chat_id": chatId,
+"question": question,
+"options": options,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
+    }
+
+    func sendPollAsync(
+            chatId: ChatId,
+        question: String,
+        options: [String],
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SendPollCompletion? = nil) {
+        return requestAsync("sendPoll", defaultParameters["sendPoll"], parameters, [
+            "chat_id": chatId,
+"question": question,
+"options": options,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias SendChatActionCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func sendChatActionSync(
+            chatId: ChatId,
+        action: String,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("sendChatAction", defaultParameters["sendChatAction"], parameters, [
+            "chat_id": chatId,
+"action": action])
+    }
+
+    func sendChatActionAsync(
+            chatId: ChatId,
+        action: String,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SendChatActionCompletion? = nil) {
+        return requestAsync("sendChatAction", defaultParameters["sendChatAction"], parameters, [
+            "chat_id": chatId,
+"action": action],
+            queue: queue, completion: completion)
+    }
+    typealias GetUserProfilePhotosCompletion = (_ result: UserProfilePhotos?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func getUserProfilePhotosSync(
+            userId: Int64,
+        offset: Int? = nil,
+        limit: Int? = nil,
+            _ parameters: [String: Any?] = [:]) -> UserProfilePhotos? {
+        return requestSync("getUserProfilePhotos", defaultParameters["getUserProfilePhotos"], parameters, [
+            "user_id": userId,
+"offset": offset,
+"limit": limit])
+    }
+
+    func getUserProfilePhotosAsync(
+            userId: Int64,
+        offset: Int? = nil,
+        limit: Int? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: GetUserProfilePhotosCompletion? = nil) {
+        return requestAsync("getUserProfilePhotos", defaultParameters["getUserProfilePhotos"], parameters, [
+            "user_id": userId,
+"offset": offset,
+"limit": limit],
+            queue: queue, completion: completion)
+    }
+    typealias GetFileCompletion = (_ result: File?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func getFileSync(
+            fileId: String,
+            _ parameters: [String: Any?] = [:]) -> File? {
+        return requestSync("getFile", defaultParameters["getFile"], parameters, [
+            "file_id": fileId])
+    }
+
+    func getFileAsync(
+            fileId: String,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: GetFileCompletion? = nil) {
+        return requestAsync("getFile", defaultParameters["getFile"], parameters, [
+            "file_id": fileId],
+            queue: queue, completion: completion)
+    }
+    typealias KickChatMemberCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func kickChatMemberSync(
+            chatId: ChatId,
+        userId: Int64,
+        untilDate: Int? = nil,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("kickChatMember", defaultParameters["kickChatMember"], parameters, [
+            "chat_id": chatId,
+"user_id": userId,
+"until_date": untilDate])
+    }
+
+    func kickChatMemberAsync(
+            chatId: ChatId,
+        userId: Int64,
+        untilDate: Int? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: KickChatMemberCompletion? = nil) {
+        return requestAsync("kickChatMember", defaultParameters["kickChatMember"], parameters, [
+            "chat_id": chatId,
+"user_id": userId,
+"until_date": untilDate],
             queue: queue, completion: completion)
     }
     typealias UnbanChatMemberCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
@@ -316,216 +968,109 @@ public extension TelegramBot {
 "user_id": userId],
             queue: queue, completion: completion)
     }
-    typealias GetFileCompletion = (_ result: File?, _ error: DataTaskError?) -> ()
+    typealias RestrictChatMemberCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func getFileSync(
-            fileId: String,
-            _ parameters: [String: Any?] = [:]) -> File? {
-        return requestSync("getFile", defaultParameters["getFile"], parameters, [
-            "file_id": fileId])
-    }
-
-    func getFileAsync(
-            fileId: String,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: GetFileCompletion? = nil) {
-        return requestAsync("getFile", defaultParameters["getFile"], parameters, [
-            "file_id": fileId],
-            queue: queue, completion: completion)
-    }
-    typealias SetStickerPositionInSetCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func setStickerPositionInSetSync(
-            position: Int,
-        sticker: String,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("setStickerPositionInSet", defaultParameters["setStickerPositionInSet"], parameters, [
-            "position": position,
-"sticker": sticker])
-    }
-
-    func setStickerPositionInSetAsync(
-            position: Int,
-        sticker: String,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: SetStickerPositionInSetCompletion? = nil) {
-        return requestAsync("setStickerPositionInSet", defaultParameters["setStickerPositionInSet"], parameters, [
-            "position": position,
-"sticker": sticker],
-            queue: queue, completion: completion)
-    }
-    typealias EditMessageReplyMarkupCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func editMessageReplyMarkupSync(
-            chatId: ChatId? = nil,
-        inlineMessageId: String? = nil,
-        messageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
-        return requestSync("editMessageReplyMarkup", defaultParameters["editMessageReplyMarkup"], parameters, [
-            "chat_id": chatId,
-"inline_message_id": inlineMessageId,
-"message_id": messageId,
-"reply_markup": replyMarkup])
-    }
-
-    func editMessageReplyMarkupAsync(
-            chatId: ChatId? = nil,
-        inlineMessageId: String? = nil,
-        messageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: EditMessageReplyMarkupCompletion? = nil) {
-        return requestAsync("editMessageReplyMarkup", defaultParameters["editMessageReplyMarkup"], parameters, [
-            "chat_id": chatId,
-"inline_message_id": inlineMessageId,
-"message_id": messageId,
-"reply_markup": replyMarkup],
-            queue: queue, completion: completion)
-    }
-    typealias DeleteChatStickerSetCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func deleteChatStickerSetSync(
+    func restrictChatMemberSync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("deleteChatStickerSet", defaultParameters["deleteChatStickerSet"], parameters, [
-            "chat_id": chatId])
-    }
-
-    func deleteChatStickerSetAsync(
-            chatId: ChatId,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: DeleteChatStickerSetCompletion? = nil) {
-        return requestAsync("deleteChatStickerSet", defaultParameters["deleteChatStickerSet"], parameters, [
-            "chat_id": chatId],
-            queue: queue, completion: completion)
-    }
-    typealias PinChatMessageCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func pinChatMessageSync(
-            chatId: ChatId,
-        disableNotification: Bool? = nil,
-        messageId: Int,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("pinChatMessage", defaultParameters["pinChatMessage"], parameters, [
-            "chat_id": chatId,
-"disable_notification": disableNotification,
-"message_id": messageId])
-    }
-
-    func pinChatMessageAsync(
-            chatId: ChatId,
-        disableNotification: Bool? = nil,
-        messageId: Int,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: PinChatMessageCompletion? = nil) {
-        return requestAsync("pinChatMessage", defaultParameters["pinChatMessage"], parameters, [
-            "chat_id": chatId,
-"disable_notification": disableNotification,
-"message_id": messageId],
-            queue: queue, completion: completion)
-    }
-    typealias UploadStickerFileCompletion = (_ result: File?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func uploadStickerFileSync(
-            pngSticker: FileInfo,
         userId: Int64,
-            _ parameters: [String: Any?] = [:]) -> File? {
-        return requestSync("uploadStickerFile", defaultParameters["uploadStickerFile"], parameters, [
-            "png_sticker": pngSticker,
-"user_id": userId])
-    }
-
-    func uploadStickerFileAsync(
-            pngSticker: FileInfo,
-        userId: Int64,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: UploadStickerFileCompletion? = nil) {
-        return requestAsync("uploadStickerFile", defaultParameters["uploadStickerFile"], parameters, [
-            "png_sticker": pngSticker,
-"user_id": userId],
-            queue: queue, completion: completion)
-    }
-    typealias EditMessageMediaCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func editMessageMediaSync(
-            chatId: ChatId? = nil,
-        inlineMessageId: String? = nil,
-        media: InputMedia,
-        messageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
-        return requestSync("editMessageMedia", defaultParameters["editMessageMedia"], parameters, [
-            "chat_id": chatId,
-"inline_message_id": inlineMessageId,
-"media": media,
-"message_id": messageId,
-"reply_markup": replyMarkup])
-    }
-
-    func editMessageMediaAsync(
-            chatId: ChatId? = nil,
-        inlineMessageId: String? = nil,
-        media: InputMedia,
-        messageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: EditMessageMediaCompletion? = nil) {
-        return requestAsync("editMessageMedia", defaultParameters["editMessageMedia"], parameters, [
-            "chat_id": chatId,
-"inline_message_id": inlineMessageId,
-"media": media,
-"message_id": messageId,
-"reply_markup": replyMarkup],
-            queue: queue, completion: completion)
-    }
-    typealias AddStickerToSetCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func addStickerToSetSync(
-            emojis: String,
-        maskPosition: MaskPosition? = nil,
-        name: String,
-        pngSticker: FileInfo,
-        userId: Int,
+        untilDate: Date? = nil,
+        permissions: ChatPermissions,
             _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("addStickerToSet", defaultParameters["addStickerToSet"], parameters, [
-            "emojis": emojis,
-"mask_position": maskPosition,
-"name": name,
-"png_sticker": pngSticker,
-"user_id": userId])
+        return requestSync("restrictChatMember", defaultParameters["restrictChatMember"], parameters, [
+            "chat_id": chatId,
+"user_id": userId,
+"until_date": untilDate,
+"permissions": permissions])
     }
 
-    func addStickerToSetAsync(
-            emojis: String,
-        maskPosition: MaskPosition? = nil,
-        name: String,
-        pngSticker: FileInfo,
-        userId: Int,
+    func restrictChatMemberAsync(
+            chatId: ChatId,
+        userId: Int64,
+        untilDate: Date? = nil,
+        permissions: ChatPermissions,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: AddStickerToSetCompletion? = nil) {
-        return requestAsync("addStickerToSet", defaultParameters["addStickerToSet"], parameters, [
-            "emojis": emojis,
-"mask_position": maskPosition,
-"name": name,
-"png_sticker": pngSticker,
-"user_id": userId],
+            completion: RestrictChatMemberCompletion? = nil) {
+        return requestAsync("restrictChatMember", defaultParameters["restrictChatMember"], parameters, [
+            "chat_id": chatId,
+"user_id": userId,
+"until_date": untilDate,
+"permissions": permissions],
+            queue: queue, completion: completion)
+    }
+    typealias PromoteChatMemberCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func promoteChatMemberSync(
+            chatId: ChatId,
+        userId: Int,
+        canChangeInfo: Bool? = nil,
+        canPostMessages: Bool? = nil,
+        canEditMessages: Bool? = nil,
+        canDeleteMessages: Bool? = nil,
+        canInviteUsers: Bool? = nil,
+        canRestrictMembers: Bool? = nil,
+        canPinMessages: Bool? = nil,
+        canPromoteMembers: Bool? = nil,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("promoteChatMember", defaultParameters["promoteChatMember"], parameters, [
+            "chat_id": chatId,
+"user_id": userId,
+"can_change_info": canChangeInfo,
+"can_post_messages": canPostMessages,
+"can_edit_messages": canEditMessages,
+"can_delete_messages": canDeleteMessages,
+"can_invite_users": canInviteUsers,
+"can_restrict_members": canRestrictMembers,
+"can_pin_messages": canPinMessages,
+"can_promote_members": canPromoteMembers])
+    }
+
+    func promoteChatMemberAsync(
+            chatId: ChatId,
+        userId: Int,
+        canChangeInfo: Bool? = nil,
+        canPostMessages: Bool? = nil,
+        canEditMessages: Bool? = nil,
+        canDeleteMessages: Bool? = nil,
+        canInviteUsers: Bool? = nil,
+        canRestrictMembers: Bool? = nil,
+        canPinMessages: Bool? = nil,
+        canPromoteMembers: Bool? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: PromoteChatMemberCompletion? = nil) {
+        return requestAsync("promoteChatMember", defaultParameters["promoteChatMember"], parameters, [
+            "chat_id": chatId,
+"user_id": userId,
+"can_change_info": canChangeInfo,
+"can_post_messages": canPostMessages,
+"can_edit_messages": canEditMessages,
+"can_delete_messages": canDeleteMessages,
+"can_invite_users": canInviteUsers,
+"can_restrict_members": canRestrictMembers,
+"can_pin_messages": canPinMessages,
+"can_promote_members": canPromoteMembers],
+            queue: queue, completion: completion)
+    }
+    typealias SetChatAdministratorCustomTitleCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func setChatAdministratorCustomTitleSync(
+            
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("setChatAdministratorCustomTitle", defaultParameters["setChatAdministratorCustomTitle"], parameters, [
+            :])
+    }
+
+    func setChatAdministratorCustomTitleAsync(
+            
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SetChatAdministratorCustomTitleCompletion? = nil) {
+        return requestAsync("setChatAdministratorCustomTitle", defaultParameters["setChatAdministratorCustomTitle"], parameters, [
+            :],
             queue: queue, completion: completion)
     }
     typealias SetChatPermissionsCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
@@ -551,6 +1096,90 @@ public extension TelegramBot {
 "permissions": permissions],
             queue: queue, completion: completion)
     }
+    typealias ExportChatInviteLinkCompletion = (_ result: String?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func exportChatInviteLinkSync(
+            chatId: ChatId,
+            _ parameters: [String: Any?] = [:]) -> String? {
+        return requestSync("exportChatInviteLink", defaultParameters["exportChatInviteLink"], parameters, [
+            "chat_id": chatId])
+    }
+
+    func exportChatInviteLinkAsync(
+            chatId: ChatId,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: ExportChatInviteLinkCompletion? = nil) {
+        return requestAsync("exportChatInviteLink", defaultParameters["exportChatInviteLink"], parameters, [
+            "chat_id": chatId],
+            queue: queue, completion: completion)
+    }
+    typealias SetChatPhotoCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func setChatPhotoSync(
+            chatId: ChatId,
+        photo: FileInfo,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("setChatPhoto", defaultParameters["setChatPhoto"], parameters, [
+            "chat_id": chatId,
+"photo": photo])
+    }
+
+    func setChatPhotoAsync(
+            chatId: ChatId,
+        photo: FileInfo,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SetChatPhotoCompletion? = nil) {
+        return requestAsync("setChatPhoto", defaultParameters["setChatPhoto"], parameters, [
+            "chat_id": chatId,
+"photo": photo],
+            queue: queue, completion: completion)
+    }
+    typealias DeleteChatPhotoCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func deleteChatPhotoSync(
+            chatId: ChatId,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("deleteChatPhoto", defaultParameters["deleteChatPhoto"], parameters, [
+            "chat_id": chatId])
+    }
+
+    func deleteChatPhotoAsync(
+            chatId: ChatId,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: DeleteChatPhotoCompletion? = nil) {
+        return requestAsync("deleteChatPhoto", defaultParameters["deleteChatPhoto"], parameters, [
+            "chat_id": chatId],
+            queue: queue, completion: completion)
+    }
+    typealias SetChatTitleCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func setChatTitleSync(
+            chatId: ChatId,
+        title: String,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("setChatTitle", defaultParameters["setChatTitle"], parameters, [
+            "chat_id": chatId,
+"title": title])
+    }
+
+    func setChatTitleAsync(
+            chatId: ChatId,
+        title: String,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SetChatTitleCompletion? = nil) {
+        return requestAsync("setChatTitle", defaultParameters["setChatTitle"], parameters, [
+            "chat_id": chatId,
+"title": title],
+            queue: queue, completion: completion)
+    }
     typealias SetChatDescriptionCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
     @discardableResult
@@ -574,70 +1203,88 @@ public extension TelegramBot {
 "description": description],
             queue: queue, completion: completion)
     }
-    typealias DeleteMessageCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+    typealias PinChatMessageCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func deleteMessageSync(
+    func pinChatMessageSync(
             chatId: ChatId,
         messageId: Int,
+        disableNotification: Bool? = nil,
             _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("deleteMessage", defaultParameters["deleteMessage"], parameters, [
+        return requestSync("pinChatMessage", defaultParameters["pinChatMessage"], parameters, [
             "chat_id": chatId,
-"message_id": messageId])
+"message_id": messageId,
+"disable_notification": disableNotification])
     }
 
-    func deleteMessageAsync(
+    func pinChatMessageAsync(
             chatId: ChatId,
         messageId: Int,
+        disableNotification: Bool? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: DeleteMessageCompletion? = nil) {
-        return requestAsync("deleteMessage", defaultParameters["deleteMessage"], parameters, [
+            completion: PinChatMessageCompletion? = nil) {
+        return requestAsync("pinChatMessage", defaultParameters["pinChatMessage"], parameters, [
             "chat_id": chatId,
-"message_id": messageId],
+"message_id": messageId,
+"disable_notification": disableNotification],
             queue: queue, completion: completion)
     }
-    typealias SendMessageCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+    typealias UnpinChatMessageCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func sendMessageSync(
+    func unpinChatMessageSync(
             chatId: ChatId,
-        disableNotification: Bool? = nil,
-        disableWebPagePreview: Bool? = nil,
-        parseMode: String? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        text: String,
-            _ parameters: [String: Any?] = [:]) -> Message? {
-        return requestSync("sendMessage", defaultParameters["sendMessage"], parameters, [
-            "chat_id": chatId,
-"disable_notification": disableNotification,
-"disable_web_page_preview": disableWebPagePreview,
-"parse_mode": parseMode,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"text": text])
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("unpinChatMessage", defaultParameters["unpinChatMessage"], parameters, [
+            "chat_id": chatId])
     }
 
-    func sendMessageAsync(
+    func unpinChatMessageAsync(
             chatId: ChatId,
-        disableNotification: Bool? = nil,
-        disableWebPagePreview: Bool? = nil,
-        parseMode: String? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        text: String,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: SendMessageCompletion? = nil) {
-        return requestAsync("sendMessage", defaultParameters["sendMessage"], parameters, [
-            "chat_id": chatId,
-"disable_notification": disableNotification,
-"disable_web_page_preview": disableWebPagePreview,
-"parse_mode": parseMode,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"text": text],
+            completion: UnpinChatMessageCompletion? = nil) {
+        return requestAsync("unpinChatMessage", defaultParameters["unpinChatMessage"], parameters, [
+            "chat_id": chatId],
+            queue: queue, completion: completion)
+    }
+    typealias LeaveChatCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func leaveChatSync(
+            chatId: ChatId,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("leaveChat", defaultParameters["leaveChat"], parameters, [
+            "chat_id": chatId])
+    }
+
+    func leaveChatAsync(
+            chatId: ChatId,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: LeaveChatCompletion? = nil) {
+        return requestAsync("leaveChat", defaultParameters["leaveChat"], parameters, [
+            "chat_id": chatId],
+            queue: queue, completion: completion)
+    }
+    typealias GetChatCompletion = (_ result: Chat?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func getChatSync(
+            chatId: ChatId,
+            _ parameters: [String: Any?] = [:]) -> Chat? {
+        return requestSync("getChat", defaultParameters["getChat"], parameters, [
+            "chat_id": chatId])
+    }
+
+    func getChatAsync(
+            chatId: ChatId,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: GetChatCompletion? = nil) {
+        return requestAsync("getChat", defaultParameters["getChat"], parameters, [
+            "chat_id": chatId],
             queue: queue, completion: completion)
     }
     typealias GetChatAdministratorsCompletion = (_ result: [ChatMember]?, _ error: DataTaskError?) -> ()
@@ -659,85 +1306,23 @@ public extension TelegramBot {
             "chat_id": chatId],
             queue: queue, completion: completion)
     }
-    typealias DeleteWebhookCompletion = (_ result: WebhookInfo?, _ error: DataTaskError?) -> ()
+    typealias GetChatMembersCountCompletion = (_ result: Int?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func deleteWebhookSync(
-            
-            _ parameters: [String: Any?] = [:]) -> WebhookInfo? {
-        return requestSync("deleteWebhook", defaultParameters["deleteWebhook"], parameters, [
-            :])
-    }
-
-    func deleteWebhookAsync(
-            
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: DeleteWebhookCompletion? = nil) {
-        return requestAsync("deleteWebhook", defaultParameters["deleteWebhook"], parameters, [
-            :],
-            queue: queue, completion: completion)
-    }
-    typealias EditMessageLiveLocationCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func editMessageLiveLocationSync(
-            chatId: ChatId? = nil,
-        inlineMessageId: String? = nil,
-        latitude: Float,
-        longitude: Float,
-        messageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
-        return requestSync("editMessageLiveLocation", defaultParameters["editMessageLiveLocation"], parameters, [
-            "chat_id": chatId,
-"inline_message_id": inlineMessageId,
-"latitude": latitude,
-"longitude": longitude,
-"message_id": messageId,
-"reply_markup": replyMarkup])
-    }
-
-    func editMessageLiveLocationAsync(
-            chatId: ChatId? = nil,
-        inlineMessageId: String? = nil,
-        latitude: Float,
-        longitude: Float,
-        messageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: EditMessageLiveLocationCompletion? = nil) {
-        return requestAsync("editMessageLiveLocation", defaultParameters["editMessageLiveLocation"], parameters, [
-            "chat_id": chatId,
-"inline_message_id": inlineMessageId,
-"latitude": latitude,
-"longitude": longitude,
-"message_id": messageId,
-"reply_markup": replyMarkup],
-            queue: queue, completion: completion)
-    }
-    typealias SetCharStickerSetCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func setCharStickerSetSync(
+    func getChatMembersCountSync(
             chatId: ChatId,
-        stickerSetName: String,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("setCharStickerSet", defaultParameters["setCharStickerSet"], parameters, [
-            "chat_id": chatId,
-"sticker_set_name": stickerSetName])
+            _ parameters: [String: Any?] = [:]) -> Int? {
+        return requestSync("getChatMembersCount", defaultParameters["getChatMembersCount"], parameters, [
+            "chat_id": chatId])
     }
 
-    func setCharStickerSetAsync(
+    func getChatMembersCountAsync(
             chatId: ChatId,
-        stickerSetName: String,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: SetCharStickerSetCompletion? = nil) {
-        return requestAsync("setCharStickerSet", defaultParameters["setCharStickerSet"], parameters, [
-            "chat_id": chatId,
-"sticker_set_name": stickerSetName],
+            completion: GetChatMembersCountCompletion? = nil) {
+        return requestAsync("getChatMembersCount", defaultParameters["getChatMembersCount"], parameters, [
+            "chat_id": chatId],
             queue: queue, completion: completion)
     }
     typealias GetChatMemberCompletion = (_ result: ChatMember?, _ error: DataTaskError?) -> ()
@@ -763,125 +1348,81 @@ public extension TelegramBot {
 "user_id": userId],
             queue: queue, completion: completion)
     }
-    typealias SendPhotoCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+    typealias SetCharStickerSetCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func sendPhotoSync(
-            caption: String? = nil,
-        chatId: ChatId,
-        disableNotification: Bool? = nil,
-        parseMode: String? = nil,
-        photo: FileInfo,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
-        return requestSync("sendPhoto", defaultParameters["sendPhoto"], parameters, [
-            "caption": caption,
-"chat_id": chatId,
-"disable_notification": disableNotification,
-"parse_mode": parseMode,
-"photo": photo,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId])
+    func setCharStickerSetSync(
+            chatId: ChatId,
+        stickerSetName: String,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("setCharStickerSet", defaultParameters["setCharStickerSet"], parameters, [
+            "chat_id": chatId,
+"sticker_set_name": stickerSetName])
     }
 
-    func sendPhotoAsync(
-            caption: String? = nil,
-        chatId: ChatId,
-        disableNotification: Bool? = nil,
-        parseMode: String? = nil,
-        photo: FileInfo,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
+    func setCharStickerSetAsync(
+            chatId: ChatId,
+        stickerSetName: String,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: SendPhotoCompletion? = nil) {
-        return requestAsync("sendPhoto", defaultParameters["sendPhoto"], parameters, [
-            "caption": caption,
-"chat_id": chatId,
-"disable_notification": disableNotification,
-"parse_mode": parseMode,
-"photo": photo,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId],
+            completion: SetCharStickerSetCompletion? = nil) {
+        return requestAsync("setCharStickerSet", defaultParameters["setCharStickerSet"], parameters, [
+            "chat_id": chatId,
+"sticker_set_name": stickerSetName],
             queue: queue, completion: completion)
     }
-    typealias DeleteChatPhotoCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+    typealias DeleteChatStickerSetCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func deleteChatPhotoSync(
+    func deleteChatStickerSetSync(
             chatId: ChatId,
             _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("deleteChatPhoto", defaultParameters["deleteChatPhoto"], parameters, [
+        return requestSync("deleteChatStickerSet", defaultParameters["deleteChatStickerSet"], parameters, [
             "chat_id": chatId])
     }
 
-    func deleteChatPhotoAsync(
+    func deleteChatStickerSetAsync(
             chatId: ChatId,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: DeleteChatPhotoCompletion? = nil) {
-        return requestAsync("deleteChatPhoto", defaultParameters["deleteChatPhoto"], parameters, [
+            completion: DeleteChatStickerSetCompletion? = nil) {
+        return requestAsync("deleteChatStickerSet", defaultParameters["deleteChatStickerSet"], parameters, [
             "chat_id": chatId],
             queue: queue, completion: completion)
     }
-    typealias SendAudioCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+    typealias AnswerCallbackQueryCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func sendAudioSync(
-            audio: FileInfo,
-        caption: String? = nil,
-        chatId: ChatId,
-        disableNotification: Bool? = nil,
-        duration: Int? = nil,
-        parseMode: String? = nil,
-        performer: String? = nil,
-        replyMarkup: InlineKeyboardMarkup,
-        replyToMessageId: Int? = nil,
-        thumb: FileInfo? = nil,
-        title: String? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
-        return requestSync("sendAudio", defaultParameters["sendAudio"], parameters, [
-            "audio": audio,
-"caption": caption,
-"chat_id": chatId,
-"disable_notification": disableNotification,
-"duration": duration,
-"parse_mode": parseMode,
-"performer": performer,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"thumb": thumb,
-"title": title])
+    func answerCallbackQuerySync(
+            callbackQueryId: String,
+        text: String? = nil,
+        showAlert: Bool? = nil,
+        url: String? = nil,
+        cacheTime: Int? = nil,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("answerCallbackQuery", defaultParameters["answerCallbackQuery"], parameters, [
+            "callback_query_id": callbackQueryId,
+"text": text,
+"show_alert": showAlert,
+"url": url,
+"cache_time": cacheTime])
     }
 
-    func sendAudioAsync(
-            audio: FileInfo,
-        caption: String? = nil,
-        chatId: ChatId,
-        disableNotification: Bool? = nil,
-        duration: Int? = nil,
-        parseMode: String? = nil,
-        performer: String? = nil,
-        replyMarkup: InlineKeyboardMarkup,
-        replyToMessageId: Int? = nil,
-        thumb: FileInfo? = nil,
-        title: String? = nil,
+    func answerCallbackQueryAsync(
+            callbackQueryId: String,
+        text: String? = nil,
+        showAlert: Bool? = nil,
+        url: String? = nil,
+        cacheTime: Int? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: SendAudioCompletion? = nil) {
-        return requestAsync("sendAudio", defaultParameters["sendAudio"], parameters, [
-            "audio": audio,
-"caption": caption,
-"chat_id": chatId,
-"disable_notification": disableNotification,
-"duration": duration,
-"parse_mode": parseMode,
-"performer": performer,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"thumb": thumb,
-"title": title],
+            completion: AnswerCallbackQueryCompletion? = nil) {
+        return requestAsync("answerCallbackQuery", defaultParameters["answerCallbackQuery"], parameters, [
+            "callback_query_id": callbackQueryId,
+"text": text,
+"show_alert": showAlert,
+"url": url,
+"cache_time": cacheTime],
             queue: queue, completion: completion)
     }
     typealias EditMessageTextCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
@@ -889,196 +1430,147 @@ public extension TelegramBot {
     @discardableResult
     func editMessageTextSync(
             chatId: ChatId? = nil,
-        disableWebPagePreview: Bool? = nil,
-        inlineMessageId: String? = nil,
         messageId: Int? = nil,
-        parseMode: String? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        inlineMessageId: String? = nil,
         text: String,
+        parseMode: String? = nil,
+        disableWebPagePreview: Bool? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
         return requestSync("editMessageText", defaultParameters["editMessageText"], parameters, [
             "chat_id": chatId,
-"disable_web_page_preview": disableWebPagePreview,
-"inline_message_id": inlineMessageId,
 "message_id": messageId,
+"inline_message_id": inlineMessageId,
+"text": text,
 "parse_mode": parseMode,
-"reply_markup": replyMarkup,
-"text": text])
+"disable_web_page_preview": disableWebPagePreview,
+"reply_markup": replyMarkup])
     }
 
     func editMessageTextAsync(
             chatId: ChatId? = nil,
-        disableWebPagePreview: Bool? = nil,
-        inlineMessageId: String? = nil,
         messageId: Int? = nil,
-        parseMode: String? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        inlineMessageId: String? = nil,
         text: String,
+        parseMode: String? = nil,
+        disableWebPagePreview: Bool? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: EditMessageTextCompletion? = nil) {
         return requestAsync("editMessageText", defaultParameters["editMessageText"], parameters, [
             "chat_id": chatId,
-"disable_web_page_preview": disableWebPagePreview,
-"inline_message_id": inlineMessageId,
 "message_id": messageId,
+"inline_message_id": inlineMessageId,
+"text": text,
 "parse_mode": parseMode,
-"reply_markup": replyMarkup,
-"text": text],
+"disable_web_page_preview": disableWebPagePreview,
+"reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
-    typealias GetChatMembersCountCompletion = (_ result: Int?, _ error: DataTaskError?) -> ()
+    typealias EditMessageCaptionCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func getChatMembersCountSync(
-            chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> Int? {
-        return requestSync("getChatMembersCount", defaultParameters["getChatMembersCount"], parameters, [
-            "chat_id": chatId])
-    }
-
-    func getChatMembersCountAsync(
-            chatId: ChatId,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: GetChatMembersCountCompletion? = nil) {
-        return requestAsync("getChatMembersCount", defaultParameters["getChatMembersCount"], parameters, [
-            "chat_id": chatId],
-            queue: queue, completion: completion)
-    }
-    typealias SendStickerCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func sendStickerSync(
-            chatId: ChatId,
-        disableNotification: Bool? = nil,
+    func editMessageCaptionSync(
+            chatId: ChatId? = nil,
+        messageId: Int? = nil,
+        inlineMessageId: String? = nil,
+        caption: String? = nil,
+        parseMode: String? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        sticker: FileInfo,
-            _ parameters: [String: Any?] = [:]) -> Message? {
-        return requestSync("sendSticker", defaultParameters["sendSticker"], parameters, [
+            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
+        return requestSync("editMessageCaption", defaultParameters["editMessageCaption"], parameters, [
             "chat_id": chatId,
-"disable_notification": disableNotification,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"sticker": sticker])
+"message_id": messageId,
+"inline_message_id": inlineMessageId,
+"caption": caption,
+"parse_mode": parseMode,
+"reply_markup": replyMarkup])
     }
 
-    func sendStickerAsync(
-            chatId: ChatId,
-        disableNotification: Bool? = nil,
+    func editMessageCaptionAsync(
+            chatId: ChatId? = nil,
+        messageId: Int? = nil,
+        inlineMessageId: String? = nil,
+        caption: String? = nil,
+        parseMode: String? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        sticker: FileInfo,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: SendStickerCompletion? = nil) {
-        return requestAsync("sendSticker", defaultParameters["sendSticker"], parameters, [
+            completion: EditMessageCaptionCompletion? = nil) {
+        return requestAsync("editMessageCaption", defaultParameters["editMessageCaption"], parameters, [
             "chat_id": chatId,
-"disable_notification": disableNotification,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"sticker": sticker],
+"message_id": messageId,
+"inline_message_id": inlineMessageId,
+"caption": caption,
+"parse_mode": parseMode,
+"reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
-    typealias ForwardMessageCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+    typealias EditMessageMediaCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func forwardMessageSync(
-            chatId: ChatId,
-        disableNotification: Bool? = nil,
-        fromChatId: ChatId,
-        messageId: Int,
-            _ parameters: [String: Any?] = [:]) -> Message? {
-        return requestSync("forwardMessage", defaultParameters["forwardMessage"], parameters, [
+    func editMessageMediaSync(
+            chatId: ChatId? = nil,
+        messageId: Int? = nil,
+        inlineMessageId: String? = nil,
+        media: InputMedia,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
+        return requestSync("editMessageMedia", defaultParameters["editMessageMedia"], parameters, [
             "chat_id": chatId,
-"disable_notification": disableNotification,
-"from_chat_id": fromChatId,
-"message_id": messageId])
+"message_id": messageId,
+"inline_message_id": inlineMessageId,
+"media": media,
+"reply_markup": replyMarkup])
     }
 
-    func forwardMessageAsync(
-            chatId: ChatId,
-        disableNotification: Bool? = nil,
-        fromChatId: ChatId,
-        messageId: Int,
+    func editMessageMediaAsync(
+            chatId: ChatId? = nil,
+        messageId: Int? = nil,
+        inlineMessageId: String? = nil,
+        media: InputMedia,
+        replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: ForwardMessageCompletion? = nil) {
-        return requestAsync("forwardMessage", defaultParameters["forwardMessage"], parameters, [
+            completion: EditMessageMediaCompletion? = nil) {
+        return requestAsync("editMessageMedia", defaultParameters["editMessageMedia"], parameters, [
             "chat_id": chatId,
-"disable_notification": disableNotification,
-"from_chat_id": fromChatId,
-"message_id": messageId],
+"message_id": messageId,
+"inline_message_id": inlineMessageId,
+"media": media,
+"reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
-    typealias UnpinChatMessageCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+    typealias EditMessageReplyMarkupCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func unpinChatMessageSync(
-            chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("unpinChatMessage", defaultParameters["unpinChatMessage"], parameters, [
-            "chat_id": chatId])
+    func editMessageReplyMarkupSync(
+            chatId: ChatId? = nil,
+        messageId: Int? = nil,
+        inlineMessageId: String? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
+        return requestSync("editMessageReplyMarkup", defaultParameters["editMessageReplyMarkup"], parameters, [
+            "chat_id": chatId,
+"message_id": messageId,
+"inline_message_id": inlineMessageId,
+"reply_markup": replyMarkup])
     }
 
-    func unpinChatMessageAsync(
-            chatId: ChatId,
+    func editMessageReplyMarkupAsync(
+            chatId: ChatId? = nil,
+        messageId: Int? = nil,
+        inlineMessageId: String? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: UnpinChatMessageCompletion? = nil) {
-        return requestAsync("unpinChatMessage", defaultParameters["unpinChatMessage"], parameters, [
-            "chat_id": chatId],
-            queue: queue, completion: completion)
-    }
-    typealias DeleteStickerFromSetCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func deleteStickerFromSetSync(
-            sticker: String,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("deleteStickerFromSet", defaultParameters["deleteStickerFromSet"], parameters, [
-            "sticker": sticker])
-    }
-
-    func deleteStickerFromSetAsync(
-            sticker: String,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: DeleteStickerFromSetCompletion? = nil) {
-        return requestAsync("deleteStickerFromSet", defaultParameters["deleteStickerFromSet"], parameters, [
-            "sticker": sticker],
-            queue: queue, completion: completion)
-    }
-    typealias GetUpdatesCompletion = (_ result: [Update]?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func getUpdatesSync(
-            allowedUpdates: [String]? = nil,
-        limit: Int? = nil,
-        offset: Int64? = nil,
-        timeout: Int? = nil,
-            _ parameters: [String: Any?] = [:]) -> [Update]? {
-        return requestSync("getUpdates", defaultParameters["getUpdates"], parameters, [
-            "allowed_updates": allowedUpdates,
-"limit": limit,
-"offset": offset,
-"timeout": timeout])
-    }
-
-    func getUpdatesAsync(
-            allowedUpdates: [String]? = nil,
-        limit: Int? = nil,
-        offset: Int64? = nil,
-        timeout: Int? = nil,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: GetUpdatesCompletion? = nil) {
-        return requestAsync("getUpdates", defaultParameters["getUpdates"], parameters, [
-            "allowed_updates": allowedUpdates,
-"limit": limit,
-"offset": offset,
-"timeout": timeout],
+            completion: EditMessageReplyMarkupCompletion? = nil) {
+        return requestAsync("editMessageReplyMarkup", defaultParameters["editMessageReplyMarkup"], parameters, [
+            "chat_id": chatId,
+"message_id": messageId,
+"inline_message_id": inlineMessageId,
+"reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
     typealias StopPollCompletion = (_ result: Poll?, _ error: DataTaskError?) -> ()
@@ -1108,85 +1600,267 @@ public extension TelegramBot {
 "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
-    typealias GetChatCompletion = (_ result: Chat?, _ error: DataTaskError?) -> ()
+    typealias DeleteMessageCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func getChatSync(
+    func deleteMessageSync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> Chat? {
-        return requestSync("getChat", defaultParameters["getChat"], parameters, [
-            "chat_id": chatId])
+        messageId: Int,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("deleteMessage", defaultParameters["deleteMessage"], parameters, [
+            "chat_id": chatId,
+"message_id": messageId])
     }
 
-    func getChatAsync(
+    func deleteMessageAsync(
             chatId: ChatId,
+        messageId: Int,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: GetChatCompletion? = nil) {
-        return requestAsync("getChat", defaultParameters["getChat"], parameters, [
-            "chat_id": chatId],
+            completion: DeleteMessageCompletion? = nil) {
+        return requestAsync("deleteMessage", defaultParameters["deleteMessage"], parameters, [
+            "chat_id": chatId,
+"message_id": messageId],
             queue: queue, completion: completion)
     }
-    typealias ExportChatInviteLinkCompletion = (_ result: String?, _ error: DataTaskError?) -> ()
+    typealias SendStickerCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func exportChatInviteLinkSync(
+    func sendStickerSync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> String? {
-        return requestSync("exportChatInviteLink", defaultParameters["exportChatInviteLink"], parameters, [
-            "chat_id": chatId])
+        sticker: FileInfo,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
+            _ parameters: [String: Any?] = [:]) -> Message? {
+        return requestSync("sendSticker", defaultParameters["sendSticker"], parameters, [
+            "chat_id": chatId,
+"sticker": sticker,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
     }
 
-    func exportChatInviteLinkAsync(
+    func sendStickerAsync(
             chatId: ChatId,
+        sticker: FileInfo,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: ExportChatInviteLinkCompletion? = nil) {
-        return requestAsync("exportChatInviteLink", defaultParameters["exportChatInviteLink"], parameters, [
-            "chat_id": chatId],
+            completion: SendStickerCompletion? = nil) {
+        return requestAsync("sendSticker", defaultParameters["sendSticker"], parameters, [
+            "chat_id": chatId,
+"sticker": sticker,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
-    typealias SetGameScoreCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
+    typealias GetStickerSetCompletion = (_ result: StickerSet?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func setGameScoreSync(
-            chatId: Int64? = nil,
-        disableEditMessage: Bool? = nil,
-        force: Bool? = nil,
-        inlineMessageId: Int? = nil,
-        messageId: Int? = nil,
-        score: Int,
-        userId: Int64,
-            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
-        return requestSync("setGameScore", defaultParameters["setGameScore"], parameters, [
-            "chat_id": chatId,
-"disable_edit_message": disableEditMessage,
-"force": force,
-"inline_message_id": inlineMessageId,
-"message_id": messageId,
-"score": score,
-"user_id": userId])
+    func getStickerSetSync(
+            name: String,
+            _ parameters: [String: Any?] = [:]) -> StickerSet? {
+        return requestSync("getStickerSet", defaultParameters["getStickerSet"], parameters, [
+            "name": name])
     }
 
-    func setGameScoreAsync(
-            chatId: Int64? = nil,
-        disableEditMessage: Bool? = nil,
-        force: Bool? = nil,
-        inlineMessageId: Int? = nil,
-        messageId: Int? = nil,
-        score: Int,
-        userId: Int64,
+    func getStickerSetAsync(
+            name: String,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: SetGameScoreCompletion? = nil) {
-        return requestAsync("setGameScore", defaultParameters["setGameScore"], parameters, [
-            "chat_id": chatId,
-"disable_edit_message": disableEditMessage,
-"force": force,
-"inline_message_id": inlineMessageId,
-"message_id": messageId,
-"score": score,
-"user_id": userId],
+            completion: GetStickerSetCompletion? = nil) {
+        return requestAsync("getStickerSet", defaultParameters["getStickerSet"], parameters, [
+            "name": name],
+            queue: queue, completion: completion)
+    }
+    typealias UploadStickerFileCompletion = (_ result: File?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func uploadStickerFileSync(
+            userId: Int64,
+        pngSticker: FileInfo,
+            _ parameters: [String: Any?] = [:]) -> File? {
+        return requestSync("uploadStickerFile", defaultParameters["uploadStickerFile"], parameters, [
+            "user_id": userId,
+"png_sticker": pngSticker])
+    }
+
+    func uploadStickerFileAsync(
+            userId: Int64,
+        pngSticker: FileInfo,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: UploadStickerFileCompletion? = nil) {
+        return requestAsync("uploadStickerFile", defaultParameters["uploadStickerFile"], parameters, [
+            "user_id": userId,
+"png_sticker": pngSticker],
+            queue: queue, completion: completion)
+    }
+    typealias CreateNewStickerSetCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func createNewStickerSetSync(
+            userId: Int64,
+        name: String,
+        title: String,
+        pngSticker: FileInfo,
+        emojis: String,
+        containsMasks: Bool? = nil,
+        maskPosition: Bool? = nil,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("createNewStickerSet", defaultParameters["createNewStickerSet"], parameters, [
+            "user_id": userId,
+"name": name,
+"title": title,
+"png_sticker": pngSticker,
+"emojis": emojis,
+"contains_masks": containsMasks,
+"mask_position": maskPosition])
+    }
+
+    func createNewStickerSetAsync(
+            userId: Int64,
+        name: String,
+        title: String,
+        pngSticker: FileInfo,
+        emojis: String,
+        containsMasks: Bool? = nil,
+        maskPosition: Bool? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: CreateNewStickerSetCompletion? = nil) {
+        return requestAsync("createNewStickerSet", defaultParameters["createNewStickerSet"], parameters, [
+            "user_id": userId,
+"name": name,
+"title": title,
+"png_sticker": pngSticker,
+"emojis": emojis,
+"contains_masks": containsMasks,
+"mask_position": maskPosition],
+            queue: queue, completion: completion)
+    }
+    typealias AddStickerToSetCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func addStickerToSetSync(
+            userId: Int,
+        name: String,
+        pngSticker: FileInfo,
+        emojis: String,
+        maskPosition: MaskPosition? = nil,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("addStickerToSet", defaultParameters["addStickerToSet"], parameters, [
+            "user_id": userId,
+"name": name,
+"png_sticker": pngSticker,
+"emojis": emojis,
+"mask_position": maskPosition])
+    }
+
+    func addStickerToSetAsync(
+            userId: Int,
+        name: String,
+        pngSticker: FileInfo,
+        emojis: String,
+        maskPosition: MaskPosition? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: AddStickerToSetCompletion? = nil) {
+        return requestAsync("addStickerToSet", defaultParameters["addStickerToSet"], parameters, [
+            "user_id": userId,
+"name": name,
+"png_sticker": pngSticker,
+"emojis": emojis,
+"mask_position": maskPosition],
+            queue: queue, completion: completion)
+    }
+    typealias SetStickerPositionInSetCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func setStickerPositionInSetSync(
+            sticker: String,
+        position: Int,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("setStickerPositionInSet", defaultParameters["setStickerPositionInSet"], parameters, [
+            "sticker": sticker,
+"position": position])
+    }
+
+    func setStickerPositionInSetAsync(
+            sticker: String,
+        position: Int,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SetStickerPositionInSetCompletion? = nil) {
+        return requestAsync("setStickerPositionInSet", defaultParameters["setStickerPositionInSet"], parameters, [
+            "sticker": sticker,
+"position": position],
+            queue: queue, completion: completion)
+    }
+    typealias DeleteStickerFromSetCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func deleteStickerFromSetSync(
+            sticker: String,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("deleteStickerFromSet", defaultParameters["deleteStickerFromSet"], parameters, [
+            "sticker": sticker])
+    }
+
+    func deleteStickerFromSetAsync(
+            sticker: String,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: DeleteStickerFromSetCompletion? = nil) {
+        return requestAsync("deleteStickerFromSet", defaultParameters["deleteStickerFromSet"], parameters, [
+            "sticker": sticker],
+            queue: queue, completion: completion)
+    }
+    typealias AnswerInlineQueryCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func answerInlineQuerySync(
+            inlineQueryId: String,
+        results: [InlineQueryResult],
+        cacheTime: Int? = nil,
+        isPersonal: Bool? = nil,
+        nextOffset: String? = nil,
+        switchPmText: String? = nil,
+        switchPmParameter: String? = nil,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("answerInlineQuery", defaultParameters["answerInlineQuery"], parameters, [
+            "inline_query_id": inlineQueryId,
+"results": results,
+"cache_time": cacheTime,
+"is_personal": isPersonal,
+"next_offset": nextOffset,
+"switch_pm_text": switchPmText,
+"switch_pm_parameter": switchPmParameter])
+    }
+
+    func answerInlineQueryAsync(
+            inlineQueryId: String,
+        results: [InlineQueryResult],
+        cacheTime: Int? = nil,
+        isPersonal: Bool? = nil,
+        nextOffset: String? = nil,
+        switchPmText: String? = nil,
+        switchPmParameter: String? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: AnswerInlineQueryCompletion? = nil) {
+        return requestAsync("answerInlineQuery", defaultParameters["answerInlineQuery"], parameters, [
+            "inline_query_id": inlineQueryId,
+"results": results,
+"cache_time": cacheTime,
+"is_personal": isPersonal,
+"next_offset": nextOffset,
+"switch_pm_text": switchPmText,
+"switch_pm_parameter": switchPmParameter],
             queue: queue, completion: completion)
     }
     typealias SendInvoiceCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
@@ -1194,106 +1868,164 @@ public extension TelegramBot {
     @discardableResult
     func sendInvoiceSync(
             chatId: Int64,
-        currency: String,
+        title: String,
         description: String,
-        disableNotification: Bool? = nil,
-        isFlexible: Bool? = nil,
-        needEmail: Bool? = nil,
-        needName: Bool? = nil,
-        needPhoneNumber: Bool? = nil,
-        needShippingAddress: Bool? = nil,
         payload: String,
-        photoHeight: Int? = nil,
-        photoSize: Int? = nil,
-        photoUrl: String? = nil,
-        photoWidth: Int? = nil,
+        providerToken: String,
+        startParameter: String,
+        currency: String,
         prices: [LabeledPrice],
         providerData: String? = nil,
-        providerToken: String,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        sendEmailToProvider: Bool? = nil,
+        photoUrl: String? = nil,
+        photoSize: Int? = nil,
+        photoWidth: Int? = nil,
+        photoHeight: Int? = nil,
+        needName: Bool? = nil,
+        needPhoneNumber: Bool? = nil,
+        needEmail: Bool? = nil,
+        needShippingAddress: Bool? = nil,
         sendPhoneNumberToProvider: Bool? = nil,
-        startParameter: String,
-        title: String,
+        sendEmailToProvider: Bool? = nil,
+        isFlexible: Bool? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendInvoice", defaultParameters["sendInvoice"], parameters, [
             "chat_id": chatId,
-"currency": currency,
+"title": title,
 "description": description,
-"disable_notification": disableNotification,
-"is_flexible": isFlexible,
-"need_email": needEmail,
-"need_name": needName,
-"need_phone_number": needPhoneNumber,
-"need_shipping_address": needShippingAddress,
 "payload": payload,
-"photo_height": photoHeight,
-"photo_size": photoSize,
-"photo_url": photoUrl,
-"photo_width": photoWidth,
+"provider_token": providerToken,
+"start_parameter": startParameter,
+"currency": currency,
 "prices": prices,
 "provider_data": providerData,
-"provider_token": providerToken,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"send_email_to_provider": sendEmailToProvider,
+"photo_url": photoUrl,
+"photo_size": photoSize,
+"photo_width": photoWidth,
+"photo_height": photoHeight,
+"need_name": needName,
+"need_phone_number": needPhoneNumber,
+"need_email": needEmail,
+"need_shipping_address": needShippingAddress,
 "send_phone_number_to_provider": sendPhoneNumberToProvider,
-"start_parameter": startParameter,
-"title": title])
+"send_email_to_provider": sendEmailToProvider,
+"is_flexible": isFlexible,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
     }
 
     func sendInvoiceAsync(
             chatId: Int64,
-        currency: String,
+        title: String,
         description: String,
-        disableNotification: Bool? = nil,
-        isFlexible: Bool? = nil,
-        needEmail: Bool? = nil,
-        needName: Bool? = nil,
-        needPhoneNumber: Bool? = nil,
-        needShippingAddress: Bool? = nil,
         payload: String,
-        photoHeight: Int? = nil,
-        photoSize: Int? = nil,
-        photoUrl: String? = nil,
-        photoWidth: Int? = nil,
+        providerToken: String,
+        startParameter: String,
+        currency: String,
         prices: [LabeledPrice],
         providerData: String? = nil,
-        providerToken: String,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        sendEmailToProvider: Bool? = nil,
+        photoUrl: String? = nil,
+        photoSize: Int? = nil,
+        photoWidth: Int? = nil,
+        photoHeight: Int? = nil,
+        needName: Bool? = nil,
+        needPhoneNumber: Bool? = nil,
+        needEmail: Bool? = nil,
+        needShippingAddress: Bool? = nil,
         sendPhoneNumberToProvider: Bool? = nil,
-        startParameter: String,
-        title: String,
+        sendEmailToProvider: Bool? = nil,
+        isFlexible: Bool? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendInvoiceCompletion? = nil) {
         return requestAsync("sendInvoice", defaultParameters["sendInvoice"], parameters, [
             "chat_id": chatId,
-"currency": currency,
+"title": title,
 "description": description,
-"disable_notification": disableNotification,
-"is_flexible": isFlexible,
-"need_email": needEmail,
-"need_name": needName,
-"need_phone_number": needPhoneNumber,
-"need_shipping_address": needShippingAddress,
 "payload": payload,
-"photo_height": photoHeight,
-"photo_size": photoSize,
-"photo_url": photoUrl,
-"photo_width": photoWidth,
+"provider_token": providerToken,
+"start_parameter": startParameter,
+"currency": currency,
 "prices": prices,
 "provider_data": providerData,
-"provider_token": providerToken,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"send_email_to_provider": sendEmailToProvider,
+"photo_url": photoUrl,
+"photo_size": photoSize,
+"photo_width": photoWidth,
+"photo_height": photoHeight,
+"need_name": needName,
+"need_phone_number": needPhoneNumber,
+"need_email": needEmail,
+"need_shipping_address": needShippingAddress,
 "send_phone_number_to_provider": sendPhoneNumberToProvider,
-"start_parameter": startParameter,
-"title": title],
+"send_email_to_provider": sendEmailToProvider,
+"is_flexible": isFlexible,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias AnswerShippingQueryCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func answerShippingQuerySync(
+            shippingQueryId: String,
+        ok: Bool,
+        shippingOptions: [ShippingOption]? = nil,
+        errorMessage: String? = nil,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("answerShippingQuery", defaultParameters["answerShippingQuery"], parameters, [
+            "shipping_query_id": shippingQueryId,
+"ok": ok,
+"shipping_options": shippingOptions,
+"error_message": errorMessage])
+    }
+
+    func answerShippingQueryAsync(
+            shippingQueryId: String,
+        ok: Bool,
+        shippingOptions: [ShippingOption]? = nil,
+        errorMessage: String? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: AnswerShippingQueryCompletion? = nil) {
+        return requestAsync("answerShippingQuery", defaultParameters["answerShippingQuery"], parameters, [
+            "shipping_query_id": shippingQueryId,
+"ok": ok,
+"shipping_options": shippingOptions,
+"error_message": errorMessage],
+            queue: queue, completion: completion)
+    }
+    typealias AnswerPreCheckoutQueryCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func answerPreCheckoutQuerySync(
+            preCheckoutQueryId: String,
+        ok: Bool,
+        errorMessage: String? = nil,
+            _ parameters: [String: Any?] = [:]) -> Bool? {
+        return requestSync("answerPreCheckoutQuery", defaultParameters["answerPreCheckoutQuery"], parameters, [
+            "pre_checkout_query_id": preCheckoutQueryId,
+"ok": ok,
+"error_message": errorMessage])
+    }
+
+    func answerPreCheckoutQueryAsync(
+            preCheckoutQueryId: String,
+        ok: Bool,
+        errorMessage: String? = nil,
+            _ parameters: [String: Any?] = [:],
+            queue: DispatchQueue = .main,
+            completion: AnswerPreCheckoutQueryCompletion? = nil) {
+        return requestAsync("answerPreCheckoutQuery", defaultParameters["answerPreCheckoutQuery"], parameters, [
+            "pre_checkout_query_id": preCheckoutQueryId,
+"ok": ok,
+"error_message": errorMessage],
             queue: queue, completion: completion)
     }
     typealias SendGameCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
@@ -1301,848 +2033,108 @@ public extension TelegramBot {
     @discardableResult
     func sendGameSync(
             chatId: Int64,
-        disableNotification: Bool? = nil,
         gameShortName: String,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendGame", defaultParameters["sendGame"], parameters, [
             "chat_id": chatId,
-"disable_notification": disableNotification,
 "game_short_name": gameShortName,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId])
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
     }
 
     func sendGameAsync(
             chatId: Int64,
-        disableNotification: Bool? = nil,
         gameShortName: String,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
+        replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendGameCompletion? = nil) {
         return requestAsync("sendGame", defaultParameters["sendGame"], parameters, [
             "chat_id": chatId,
-"disable_notification": disableNotification,
 "game_short_name": gameShortName,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId],
-            queue: queue, completion: completion)
-    }
-    typealias SendMediaGroupCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func sendMediaGroupSync(
-            chatId: ChatId,
-        disableNotification: Bool? = nil,
-        media: [InputMedia],
-        replyToMessageId: Int? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
-        return requestSync("sendMediaGroup", defaultParameters["sendMediaGroup"], parameters, [
-            "chat_id": chatId,
 "disable_notification": disableNotification,
-"media": media,
-"reply_to_message_id": replyToMessageId])
-    }
-
-    func sendMediaGroupAsync(
-            chatId: ChatId,
-        disableNotification: Bool? = nil,
-        media: [InputMedia],
-        replyToMessageId: Int? = nil,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: SendMediaGroupCompletion? = nil) {
-        return requestAsync("sendMediaGroup", defaultParameters["sendMediaGroup"], parameters, [
-            "chat_id": chatId,
-"disable_notification": disableNotification,
-"media": media,
-"reply_to_message_id": replyToMessageId],
-            queue: queue, completion: completion)
-    }
-    typealias EditMessageCaptionCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func editMessageCaptionSync(
-            caption: String? = nil,
-        chatId: ChatId? = nil,
-        inlineMessageId: String? = nil,
-        messageId: Int? = nil,
-        parseMode: String? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
-        return requestSync("editMessageCaption", defaultParameters["editMessageCaption"], parameters, [
-            "caption": caption,
-"chat_id": chatId,
-"inline_message_id": inlineMessageId,
-"message_id": messageId,
-"parse_mode": parseMode,
-"reply_markup": replyMarkup])
-    }
-
-    func editMessageCaptionAsync(
-            caption: String? = nil,
-        chatId: ChatId? = nil,
-        inlineMessageId: String? = nil,
-        messageId: Int? = nil,
-        parseMode: String? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: EditMessageCaptionCompletion? = nil) {
-        return requestAsync("editMessageCaption", defaultParameters["editMessageCaption"], parameters, [
-            "caption": caption,
-"chat_id": chatId,
-"inline_message_id": inlineMessageId,
-"message_id": messageId,
-"parse_mode": parseMode,
+"reply_to_message_id": replyToMessageId,
 "reply_markup": replyMarkup],
             queue: queue, completion: completion)
     }
-    typealias LeaveChatCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+    typealias SetGameScoreCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func leaveChatSync(
-            chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("leaveChat", defaultParameters["leaveChat"], parameters, [
-            "chat_id": chatId])
-    }
-
-    func leaveChatAsync(
-            chatId: ChatId,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: LeaveChatCompletion? = nil) {
-        return requestAsync("leaveChat", defaultParameters["leaveChat"], parameters, [
-            "chat_id": chatId],
-            queue: queue, completion: completion)
-    }
-    typealias StopMessageLiveLocationCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func stopMessageLiveLocationSync(
-            chatId: ChatId? = nil,
-        inlineMessageId: String? = nil,
+    func setGameScoreSync(
+            userId: Int64,
+        score: Int,
+        force: Bool? = nil,
+        disableEditMessage: Bool? = nil,
+        chatId: Int64? = nil,
         messageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        inlineMessageId: Int? = nil,
             _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
-        return requestSync("stopMessageLiveLocation", defaultParameters["stopMessageLiveLocation"], parameters, [
-            "chat_id": chatId,
-"inline_message_id": inlineMessageId,
+        return requestSync("setGameScore", defaultParameters["setGameScore"], parameters, [
+            "user_id": userId,
+"score": score,
+"force": force,
+"disable_edit_message": disableEditMessage,
+"chat_id": chatId,
 "message_id": messageId,
-"reply_markup": replyMarkup])
+"inline_message_id": inlineMessageId])
     }
 
-    func stopMessageLiveLocationAsync(
-            chatId: ChatId? = nil,
-        inlineMessageId: String? = nil,
+    func setGameScoreAsync(
+            userId: Int64,
+        score: Int,
+        force: Bool? = nil,
+        disableEditMessage: Bool? = nil,
+        chatId: Int64? = nil,
         messageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        inlineMessageId: Int? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: StopMessageLiveLocationCompletion? = nil) {
-        return requestAsync("stopMessageLiveLocation", defaultParameters["stopMessageLiveLocation"], parameters, [
-            "chat_id": chatId,
-"inline_message_id": inlineMessageId,
+            completion: SetGameScoreCompletion? = nil) {
+        return requestAsync("setGameScore", defaultParameters["setGameScore"], parameters, [
+            "user_id": userId,
+"score": score,
+"force": force,
+"disable_edit_message": disableEditMessage,
+"chat_id": chatId,
 "message_id": messageId,
-"reply_markup": replyMarkup],
+"inline_message_id": inlineMessageId],
             queue: queue, completion: completion)
     }
-    typealias AnswerCallbackQueryCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+    typealias GetGameHighScoresCompletion = (_ result: [GameHighScore]?, _ error: DataTaskError?) -> ()
 
     @discardableResult
-    func answerCallbackQuerySync(
-            cacheTime: Int? = nil,
-        callbackQueryId: String,
-        showAlert: Bool? = nil,
-        text: String? = nil,
-        url: String? = nil,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("answerCallbackQuery", defaultParameters["answerCallbackQuery"], parameters, [
-            "cache_time": cacheTime,
-"callback_query_id": callbackQueryId,
-"show_alert": showAlert,
-"text": text,
-"url": url])
-    }
-
-    func answerCallbackQueryAsync(
-            cacheTime: Int? = nil,
-        callbackQueryId: String,
-        showAlert: Bool? = nil,
-        text: String? = nil,
-        url: String? = nil,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: AnswerCallbackQueryCompletion? = nil) {
-        return requestAsync("answerCallbackQuery", defaultParameters["answerCallbackQuery"], parameters, [
-            "cache_time": cacheTime,
-"callback_query_id": callbackQueryId,
-"show_alert": showAlert,
-"text": text,
-"url": url],
-            queue: queue, completion: completion)
-    }
-    typealias AnswerPreCheckoutQueryCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func answerPreCheckoutQuerySync(
-            errorMessage: String? = nil,
-        ok: Bool,
-        preCheckoutQueryId: String,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("answerPreCheckoutQuery", defaultParameters["answerPreCheckoutQuery"], parameters, [
-            "error_message": errorMessage,
-"ok": ok,
-"pre_checkout_query_id": preCheckoutQueryId])
-    }
-
-    func answerPreCheckoutQueryAsync(
-            errorMessage: String? = nil,
-        ok: Bool,
-        preCheckoutQueryId: String,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: AnswerPreCheckoutQueryCompletion? = nil) {
-        return requestAsync("answerPreCheckoutQuery", defaultParameters["answerPreCheckoutQuery"], parameters, [
-            "error_message": errorMessage,
-"ok": ok,
-"pre_checkout_query_id": preCheckoutQueryId],
-            queue: queue, completion: completion)
-    }
-    typealias SendVenueCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func sendVenueSync(
-            address: String,
-        chatId: ChatId,
-        disableNotification: Bool? = nil,
-        foursquareId: String? = nil,
-        foursquareType: String? = nil,
-        latitude: Float,
-        longitude: Float,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        title: String,
-            _ parameters: [String: Any?] = [:]) -> Message? {
-        return requestSync("sendVenue", defaultParameters["sendVenue"], parameters, [
-            "address": address,
+    func getGameHighScoresSync(
+            userId: Int64,
+        chatId: Int64? = nil,
+        messageId: Int? = nil,
+        inlineMessageId: String? = nil,
+            _ parameters: [String: Any?] = [:]) -> [GameHighScore]? {
+        return requestSync("getGameHighScores", defaultParameters["getGameHighScores"], parameters, [
+            "user_id": userId,
 "chat_id": chatId,
-"disable_notification": disableNotification,
-"foursquare_id": foursquareId,
-"foursquare_type": foursquareType,
-"latitude": latitude,
-"longitude": longitude,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"title": title])
+"message_id": messageId,
+"inline_message_id": inlineMessageId])
     }
 
-    func sendVenueAsync(
-            address: String,
-        chatId: ChatId,
-        disableNotification: Bool? = nil,
-        foursquareId: String? = nil,
-        foursquareType: String? = nil,
-        latitude: Float,
-        longitude: Float,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        title: String,
+    func getGameHighScoresAsync(
+            userId: Int64,
+        chatId: Int64? = nil,
+        messageId: Int? = nil,
+        inlineMessageId: String? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
-            completion: SendVenueCompletion? = nil) {
-        return requestAsync("sendVenue", defaultParameters["sendVenue"], parameters, [
-            "address": address,
+            completion: GetGameHighScoresCompletion? = nil) {
+        return requestAsync("getGameHighScores", defaultParameters["getGameHighScores"], parameters, [
+            "user_id": userId,
 "chat_id": chatId,
-"disable_notification": disableNotification,
-"foursquare_id": foursquareId,
-"foursquare_type": foursquareType,
-"latitude": latitude,
-"longitude": longitude,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"title": title],
-            queue: queue, completion: completion)
-    }
-    typealias SetChatPhotoCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func setChatPhotoSync(
-            chatId: ChatId,
-        photo: FileInfo,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("setChatPhoto", defaultParameters["setChatPhoto"], parameters, [
-            "chat_id": chatId,
-"photo": photo])
-    }
-
-    func setChatPhotoAsync(
-            chatId: ChatId,
-        photo: FileInfo,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: SetChatPhotoCompletion? = nil) {
-        return requestAsync("setChatPhoto", defaultParameters["setChatPhoto"], parameters, [
-            "chat_id": chatId,
-"photo": photo],
-            queue: queue, completion: completion)
-    }
-    typealias RestrictChatMemberCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func restrictChatMemberSync(
-            chatId: ChatId,
-        permissions: ChatPermissions,
-        untilDate: Date? = nil,
-        userId: Int64,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("restrictChatMember", defaultParameters["restrictChatMember"], parameters, [
-            "chat_id": chatId,
-"permissions": permissions,
-"until_date": untilDate,
-"user_id": userId])
-    }
-
-    func restrictChatMemberAsync(
-            chatId: ChatId,
-        permissions: ChatPermissions,
-        untilDate: Date? = nil,
-        userId: Int64,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: RestrictChatMemberCompletion? = nil) {
-        return requestAsync("restrictChatMember", defaultParameters["restrictChatMember"], parameters, [
-            "chat_id": chatId,
-"permissions": permissions,
-"until_date": untilDate,
-"user_id": userId],
-            queue: queue, completion: completion)
-    }
-    typealias SendVideoCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func sendVideoSync(
-            caption: String? = nil,
-        chatId: ChatId,
-        disableNotification: Bool? = nil,
-        duration: Int? = nil,
-        height: Int? = nil,
-        parseMode: String? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        supportsStreaming: Bool? = nil,
-        thumb: InputFileOrString? = nil,
-        video: FileInfo,
-        width: Int? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
-        return requestSync("sendVideo", defaultParameters["sendVideo"], parameters, [
-            "caption": caption,
-"chat_id": chatId,
-"disable_notification": disableNotification,
-"duration": duration,
-"height": height,
-"parse_mode": parseMode,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"supports_streaming": supportsStreaming,
-"thumb": thumb,
-"video": video,
-"width": width])
-    }
-
-    func sendVideoAsync(
-            caption: String? = nil,
-        chatId: ChatId,
-        disableNotification: Bool? = nil,
-        duration: Int? = nil,
-        height: Int? = nil,
-        parseMode: String? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        supportsStreaming: Bool? = nil,
-        thumb: InputFileOrString? = nil,
-        video: FileInfo,
-        width: Int? = nil,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: SendVideoCompletion? = nil) {
-        return requestAsync("sendVideo", defaultParameters["sendVideo"], parameters, [
-            "caption": caption,
-"chat_id": chatId,
-"disable_notification": disableNotification,
-"duration": duration,
-"height": height,
-"parse_mode": parseMode,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"supports_streaming": supportsStreaming,
-"thumb": thumb,
-"video": video,
-"width": width],
-            queue: queue, completion: completion)
-    }
-    typealias CreateNewStickerSetCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func createNewStickerSetSync(
-            containsMasks: Bool? = nil,
-        emojis: String,
-        maskPosition: Bool? = nil,
-        name: String,
-        pngSticker: FileInfo,
-        title: String,
-        userId: Int64,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("createNewStickerSet", defaultParameters["createNewStickerSet"], parameters, [
-            "contains_masks": containsMasks,
-"emojis": emojis,
-"mask_position": maskPosition,
-"name": name,
-"png_sticker": pngSticker,
-"title": title,
-"user_id": userId])
-    }
-
-    func createNewStickerSetAsync(
-            containsMasks: Bool? = nil,
-        emojis: String,
-        maskPosition: Bool? = nil,
-        name: String,
-        pngSticker: FileInfo,
-        title: String,
-        userId: Int64,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: CreateNewStickerSetCompletion? = nil) {
-        return requestAsync("createNewStickerSet", defaultParameters["createNewStickerSet"], parameters, [
-            "contains_masks": containsMasks,
-"emojis": emojis,
-"mask_position": maskPosition,
-"name": name,
-"png_sticker": pngSticker,
-"title": title,
-"user_id": userId],
-            queue: queue, completion: completion)
-    }
-    typealias SendVoiceCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func sendVoiceSync(
-            caption: String? = nil,
-        chatId: ChatId,
-        disableNotification: Bool? = nil,
-        duration: Int? = nil,
-        parseMode: String? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Bool? = nil,
-        voice: FileInfo,
-            _ parameters: [String: Any?] = [:]) -> Message? {
-        return requestSync("sendVoice", defaultParameters["sendVoice"], parameters, [
-            "caption": caption,
-"chat_id": chatId,
-"disable_notification": disableNotification,
-"duration": duration,
-"parse_mode": parseMode,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"voice": voice])
-    }
-
-    func sendVoiceAsync(
-            caption: String? = nil,
-        chatId: ChatId,
-        disableNotification: Bool? = nil,
-        duration: Int? = nil,
-        parseMode: String? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Bool? = nil,
-        voice: FileInfo,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: SendVoiceCompletion? = nil) {
-        return requestAsync("sendVoice", defaultParameters["sendVoice"], parameters, [
-            "caption": caption,
-"chat_id": chatId,
-"disable_notification": disableNotification,
-"duration": duration,
-"parse_mode": parseMode,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"voice": voice],
-            queue: queue, completion: completion)
-    }
-    typealias PromoteChatMemberCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func promoteChatMemberSync(
-            canChangeInfo: Bool? = nil,
-        canDeleteMessages: Bool? = nil,
-        canEditMessages: Bool? = nil,
-        canInviteUsers: Bool? = nil,
-        canPinMessages: Bool? = nil,
-        canPostMessages: Bool? = nil,
-        canPromoteMembers: Bool? = nil,
-        canRestrictMembers: Bool? = nil,
-        chatId: ChatId,
-        userId: Int,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("promoteChatMember", defaultParameters["promoteChatMember"], parameters, [
-            "can_change_info": canChangeInfo,
-"can_delete_messages": canDeleteMessages,
-"can_edit_messages": canEditMessages,
-"can_invite_users": canInviteUsers,
-"can_pin_messages": canPinMessages,
-"can_post_messages": canPostMessages,
-"can_promote_members": canPromoteMembers,
-"can_restrict_members": canRestrictMembers,
-"chat_id": chatId,
-"user_id": userId])
-    }
-
-    func promoteChatMemberAsync(
-            canChangeInfo: Bool? = nil,
-        canDeleteMessages: Bool? = nil,
-        canEditMessages: Bool? = nil,
-        canInviteUsers: Bool? = nil,
-        canPinMessages: Bool? = nil,
-        canPostMessages: Bool? = nil,
-        canPromoteMembers: Bool? = nil,
-        canRestrictMembers: Bool? = nil,
-        chatId: ChatId,
-        userId: Int,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: PromoteChatMemberCompletion? = nil) {
-        return requestAsync("promoteChatMember", defaultParameters["promoteChatMember"], parameters, [
-            "can_change_info": canChangeInfo,
-"can_delete_messages": canDeleteMessages,
-"can_edit_messages": canEditMessages,
-"can_invite_users": canInviteUsers,
-"can_pin_messages": canPinMessages,
-"can_post_messages": canPostMessages,
-"can_promote_members": canPromoteMembers,
-"can_restrict_members": canRestrictMembers,
-"chat_id": chatId,
-"user_id": userId],
-            queue: queue, completion: completion)
-    }
-    typealias GetUserProfilePhotosCompletion = (_ result: UserProfilePhotos?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func getUserProfilePhotosSync(
-            limit: Int? = nil,
-        offset: Int? = nil,
-        userId: Int64,
-            _ parameters: [String: Any?] = [:]) -> UserProfilePhotos? {
-        return requestSync("getUserProfilePhotos", defaultParameters["getUserProfilePhotos"], parameters, [
-            "limit": limit,
-"offset": offset,
-"user_id": userId])
-    }
-
-    func getUserProfilePhotosAsync(
-            limit: Int? = nil,
-        offset: Int? = nil,
-        userId: Int64,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: GetUserProfilePhotosCompletion? = nil) {
-        return requestAsync("getUserProfilePhotos", defaultParameters["getUserProfilePhotos"], parameters, [
-            "limit": limit,
-"offset": offset,
-"user_id": userId],
-            queue: queue, completion: completion)
-    }
-    typealias SendVideoNoteCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func sendVideoNoteSync(
-            chatId: ChatId,
-        disableNotification: Bool? = nil,
-        duration: Int? = nil,
-        length: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        thumb: FileInfo? = nil,
-        videoNote: FileInfo,
-            _ parameters: [String: Any?] = [:]) -> Message? {
-        return requestSync("sendVideoNote", defaultParameters["sendVideoNote"], parameters, [
-            "chat_id": chatId,
-"disable_notification": disableNotification,
-"duration": duration,
-"length": length,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"thumb": thumb,
-"video_note": videoNote])
-    }
-
-    func sendVideoNoteAsync(
-            chatId: ChatId,
-        disableNotification: Bool? = nil,
-        duration: Int? = nil,
-        length: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        thumb: FileInfo? = nil,
-        videoNote: FileInfo,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: SendVideoNoteCompletion? = nil) {
-        return requestAsync("sendVideoNote", defaultParameters["sendVideoNote"], parameters, [
-            "chat_id": chatId,
-"disable_notification": disableNotification,
-"duration": duration,
-"length": length,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"thumb": thumb,
-"video_note": videoNote],
-            queue: queue, completion: completion)
-    }
-    typealias SendLocationCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func sendLocationSync(
-            chatId: ChatId,
-        disableNotification: Bool? = nil,
-        latitude: Float,
-        livePeriod: Int? = nil,
-        longitude: Float,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
-        return requestSync("sendLocation", defaultParameters["sendLocation"], parameters, [
-            "chat_id": chatId,
-"disable_notification": disableNotification,
-"latitude": latitude,
-"live_period": livePeriod,
-"longitude": longitude,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId])
-    }
-
-    func sendLocationAsync(
-            chatId: ChatId,
-        disableNotification: Bool? = nil,
-        latitude: Float,
-        livePeriod: Int? = nil,
-        longitude: Float,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: SendLocationCompletion? = nil) {
-        return requestAsync("sendLocation", defaultParameters["sendLocation"], parameters, [
-            "chat_id": chatId,
-"disable_notification": disableNotification,
-"latitude": latitude,
-"live_period": livePeriod,
-"longitude": longitude,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId],
-            queue: queue, completion: completion)
-    }
-    typealias SendPollCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func sendPollSync(
-            chatId: ChatId,
-        disableNotification: Bool? = nil,
-        options: [String],
-        question: String,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
-        return requestSync("sendPoll", defaultParameters["sendPoll"], parameters, [
-            "chat_id": chatId,
-"disable_notification": disableNotification,
-"options": options,
-"question": question,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId])
-    }
-
-    func sendPollAsync(
-            chatId: ChatId,
-        disableNotification: Bool? = nil,
-        options: [String],
-        question: String,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: SendPollCompletion? = nil) {
-        return requestAsync("sendPoll", defaultParameters["sendPoll"], parameters, [
-            "chat_id": chatId,
-"disable_notification": disableNotification,
-"options": options,
-"question": question,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId],
-            queue: queue, completion: completion)
-    }
-    typealias SendAnimationCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func sendAnimationSync(
-            animation: FileInfo,
-        caption: String? = nil,
-        chatId: ChatId,
-        disableNotification: Bool? = nil,
-        duration: Int? = nil,
-        height: Int? = nil,
-        parseMode: String? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        thumb: FileInfo? = nil,
-        width: Int? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
-        return requestSync("sendAnimation", defaultParameters["sendAnimation"], parameters, [
-            "animation": animation,
-"caption": caption,
-"chat_id": chatId,
-"disable_notification": disableNotification,
-"duration": duration,
-"height": height,
-"parse_mode": parseMode,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"thumb": thumb,
-"width": width])
-    }
-
-    func sendAnimationAsync(
-            animation: FileInfo,
-        caption: String? = nil,
-        chatId: ChatId,
-        disableNotification: Bool? = nil,
-        duration: Int? = nil,
-        height: Int? = nil,
-        parseMode: String? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
-        replyToMessageId: Int? = nil,
-        thumb: FileInfo? = nil,
-        width: Int? = nil,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: SendAnimationCompletion? = nil) {
-        return requestAsync("sendAnimation", defaultParameters["sendAnimation"], parameters, [
-            "animation": animation,
-"caption": caption,
-"chat_id": chatId,
-"disable_notification": disableNotification,
-"duration": duration,
-"height": height,
-"parse_mode": parseMode,
-"reply_markup": replyMarkup,
-"reply_to_message_id": replyToMessageId,
-"thumb": thumb,
-"width": width],
-            queue: queue, completion: completion)
-    }
-    typealias SetChatAdministratorCustomTitleCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func setChatAdministratorCustomTitleSync(
-            chatId: ChatId,
-        customTitle: String,
-        userId: Int,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("setChatAdministratorCustomTitle", defaultParameters["setChatAdministratorCustomTitle"], parameters, [
-            "chat_id": chatId,
-"custom_title": customTitle,
-"user_id": userId])
-    }
-
-    func setChatAdministratorCustomTitleAsync(
-            chatId: ChatId,
-        customTitle: String,
-        userId: Int,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: SetChatAdministratorCustomTitleCompletion? = nil) {
-        return requestAsync("setChatAdministratorCustomTitle", defaultParameters["setChatAdministratorCustomTitle"], parameters, [
-            "chat_id": chatId,
-"custom_title": customTitle,
-"user_id": userId],
-            queue: queue, completion: completion)
-    }
-    typealias GetMeCompletion = (_ result: User?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func getMeSync(
-            
-            _ parameters: [String: Any?] = [:]) -> User? {
-        return requestSync("getMe", defaultParameters["getMe"], parameters, [
-            :])
-    }
-
-    func getMeAsync(
-            
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: GetMeCompletion? = nil) {
-        return requestAsync("getMe", defaultParameters["getMe"], parameters, [
-            :],
-            queue: queue, completion: completion)
-    }
-    typealias SetChatTitleCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func setChatTitleSync(
-            chatId: ChatId,
-        title: String,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("setChatTitle", defaultParameters["setChatTitle"], parameters, [
-            "chat_id": chatId,
-"title": title])
-    }
-
-    func setChatTitleAsync(
-            chatId: ChatId,
-        title: String,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: SetChatTitleCompletion? = nil) {
-        return requestAsync("setChatTitle", defaultParameters["setChatTitle"], parameters, [
-            "chat_id": chatId,
-"title": title],
-            queue: queue, completion: completion)
-    }
-    typealias AnswerShippingQueryCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
-
-    @discardableResult
-    func answerShippingQuerySync(
-            errorMessage: String? = nil,
-        ok: Bool,
-        shippingOptions: [ShippingOption]? = nil,
-        shippingQueryId: String,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
-        return requestSync("answerShippingQuery", defaultParameters["answerShippingQuery"], parameters, [
-            "error_message": errorMessage,
-"ok": ok,
-"shipping_options": shippingOptions,
-"shipping_query_id": shippingQueryId])
-    }
-
-    func answerShippingQueryAsync(
-            errorMessage: String? = nil,
-        ok: Bool,
-        shippingOptions: [ShippingOption]? = nil,
-        shippingQueryId: String,
-            _ parameters: [String: Any?] = [:],
-            queue: DispatchQueue = .main,
-            completion: AnswerShippingQueryCompletion? = nil) {
-        return requestAsync("answerShippingQuery", defaultParameters["answerShippingQuery"], parameters, [
-            "error_message": errorMessage,
-"ok": ok,
-"shipping_options": shippingOptions,
-"shipping_query_id": shippingQueryId],
+"message_id": messageId,
+"inline_message_id": inlineMessageId],
             queue: queue, completion: completion)
     }
 
