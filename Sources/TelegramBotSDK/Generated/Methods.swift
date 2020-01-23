@@ -129,8 +129,8 @@ public extension TelegramBot {
 
     @discardableResult
     func sendMessageSync(
-            text: String,
-        chatId: ChatId,
+            chatId: ChatId,
+        text: String,
         parseMode: String? = nil,
         disableWebPagePreview: Bool? = nil,
         disableNotification: Bool? = nil,
@@ -138,8 +138,8 @@ public extension TelegramBot {
         replyMarkup: InlineKeyboardMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendMessage", defaultParameters["sendMessage"], parameters, [
-            "text": text,
-"chat_id": chatId,
+            "chat_id": chatId,
+"text": text,
 "parse_mode": parseMode,
 "disable_web_page_preview": disableWebPagePreview,
 "disable_notification": disableNotification,
@@ -148,8 +148,8 @@ public extension TelegramBot {
     }
 
     func sendMessageAsync(
-            text: String,
-        chatId: ChatId,
+            chatId: ChatId,
+        text: String,
         parseMode: String? = nil,
         disableWebPagePreview: Bool? = nil,
         disableNotification: Bool? = nil,
@@ -159,8 +159,8 @@ public extension TelegramBot {
             queue: DispatchQueue = .main,
             completion: SendMessageCompletion? = nil) {
         return requestAsync("sendMessage", defaultParameters["sendMessage"], parameters, [
-            "text": text,
-"chat_id": chatId,
+            "chat_id": chatId,
+"text": text,
 "parse_mode": parseMode,
 "disable_web_page_preview": disableWebPagePreview,
 "disable_notification": disableNotification,
