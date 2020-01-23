@@ -109,6 +109,11 @@ public struct Update: JsonConvertible, InternalJsonConvertible {
         set { internalJson["poll"] = JSON(newValue.json) }
     }
 
+    public var pollAnswer: PollAnswer {
+        get { return PollAnswer(internalJson: internalJson["poll_answer"]) }
+        set { internalJson["poll_answer"] = JSON(newValue.json) }
+    }
+
     internal init(internalJson: JSON = [:]) {
         self.internalJson = internalJson
     }
@@ -221,6 +226,21 @@ public struct User: JsonConvertible, InternalJsonConvertible {
     public var languageCode: String? {
         get { return internalJson["language_code"].string }
         set { internalJson["language_code"].string = newValue }
+    }
+
+    public var canJoinGroups: Bool? {
+        get { return internalJson["can_join_groups"].bool }
+        set { internalJson["can_join_groups"].bool = newValue }
+    }
+
+    public var canReadAllGroupMessages: Bool? {
+        get { return internalJson["can_read_all_group_messages"].bool }
+        set { internalJson["can_read_all_group_messages"].bool = newValue }
+    }
+
+    public var supportsInlineQueries: Bool? {
+        get { return internalJson["supports_inline_queries"].bool }
+        set { internalJson["supports_inline_queries"].bool = newValue }
     }
 
     internal init(internalJson: JSON = [:]) {
@@ -747,6 +767,11 @@ public struct MessageEntity: JsonConvertible, InternalJsonConvertible {
         set {
             internalJson["user"] = newValue?.internalJson ?? JSON.null
         }
+    }
+
+    public var language: String? {
+        get { return internalJson["language"].string }
+        set { internalJson["language"].string = newValue }
     }
 
     internal init(internalJson: JSON = [:]) {
@@ -1336,6 +1361,43 @@ public struct PollOption: JsonConvertible, InternalJsonConvertible {
 }
 
 
+public struct PollAnswer: JsonConvertible, InternalJsonConvertible {
+    /// Original JSON for fields not yet added to Swift structures.
+    public var json: Any {
+        get { return internalJson.object }
+        set { internalJson = JSON(newValue) }
+    }
+    internal var internalJson: JSON
+    public var pollId: String {
+        get { return internalJson["poll_id"].stringValue }
+        set { internalJson["poll_id"].stringValue = newValue }
+    }
+
+    public var user: User {
+        get { return User(internalJson: internalJson["user"]) }
+        set { internalJson["user"] = JSON(newValue.json) }
+    }
+
+    public var optionIds: Int {
+        get { return internalJson["option_ids"].intValue }
+        set { internalJson["option_ids"].intValue = newValue }
+    }
+
+    internal init(internalJson: JSON = [:]) {
+        self.internalJson = internalJson
+    }
+    public init() {
+        self.internalJson = JSON()
+    }
+    public init(json: Any) {
+        self.internalJson = JSON(json)
+    }
+    public init(data: Data) {
+        self.internalJson = JSON(data: data)
+    }
+}
+
+
 public struct Poll: JsonConvertible, InternalJsonConvertible {
     /// Original JSON for fields not yet added to Swift structures.
     public var json: Any {
@@ -1358,9 +1420,34 @@ public struct Poll: JsonConvertible, InternalJsonConvertible {
         set { internalJson["options"] = JSON.initFrom(newValue) }
     }
 
+    public var totalVoterCount: Int {
+        get { return internalJson["total_voter_count"].intValue }
+        set { internalJson["total_voter_count"].intValue = newValue }
+    }
+
     public var isClosed: Bool {
         get { return internalJson["is_closed"].boolValue }
         set { internalJson["is_closed"].boolValue = newValue }
+    }
+
+    public var isAnonymous: Bool {
+        get { return internalJson["is_anonymous"].boolValue }
+        set { internalJson["is_anonymous"].boolValue = newValue }
+    }
+
+    public var typeString: String {
+        get { return internalJson["type"].stringValue }
+        set { internalJson["type"].stringValue = newValue }
+    }
+
+    public var allowsMultipleAnswers: Bool {
+        get { return internalJson["allows_multiple_answers"].boolValue }
+        set { internalJson["allows_multiple_answers"].boolValue = newValue }
+    }
+
+    public var correctOptionId: Int? {
+        get { return internalJson["correct_option_id"].int }
+        set { internalJson["correct_option_id"].int = newValue }
     }
 
     internal init(internalJson: JSON = [:]) {
@@ -1540,6 +1627,43 @@ public struct KeyboardButton: JsonConvertible, InternalJsonConvertible {
     public var requestLocation: Bool? {
         get { return internalJson["request_location"].bool }
         set { internalJson["request_location"].bool = newValue }
+    }
+
+    public var requestPoll: KeyboardButtonPollType? {
+        get {
+            let value = internalJson["request_poll"]
+            return value.isNullOrUnknown ? nil : KeyboardButtonPollType(internalJson: value)
+        }
+        set {
+            internalJson["request_poll"] = newValue?.internalJson ?? JSON.null
+        }
+    }
+
+    internal init(internalJson: JSON = [:]) {
+        self.internalJson = internalJson
+    }
+    public init() {
+        self.internalJson = JSON()
+    }
+    public init(json: Any) {
+        self.internalJson = JSON(json)
+    }
+    public init(data: Data) {
+        self.internalJson = JSON(data: data)
+    }
+}
+
+
+public struct KeyboardButtonPollType: JsonConvertible, InternalJsonConvertible {
+    /// Original JSON for fields not yet added to Swift structures.
+    public var json: Any {
+        get { return internalJson.object }
+        set { internalJson = JSON(newValue) }
+    }
+    internal var internalJson: JSON
+    public var typeString: String? {
+        get { return internalJson["type"].string }
+        set { internalJson["type"].string = newValue }
     }
 
     internal init(internalJson: JSON = [:]) {

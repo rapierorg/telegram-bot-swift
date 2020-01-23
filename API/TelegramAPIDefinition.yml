@@ -18,6 +18,7 @@ fields:
     - shipping_query: ShippingQuery?
     - pre_checkout_query: PreCheckoutQuery?
     - poll: Poll
+    - poll_answer: PollAnswer
 
 ---
 type: WebhookInfo
@@ -39,6 +40,9 @@ fields:
     - last_name: String?
     - username: String?
     - language_code: String?
+    - can_join_groups: Bool?
+    - can_read_all_group_messages: Bool?
+    - supports_inline_queries: Bool?
 
 ---
 type: Chat
@@ -117,6 +121,7 @@ fields:
     - length: Int
     - url: String?
     - user: User?
+    - language: String?
 
 ---
 type: PhotoSize
@@ -224,12 +229,24 @@ fields:
     - voter_count: Int
 
 ---
+type: PollAnswer
+fields:
+    - poll_id: String
+    - user: User
+    - option_ids: Int[]
+
+---
 type: Poll
 fields:
     - id: String
     - question: String
     - options: PollOption[]
+    - total_voter_count: Int
     - is_closed: Bool
+    - is_anonymous: Bool
+    - type: String
+    - allows_multiple_answers: Bool
+    - correct_option_id: Int?
 
 ---
 type: UserProfilePhotos
@@ -259,6 +276,12 @@ fields:
     - text: String
     - request_contact: Bool?
     - request_location: Bool?
+    - request_poll: KeyboardButtonPollType?
+
+---
+type: KeyboardButtonPollType
+fields:
+    - type: String?
 
 ---
 type: ReplyKeyboardRemove
@@ -1082,6 +1105,10 @@ parameters:
     - chat_id: ChatId
     - question: String
     - options: String[]
+    - is_anonymous: Bool?
+    - type: String?
+    - correct_option_id: Int?
+    - is_closed: Bool?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
     - reply_markup: InlineKeyboardMarkup?
