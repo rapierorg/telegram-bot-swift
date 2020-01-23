@@ -889,8 +889,8 @@ result: User?
 ---
 method: sendMessage
 parameters:
-    - text: String
     - chat_id: ChatId
+    - text: String
     - parse_mode: String?
     - disable_web_page_preview: Bool?
     - disable_notification: Bool?
