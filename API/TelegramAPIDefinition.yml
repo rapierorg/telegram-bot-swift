@@ -918,7 +918,7 @@ parameters:
     - disable_web_page_preview: Bool?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -939,7 +939,7 @@ parameters:
     - parse_mode: String?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -955,7 +955,7 @@ parameters:
     - thumb: FileInfo?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -968,7 +968,7 @@ parameters:
     - parse_mode: String?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -985,7 +985,7 @@ parameters:
     - supports_streaming: Bool?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1001,7 +1001,7 @@ parameters:
     - parse_mode: String?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1014,7 +1014,7 @@ parameters:
     - duration: Int?
     - disable_notification: Bool?
     - reply_to_message_id: Bool?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1027,7 +1027,7 @@ parameters:
     - thumb: FileInfo?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1083,7 +1083,7 @@ parameters:
     - foursquare_type: String?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1096,7 +1096,7 @@ parameters:
     - vcard: String?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1111,7 +1111,7 @@ parameters:
     - is_closed: Bool?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1354,7 +1354,7 @@ parameters:
     - sticker: FileInfo
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
