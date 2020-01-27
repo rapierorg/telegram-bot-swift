@@ -135,7 +135,7 @@ public extension TelegramBot {
         disableWebPagePreview: Bool? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendMessage", defaultParameters["sendMessage"], parameters, [
             "chat_id": chatId,
@@ -154,7 +154,7 @@ public extension TelegramBot {
         disableWebPagePreview: Bool? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendMessageCompletion? = nil) {
@@ -209,7 +209,7 @@ public extension TelegramBot {
         parseMode: String? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendPhoto", defaultParameters["sendPhoto"], parameters, [
             "chat_id": chatId,
@@ -228,7 +228,7 @@ public extension TelegramBot {
         parseMode: String? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendPhotoCompletion? = nil) {
@@ -256,7 +256,7 @@ public extension TelegramBot {
         thumb: FileInfo? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendAudio", defaultParameters["sendAudio"], parameters, [
             "chat_id": chatId,
@@ -283,7 +283,7 @@ public extension TelegramBot {
         thumb: FileInfo? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendAudioCompletion? = nil) {
@@ -312,7 +312,7 @@ public extension TelegramBot {
         parseMode: String? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendDocument", defaultParameters["sendDocument"], parameters, [
             "chat_id": chatId,
@@ -333,7 +333,7 @@ public extension TelegramBot {
         parseMode: String? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendDocumentCompletion? = nil) {
@@ -363,7 +363,7 @@ public extension TelegramBot {
         supportsStreaming: Bool? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendVideo", defaultParameters["sendVideo"], parameters, [
             "chat_id": chatId,
@@ -392,7 +392,7 @@ public extension TelegramBot {
         supportsStreaming: Bool? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVideoCompletion? = nil) {
@@ -425,7 +425,7 @@ public extension TelegramBot {
         parseMode: String? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendAnimation", defaultParameters["sendAnimation"], parameters, [
             "chat_id": chatId,
@@ -452,7 +452,7 @@ public extension TelegramBot {
         parseMode: String? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendAnimationCompletion? = nil) {
@@ -481,7 +481,7 @@ public extension TelegramBot {
         duration: Int? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Bool? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendVoice", defaultParameters["sendVoice"], parameters, [
             "chat_id": chatId,
@@ -502,7 +502,7 @@ public extension TelegramBot {
         duration: Int? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Bool? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVoiceCompletion? = nil) {
@@ -528,7 +528,7 @@ public extension TelegramBot {
         thumb: FileInfo? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendVideoNote", defaultParameters["sendVideoNote"], parameters, [
             "chat_id": chatId,
@@ -549,7 +549,7 @@ public extension TelegramBot {
         thumb: FileInfo? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVideoNoteCompletion? = nil) {
@@ -721,7 +721,7 @@ public extension TelegramBot {
         foursquareType: String? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendVenue", defaultParameters["sendVenue"], parameters, [
             "chat_id": chatId,
@@ -746,7 +746,7 @@ public extension TelegramBot {
         foursquareType: String? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVenueCompletion? = nil) {
@@ -774,7 +774,7 @@ public extension TelegramBot {
         vcard: String? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendContact", defaultParameters["sendContact"], parameters, [
             "chat_id": chatId,
@@ -795,7 +795,7 @@ public extension TelegramBot {
         vcard: String? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendContactCompletion? = nil) {
@@ -823,7 +823,7 @@ public extension TelegramBot {
         isClosed: Bool? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendPoll", defaultParameters["sendPoll"], parameters, [
             "chat_id": chatId,
@@ -848,7 +848,7 @@ public extension TelegramBot {
         isClosed: Bool? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendPollCompletion? = nil) {
@@ -1647,7 +1647,7 @@ public extension TelegramBot {
         sticker: FileInfo,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:]) -> Message? {
         return requestSync("sendSticker", defaultParameters["sendSticker"], parameters, [
             "chat_id": chatId,
@@ -1662,7 +1662,7 @@ public extension TelegramBot {
         sticker: FileInfo,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-        replyMarkup: InlineKeyboardMarkup? = nil,
+        replyMarkup: ReplyMarkup? = nil,
             _ parameters: [String: Any?] = [:],
             queue: DispatchQueue = .main,
             completion: SendStickerCompletion? = nil) {
