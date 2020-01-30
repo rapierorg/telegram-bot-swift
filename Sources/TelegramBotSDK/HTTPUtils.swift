@@ -47,24 +47,15 @@ public class HTTPUtils {
             
             var valueString: String
             
-            let typesToDescribe = [
-                "String",
-                "ParseMode",
-                "ChatId",
-                "ChatType",
-                "MessageEntityType",
-                "PollType",
-            ]
-            
             if let boolValue = value as? Bool {
                 if !boolValue {
                     continue
                 }
                 // If true, add "key=" to encoded string
                 valueString = "true"
-            } else if typesToDescribe.contains(String(describing: type(of: value))) {
+            } else if value is String {
                 
-                valueString = String(describing: value)
+                valueString = value as! String
             } else {
                 let encodableBox = AnyEncodable(value: value)
                 let encoder = JSONEncoder()
@@ -72,7 +63,12 @@ public class HTTPUtils {
                 encoder.keyEncodingStrategy = .convertToSnakeCase
                 let jsonEncodedData = try? encoder.encode(encodableBox)
                 guard let jsonEncodedUnwrappedData = jsonEncodedData else { continue }
-                guard let jsonEncodedString = String(data: jsonEncodedUnwrappedData, encoding: .utf8) else { continue }
+                guard var jsonEncodedString = String(data: jsonEncodedUnwrappedData, encoding: .utf8) else { continue }
+                
+                if !(jsonEncodedString.contains("{") && jsonEncodedString.contains(":")) && jsonEncodedString.contains("\"") {
+                    jsonEncodedString = jsonEncodedString.replacingOccurrences(of: "\"", with: "")
+                }
+                
                 valueString = jsonEncodedString
             }
             
