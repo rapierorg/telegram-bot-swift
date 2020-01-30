@@ -16,7 +16,7 @@ import Dispatch
 extension TelegramBot {
 	/// Perform synchronous request.
 	/// - Returns: Decodable  on success. Nil on error, in which case `lastError` contains the details.
-	internal func requestSync<TResult>(_ endpoint: String, _ parameters: [String: Any?] = [:]) -> TResult? where TResult: Decodable {
+	internal func requestSync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?] = [:]) -> TResult? where TResult: Decodable {
 		
 		var retval: TResult!
 		let sem = DispatchSemaphore(value: 0)
@@ -33,7 +33,7 @@ extension TelegramBot {
 	
 	/// Perform synchronous request.
 	/// - Returns: Decodable  on success. Nil on error, in which case `lastError` contains the details.
-	internal func requestSync<TResult>(_ endpoint: String, _ parameters: [String: Any?]?...) -> TResult? where TResult: Decodable {
+	internal func requestSync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?]?...) -> TResult? where TResult: Decodable {
 		return requestSync(endpoint, mergeParameters(parameters))
 	}
 	
@@ -78,7 +78,7 @@ extension TelegramBot {
 	
 	/// Perform asynchronous request.
 	/// - Returns: Decodable  on success. Nil on error, in which case `error` contains the details.
-	internal func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Any?]?..., queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: TResult?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
+	internal func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?]?..., queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: TResult?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
 		requestAsync(endpoint, mergeParameters(parameters), queue: queue, completion: completion)
 	}
 	
@@ -100,14 +100,14 @@ extension TelegramBot {
 	
 	/// Perform asynchronous request.
 	/// - Returns: array of Decodable  on success. Nil on error, in which case `error` contains the details.
-	internal func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Any?]?..., queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: [TResult]?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
+	internal func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?]?..., queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: [TResult]?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
 		return requestAsync(endpoint, mergeParameters(parameters), queue: queue, completion: completion)
 	}
 	
 	/// Merge request parameters into a single dictionary. Nil parameters are ignored. Keys with nil values are also ignored.
 	/// - Returns: merged parameters.
-	private func mergeParameters(_ parameters: [ [String: Any?]? ]) -> [String: Any?] {
-		var result = [String: Any?]()
+	private func mergeParameters(_ parameters: [ [String: Encodable?]? ]) -> [String: Encodable?] {
+		var result = [String: Encodable?]()
 		for p in parameters {
 			guard let p = p else { continue }
 			p.forEach { key, value in

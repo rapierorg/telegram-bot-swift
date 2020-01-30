@@ -13,18 +13,18 @@
 import Foundation
 
 public enum ChatId: Codable {
-    case string(String)
-    case int64(Int64)
+    case channel(String)
+    case chat(Int64)
     case unknown
     
     public init(from decoder: Decoder) throws {
         if let string = try? decoder.singleValueContainer().decode(String.self) {
-            self = .string(string)
+            self = .channel(string)
             return
         }
 
         if let int64 = try? decoder.singleValueContainer().decode(Int64.self) {
-            self = .int64(int64)
+            self = .chat(int64)
             return
         }
         
@@ -34,9 +34,9 @@ public enum ChatId: Codable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        case let .string(string):
+        case let .channel(string):
             try container.encode(string)
-        case let .int64(int64):
+        case let .chat(int64):
             try container.encode(int64)
         default:
             fatalError("Unknown should not be used")

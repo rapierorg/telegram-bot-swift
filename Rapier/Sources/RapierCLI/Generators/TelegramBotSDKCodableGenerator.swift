@@ -151,14 +151,14 @@ class TelegramBotSDKCodableGenerator: CodeGenerator {
             @discardableResult
             func \(name)Sync(
                     \(fieldsString)
-                    _ parameters: [String: Any?] = [:]) -> \(resultSwiftType) {
+                    _ parameters: [String: Encodable?] = [:]) -> \(resultSwiftType) {
                 return requestSync("\(name)", defaultParameters["\(name)"], parameters, [
                     \(arrayFieldsString)])
             }
 
             func \(name)Async(
                     \(fieldsString)
-                    _ parameters: [String: Any?] = [:],
+                    _ parameters: [String: Encodable?] = [:],
                     queue: DispatchQueue = .main,
                     completion: \(completionName)? = nil) {
                 return requestAsync("\(name)", defaultParameters["\(name)"], parameters, [

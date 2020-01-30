@@ -33,7 +33,7 @@ class BlockingServerTests: XCTestCase {
             print("--- update: \(update)")
             if let message = update.message, let text = message.text, let chatId = message.from?.id {
                 if text == "Hello" {
-                    bot.sendMessageAsync(chatId: .int64(chatId), text: "How are you?")
+                    bot.sendMessageAsync(chatId: .chat(chatId), text: "How are you?")
                 }
             }
         }

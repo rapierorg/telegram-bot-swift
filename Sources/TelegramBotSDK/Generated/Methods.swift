@@ -14,7 +14,7 @@ public extension TelegramBot {
         limit: Int? = nil,
         timeout: Int? = nil,
         allowedUpdates: [String]? = nil,
-            _ parameters: [String: Any?] = [:]) -> [Update]? {
+            _ parameters: [String: Encodable?] = [:]) -> [Update]? {
         return requestSync("getUpdates", defaultParameters["getUpdates"], parameters, [
             "offset": offset,
 "limit": limit,
@@ -27,7 +27,7 @@ public extension TelegramBot {
         limit: Int? = nil,
         timeout: Int? = nil,
         allowedUpdates: [String]? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: GetUpdatesCompletion? = nil) {
         return requestAsync("getUpdates", defaultParameters["getUpdates"], parameters, [
@@ -45,7 +45,7 @@ public extension TelegramBot {
         certificate: FileInfo? = nil,
         maxConnections: Int? = nil,
         allowedUpdates: [String]? = nil,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("setWebhook", defaultParameters["setWebhook"], parameters, [
             "url": url,
 "certificate": certificate,
@@ -58,7 +58,7 @@ public extension TelegramBot {
         certificate: FileInfo? = nil,
         maxConnections: Int? = nil,
         allowedUpdates: [String]? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SetWebhookCompletion? = nil) {
         return requestAsync("setWebhook", defaultParameters["setWebhook"], parameters, [
@@ -73,14 +73,14 @@ public extension TelegramBot {
     @discardableResult
     func deleteWebhookSync(
             
-            _ parameters: [String: Any?] = [:]) -> WebhookInfo? {
+            _ parameters: [String: Encodable?] = [:]) -> WebhookInfo? {
         return requestSync("deleteWebhook", defaultParameters["deleteWebhook"], parameters, [
             :])
     }
 
     func deleteWebhookAsync(
             
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: DeleteWebhookCompletion? = nil) {
         return requestAsync("deleteWebhook", defaultParameters["deleteWebhook"], parameters, [
@@ -92,14 +92,14 @@ public extension TelegramBot {
     @discardableResult
     func getWebhookInfoSync(
             
-            _ parameters: [String: Any?] = [:]) -> WebhookInfo? {
+            _ parameters: [String: Encodable?] = [:]) -> WebhookInfo? {
         return requestSync("getWebhookInfo", defaultParameters["getWebhookInfo"], parameters, [
             :])
     }
 
     func getWebhookInfoAsync(
             
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: GetWebhookInfoCompletion? = nil) {
         return requestAsync("getWebhookInfo", defaultParameters["getWebhookInfo"], parameters, [
@@ -111,14 +111,14 @@ public extension TelegramBot {
     @discardableResult
     func getMeSync(
             
-            _ parameters: [String: Any?] = [:]) -> User? {
+            _ parameters: [String: Encodable?] = [:]) -> User? {
         return requestSync("getMe", defaultParameters["getMe"], parameters, [
             :])
     }
 
     func getMeAsync(
             
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: GetMeCompletion? = nil) {
         return requestAsync("getMe", defaultParameters["getMe"], parameters, [
@@ -136,7 +136,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendMessage", defaultParameters["sendMessage"], parameters, [
             "chat_id": chatId,
 "text": text,
@@ -155,7 +155,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendMessageCompletion? = nil) {
         return requestAsync("sendMessage", defaultParameters["sendMessage"], parameters, [
@@ -176,7 +176,7 @@ public extension TelegramBot {
         fromChatId: ChatId,
         disableNotification: Bool? = nil,
         messageId: Int,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("forwardMessage", defaultParameters["forwardMessage"], parameters, [
             "chat_id": chatId,
 "from_chat_id": fromChatId,
@@ -189,7 +189,7 @@ public extension TelegramBot {
         fromChatId: ChatId,
         disableNotification: Bool? = nil,
         messageId: Int,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: ForwardMessageCompletion? = nil) {
         return requestAsync("forwardMessage", defaultParameters["forwardMessage"], parameters, [
@@ -210,7 +210,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendPhoto", defaultParameters["sendPhoto"], parameters, [
             "chat_id": chatId,
 "photo": photo,
@@ -229,7 +229,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendPhotoCompletion? = nil) {
         return requestAsync("sendPhoto", defaultParameters["sendPhoto"], parameters, [
@@ -257,7 +257,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendAudio", defaultParameters["sendAudio"], parameters, [
             "chat_id": chatId,
 "audio": audio,
@@ -284,7 +284,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendAudioCompletion? = nil) {
         return requestAsync("sendAudio", defaultParameters["sendAudio"], parameters, [
@@ -313,7 +313,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendDocument", defaultParameters["sendDocument"], parameters, [
             "chat_id": chatId,
 "document": document,
@@ -334,7 +334,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendDocumentCompletion? = nil) {
         return requestAsync("sendDocument", defaultParameters["sendDocument"], parameters, [
@@ -364,7 +364,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendVideo", defaultParameters["sendVideo"], parameters, [
             "chat_id": chatId,
 "video": video,
@@ -393,7 +393,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVideoCompletion? = nil) {
         return requestAsync("sendVideo", defaultParameters["sendVideo"], parameters, [
@@ -426,7 +426,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendAnimation", defaultParameters["sendAnimation"], parameters, [
             "chat_id": chatId,
 "animation": animation,
@@ -453,7 +453,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendAnimationCompletion? = nil) {
         return requestAsync("sendAnimation", defaultParameters["sendAnimation"], parameters, [
@@ -482,7 +482,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Bool? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendVoice", defaultParameters["sendVoice"], parameters, [
             "chat_id": chatId,
 "voice": voice,
@@ -503,7 +503,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Bool? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVoiceCompletion? = nil) {
         return requestAsync("sendVoice", defaultParameters["sendVoice"], parameters, [
@@ -529,7 +529,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendVideoNote", defaultParameters["sendVideoNote"], parameters, [
             "chat_id": chatId,
 "video_note": videoNote,
@@ -550,7 +550,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVideoNoteCompletion? = nil) {
         return requestAsync("sendVideoNote", defaultParameters["sendVideoNote"], parameters, [
@@ -572,7 +572,7 @@ public extension TelegramBot {
         media: [InputMedia],
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendMediaGroup", defaultParameters["sendMediaGroup"], parameters, [
             "chat_id": chatId,
 "media": media,
@@ -585,7 +585,7 @@ public extension TelegramBot {
         media: [InputMedia],
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendMediaGroupCompletion? = nil) {
         return requestAsync("sendMediaGroup", defaultParameters["sendMediaGroup"], parameters, [
@@ -606,7 +606,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendLocation", defaultParameters["sendLocation"], parameters, [
             "chat_id": chatId,
 "latitude": latitude,
@@ -625,7 +625,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendLocationCompletion? = nil) {
         return requestAsync("sendLocation", defaultParameters["sendLocation"], parameters, [
@@ -648,7 +648,7 @@ public extension TelegramBot {
         latitude: Float,
         longitude: Float,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
+            _ parameters: [String: Encodable?] = [:]) -> MessageOrBool? {
         return requestSync("editMessageLiveLocation", defaultParameters["editMessageLiveLocation"], parameters, [
             "chat_id": chatId,
 "message_id": messageId,
@@ -665,7 +665,7 @@ public extension TelegramBot {
         latitude: Float,
         longitude: Float,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: EditMessageLiveLocationCompletion? = nil) {
         return requestAsync("editMessageLiveLocation", defaultParameters["editMessageLiveLocation"], parameters, [
@@ -685,7 +685,7 @@ public extension TelegramBot {
         messageId: Int? = nil,
         inlineMessageId: String? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
+            _ parameters: [String: Encodable?] = [:]) -> MessageOrBool? {
         return requestSync("stopMessageLiveLocation", defaultParameters["stopMessageLiveLocation"], parameters, [
             "chat_id": chatId,
 "message_id": messageId,
@@ -698,7 +698,7 @@ public extension TelegramBot {
         messageId: Int? = nil,
         inlineMessageId: String? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: StopMessageLiveLocationCompletion? = nil) {
         return requestAsync("stopMessageLiveLocation", defaultParameters["stopMessageLiveLocation"], parameters, [
@@ -722,7 +722,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendVenue", defaultParameters["sendVenue"], parameters, [
             "chat_id": chatId,
 "latitude": latitude,
@@ -747,7 +747,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendVenueCompletion? = nil) {
         return requestAsync("sendVenue", defaultParameters["sendVenue"], parameters, [
@@ -775,7 +775,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendContact", defaultParameters["sendContact"], parameters, [
             "chat_id": chatId,
 "phone_number": phoneNumber,
@@ -796,7 +796,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendContactCompletion? = nil) {
         return requestAsync("sendContact", defaultParameters["sendContact"], parameters, [
@@ -818,13 +818,13 @@ public extension TelegramBot {
         question: String,
         options: [String],
         isAnonymous: Bool? = nil,
-        type: String? = nil,
+        type: PollType? = nil,
         correctOptionId: Int? = nil,
         isClosed: Bool? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendPoll", defaultParameters["sendPoll"], parameters, [
             "chat_id": chatId,
 "question": question,
@@ -843,13 +843,13 @@ public extension TelegramBot {
         question: String,
         options: [String],
         isAnonymous: Bool? = nil,
-        type: String? = nil,
+        type: PollType? = nil,
         correctOptionId: Int? = nil,
         isClosed: Bool? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendPollCompletion? = nil) {
         return requestAsync("sendPoll", defaultParameters["sendPoll"], parameters, [
@@ -871,7 +871,7 @@ public extension TelegramBot {
     func sendChatActionSync(
             chatId: ChatId,
         action: String,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("sendChatAction", defaultParameters["sendChatAction"], parameters, [
             "chat_id": chatId,
 "action": action])
@@ -880,7 +880,7 @@ public extension TelegramBot {
     func sendChatActionAsync(
             chatId: ChatId,
         action: String,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendChatActionCompletion? = nil) {
         return requestAsync("sendChatAction", defaultParameters["sendChatAction"], parameters, [
@@ -895,7 +895,7 @@ public extension TelegramBot {
             userId: Int64,
         offset: Int? = nil,
         limit: Int? = nil,
-            _ parameters: [String: Any?] = [:]) -> UserProfilePhotos? {
+            _ parameters: [String: Encodable?] = [:]) -> UserProfilePhotos? {
         return requestSync("getUserProfilePhotos", defaultParameters["getUserProfilePhotos"], parameters, [
             "user_id": userId,
 "offset": offset,
@@ -906,7 +906,7 @@ public extension TelegramBot {
             userId: Int64,
         offset: Int? = nil,
         limit: Int? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: GetUserProfilePhotosCompletion? = nil) {
         return requestAsync("getUserProfilePhotos", defaultParameters["getUserProfilePhotos"], parameters, [
@@ -920,14 +920,14 @@ public extension TelegramBot {
     @discardableResult
     func getFileSync(
             fileId: String,
-            _ parameters: [String: Any?] = [:]) -> File? {
+            _ parameters: [String: Encodable?] = [:]) -> File? {
         return requestSync("getFile", defaultParameters["getFile"], parameters, [
             "file_id": fileId])
     }
 
     func getFileAsync(
             fileId: String,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: GetFileCompletion? = nil) {
         return requestAsync("getFile", defaultParameters["getFile"], parameters, [
@@ -941,7 +941,7 @@ public extension TelegramBot {
             chatId: ChatId,
         userId: Int64,
         untilDate: Int? = nil,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("kickChatMember", defaultParameters["kickChatMember"], parameters, [
             "chat_id": chatId,
 "user_id": userId,
@@ -952,7 +952,7 @@ public extension TelegramBot {
             chatId: ChatId,
         userId: Int64,
         untilDate: Int? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: KickChatMemberCompletion? = nil) {
         return requestAsync("kickChatMember", defaultParameters["kickChatMember"], parameters, [
@@ -967,7 +967,7 @@ public extension TelegramBot {
     func unbanChatMemberSync(
             chatId: ChatId,
         userId: Int64,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("unbanChatMember", defaultParameters["unbanChatMember"], parameters, [
             "chat_id": chatId,
 "user_id": userId])
@@ -976,7 +976,7 @@ public extension TelegramBot {
     func unbanChatMemberAsync(
             chatId: ChatId,
         userId: Int64,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: UnbanChatMemberCompletion? = nil) {
         return requestAsync("unbanChatMember", defaultParameters["unbanChatMember"], parameters, [
@@ -992,7 +992,7 @@ public extension TelegramBot {
         userId: Int64,
         untilDate: Date? = nil,
         permissions: ChatPermissions,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("restrictChatMember", defaultParameters["restrictChatMember"], parameters, [
             "chat_id": chatId,
 "user_id": userId,
@@ -1005,7 +1005,7 @@ public extension TelegramBot {
         userId: Int64,
         untilDate: Date? = nil,
         permissions: ChatPermissions,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: RestrictChatMemberCompletion? = nil) {
         return requestAsync("restrictChatMember", defaultParameters["restrictChatMember"], parameters, [
@@ -1029,7 +1029,7 @@ public extension TelegramBot {
         canRestrictMembers: Bool? = nil,
         canPinMessages: Bool? = nil,
         canPromoteMembers: Bool? = nil,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("promoteChatMember", defaultParameters["promoteChatMember"], parameters, [
             "chat_id": chatId,
 "user_id": userId,
@@ -1054,7 +1054,7 @@ public extension TelegramBot {
         canRestrictMembers: Bool? = nil,
         canPinMessages: Bool? = nil,
         canPromoteMembers: Bool? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: PromoteChatMemberCompletion? = nil) {
         return requestAsync("promoteChatMember", defaultParameters["promoteChatMember"], parameters, [
@@ -1075,14 +1075,14 @@ public extension TelegramBot {
     @discardableResult
     func setChatAdministratorCustomTitleSync(
             
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("setChatAdministratorCustomTitle", defaultParameters["setChatAdministratorCustomTitle"], parameters, [
             :])
     }
 
     func setChatAdministratorCustomTitleAsync(
             
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SetChatAdministratorCustomTitleCompletion? = nil) {
         return requestAsync("setChatAdministratorCustomTitle", defaultParameters["setChatAdministratorCustomTitle"], parameters, [
@@ -1095,7 +1095,7 @@ public extension TelegramBot {
     func setChatPermissionsSync(
             chatId: ChatId,
         permissions: ChatPermissions,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("setChatPermissions", defaultParameters["setChatPermissions"], parameters, [
             "chat_id": chatId,
 "permissions": permissions])
@@ -1104,7 +1104,7 @@ public extension TelegramBot {
     func setChatPermissionsAsync(
             chatId: ChatId,
         permissions: ChatPermissions,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SetChatPermissionsCompletion? = nil) {
         return requestAsync("setChatPermissions", defaultParameters["setChatPermissions"], parameters, [
@@ -1117,14 +1117,14 @@ public extension TelegramBot {
     @discardableResult
     func exportChatInviteLinkSync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> String? {
+            _ parameters: [String: Encodable?] = [:]) -> String? {
         return requestSync("exportChatInviteLink", defaultParameters["exportChatInviteLink"], parameters, [
             "chat_id": chatId])
     }
 
     func exportChatInviteLinkAsync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: ExportChatInviteLinkCompletion? = nil) {
         return requestAsync("exportChatInviteLink", defaultParameters["exportChatInviteLink"], parameters, [
@@ -1137,7 +1137,7 @@ public extension TelegramBot {
     func setChatPhotoSync(
             chatId: ChatId,
         photo: FileInfo,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("setChatPhoto", defaultParameters["setChatPhoto"], parameters, [
             "chat_id": chatId,
 "photo": photo])
@@ -1146,7 +1146,7 @@ public extension TelegramBot {
     func setChatPhotoAsync(
             chatId: ChatId,
         photo: FileInfo,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SetChatPhotoCompletion? = nil) {
         return requestAsync("setChatPhoto", defaultParameters["setChatPhoto"], parameters, [
@@ -1159,14 +1159,14 @@ public extension TelegramBot {
     @discardableResult
     func deleteChatPhotoSync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("deleteChatPhoto", defaultParameters["deleteChatPhoto"], parameters, [
             "chat_id": chatId])
     }
 
     func deleteChatPhotoAsync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: DeleteChatPhotoCompletion? = nil) {
         return requestAsync("deleteChatPhoto", defaultParameters["deleteChatPhoto"], parameters, [
@@ -1179,7 +1179,7 @@ public extension TelegramBot {
     func setChatTitleSync(
             chatId: ChatId,
         title: String,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("setChatTitle", defaultParameters["setChatTitle"], parameters, [
             "chat_id": chatId,
 "title": title])
@@ -1188,7 +1188,7 @@ public extension TelegramBot {
     func setChatTitleAsync(
             chatId: ChatId,
         title: String,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SetChatTitleCompletion? = nil) {
         return requestAsync("setChatTitle", defaultParameters["setChatTitle"], parameters, [
@@ -1202,7 +1202,7 @@ public extension TelegramBot {
     func setChatDescriptionSync(
             chatId: ChatId,
         description: String,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("setChatDescription", defaultParameters["setChatDescription"], parameters, [
             "chat_id": chatId,
 "description": description])
@@ -1211,7 +1211,7 @@ public extension TelegramBot {
     func setChatDescriptionAsync(
             chatId: ChatId,
         description: String,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SetChatDescriptionCompletion? = nil) {
         return requestAsync("setChatDescription", defaultParameters["setChatDescription"], parameters, [
@@ -1226,7 +1226,7 @@ public extension TelegramBot {
             chatId: ChatId,
         messageId: Int,
         disableNotification: Bool? = nil,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("pinChatMessage", defaultParameters["pinChatMessage"], parameters, [
             "chat_id": chatId,
 "message_id": messageId,
@@ -1237,7 +1237,7 @@ public extension TelegramBot {
             chatId: ChatId,
         messageId: Int,
         disableNotification: Bool? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: PinChatMessageCompletion? = nil) {
         return requestAsync("pinChatMessage", defaultParameters["pinChatMessage"], parameters, [
@@ -1251,14 +1251,14 @@ public extension TelegramBot {
     @discardableResult
     func unpinChatMessageSync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("unpinChatMessage", defaultParameters["unpinChatMessage"], parameters, [
             "chat_id": chatId])
     }
 
     func unpinChatMessageAsync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: UnpinChatMessageCompletion? = nil) {
         return requestAsync("unpinChatMessage", defaultParameters["unpinChatMessage"], parameters, [
@@ -1270,14 +1270,14 @@ public extension TelegramBot {
     @discardableResult
     func leaveChatSync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("leaveChat", defaultParameters["leaveChat"], parameters, [
             "chat_id": chatId])
     }
 
     func leaveChatAsync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: LeaveChatCompletion? = nil) {
         return requestAsync("leaveChat", defaultParameters["leaveChat"], parameters, [
@@ -1289,14 +1289,14 @@ public extension TelegramBot {
     @discardableResult
     func getChatSync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> Chat? {
+            _ parameters: [String: Encodable?] = [:]) -> Chat? {
         return requestSync("getChat", defaultParameters["getChat"], parameters, [
             "chat_id": chatId])
     }
 
     func getChatAsync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: GetChatCompletion? = nil) {
         return requestAsync("getChat", defaultParameters["getChat"], parameters, [
@@ -1308,14 +1308,14 @@ public extension TelegramBot {
     @discardableResult
     func getChatAdministratorsSync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> [ChatMember]? {
+            _ parameters: [String: Encodable?] = [:]) -> [ChatMember]? {
         return requestSync("getChatAdministrators", defaultParameters["getChatAdministrators"], parameters, [
             "chat_id": chatId])
     }
 
     func getChatAdministratorsAsync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: GetChatAdministratorsCompletion? = nil) {
         return requestAsync("getChatAdministrators", defaultParameters["getChatAdministrators"], parameters, [
@@ -1327,14 +1327,14 @@ public extension TelegramBot {
     @discardableResult
     func getChatMembersCountSync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> Int? {
+            _ parameters: [String: Encodable?] = [:]) -> Int? {
         return requestSync("getChatMembersCount", defaultParameters["getChatMembersCount"], parameters, [
             "chat_id": chatId])
     }
 
     func getChatMembersCountAsync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: GetChatMembersCountCompletion? = nil) {
         return requestAsync("getChatMembersCount", defaultParameters["getChatMembersCount"], parameters, [
@@ -1347,7 +1347,7 @@ public extension TelegramBot {
     func getChatMemberSync(
             chatId: ChatId,
         userId: Int,
-            _ parameters: [String: Any?] = [:]) -> ChatMember? {
+            _ parameters: [String: Encodable?] = [:]) -> ChatMember? {
         return requestSync("getChatMember", defaultParameters["getChatMember"], parameters, [
             "chat_id": chatId,
 "user_id": userId])
@@ -1356,7 +1356,7 @@ public extension TelegramBot {
     func getChatMemberAsync(
             chatId: ChatId,
         userId: Int,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: GetChatMemberCompletion? = nil) {
         return requestAsync("getChatMember", defaultParameters["getChatMember"], parameters, [
@@ -1370,7 +1370,7 @@ public extension TelegramBot {
     func setCharStickerSetSync(
             chatId: ChatId,
         stickerSetName: String,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("setCharStickerSet", defaultParameters["setCharStickerSet"], parameters, [
             "chat_id": chatId,
 "sticker_set_name": stickerSetName])
@@ -1379,7 +1379,7 @@ public extension TelegramBot {
     func setCharStickerSetAsync(
             chatId: ChatId,
         stickerSetName: String,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SetCharStickerSetCompletion? = nil) {
         return requestAsync("setCharStickerSet", defaultParameters["setCharStickerSet"], parameters, [
@@ -1392,14 +1392,14 @@ public extension TelegramBot {
     @discardableResult
     func deleteChatStickerSetSync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("deleteChatStickerSet", defaultParameters["deleteChatStickerSet"], parameters, [
             "chat_id": chatId])
     }
 
     func deleteChatStickerSetAsync(
             chatId: ChatId,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: DeleteChatStickerSetCompletion? = nil) {
         return requestAsync("deleteChatStickerSet", defaultParameters["deleteChatStickerSet"], parameters, [
@@ -1415,7 +1415,7 @@ public extension TelegramBot {
         showAlert: Bool? = nil,
         url: String? = nil,
         cacheTime: Int? = nil,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("answerCallbackQuery", defaultParameters["answerCallbackQuery"], parameters, [
             "callback_query_id": callbackQueryId,
 "text": text,
@@ -1430,7 +1430,7 @@ public extension TelegramBot {
         showAlert: Bool? = nil,
         url: String? = nil,
         cacheTime: Int? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: AnswerCallbackQueryCompletion? = nil) {
         return requestAsync("answerCallbackQuery", defaultParameters["answerCallbackQuery"], parameters, [
@@ -1452,7 +1452,7 @@ public extension TelegramBot {
         parseMode: ParseMode? = nil,
         disableWebPagePreview: Bool? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
+            _ parameters: [String: Encodable?] = [:]) -> MessageOrBool? {
         return requestSync("editMessageText", defaultParameters["editMessageText"], parameters, [
             "chat_id": chatId,
 "message_id": messageId,
@@ -1471,7 +1471,7 @@ public extension TelegramBot {
         parseMode: ParseMode? = nil,
         disableWebPagePreview: Bool? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: EditMessageTextCompletion? = nil) {
         return requestAsync("editMessageText", defaultParameters["editMessageText"], parameters, [
@@ -1494,7 +1494,7 @@ public extension TelegramBot {
         caption: String? = nil,
         parseMode: ParseMode? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
+            _ parameters: [String: Encodable?] = [:]) -> MessageOrBool? {
         return requestSync("editMessageCaption", defaultParameters["editMessageCaption"], parameters, [
             "chat_id": chatId,
 "message_id": messageId,
@@ -1511,7 +1511,7 @@ public extension TelegramBot {
         caption: String? = nil,
         parseMode: ParseMode? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: EditMessageCaptionCompletion? = nil) {
         return requestAsync("editMessageCaption", defaultParameters["editMessageCaption"], parameters, [
@@ -1532,7 +1532,7 @@ public extension TelegramBot {
         inlineMessageId: String? = nil,
         media: InputMedia,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
+            _ parameters: [String: Encodable?] = [:]) -> MessageOrBool? {
         return requestSync("editMessageMedia", defaultParameters["editMessageMedia"], parameters, [
             "chat_id": chatId,
 "message_id": messageId,
@@ -1547,7 +1547,7 @@ public extension TelegramBot {
         inlineMessageId: String? = nil,
         media: InputMedia,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: EditMessageMediaCompletion? = nil) {
         return requestAsync("editMessageMedia", defaultParameters["editMessageMedia"], parameters, [
@@ -1566,7 +1566,7 @@ public extension TelegramBot {
         messageId: Int? = nil,
         inlineMessageId: String? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
+            _ parameters: [String: Encodable?] = [:]) -> MessageOrBool? {
         return requestSync("editMessageReplyMarkup", defaultParameters["editMessageReplyMarkup"], parameters, [
             "chat_id": chatId,
 "message_id": messageId,
@@ -1579,7 +1579,7 @@ public extension TelegramBot {
         messageId: Int? = nil,
         inlineMessageId: String? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: EditMessageReplyMarkupCompletion? = nil) {
         return requestAsync("editMessageReplyMarkup", defaultParameters["editMessageReplyMarkup"], parameters, [
@@ -1596,7 +1596,7 @@ public extension TelegramBot {
             chatId: ChatId,
         messageId: Int,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Poll? {
+            _ parameters: [String: Encodable?] = [:]) -> Poll? {
         return requestSync("stopPoll", defaultParameters["stopPoll"], parameters, [
             "chat_id": chatId,
 "message_id": messageId,
@@ -1607,7 +1607,7 @@ public extension TelegramBot {
             chatId: ChatId,
         messageId: Int,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: StopPollCompletion? = nil) {
         return requestAsync("stopPoll", defaultParameters["stopPoll"], parameters, [
@@ -1622,7 +1622,7 @@ public extension TelegramBot {
     func deleteMessageSync(
             chatId: ChatId,
         messageId: Int,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("deleteMessage", defaultParameters["deleteMessage"], parameters, [
             "chat_id": chatId,
 "message_id": messageId])
@@ -1631,7 +1631,7 @@ public extension TelegramBot {
     func deleteMessageAsync(
             chatId: ChatId,
         messageId: Int,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: DeleteMessageCompletion? = nil) {
         return requestAsync("deleteMessage", defaultParameters["deleteMessage"], parameters, [
@@ -1648,7 +1648,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendSticker", defaultParameters["sendSticker"], parameters, [
             "chat_id": chatId,
 "sticker": sticker,
@@ -1663,7 +1663,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendStickerCompletion? = nil) {
         return requestAsync("sendSticker", defaultParameters["sendSticker"], parameters, [
@@ -1679,14 +1679,14 @@ public extension TelegramBot {
     @discardableResult
     func getStickerSetSync(
             name: String,
-            _ parameters: [String: Any?] = [:]) -> StickerSet? {
+            _ parameters: [String: Encodable?] = [:]) -> StickerSet? {
         return requestSync("getStickerSet", defaultParameters["getStickerSet"], parameters, [
             "name": name])
     }
 
     func getStickerSetAsync(
             name: String,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: GetStickerSetCompletion? = nil) {
         return requestAsync("getStickerSet", defaultParameters["getStickerSet"], parameters, [
@@ -1699,7 +1699,7 @@ public extension TelegramBot {
     func uploadStickerFileSync(
             userId: Int64,
         pngSticker: FileInfo,
-            _ parameters: [String: Any?] = [:]) -> File? {
+            _ parameters: [String: Encodable?] = [:]) -> File? {
         return requestSync("uploadStickerFile", defaultParameters["uploadStickerFile"], parameters, [
             "user_id": userId,
 "png_sticker": pngSticker])
@@ -1708,7 +1708,7 @@ public extension TelegramBot {
     func uploadStickerFileAsync(
             userId: Int64,
         pngSticker: FileInfo,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: UploadStickerFileCompletion? = nil) {
         return requestAsync("uploadStickerFile", defaultParameters["uploadStickerFile"], parameters, [
@@ -1727,7 +1727,7 @@ public extension TelegramBot {
         emojis: String,
         containsMasks: Bool? = nil,
         maskPosition: Bool? = nil,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("createNewStickerSet", defaultParameters["createNewStickerSet"], parameters, [
             "user_id": userId,
 "name": name,
@@ -1746,7 +1746,7 @@ public extension TelegramBot {
         emojis: String,
         containsMasks: Bool? = nil,
         maskPosition: Bool? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: CreateNewStickerSetCompletion? = nil) {
         return requestAsync("createNewStickerSet", defaultParameters["createNewStickerSet"], parameters, [
@@ -1768,7 +1768,7 @@ public extension TelegramBot {
         pngSticker: FileInfo,
         emojis: String,
         maskPosition: MaskPosition? = nil,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("addStickerToSet", defaultParameters["addStickerToSet"], parameters, [
             "user_id": userId,
 "name": name,
@@ -1783,7 +1783,7 @@ public extension TelegramBot {
         pngSticker: FileInfo,
         emojis: String,
         maskPosition: MaskPosition? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: AddStickerToSetCompletion? = nil) {
         return requestAsync("addStickerToSet", defaultParameters["addStickerToSet"], parameters, [
@@ -1800,7 +1800,7 @@ public extension TelegramBot {
     func setStickerPositionInSetSync(
             sticker: String,
         position: Int,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("setStickerPositionInSet", defaultParameters["setStickerPositionInSet"], parameters, [
             "sticker": sticker,
 "position": position])
@@ -1809,7 +1809,7 @@ public extension TelegramBot {
     func setStickerPositionInSetAsync(
             sticker: String,
         position: Int,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SetStickerPositionInSetCompletion? = nil) {
         return requestAsync("setStickerPositionInSet", defaultParameters["setStickerPositionInSet"], parameters, [
@@ -1822,14 +1822,14 @@ public extension TelegramBot {
     @discardableResult
     func deleteStickerFromSetSync(
             sticker: String,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("deleteStickerFromSet", defaultParameters["deleteStickerFromSet"], parameters, [
             "sticker": sticker])
     }
 
     func deleteStickerFromSetAsync(
             sticker: String,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: DeleteStickerFromSetCompletion? = nil) {
         return requestAsync("deleteStickerFromSet", defaultParameters["deleteStickerFromSet"], parameters, [
@@ -1847,7 +1847,7 @@ public extension TelegramBot {
         nextOffset: String? = nil,
         switchPmText: String? = nil,
         switchPmParameter: String? = nil,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("answerInlineQuery", defaultParameters["answerInlineQuery"], parameters, [
             "inline_query_id": inlineQueryId,
 "results": results,
@@ -1866,7 +1866,7 @@ public extension TelegramBot {
         nextOffset: String? = nil,
         switchPmText: String? = nil,
         switchPmParameter: String? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: AnswerInlineQueryCompletion? = nil) {
         return requestAsync("answerInlineQuery", defaultParameters["answerInlineQuery"], parameters, [
@@ -1906,7 +1906,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendInvoice", defaultParameters["sendInvoice"], parameters, [
             "chat_id": chatId,
 "title": title,
@@ -1957,7 +1957,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendInvoiceCompletion? = nil) {
         return requestAsync("sendInvoice", defaultParameters["sendInvoice"], parameters, [
@@ -1994,7 +1994,7 @@ public extension TelegramBot {
         ok: Bool,
         shippingOptions: [ShippingOption]? = nil,
         errorMessage: String? = nil,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("answerShippingQuery", defaultParameters["answerShippingQuery"], parameters, [
             "shipping_query_id": shippingQueryId,
 "ok": ok,
@@ -2007,7 +2007,7 @@ public extension TelegramBot {
         ok: Bool,
         shippingOptions: [ShippingOption]? = nil,
         errorMessage: String? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: AnswerShippingQueryCompletion? = nil) {
         return requestAsync("answerShippingQuery", defaultParameters["answerShippingQuery"], parameters, [
@@ -2024,7 +2024,7 @@ public extension TelegramBot {
             preCheckoutQueryId: String,
         ok: Bool,
         errorMessage: String? = nil,
-            _ parameters: [String: Any?] = [:]) -> Bool? {
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("answerPreCheckoutQuery", defaultParameters["answerPreCheckoutQuery"], parameters, [
             "pre_checkout_query_id": preCheckoutQueryId,
 "ok": ok,
@@ -2035,7 +2035,7 @@ public extension TelegramBot {
             preCheckoutQueryId: String,
         ok: Bool,
         errorMessage: String? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: AnswerPreCheckoutQueryCompletion? = nil) {
         return requestAsync("answerPreCheckoutQuery", defaultParameters["answerPreCheckoutQuery"], parameters, [
@@ -2053,7 +2053,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:]) -> Message? {
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
         return requestSync("sendGame", defaultParameters["sendGame"], parameters, [
             "chat_id": chatId,
 "game_short_name": gameShortName,
@@ -2068,7 +2068,7 @@ public extension TelegramBot {
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: InlineKeyboardMarkup? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SendGameCompletion? = nil) {
         return requestAsync("sendGame", defaultParameters["sendGame"], parameters, [
@@ -2090,7 +2090,7 @@ public extension TelegramBot {
         chatId: Int64? = nil,
         messageId: Int? = nil,
         inlineMessageId: Int? = nil,
-            _ parameters: [String: Any?] = [:]) -> MessageOrBool? {
+            _ parameters: [String: Encodable?] = [:]) -> MessageOrBool? {
         return requestSync("setGameScore", defaultParameters["setGameScore"], parameters, [
             "user_id": userId,
 "score": score,
@@ -2109,7 +2109,7 @@ public extension TelegramBot {
         chatId: Int64? = nil,
         messageId: Int? = nil,
         inlineMessageId: Int? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SetGameScoreCompletion? = nil) {
         return requestAsync("setGameScore", defaultParameters["setGameScore"], parameters, [
@@ -2130,7 +2130,7 @@ public extension TelegramBot {
         chatId: Int64? = nil,
         messageId: Int? = nil,
         inlineMessageId: String? = nil,
-            _ parameters: [String: Any?] = [:]) -> [GameHighScore]? {
+            _ parameters: [String: Encodable?] = [:]) -> [GameHighScore]? {
         return requestSync("getGameHighScores", defaultParameters["getGameHighScores"], parameters, [
             "user_id": userId,
 "chat_id": chatId,
@@ -2143,7 +2143,7 @@ public extension TelegramBot {
         chatId: Int64? = nil,
         messageId: Int? = nil,
         inlineMessageId: String? = nil,
-            _ parameters: [String: Any?] = [:],
+            _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: GetGameHighScoresCompletion? = nil) {
         return requestAsync("getGameHighScores", defaultParameters["getGameHighScores"], parameters, [

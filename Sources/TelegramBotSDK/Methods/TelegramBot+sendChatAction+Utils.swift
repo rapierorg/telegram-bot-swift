@@ -15,7 +15,7 @@ import Dispatch
 
 
 public extension TelegramBot {
-	enum ChatAction: String {
+	enum ChatAction: String, Codable {
 		case typing = "typing"
 		case uploadPhoto = "upload_photo"
 		case recordVideo = "record_video"
@@ -38,7 +38,7 @@ public extension TelegramBot {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
 	@discardableResult
     func sendChatActionSync(chatId: ChatId, action: ChatAction,
-	                               _ parameters: [String: Any?] = [:]) -> Bool? {
+	                               _ parameters: [String: Encodable?] = [:]) -> Bool? {
 		return requestSync("sendChatAction", defaultParameters["sendChatAction"], parameters,
 		                   ["chat_id": chatId, "action": action])
 	}
@@ -54,7 +54,7 @@ public extension TelegramBot {
     ///
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendchataction>
 	func sendChatActionAsync(chatId: ChatId, action: ChatAction,
-	                                _ parameters: [String: Any?] = [:],
+	                                _ parameters: [String: Encodable?] = [:],
 	                                queue: DispatchQueue = DispatchQueue.main,
 	                                completion: SendChatActionCompletion? = nil) {
 		requestAsync("sendChatAction", defaultParameters["sendChatAction"], parameters,

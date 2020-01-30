@@ -65,17 +65,17 @@ class RequestTests: XCTestCase {
 	//
 	
 	func testSendMessage() {
-        let response = bot.sendMessageSync(chatId: .int64(chatId), text: "testSendMessage1: this is a simple message")
+        let response = bot.sendMessageSync(chatId: .chat(chatId), text: "testSendMessage1: this is a simple message")
 		check(response)
 		
 		let messageId = response!.messageId
-		check( bot.sendMessageSync(chatId: .int64(chatId), text: "testSendMessage2: a reply to previous message", ["reply_to_message_id": messageId]) )
+		check( bot.sendMessageSync(chatId: .chat(chatId), text: "testSendMessage2: a reply to previous message", ["reply_to_message_id": messageId]) )
 
-        check( bot.sendMessageSync(chatId: .int64(chatId), text: "testSendMessage3: url without preview: http://google.com", ["disable_web_page_preview": true]) )
+        check( bot.sendMessageSync(chatId: .chat(chatId), text: "testSendMessage3: url without preview: http://google.com", ["disable_web_page_preview": true]) )
 
-        check( bot.sendMessageSync(chatId: .int64(chatId), text: "testSendMessage4: markdown: *bold* _italic_ [link](http://google.com)", ["parse_mode": "Markdown"]) )
+        check( bot.sendMessageSync(chatId: .chat(chatId), text: "testSendMessage4: markdown: *bold* _italic_ [link](http://google.com)", ["parse_mode": "Markdown"]) )
 
-        check( bot.sendMessageSync(chatId: .int64(chatId), text: "testSendMessage5: html: <b>bold</b> <i>italic</i>\n<code>void main() {\n  return 0;\n}</code>", parseMode: .html) )
+        check( bot.sendMessageSync(chatId: .chat(chatId), text: "testSendMessage5: html: <b>bold</b> <i>italic</i>\n<code>void main() {\n  return 0;\n}</code>", parseMode: .html) )
 	}
 	
 	func testShowKeyboardWithText() {
@@ -83,7 +83,7 @@ class RequestTests: XCTestCase {
             [KeyboardButton(text: "Button 1"), KeyboardButton(text: "Button 2")],
             [KeyboardButton(text: "Button 3")]
         ])
-        check( bot.sendMessageSync(chatId: .int64(chatId), text: "Here is a keyboard", ["reply_markup": markup]) )
+        check( bot.sendMessageSync(chatId: .chat(chatId), text: "Here is a keyboard", ["reply_markup": markup]) )
 	}
 	
 	func testShowKeyboardWithButtons() {
@@ -98,17 +98,17 @@ class RequestTests: XCTestCase {
 			[ button1, button2 ],
 			[ button3, button4 ]
 		]
-		check( bot.sendMessageSync(chatId: .int64(chatId), text: "Here is a keyboard", ["reply_markup": markup]) )
+		check( bot.sendMessageSync(chatId: .chat(chatId), text: "Here is a keyboard", ["reply_markup": markup]) )
 	}
 	
 	func testHideKeyboard() {
 		let markup = ReplyKeyboardRemove(removeKeyboard: true)
-        check( bot.sendMessageSync(chatId: .int64(chatId), text: "Removing the keyboard", ["reply_markup": markup]) )
+        check( bot.sendMessageSync(chatId: .chat(chatId), text: "Removing the keyboard", ["reply_markup": markup]) )
 	}
 	
 	func testForceReply() {
 		let markup = ForceReply(forceReply: true)
-		check( bot.sendMessageSync(chatId: .int64(chatId), text: "Force reply", ["reply_markup": markup]) )
+		check( bot.sendMessageSync(chatId: .chat(chatId), text: "Force reply", ["reply_markup": markup]) )
 	}
 	
 	//
@@ -116,7 +116,7 @@ class RequestTests: XCTestCase {
 	//
 	
 	func testForwardMessage() {
-        check( bot.forwardMessageSync(chatId: .int64(chatId), fromChatId: .int64(chatId), messageId: messageId) )
+        check( bot.forwardMessageSync(chatId: .chat(chatId), fromChatId: .chat(chatId), messageId: messageId) )
 	}
 	
 	//
@@ -124,8 +124,8 @@ class RequestTests: XCTestCase {
 	//
 	
 	func testSendLocation() {
-        check( bot.sendChatActionSync(chatId: .int64(chatId), action: .findLocation) )
-        check( bot.sendLocationSync(chatId: .int64(chatId), latitude: 50.4501, longitude: 30.5234) )
+        check( bot.sendChatActionSync(chatId: .chat(chatId), action: .findLocation) )
+        check( bot.sendLocationSync(chatId: .chat(chatId), latitude: 50.4501, longitude: 30.5234) )
 	}
 	
     //
@@ -143,7 +143,7 @@ class RequestTests: XCTestCase {
             return
         }
         let inputFile = InputFile(filename: "test.jpg", data: imageData)
-        bot.sendPhotoSync(chatId: .int64(chatId), photo: inputFile)
+        bot.sendPhotoSync(chatId: .chat(chatId), photo: .inputFile(inputFile))
     }
     
 	// Helper functions

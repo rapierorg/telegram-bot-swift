@@ -81,7 +81,7 @@ public class User: Codable {
 
 public class Chat: Codable {
     public var id: Int64
-    public var type: String
+    public var type: ChatType
     public var title: String?
     public var username: String?
     public var firstName: String?
@@ -94,7 +94,7 @@ public class Chat: Codable {
     public var slowModeDelay: Int?
     public var stickerSetName: String?
     public var canSetStickerSet: Bool?
-    public init(id: Int64, type: String, title: String? = nil, username: String? = nil, firstName: String? = nil, lastName: String? = nil, photo: ChatPhoto? = nil, description: String? = nil, inviteLink: String? = nil, pinnedMessage: Message? = nil, permissions: ChatPermissions? = nil, slowModeDelay: Int? = nil, stickerSetName: String? = nil, canSetStickerSet: Bool? = nil) {
+    public init(id: Int64, type: ChatType, title: String? = nil, username: String? = nil, firstName: String? = nil, lastName: String? = nil, photo: ChatPhoto? = nil, description: String? = nil, inviteLink: String? = nil, pinnedMessage: Message? = nil, permissions: ChatPermissions? = nil, slowModeDelay: Int? = nil, stickerSetName: String? = nil, canSetStickerSet: Bool? = nil) {
         self.id = id
         self.type = type
         self.title = title
@@ -451,10 +451,10 @@ public class Poll: Codable {
     public var totalVoterCount: Int
     public var isClosed: Bool
     public var isAnonymous: Bool
-    public var type: String
+    public var type: PollType
     public var allowsMultipleAnswers: Bool
     public var correctOptionId: Int?
-    public init(id: String, question: String, options: [PollOption], totalVoterCount: Int, isClosed: Bool, isAnonymous: Bool, type: String, allowsMultipleAnswers: Bool, correctOptionId: Int? = nil) {
+    public init(id: String, question: String, options: [PollOption], totalVoterCount: Int, isClosed: Bool, isAnonymous: Bool, type: PollType, allowsMultipleAnswers: Bool, correctOptionId: Int? = nil) {
         self.id = id
         self.question = question
         self.options = options
@@ -526,8 +526,8 @@ public class KeyboardButton: Codable {
 
 
 public class KeyboardButtonPollType: Codable {
-    public var type: String?
-    public init(type: String? = nil) {
+    public var type: PollType?
+    public init(type: PollType? = nil) {
         self.type = type
     }
 

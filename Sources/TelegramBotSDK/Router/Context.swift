@@ -33,7 +33,7 @@ public class Context {
 
 	public var privateChat: Bool {
         guard let message = message else { return false }
-        return message.chat.type == "private_chat"
+        return message.chat.type == .privateChat
     }
 	public var chatId: Int64? { return message?.chat.id ??
         update.callbackQuery?.message?.chat.id
@@ -63,7 +63,7 @@ public class Context {
                             disableNotification: Bool? = nil,
                             replyToMessageId: Int? = nil,
                             replyMarkup: ReplyMarkup? = nil,
-                            _ parameters: [String: Any?] = [:]) -> Message? {
+                            _ parameters: [String: Encodable?] = [:]) -> Message? {
         guard let chatId = chatId else {
             assertionFailure("respondSync() used when update.message is nil")
             bot.lastError = nil
@@ -87,7 +87,7 @@ public class Context {
 	                         disableNotification: Bool? = nil,
 	                         replyToMessageId: Int? = nil,
 	                         replyMarkup: ReplyMarkup? = nil,
-	                         _ parameters: [String: Any?] = [:],
+	                         _ parameters: [String: Encodable?] = [:],
 	                         queue: DispatchQueue = .main,
 	                         completion: TelegramBot.SendMessageCompletion? = nil) {
         guard let chatId = chatId else {
@@ -111,12 +111,12 @@ public class Context {
 	public func respondPrivatelySync(_ userText: String, groupText: String) -> (userMessage: Message?, groupMessage: Message?) {
 		var userMessage: Message?
 		if let fromId = fromId {
-            userMessage = bot.sendMessageSync(chatId: .int64(fromId), text: userText)
+            userMessage = bot.sendMessageSync(chatId: .chat(fromId), text: userText)
 		}
 		var groupMessage: Message? = nil
 		if !privateChat {
             if let chatId = chatId {
-                groupMessage = bot.sendMessageSync(chatId: .int64(chatId), text: groupText)
+                groupMessage = bot.sendMessageSync(chatId: .chat(chatId), text: groupText)
             } else {
                 assertionFailure("respondPrivatelySync() used when update.message is nil")
                 bot.lastError = nil
@@ -131,11 +131,11 @@ public class Context {
 	                                  onDidSendToUser userCompletion: TelegramBot.SendMessageCompletion? = nil,
 	                                  onDidSendToGroup groupCompletion: TelegramBot.SendMessageCompletion? = nil) {
 		if let fromId = fromId {
-            bot.sendMessageAsync(chatId: .int64(fromId), text: userText, completion: userCompletion)
+            bot.sendMessageAsync(chatId: .chat(fromId), text: userText, completion: userCompletion)
 		}
 		if !privateChat {
             if let chatId = chatId {
-                bot.sendMessageAsync(chatId: .int64(chatId), text: groupText, completion: groupCompletion)
+                bot.sendMessageAsync(chatId: .chat(chatId), text: groupText, completion: groupCompletion)
             } else {
                 assertionFailure("respondPrivatelyAsync() used when update.message is nil")
             }

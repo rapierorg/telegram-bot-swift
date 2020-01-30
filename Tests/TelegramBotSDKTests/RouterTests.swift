@@ -23,7 +23,7 @@ class RouterTests: XCTestCase {
         super.setUp()
         continueAfterFailure = false
 
-        let chat = Chat(id: 1, type: "")
+        let chat = Chat(id: 1, type: .privateChat)
         update.message = Message(messageId: 1, date: Date(), chat: chat)
 
         token = readToken(from: "TEST_BOT_TOKEN")

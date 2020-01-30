@@ -18,7 +18,7 @@ import CCurl
 public class TelegramBot {
     internal typealias DataTaskCompletion = (_ result: Decodable?, _ error: DataTaskError?)->()
 
-    public typealias RequestParameters = [String: Any?]
+    public typealias RequestParameters = [String: Encodable?]
 	
     /// Telegram server URL.
     public var url = "https://api.telegram.org"
