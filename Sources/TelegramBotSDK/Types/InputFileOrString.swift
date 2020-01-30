@@ -3,7 +3,7 @@
 //
 // This source file is part of the Telegram Bot SDK for Swift (unofficial).
 //
-// Copyright (c) 2015 - 2016 Andrey Fidrya and the project authors
+// Copyright (c) 2015 - 2020 Andrey Fidrya and the project authors
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
 // See LICENSE.txt for license information
@@ -12,41 +12,35 @@
 
 import Foundation
 
-
-public enum InputFileOrString: JsonConvertible, InternalJsonConvertible {
-    public init(json: Any) {
-        self.init(internalJson: JSON(json))
-    }
-    
+public enum InputFileOrString: Codable {
     case inputFile(InputFile)
     case string(String)
     
-    internal init(internalJson: JSON) {
-        if nil != internalJson.string {
-            self = .string(String(internalJson: internalJson))
-        } else {
-            self = .inputFile(InputFile(filename: "", data: Data()))
+    case unknown
+    
+    public init(from decoder: Decoder) throws {
+        if let inputFile = try? decoder.singleValueContainer().decode(InputFile.self) {
+            self = .inputFile(inputFile)
+            return
         }
+
+        if let string = try? decoder.singleValueContainer().decode(String.self) {
+            self = .string(string)
+            return
+        }
+        
+        self = .unknown
     }
     
-    public var json: Any {
-        get {
-            return internalJson.object
-        }
-        set {
-            internalJson = JSON(newValue)
-        }
-    }
-    
-    internal var internalJson: JSON {
-        get {
-            switch self {
-            case .inputFile(let _): return JSON()
-            case .string(let string): return string.internalJson
-            }
-        }
-        set {
-            self = InputFileOrString(json: internalJson)
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case let .inputFile(inputFile):
+            try container.encode(inputFile)
+        case let .string(string):
+            try container.encode(string)
+        default:
+            fatalError("Unknown should not be used")
         }
     }
 }

@@ -65,60 +65,50 @@ class RequestTests: XCTestCase {
 	//
 	
 	func testSendMessage() {
-        let response = bot.sendMessageSync(chatId: chatId, text: "testSendMessage1: this is a simple message")
+        let response = bot.sendMessageSync(chatId: .int64(chatId), text: "testSendMessage1: this is a simple message")
 		check(response)
 		
 		let messageId = response!.messageId
-		check( bot.sendMessageSync(chatId: chatId, text: "testSendMessage2: a reply to previous message", ["reply_to_message_id": messageId]) )
+		check( bot.sendMessageSync(chatId: .int64(chatId), text: "testSendMessage2: a reply to previous message", ["reply_to_message_id": messageId]) )
 
-        check( bot.sendMessageSync(chatId: chatId, text: "testSendMessage3: url without preview: http://google.com", ["disable_web_page_preview": true]) )
+        check( bot.sendMessageSync(chatId: .int64(chatId), text: "testSendMessage3: url without preview: http://google.com", ["disable_web_page_preview": true]) )
 
-        check( bot.sendMessageSync(chatId: chatId, text: "testSendMessage4: markdown: *bold* _italic_ [link](http://google.com)", ["parse_mode": "Markdown"]) )
+        check( bot.sendMessageSync(chatId: .int64(chatId), text: "testSendMessage4: markdown: *bold* _italic_ [link](http://google.com)", ["parse_mode": "Markdown"]) )
 
-        check( bot.sendMessageSync(chatId: chatId, parseMode: .html, text: "testSendMessage5: html: <b>bold</b> <i>italic</i>\n<code>void main() {\n  return 0;\n}</code>") )
+        check( bot.sendMessageSync(chatId: .int64(chatId), text: "testSendMessage5: html: <b>bold</b> <i>italic</i>\n<code>void main() {\n  return 0;\n}</code>", parseMode: .html) )
 	}
 	
 	func testShowKeyboardWithText() {
-		var markup = ReplyKeyboardMarkup()
-		markup.keyboardStrings = [
-			[ "Button 1", "Button 2" ],
-			[ "Button 3", "Button 4" ]
-		]
-		check( bot.sendMessageSync(chatId: chatId, text: "Here is a keyboard", ["reply_markup": markup]) )
+		let markup = ReplyKeyboardMarkup(keyboard: [
+            [KeyboardButton(text: "Button 1"), KeyboardButton(text: "Button 2")],
+            [KeyboardButton(text: "Button 3")]
+        ])
+        check( bot.sendMessageSync(chatId: .int64(chatId), text: "Here is a keyboard", ["reply_markup": markup]) )
 	}
 	
 	func testShowKeyboardWithButtons() {
-		var markup = ReplyKeyboardMarkup()
+		let markup = ReplyKeyboardMarkup(keyboard: [])
 		
-		var button1 = KeyboardButton()
-		button1.text = "Button 1"
-		
-		var button2 = KeyboardButton()
-		button2.text = "Button 2"
-
-		var button3 = KeyboardButton()
-		button3.text = "Share Contact"
-		button3.requestContact = true
-		
-		var button4 = KeyboardButton()
-		button4.text = "Share Location"
-		button4.requestLocation = true
+        let button1 = KeyboardButton(text: "Button 1")
+        let button2 = KeyboardButton(text: "Button 2")
+        let button3 = KeyboardButton(text: "Share Contact", requestContact: true)
+        let button4 = KeyboardButton(text: "Share Location", requestLocation: true)
 		
 		markup.keyboard = [
 			[ button1, button2 ],
 			[ button3, button4 ]
 		]
-		check( bot.sendMessageSync(chatId: chatId, text: "Here is a keyboard", ["reply_markup": markup]) )
+		check( bot.sendMessageSync(chatId: .int64(chatId), text: "Here is a keyboard", ["reply_markup": markup]) )
 	}
 	
 	func testHideKeyboard() {
-		let markup = ReplyKeyboardRemove()
-		check( bot.sendMessageSync(chatId: chatId, text: "Removing the keyboard", ["reply_markup": markup]) )
+		let markup = ReplyKeyboardRemove(removeKeyboard: true)
+        check( bot.sendMessageSync(chatId: .int64(chatId), text: "Removing the keyboard", ["reply_markup": markup]) )
 	}
 	
 	func testForceReply() {
-		let markup = ForceReply()
-		check( bot.sendMessageSync(chatId: chatId, text: "Force reply", ["reply_markup": markup]) )
+		let markup = ForceReply(forceReply: true)
+		check( bot.sendMessageSync(chatId: .int64(chatId), text: "Force reply", ["reply_markup": markup]) )
 	}
 	
 	//
@@ -126,7 +116,7 @@ class RequestTests: XCTestCase {
 	//
 	
 	func testForwardMessage() {
-		check( bot.forwardMessageSync(chatId: chatId, fromChatId: chatId, messageId: messageId) )
+        check( bot.forwardMessageSync(chatId: .int64(chatId), fromChatId: .int64(chatId), messageId: messageId) )
 	}
 	
 	//
@@ -134,8 +124,8 @@ class RequestTests: XCTestCase {
 	//
 	
 	func testSendLocation() {
-		check( bot.sendChatActionSync(chat_id: chatId, action: .find_location) )
-		check( bot.sendLocationSync(chatId: chatId, latitude: 50.4501, longitude: 30.5234) )
+        check( bot.sendChatActionSync(chatId: .int64(chatId), action: .findLocation) )
+        check( bot.sendLocationSync(chatId: .int64(chatId), latitude: 50.4501, longitude: 30.5234) )
 	}
 	
     //
@@ -153,13 +143,13 @@ class RequestTests: XCTestCase {
             return
         }
         let inputFile = InputFile(filename: "test.jpg", data: imageData)
-        bot.sendPhotoSync(chatId: chatId, photo: inputFile)
+        bot.sendPhotoSync(chatId: .int64(chatId), photo: inputFile)
     }
     
 	// Helper functions
 
-	func check<T>(_ result: T?) where T: JsonConvertible {
-		XCTAssert(result?.prettyPrint() != nil)
+	func check<T>(_ result: T?) where T: Codable {
+		XCTAssert(result != nil)
 	}
 
     static var allTests : [(String, (RequestTests) -> () throws -> Void)] {

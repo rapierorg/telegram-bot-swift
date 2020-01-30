@@ -65,16 +65,16 @@ class TelegramBotSDKCodableGenerator: CodeGenerator {
             let name = makeGetterName(typeName: typeName, fieldName: fieldInfo.name, fieldType: fieldInfo.type)
             var type = fieldInfo.type
             
-            if fieldInfo.isOptional {
-                type = "\(type)?"
-            }
-            
             if fieldInfo.isArray {
                 type = "[\(type)]"
             }
             
             if fieldInfo.isArrayOfArray {
                 type = "[\(type)]"
+            }
+            
+            if fieldInfo.isOptional {
+                type = "\(type)? = nil"
             }
             
             return "\(name.camelized()): \(type)"
@@ -212,11 +212,11 @@ class TelegramBotSDKCodableGenerator: CodeGenerator {
         
         if fieldInfo.isArrayOfArray {
             return """
-                public var \(name): [[\(type)]] = [[]]\n
+                public var \(name): [[\(type)]]\(isOptional ? "?" : "") = [[]]\n
             """
         } else if fieldInfo.isArray {
             return """
-                public var \(name): [\(type)] = []\n
+                public var \(name): [\(type)]\(isOptional ? "?" : "") = []\n
             """
         } else {
             return """
@@ -230,19 +230,6 @@ class TelegramBotSDKCodableGenerator: CodeGenerator {
 
 extension TelegramBotSDKCodableGenerator {
     private func makeGetterName(typeName: String, fieldName: String, fieldType: String) -> String {
-        switch (typeName, fieldName) {
-        case ("ChatMember", "status"):
-            return "status_string"
-        default:
-            if fieldName == "type" && fieldType == "String" {
-                return "type_string"
-                
-            }
-            if fieldName == "parse_mode" && fieldType == "String" {
-                return "parse_mode_string"
-            }
-            break
-        }
         return fieldName
     }
 }

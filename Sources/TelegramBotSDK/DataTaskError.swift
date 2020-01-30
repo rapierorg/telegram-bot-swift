@@ -3,7 +3,7 @@
 //
 // This source file is part of the Telegram Bot SDK for Swift (unofficial).
 //
-// Copyright (c) 2015 - 2016 Andrey Fidrya and the project authors
+// Copyright (c) 2015 - 2020 Andrey Fidrya and the project authors
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
 // See LICENSE.txt for license information
@@ -29,14 +29,16 @@ public enum DataTaskError {
     case libcurlAbortedByCallback
     
     /// Status Code is not 200 (OK)
-    case invalidStatusCode(statusCode: Int, telegramResponse: Response, data: Data?)
+    case invalidStatusCode(statusCode: Int, telegramDescription: String, telegramErrorCode: Int, data: Data?)
     
     /// Telegram server returned no data
     case noDataReceived
     
     /// Server error (server returned "ok: false")
-    case serverError(telegramResponse: Response,
-        data: Data)
+    case serverError(data: Data)
+    
+    /// Codable failed to decode to type
+    case decodeError(data: Data)
 }
 
 extension DataTaskError: CustomDebugStringConvertible {
@@ -51,12 +53,14 @@ extension DataTaskError: CustomDebugStringConvertible {
             return "Libcurl error \(code.rawValue): \(description)"
         case .libcurlAbortedByCallback:
             return "Libcurl aborted by callback"
-        case let .invalidStatusCode(statusCode, telegramResponse, _):
-            return "Expected status code 200, got \(statusCode): \(telegramResponse.description.unwrapOptional)"
+        case let .invalidStatusCode(statusCode, telegramDescription, _, _):
+            return "Expected status code 200, got \(statusCode): \(telegramDescription)"
         case .noDataReceived:
             return "No data received"
-        case let .serverError(telegramResponse, _):
-            return "Telegram server returned an error: \(telegramResponse.description.unwrapOptional)"
+        case .serverError:
+            return "Telegram server returned an error"
+        case .decodeError:
+            return "Codable failed to decode result"
         }
     }
 }

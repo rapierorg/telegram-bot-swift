@@ -60,7 +60,7 @@ class UrlencodeTests: XCTestCase {
     
     func testFormUrlencodeMixed() {
         let value3: Int? = nil
-        let parameters: [String: Any?] = [
+        let parameters: [String: Encodable?] = [
             "key1": "value1",
             "key2": 123,
             "key3": value3
@@ -70,7 +70,7 @@ class UrlencodeTests: XCTestCase {
     }
     
     func testFormUrlencodeNilValue() {
-        let parameters: [String: Any?] = [
+        let parameters: [String: Encodable?] = [
             "key": nil
         ]
         let encoded = HTTPUtils.formUrlencode(parameters)
@@ -79,7 +79,7 @@ class UrlencodeTests: XCTestCase {
     
     func testFormUrlencodeOptionalString() {
         let value: String? = "value"
-        let parameters: [String: Any?] = [
+        let parameters: [String: Encodable?] = [
             "key": value
         ]
         let encoded = HTTPUtils.formUrlencode(parameters)
@@ -87,7 +87,7 @@ class UrlencodeTests: XCTestCase {
     }
     
     func testFormUrlencodeAny() {
-        let parameters: [String: Any?] = [
+        let parameters: [String: Encodable?] = [
             "key": "value"
         ]
         let encoded = HTTPUtils.formUrlencode(parameters)
@@ -96,7 +96,7 @@ class UrlencodeTests: XCTestCase {
     
     func testFormUrlencodeOptionalAsAny() {
         let value: String? = "value"
-        let parameters: [String: Any?] = [
+        let parameters: [String: Encodable?] = [
             "key": value
         ]
         let encoded = HTTPUtils.formUrlencode(parameters)
@@ -105,7 +105,7 @@ class UrlencodeTests: XCTestCase {
     
     func testFormUrlencodeNilAsAny() {
         let value: String? = nil
-        let parameters: [String: Any?] = [
+        let parameters: [String: Encodable?] = [
             "key": value
         ]
         let encoded = HTTPUtils.formUrlencode(parameters)
@@ -113,7 +113,7 @@ class UrlencodeTests: XCTestCase {
     }
     
     func testFormUrlencodeTypes() {
-        let parameters: [String: Any?] = [
+        let parameters: [String: Encodable?] = [
             "key1": 123,
             "key2": 123.456,
             "key3": true,
@@ -125,17 +125,17 @@ class UrlencodeTests: XCTestCase {
     }
     
     func testFormUrlencodeReplyMarkup() {
-        var keyboardMarkup = ReplyKeyboardMarkup()
-        keyboardMarkup.keyboardStrings = [
-            [ "A", "B", "C" ],
-            [ "D", "E" ]
-        ]
-        let parameters: [String: Any?] = [
+        let keyboardMarkup = ReplyKeyboardMarkup(keyboard: [
+            [ KeyboardButton(text: "A"), KeyboardButton(text: "B"), KeyboardButton(text: "C") ],
+            [ KeyboardButton(text: "D"), KeyboardButton(text: "E") ]
+        ])
+        let parameters: [String: Encodable?] = [
             "key": keyboardMarkup
         ]
         let encoded = HTTPUtils.formUrlencode(parameters)
+        print(encoded)
         // key={"keyboard":[["A","B","C"],["D","E"]]}
-        XCTAssert(encoded == "key=%7B%22keyboard%22%3A%5B%5B%22A%22%2C%22B%22%2C%22C%22%5D%2C%5B%22D%22%2C%22E%22%5D%5D%7D")
+        XCTAssert(encoded == "key=%7B%22keyboard%22%3A%5B%5B%7B%22text%22%3A%22A%22%7D%2C%7B%22text%22%3A%22B%22%7D%2C%7B%22text%22%3A%22C%22%7D%5D%2C%5B%7B%22text%22%3A%22D%22%7D%2C%7B%22text%22%3A%22E%22%7D%5D%5D%7D")
     }
 
     static var allTests : [(String, (UrlencodeTests) -> () throws -> Void)] {

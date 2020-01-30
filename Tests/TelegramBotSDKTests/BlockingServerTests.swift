@@ -30,10 +30,10 @@ class BlockingServerTests: XCTestCase {
         let bot = TelegramBot(token: token)
 
         while let update = bot.nextUpdateSync() {
-            print("--- update: \(update.debugDescription)")
+            print("--- update: \(update)")
             if let message = update.message, let text = message.text, let chatId = message.from?.id {
                 if text == "Hello" {
-                    bot.sendMessageAsync(chatId: chatId, text: "How are you?")
+                    bot.sendMessageAsync(chatId: .int64(chatId), text: "How are you?")
                 }
             }
         }
