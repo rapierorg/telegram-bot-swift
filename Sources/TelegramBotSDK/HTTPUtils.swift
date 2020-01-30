@@ -47,13 +47,22 @@ public class HTTPUtils {
             
             var valueString: String
             
+            let typesToDescribe = [
+                "String",
+                "ParseMode",
+                "ChatId",
+                "ChatType",
+                "MessageEntityType",
+                "PollType",
+            ]
+            
             if let boolValue = value as? Bool {
                 if !boolValue {
                     continue
                 }
                 // If true, add "key=" to encoded string
                 valueString = "true"
-            } else if value is String {
+            } else if typesToDescribe.contains(String(describing: type(of: value))) {
                 
                 valueString = value as! String
             } else {
