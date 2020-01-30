@@ -64,7 +64,7 @@ public class HTTPUtils {
                 valueString = "true"
             } else if typesToDescribe.contains(String(describing: type(of: value))) {
                 
-                valueString = value as! String
+                valueString = String(describing: value)
             } else {
                 let encodableBox = AnyEncodable(value: value)
                 let encoder = JSONEncoder()
