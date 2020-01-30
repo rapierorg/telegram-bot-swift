@@ -65,8 +65,8 @@ public class HTTPUtils {
                 guard let jsonEncodedUnwrappedData = jsonEncodedData else { continue }
                 guard var jsonEncodedString = String(data: jsonEncodedUnwrappedData, encoding: .utf8) else { continue }
                 
-                if !(jsonEncodedString.contains("{") && jsonEncodedString.contains(":")) && jsonEncodedString.contains("\"") {
-                    jsonEncodedString = jsonEncodedString.replacingOccurrences(of: "\"", with: "")
+                if jsonEncodedString.hasPrefix("\"") && jsonEncodedString.hasSuffix("\"") {
+                    jsonEncodedString = String(jsonEncodedString.dropFirst().dropLast())
                 }
                 
                 valueString = jsonEncodedString
