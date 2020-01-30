@@ -918,7 +918,7 @@ parameters:
     - disable_web_page_preview: Bool?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -939,7 +939,7 @@ parameters:
     - parse_mode: ParseMode?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -955,7 +955,7 @@ parameters:
     - thumb: FileInfo?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -968,7 +968,7 @@ parameters:
     - parse_mode: ParseMode?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -985,7 +985,7 @@ parameters:
     - supports_streaming: Bool?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1001,7 +1001,7 @@ parameters:
     - parse_mode: ParseMode?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1014,7 +1014,7 @@ parameters:
     - duration: Int?
     - disable_notification: Bool?
     - reply_to_message_id: Bool?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1027,7 +1027,7 @@ parameters:
     - thumb: FileInfo?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1048,7 +1048,7 @@ parameters:
     - live_period: Int?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1059,7 +1059,7 @@ parameters:
     - inline_message_id: String?
     - latitude: Float
     - longitude: Float
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: MessageOrBool?
 
 ---
@@ -1068,7 +1068,7 @@ parameters:
     - chat_id: ChatId?
     - message_id: Int?
     - inline_message_id: String?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: MessageOrBool?
 
 ---
@@ -1083,7 +1083,7 @@ parameters:
     - foursquare_type: String?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1096,7 +1096,7 @@ parameters:
     - vcard: String?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1111,7 +1111,7 @@ parameters:
     - is_closed: Bool?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1299,7 +1299,7 @@ parameters:
     - text: String
     - parse_mode: ParseMode?
     - disable_web_page_preview: Bool?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: MessageOrBool?
 
 ---
@@ -1310,7 +1310,7 @@ parameters:
     - inline_message_id: String?
     - caption: String?
     - parse_mode: ParseMode?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: MessageOrBool?
 
 ---
@@ -1320,7 +1320,7 @@ parameters:
     - message_id: Int?
     - inline_message_id: String?
     - media: InputMedia
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: MessageOrBool?
 
 ---
@@ -1329,7 +1329,7 @@ parameters:
     - chat_id: ChatId?
     - message_id: Int?
     - inline_message_id: String?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: MessageOrBool?
 
 ---
@@ -1337,7 +1337,7 @@ method: stopPoll
 parameters:
     - chat_id: ChatId
     - message_id: Int
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Poll?
 
 ---
@@ -1354,7 +1354,7 @@ parameters:
     - sticker: FileInfo
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1442,7 +1442,7 @@ parameters:
     - is_flexible: Bool?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1469,7 +1469,7 @@ parameters:
     - game_short_name: String
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
