@@ -58,7 +58,7 @@ public class Context {
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
     @discardableResult
     public func respondSync(_ text: String,
-                            parseMode: String? = nil,
+                            parseMode: ParseMode? = nil,
                             disableWebPagePreview: Bool? = nil,
                             disableNotification: Bool? = nil,
                             replyToMessageId: Int? = nil,
@@ -69,20 +69,21 @@ public class Context {
             bot.lastError = nil
             return nil
         }
-        return bot.requestSync("sendMessage", bot.defaultParameters["sendMessage"], parameters, [
-            "chat_id": chatId,
-            "text": text,
-            "parse_mode": parseMode,
-            "disable_web_page_preview": disableWebPagePreview,
-            "disable_notification": disableNotification,
-            "reply_to_message_id": replyToMessageId,
-            "reply_markup": replyMarkup])
+        return bot.sendMessageSync(
+            chatId: .chat(chatId),
+            text: text,
+            parseMode: parseMode,
+            disableWebPagePreview: disableWebPagePreview,
+            disableNotification: disableNotification,
+            replyToMessageId: replyToMessageId,
+            replyMarkup: replyMarkup,
+            parameters)
     }
     
     /// Sends a message to current chat.
     /// - SeeAlso: <https://core.telegram.org/bots/api#sendmessage>
 	public func respondAsync(_ text: String,
-	                         parseMode: String? = nil,
+	                         parseMode: ParseMode? = nil,
 	                         disableWebPagePreview: Bool? = nil,
 	                         disableNotification: Bool? = nil,
 	                         replyToMessageId: Int? = nil,
@@ -94,15 +95,16 @@ public class Context {
             assertionFailure("respondAsync() used when update.message is nil")
             return
         }
-        return bot.requestAsync("sendMessage", bot.defaultParameters["sendMessage"], parameters, [
-            "chat_id": chatId,
-            "text": text,
-            "parse_mode": parseMode,
-            "disable_web_page_preview": disableWebPagePreview,
-            "disable_notification": disableNotification,
-            "reply_to_message_id": replyToMessageId,
-            "reply_markup": replyMarkup],
-                            queue: queue, completion: completion)
+        return bot.sendMessageAsync(
+            chatId: .chat(chatId),
+            text: text,
+            parseMode: parseMode,
+            disableWebPagePreview: disableWebPagePreview,
+            disableNotification: disableNotification,
+            replyToMessageId: replyToMessageId,
+            replyMarkup: replyMarkup,
+            parameters, queue: queue,
+            completion: completion)
 	}
 	
     /// Respond privately also sending a message to a group.
