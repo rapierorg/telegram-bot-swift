@@ -257,6 +257,8 @@ public class TelegramBot {
         }
         let data = callbackData.data
         let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .secondsSince1970
         guard let telegramResponse = try? decoder.decode(Response<T>.self, from: data) else {
             completion(nil, .decodeError(data: data))
             return

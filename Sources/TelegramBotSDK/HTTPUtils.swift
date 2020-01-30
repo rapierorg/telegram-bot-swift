@@ -58,7 +58,10 @@ public class HTTPUtils {
                 valueString = value as! String
             } else {
                 let encodableBox = AnyEncodable(value: value)
-                let jsonEncodedData = try? JSONEncoder().encode(encodableBox)
+                let encoder = JSONEncoder()
+                encoder.dateEncodingStrategy = .secondsSince1970
+                encoder.keyEncodingStrategy = .convertToSnakeCase
+                let jsonEncodedData = try? encoder.encode(encodableBox)
                 guard let jsonEncodedUnwrappedData = jsonEncodedData else { continue }
                 guard let jsonEncodedString = String(data: jsonEncodedUnwrappedData, encoding: .utf8) else { continue }
                 valueString = jsonEncodedString
