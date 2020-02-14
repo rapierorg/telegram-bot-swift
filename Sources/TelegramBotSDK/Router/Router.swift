@@ -167,6 +167,28 @@ public class Router {
             case .pinnedMessage: return message.pinnedMessage != nil
             default: break
             }
+        } else if let message = update.editedMessage {
+            switch contentType {
+            case .editedFrom: return message.from != nil
+            case .editedForwardFrom: return message.forwardFrom != nil
+            case .editedForwardFromChat: return message.forwardFromChat != nil
+            case .editedForwardDate: return message.forwardDate != nil
+            case .editedReplyToMessage: return message.replyToMessage != nil
+            case .editedEditDate: return message.editDate != nil
+            case .editedText: return message.text != nil
+            case .editedEntities: return !message.entities.isEmpty
+            case .editedAudio: return message.audio != nil
+            case .editedDocument: return message.document != nil
+            case .editedPhoto: return !message.photo.isEmpty
+            case .editedSticker: return message.sticker != nil
+            case .editedVideo: return message.video != nil
+            case .editedVoice: return message.voice != nil
+            case .editedCaption: return message.caption != nil
+            case .editedContact: return message.contact != nil
+            case .editedLocation: return message.location != nil
+            case .editedVenue: return message.venue != nil
+            default: break
+            }
         } else {
             switch contentType {
             case .callback_query(let data):
