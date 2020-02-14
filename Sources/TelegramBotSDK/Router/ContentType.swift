@@ -45,4 +45,23 @@ public enum ContentType {
 	case migrateFromChatId
 	case pinnedMessage
     case callback_query(data: String?)
+    
+    case editedFrom
+    case editedForwardFrom
+    case editedForwardFromChat
+    case editedForwardDate
+    case editedReplyToMessage
+    case editedEditDate
+    case editedText
+    case editedEntities
+    case editedAudio
+    case editedDocument
+    case editedPhoto
+    case editedSticker
+    case editedVideo
+    case editedVoice
+    case editedCaption
+    case editedContact
+    case editedLocation
+    case editedVenue
 }
