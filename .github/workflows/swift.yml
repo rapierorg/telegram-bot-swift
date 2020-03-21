@@ -18,7 +18,7 @@ jobs:
       with:
         swift-version: "5.1"
     - name: Build
-      run: swift build -v
+      run: swift build
   build-linux:
     runs-on: [ubuntu-18.04]
     steps:
@@ -30,4 +30,4 @@ jobs:
         with:
           swift-version: "5.1"
       - name: Build
-        run: swift build -v
+        run: swift build
