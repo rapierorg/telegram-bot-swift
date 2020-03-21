@@ -37,29 +37,6 @@ extension TelegramBot {
 		return requestSync(endpoint, mergeParameters(parameters))
 	}
 	
-	/*/// Perform synchronous request.
-	/// - Returns: array of JsonConvertibles on success. Nil on error, in which case `lastError` contains the details.
-	internal func requestSync<TResult>(_ endpoint: String, _ parameters: [String: Any?] = [:]) -> [TResult]? where TResult: Decodable {
-		
-		var retval: [TResult]!
-		let sem = DispatchSemaphore(value: 0)
-		let queue = DispatchQueue.global()
-		requestAsync(endpoint, parameters, queue: queue) {
-			(result: [TResult]?, error: DataTaskError?) in
-			retval = result
-			self.lastError = error
-			sem.signal()
-		}
-		RunLoop.current.waitForSemaphore(sem)
-		return retval
-	}
-	
-	/// Perform synchronous request.
-	/// - Returns: array of JsonConvertibles on success. Nil on error, in which case `lastError` contains the details.
-	public func requestSync<TResult>(_ endpoint: String, _ parameters: [String: Any?]?...) -> [TResult]? where TResult: Decodable {
-		return requestSync(endpoint, mergeParameters(parameters))
-	}*/
-	
 	/// Perform asynchronous request.
 	/// - Returns: Decodable  on success. Nil on error, in which case `error` contains the details.
     internal func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?] = [:], queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: TResult?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
