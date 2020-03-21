@@ -176,10 +176,10 @@ public class Router {
             case .editedReplyToMessage: return message.replyToMessage != nil
             case .editedEditDate: return message.editDate != nil
             case .editedText: return message.text != nil
-            case .editedEntities: return !message.entities.isEmpty
+            case .editedEntities: return !(message.entities ?? []).isEmpty
             case .editedAudio: return message.audio != nil
             case .editedDocument: return message.document != nil
-            case .editedPhoto: return !message.photo.isEmpty
+            case .editedPhoto: return !(message.photo ?? []).isEmpty
             case .editedSticker: return message.sticker != nil
             case .editedVideo: return message.video != nil
             case .editedVoice: return message.voice != nil
