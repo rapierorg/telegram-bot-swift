@@ -1,0 +1,33 @@
+name: Build Project
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-macos:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Swift Setup
+      uses: YOCKOW/Action-setup-swift@v1.1.1
+      with:
+        swift-version: "5.1"
+    - name: Build
+      run: swift build -v
+  build-linux:
+    runs-on: [ubuntu-18.04]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install xmllint
+        run: sudo apt-get install libcurl4-openssl-dev
+      - name: Swift Setup
+        uses: YOCKOW/Action-setup-swift@v1.1.1
+        with:
+          swift-version: "5.1"
+      - name: Build
+        run: swift build -v
