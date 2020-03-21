@@ -37,7 +37,9 @@ class BlockingServerTests: XCTestCase {
                 }
             }
         }
-        print("Server stopped due to error: \(bot.lastError)")
+        if let lastError = bot.lastError {
+            print("Server stopped due to error: \(lastError)")
+        }
     }
     
     static var allTests : [(String, (BlockingServerTests) -> () throws -> Void)] {

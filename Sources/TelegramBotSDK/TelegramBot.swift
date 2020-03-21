@@ -196,8 +196,9 @@ public class TelegramBot {
         let byteCount = requestData.count - 1
         
         DispatchQueue.global().async {
-            requestData.withUnsafeBytes { (bytes: UnsafePointer<UInt8>)->Void in
-                self.curlPerformRequest(endpointUrl: endpointUrl, contentType: contentType, resultType: resultType, requestBytes: bytes, byteCount: byteCount, completion: completion)
+            requestData.withUnsafeBytes { (unsafeRawBufferPointer) -> Void in
+                let unsafeBufferPointer = unsafeRawBufferPointer.bindMemory(to: UInt8.self).baseAddress!
+                self.curlPerformRequest(endpointUrl: endpointUrl, contentType: contentType, resultType: resultType, requestBytes: unsafeBufferPointer, byteCount: byteCount, completion: completion)
             }
         }
     }
