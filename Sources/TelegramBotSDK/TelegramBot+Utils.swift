@@ -3,7 +3,7 @@
 //
 // This source file is part of the Telegram Bot SDK for Swift (unofficial).
 //
-// Copyright (c) 2015 - 2016 Andrey Fidrya and the project authors
+// Copyright (c) 2015 - 2020 Andrey Fidrya and the project authors
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
 // See LICENSE.txt for license information
@@ -18,22 +18,22 @@ extension TelegramBot {
     @discardableResult
     public func reportErrorSync(chatId: Int64, text: String, errorDescription: String) -> Message? {
 		logger("ERROR: \(errorDescription)")
-		return sendMessageSync(chatId: chatId, text: text)
+        return sendMessageSync(chatId: .chat(chatId), text: text)
     }
 	
     @discardableResult
 	public func reportErrorSync(chatId: Int64, errorDescription: String) -> Message? {
 		logger("ERROR: \(errorDescription)")
-		return sendMessageSync(chatId: chatId, text: TelegramBot.unhandledErrorText)
+        return sendMessageSync(chatId: .chat(chatId), text: TelegramBot.unhandledErrorText)
 	}
 	
 	public func reportErrorAsync(chatId: Int64, text: String, errorDescription: String, completion: SendMessageCompletion? = nil) {
 		logger("ERROR: \(errorDescription)")
-		sendMessageAsync(chatId: chatId, text: text, completion: completion)
+        sendMessageAsync(chatId: .chat(chatId), text: text, completion: completion)
 	}
 	
 	public func reportErrorAsync(chatId: Int64, errorDescription: String, completion: SendMessageCompletion? = nil) {
 		logger("ERROR: \(errorDescription)")
-		sendMessageAsync(chatId: chatId, text: TelegramBot.unhandledErrorText, completion: completion)
+        sendMessageAsync(chatId: .chat(chatId), text: TelegramBot.unhandledErrorText, completion: completion)
 	}
 }

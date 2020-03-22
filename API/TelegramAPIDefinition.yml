@@ -17,8 +17,8 @@ fields:
     - callback_query: CallbackQuery?
     - shipping_query: ShippingQuery?
     - pre_checkout_query: PreCheckoutQuery?
-    - poll: Poll
-    - poll_answer: PollAnswer
+    - poll: Poll?
+    - poll_answer: PollAnswer?
 
 ---
 type: WebhookInfo
@@ -48,7 +48,7 @@ fields:
 type: Chat
 fields:
     - id: Int64
-    - type: String
+    - type: ChatType
     - title: String?
     - username: String?
     - first_name: String?
@@ -116,7 +116,7 @@ fields:
 ---
 type: MessageEntity
 fields:
-    - type: String?
+    - type: MessageEntityType
     - offset: Int
     - length: Int
     - url: String?
@@ -244,7 +244,7 @@ fields:
     - total_voter_count: Int
     - is_closed: Bool
     - is_anonymous: Bool
-    - type: String
+    - type: PollType
     - allows_multiple_answers: Bool
     - correct_option_id: Int?
 
@@ -281,7 +281,7 @@ fields:
 ---
 type: KeyboardButtonPollType
 fields:
-    - type: String?
+    - type: PollType?
 
 ---
 type: ReplyKeyboardRemove
@@ -343,7 +343,7 @@ fields:
 type: ChatMember
 fields:
     - user: User
-    - status: String
+    - status: Status
     - custom_title: String?
     - until_date: Date?
     - can_be_edited: Bool?
@@ -386,7 +386,7 @@ fields:
     - type: String
     - media: String
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
 
 ---
 type: InputMediaVideo
@@ -395,7 +395,7 @@ fields:
     - media: String
     - thumb: InputFileOrString?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - width: Int?
     - height: Int?
     - duration: Int?
@@ -408,7 +408,7 @@ fields:
     - media: String
     - thumb: InputFileOrString?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - width: Int?
     - height: Int?
     - duration: Int?
@@ -420,7 +420,7 @@ fields:
     - media: String
     - thumb: InputFileOrString?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - duration: Int?
     - performer: String?
     - title: String?
@@ -432,7 +432,7 @@ fields:
     - media: String
     - thumb: InputFileOrString?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
 
 ---
 type: Sticker
@@ -501,7 +501,7 @@ fields:
     - title: String?
     - description: String?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - reply_markup: InlineKeyboardMarkup?
     - input_message_content: InputMessageContent?
 
@@ -517,7 +517,7 @@ fields:
     - thumb_url: String
     - title: String?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - reply_markup: InlineKeyboardMarkup?
     - input_message_content: InputMessageContent?
 
@@ -548,7 +548,7 @@ fields:
     - thumb_url: String
     - title: String?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - reply_markup: InlineKeyboardMarkup?
     - input_message_content: InputMessageContent?
 
@@ -562,7 +562,7 @@ fields:
     - thumb_url: String
     - title: String
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - video_width: Int?
     - video_height: Int?
     - video_duration: Int?
@@ -578,7 +578,7 @@ fields:
     - audio_url: String
     - title: String
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - performer: String?
     - audio_duration: Int?
     - reply_markup: InlineKeyboardMarkup?
@@ -592,7 +592,7 @@ fields:
     - voice_url: String
     - title: String
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - voice_duration: Int?
     - reply_markup: InlineKeyboardMarkup?
     - input_message_content: InputMessageContent?
@@ -604,7 +604,7 @@ fields:
     - id: String
     - title: String
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - document_url: String
     - mime_type: String
     - description: String?
@@ -663,7 +663,7 @@ fields:
     - title: String?
     - description: String?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - reply_markup: InlineKeyboardMarkup?
     - input_message_content: InputMessageContent?
 
@@ -675,7 +675,7 @@ fields:
     - gif_file_id: String
     - title: String?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - reply_markup: InlineKeyboardMarkup?
     - input_message_content: InputMessageContent?
 
@@ -687,7 +687,7 @@ fields:
     - mpeg4_file_id: String
     - title: String?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - reply_markup: InlineKeyboardMarkup?
     - input_message_content: InputMessageContent?
 
@@ -709,7 +709,7 @@ fields:
     - document_file_id: String
     - description: String?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - reply_markup: InlineKeyboardMarkup?
     - input_message_content: InputMessageContent?
 
@@ -722,7 +722,7 @@ fields:
     - title: String
     - description: String?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - reply_markup: InlineKeyboardMarkup?
     - input_message_content: InputMessageContent?
 
@@ -734,7 +734,7 @@ fields:
     - voice_file_id: String
     - title: String
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - reply_markup: InlineKeyboardMarkup?
     - input_message_content: InputMessageContent?
 
@@ -745,7 +745,7 @@ fields:
     - id: String
     - audio_file_id: String
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - reply_markup: InlineKeyboardMarkup?
     - input_message_content: InputMessageContent?
 
@@ -753,7 +753,7 @@ fields:
 type: InputTextMessageContent
 fields:
     - message_text: String
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - disable_web_page_preview: Bool?
 
 ---
@@ -914,7 +914,7 @@ method: sendMessage
 parameters:
     - chat_id: ChatId
     - text: String
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - disable_web_page_preview: Bool?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
@@ -936,7 +936,7 @@ parameters:
     - chat_id: ChatId
     - photo: FileInfo
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
     - reply_markup: ReplyMarkup?
@@ -948,7 +948,7 @@ parameters:
     - chat_id: ChatId
     - audio: FileInfo
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - duration: Int?
     - performer: String?
     - title: String?
@@ -965,7 +965,7 @@ parameters:
     - document: FileInfo
     - thumb: FileInfo?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
     - reply_markup: ReplyMarkup?
@@ -981,7 +981,7 @@ parameters:
     - height: Int?
     - thumb: InputFileOrString?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - supports_streaming: Bool?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
@@ -998,7 +998,7 @@ parameters:
     - height: Int?
     - thumb: FileInfo?
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
     - reply_markup: ReplyMarkup?
@@ -1010,7 +1010,7 @@ parameters:
     - chat_id: ChatId
     - voice: FileInfo
     - caption: String?
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - duration: Int?
     - disable_notification: Bool?
     - reply_to_message_id: Bool?
@@ -1048,7 +1048,7 @@ parameters:
     - live_period: Int?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1059,7 +1059,7 @@ parameters:
     - inline_message_id: String?
     - latitude: Float
     - longitude: Float
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: MessageOrBool?
 
 ---
@@ -1068,7 +1068,7 @@ parameters:
     - chat_id: ChatId?
     - message_id: Int?
     - inline_message_id: String?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: MessageOrBool?
 
 ---
@@ -1106,7 +1106,7 @@ parameters:
     - question: String
     - options: String[]
     - is_anonymous: Bool?
-    - type: String?
+    - type: PollType?
     - correct_option_id: Int?
     - is_closed: Bool?
     - disable_notification: Bool?
@@ -1297,9 +1297,9 @@ parameters:
     - message_id: Int?
     - inline_message_id: String?
     - text: String
-    - parse_mode: String?
+    - parse_mode: ParseMode?
     - disable_web_page_preview: Bool?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: MessageOrBool?
 
 ---
@@ -1309,8 +1309,8 @@ parameters:
     - message_id: Int?
     - inline_message_id: String?
     - caption: String?
-    - parse_mode: String?
-    - reply_markup: InlineKeyboardMarkup?
+    - parse_mode: ParseMode?
+    - reply_markup: ReplyMarkup?
 result: MessageOrBool?
 
 ---
@@ -1320,7 +1320,7 @@ parameters:
     - message_id: Int?
     - inline_message_id: String?
     - media: InputMedia
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: MessageOrBool?
 
 ---
@@ -1329,7 +1329,7 @@ parameters:
     - chat_id: ChatId?
     - message_id: Int?
     - inline_message_id: String?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: MessageOrBool?
 
 ---
@@ -1337,7 +1337,7 @@ method: stopPoll
 parameters:
     - chat_id: ChatId
     - message_id: Int
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Poll?
 
 ---
@@ -1442,7 +1442,7 @@ parameters:
     - is_flexible: Bool?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---
@@ -1469,7 +1469,7 @@ parameters:
     - game_short_name: String
     - disable_notification: Bool?
     - reply_to_message_id: Int?
-    - reply_markup: InlineKeyboardMarkup?
+    - reply_markup: ReplyMarkup?
 result: Message?
 
 ---

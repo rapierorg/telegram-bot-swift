@@ -3,7 +3,7 @@
 //
 // This source file is part of the Telegram Bot SDK for Swift (unofficial).
 //
-// Copyright (c) 2015 - 2016 Andrey Fidrya and the project authors
+// Copyright (c) 2015 - 2020 Andrey Fidrya and the project authors
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
 // See LICENSE.txt for license information
@@ -12,6 +12,20 @@
 
 import Foundation
 
+struct AnyEncodable: Encodable {
+    let value: Encodable
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try value.encode(to: &container)
+    }
+}
+
+extension Encodable {
+    func encode(to container: inout SingleValueEncodingContainer) throws {
+        try container.encode(self)
+    }
+}
 
 public class HTTPUtils {
     /// Encodes keys and values in a dictionary for using with
@@ -23,7 +37,7 @@ public class HTTPUtils {
     ///
     /// - SeeAlso: Encoding is performed using String's `formUrlencode` method.
     /// - Returns: Encoded string.
-    public class func formUrlencode(_ dictionary: [String: Any?]) -> String {
+    public class func formUrlencode(_ dictionary: [String: Encodable?]) -> String {
         var result = ""
         for (key, valueOrNil) in dictionary {
             guard let value = valueOrNil else {
@@ -39,21 +53,23 @@ public class HTTPUtils {
                 }
                 // If true, add "key=" to encoded string
                 valueString = "true"
-            } else if let arrayValue = value as? [InternalJsonConvertible] {
+            } else if value is String {
                 
-                let jsonArray = arrayValue.map({ (jsonObject) -> JSON in
-                    return jsonObject.internalJson
-                })
-                
-                let jsonConvertible = JSON(jsonArray)
-                
-                if let resultString = jsonConvertible.internalJson.rawString(options: JSONSerialization.WritingOptions()) {
-                    valueString = String(describing: resultString)
-                } else {
-                    continue
-                }
+                valueString = value as! String
             } else {
-                valueString = String(describing: value)
+                let encodableBox = AnyEncodable(value: value)
+                let encoder = JSONEncoder()
+                encoder.dateEncodingStrategy = .secondsSince1970
+                encoder.keyEncodingStrategy = .convertToSnakeCase
+                let jsonEncodedData = try? encoder.encode(encodableBox)
+                guard let jsonEncodedUnwrappedData = jsonEncodedData else { continue }
+                guard var jsonEncodedString = String(data: jsonEncodedUnwrappedData, encoding: .utf8) else { continue }
+                
+                if jsonEncodedString.hasPrefix("\"") && jsonEncodedString.hasSuffix("\"") {
+                    jsonEncodedString = String(jsonEncodedString.dropFirst().dropLast())
+                }
+                
+                valueString = jsonEncodedString
             }
             
             if !result.isEmpty {

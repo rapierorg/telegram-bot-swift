@@ -3,7 +3,7 @@
 //
 // This source file is part of the Telegram Bot SDK for Swift (unofficial).
 //
-// Copyright (c) 2015 - 2016 Andrey Fidrya and the project authors
+// Copyright (c) 2015 - 2020 Andrey Fidrya and the project authors
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
 // See LICENSE.txt for license information
@@ -16,9 +16,9 @@ import Dispatch
 import CCurl
 
 public class TelegramBot {
-    internal typealias DataTaskCompletion = (_ json: JSON, _ error: DataTaskError?)->()
+    internal typealias DataTaskCompletion = (_ result: Decodable?, _ error: DataTaskError?)->()
 
-    public typealias RequestParameters = [String: Any?]
+    public typealias RequestParameters = [String: Encodable?]
 	
     /// Telegram server URL.
     public var url = "https://api.telegram.org"
@@ -147,13 +147,13 @@ public class TelegramBot {
     
     /// Initiates a request to the server. Used for implementing
     /// specific requests (getMe, getStatus etc).
-    internal func startDataTaskForEndpoint(_ endpoint: String, completion: @escaping DataTaskCompletion) {
-        startDataTaskForEndpoint(endpoint, parameters: [:], completion: completion)
+    internal func startDataTaskForEndpoint<T: Decodable>(_ endpoint: String, resultType: T.Type, completion: @escaping DataTaskCompletion) {
+        startDataTaskForEndpoint(endpoint, parameters: [:], resultType: resultType, completion: completion)
     }
     
     /// Initiates a request to the server. Used for implementing
     /// specific requests.
-    internal func startDataTaskForEndpoint(_ endpoint: String, parameters: [String: Any?], completion: @escaping DataTaskCompletion) {
+    internal func startDataTaskForEndpoint<T: Decodable>(_ endpoint: String, parameters: [String: Encodable?], resultType: T.Type, completion: @escaping DataTaskCompletion) {
         let endpointUrl = urlForEndpoint(endpoint)
         
         // If parameters contain values of type InputFile, use  multipart/form-data for sending them.
@@ -165,13 +165,13 @@ public class TelegramBot {
             }
             
             if value is InputFileOrString {
-                if case let InputFileOrString.inputFile(_) = (value as! InputFileOrString) {
+                if case InputFileOrString.inputFile = (value as! InputFileOrString) {
                     hasAttachments = true
                     break
                 }
             }
         }
-
+        
         let contentType: String
         var requestDataOrNil: Data?
         if hasAttachments {
@@ -196,14 +196,15 @@ public class TelegramBot {
         let byteCount = requestData.count - 1
         
         DispatchQueue.global().async {
-            requestData.withUnsafeBytes { (bytes: UnsafePointer<UInt8>)->Void in
-                self.curlPerformRequest(endpointUrl: endpointUrl, contentType: contentType, requestBytes: bytes, byteCount: byteCount, completion: completion)
+            requestData.withUnsafeBytes { (unsafeRawBufferPointer) -> Void in
+                let unsafeBufferPointer = unsafeRawBufferPointer.bindMemory(to: UInt8.self).baseAddress!
+                self.curlPerformRequest(endpointUrl: endpointUrl, contentType: contentType, resultType: resultType, requestBytes: unsafeBufferPointer, byteCount: byteCount, completion: completion)
             }
         }
     }
     
     /// Note: performed on global queue
-    private func curlPerformRequest(endpointUrl: URL, contentType: String, requestBytes: UnsafePointer<UInt8>, byteCount: Int, completion: @escaping DataTaskCompletion) {
+    private func curlPerformRequest<T: Decodable>(endpointUrl: URL, contentType: String, resultType: T.Type, requestBytes: UnsafePointer<UInt8>, byteCount: Int, completion: @escaping DataTaskCompletion) {
         var callbackData = WriteCallbackData()
         
         guard let curl = curl_easy_init() else {
@@ -256,11 +257,22 @@ public class TelegramBot {
             return
         }
         let data = callbackData.data
-        let json = JSON(data: data)
-        let telegramResponse = Response(internalJson: json)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .secondsSince1970
+        guard let telegramResponse = try? decoder.decode(Response<T>.self, from: data) else {
+            completion(nil, .decodeError(data: data))
+            return
+        }
         
         guard httpCode == 200 else {
-            completion(nil, .invalidStatusCode(statusCode: httpCode, telegramResponse: telegramResponse, data: data))
+            completion(nil,
+                       .invalidStatusCode(
+                        statusCode: httpCode,
+                        telegramDescription: telegramResponse.description!,
+                        telegramErrorCode: telegramResponse.errorCode!,
+                        data: data)
+            )
             return
         }
         
@@ -270,11 +282,11 @@ public class TelegramBot {
         }
         
         if !telegramResponse.ok {
-            completion(nil, .serverError(telegramResponse: telegramResponse, data: data))
+            completion(nil, .serverError(data: data))
             return
         }
         
-        completion(telegramResponse.result, nil)
+        completion(telegramResponse.result!, nil)
     }
     
     private func reportCurlError(code: CURLcode, completion: @escaping DataTaskCompletion) {

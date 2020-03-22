@@ -2,4989 +2,1666 @@
 
 import Foundation
 
-public struct Update: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var updateId: Int64 {
-        get { return internalJson["update_id"].int64Value }
-        set { internalJson["update_id"].int64Value = newValue }
-    }
-
-    public var message: Message? {
-        get {
-            let value = internalJson["message"]
-            return value.isNullOrUnknown ? nil : Message(internalJson: value)
-        }
-        set {
-            internalJson["message"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var editedMessage: Message? {
-        get {
-            let value = internalJson["edited_message"]
-            return value.isNullOrUnknown ? nil : Message(internalJson: value)
-        }
-        set {
-            internalJson["edited_message"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var channelPost: Message? {
-        get {
-            let value = internalJson["channel_post"]
-            return value.isNullOrUnknown ? nil : Message(internalJson: value)
-        }
-        set {
-            internalJson["channel_post"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var editedChannelPost: Message? {
-        get {
-            let value = internalJson["edited_channel_post"]
-            return value.isNullOrUnknown ? nil : Message(internalJson: value)
-        }
-        set {
-            internalJson["edited_channel_post"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inlineQuery: InlineQuery? {
-        get {
-            let value = internalJson["inline_query"]
-            return value.isNullOrUnknown ? nil : InlineQuery(internalJson: value)
-        }
-        set {
-            internalJson["inline_query"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var chosenInlineResult: ChosenInlineResult? {
-        get {
-            let value = internalJson["chosen_inline_result"]
-            return value.isNullOrUnknown ? nil : ChosenInlineResult(internalJson: value)
-        }
-        set {
-            internalJson["chosen_inline_result"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var callbackQuery: CallbackQuery? {
-        get {
-            let value = internalJson["callback_query"]
-            return value.isNullOrUnknown ? nil : CallbackQuery(internalJson: value)
-        }
-        set {
-            internalJson["callback_query"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var shippingQuery: ShippingQuery? {
-        get {
-            let value = internalJson["shipping_query"]
-            return value.isNullOrUnknown ? nil : ShippingQuery(internalJson: value)
-        }
-        set {
-            internalJson["shipping_query"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var preCheckoutQuery: PreCheckoutQuery? {
-        get {
-            let value = internalJson["pre_checkout_query"]
-            return value.isNullOrUnknown ? nil : PreCheckoutQuery(internalJson: value)
-        }
-        set {
-            internalJson["pre_checkout_query"] = newValue?.internalJson ?? JSON.null
-        }
-    }
+public class Update: Codable {
+    public var updateId: Int64
+    public var message: Message?
+    public var editedMessage: Message?
+    public var channelPost: Message?
+    public var editedChannelPost: Message?
+    public var inlineQuery: InlineQuery?
+    public var chosenInlineResult: ChosenInlineResult?
+    public var callbackQuery: CallbackQuery?
+    public var shippingQuery: ShippingQuery?
+    public var preCheckoutQuery: PreCheckoutQuery?
+    public var poll: Poll?
+    public var pollAnswer: PollAnswer?
+    public init(updateId: Int64, message: Message? = nil, editedMessage: Message? = nil, channelPost: Message? = nil, editedChannelPost: Message? = nil, inlineQuery: InlineQuery? = nil, chosenInlineResult: ChosenInlineResult? = nil, callbackQuery: CallbackQuery? = nil, shippingQuery: ShippingQuery? = nil, preCheckoutQuery: PreCheckoutQuery? = nil, poll: Poll? = nil, pollAnswer: PollAnswer? = nil) {
+        self.updateId = updateId
+        self.message = message
+        self.editedMessage = editedMessage
+        self.channelPost = channelPost
+        self.editedChannelPost = editedChannelPost
+        self.inlineQuery = inlineQuery
+        self.chosenInlineResult = chosenInlineResult
+        self.callbackQuery = callbackQuery
+        self.shippingQuery = shippingQuery
+        self.preCheckoutQuery = preCheckoutQuery
+        self.poll = poll
+        self.pollAnswer = pollAnswer
+    }
+
+}
+
+
+public class WebhookInfo: Codable {
+    public var url: String
+    public var hasCustomCertificate: Bool
+    public var pendingUpdateCount: Int
+    public var lastErrorDate: Date?
+    public var lastErrorMessage: String?
+    public var maxConnections: Int?
+    public var allowedUpdates: [String]? = []
+    public init(url: String, hasCustomCertificate: Bool, pendingUpdateCount: Int, lastErrorDate: Date? = nil, lastErrorMessage: String? = nil, maxConnections: Int? = nil, allowedUpdates: [String]? = nil) {
+        self.url = url
+        self.hasCustomCertificate = hasCustomCertificate
+        self.pendingUpdateCount = pendingUpdateCount
+        self.lastErrorDate = lastErrorDate
+        self.lastErrorMessage = lastErrorMessage
+        self.maxConnections = maxConnections
+        self.allowedUpdates = allowedUpdates
+    }
+
+}
+
+
+public class User: Codable {
+    public var id: Int64
+    public var isBot: Bool
+    public var firstName: String
+    public var lastName: String?
+    public var username: String?
+    public var languageCode: String?
+    public var canJoinGroups: Bool?
+    public var canReadAllGroupMessages: Bool?
+    public var supportsInlineQueries: Bool?
+    public init(id: Int64, isBot: Bool, firstName: String, lastName: String? = nil, username: String? = nil, languageCode: String? = nil, canJoinGroups: Bool? = nil, canReadAllGroupMessages: Bool? = nil, supportsInlineQueries: Bool? = nil) {
+        self.id = id
+        self.isBot = isBot
+        self.firstName = firstName
+        self.lastName = lastName
+        self.username = username
+        self.languageCode = languageCode
+        self.canJoinGroups = canJoinGroups
+        self.canReadAllGroupMessages = canReadAllGroupMessages
+        self.supportsInlineQueries = supportsInlineQueries
+    }
+
+}
+
+
+public class Chat: Codable {
+    public var id: Int64
+    public var type: ChatType
+    public var title: String?
+    public var username: String?
+    public var firstName: String?
+    public var lastName: String?
+    public var photo: ChatPhoto?
+    public var description: String?
+    public var inviteLink: String?
+    public var pinnedMessage: Message?
+    public var permissions: ChatPermissions?
+    public var slowModeDelay: Int?
+    public var stickerSetName: String?
+    public var canSetStickerSet: Bool?
+    public init(id: Int64, type: ChatType, title: String? = nil, username: String? = nil, firstName: String? = nil, lastName: String? = nil, photo: ChatPhoto? = nil, description: String? = nil, inviteLink: String? = nil, pinnedMessage: Message? = nil, permissions: ChatPermissions? = nil, slowModeDelay: Int? = nil, stickerSetName: String? = nil, canSetStickerSet: Bool? = nil) {
+        self.id = id
+        self.type = type
+        self.title = title
+        self.username = username
+        self.firstName = firstName
+        self.lastName = lastName
+        self.photo = photo
+        self.description = description
+        self.inviteLink = inviteLink
+        self.pinnedMessage = pinnedMessage
+        self.permissions = permissions
+        self.slowModeDelay = slowModeDelay
+        self.stickerSetName = stickerSetName
+        self.canSetStickerSet = canSetStickerSet
+    }
+
+}
+
+
+public class Message: Codable {
+    public var messageId: Int
+    public var from: User?
+    public var date: Date
+    public var chat: Chat
+    public var forwardFrom: User?
+    public var forwardFromChat: Chat?
+    public var forwardFromMessageId: Int?
+    public var forwardSignature: String?
+    public var forwardSenderName: String?
+    public var forwardDate: Date?
+    public var replyToMessage: Message?
+    public var editDate: Date?
+    public var mediaGroupId: String?
+    public var authorSignature: String?
+    public var text: String?
+    public var entities: [MessageEntity]? = []
+    public var captionEntities: [MessageEntity]? = []
+    public var audio: Audio?
+    public var document: Document?
+    public var animation: Animation?
+    public var game: Game?
+    public var photo: [PhotoSize]? = []
+    public var sticker: Sticker?
+    public var video: Video?
+    public var voice: Voice?
+    public var videoNote: VideoNote?
+    public var caption: String?
+    public var contact: Contact?
+    public var location: Location?
+    public var venue: Venue?
+    public var poll: Poll?
+    public var newChatMembers: [User]? = []
+    public var leftChatMember: User?
+    public var newChatTitle: String?
+    public var newChatPhoto: [PhotoSize]? = []
+    public var deleteChatPhoto: Bool?
+    public var groupChatCreated: Bool?
+    public var supergroupChatCreated: Bool?
+    public var channelChatCreated: Bool?
+    public var migrateToChatId: Int64?
+    public var migrateFromChatId: Int64?
+    public var pinnedMessage: Message?
+    public var invoice: Invoice?
+    public var successfulPayment: SuccessfulPayment?
+    public var connectedWebsite: String?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public init(messageId: Int, from: User? = nil, date: Date, chat: Chat, forwardFrom: User? = nil, forwardFromChat: Chat? = nil, forwardFromMessageId: Int? = nil, forwardSignature: String? = nil, forwardSenderName: String? = nil, forwardDate: Date? = nil, replyToMessage: Message? = nil, editDate: Date? = nil, mediaGroupId: String? = nil, authorSignature: String? = nil, text: String? = nil, entities: [MessageEntity]? = nil, captionEntities: [MessageEntity]? = nil, audio: Audio? = nil, document: Document? = nil, animation: Animation? = nil, game: Game? = nil, photo: [PhotoSize]? = nil, sticker: Sticker? = nil, video: Video? = nil, voice: Voice? = nil, videoNote: VideoNote? = nil, caption: String? = nil, contact: Contact? = nil, location: Location? = nil, venue: Venue? = nil, poll: Poll? = nil, newChatMembers: [User]? = nil, leftChatMember: User? = nil, newChatTitle: String? = nil, newChatPhoto: [PhotoSize]? = nil, deleteChatPhoto: Bool? = nil, groupChatCreated: Bool? = nil, supergroupChatCreated: Bool? = nil, channelChatCreated: Bool? = nil, migrateToChatId: Int64? = nil, migrateFromChatId: Int64? = nil, pinnedMessage: Message? = nil, invoice: Invoice? = nil, successfulPayment: SuccessfulPayment? = nil, connectedWebsite: String? = nil, replyMarkup: InlineKeyboardMarkup? = nil) {
+        self.messageId = messageId
+        self.from = from
+        self.date = date
+        self.chat = chat
+        self.forwardFrom = forwardFrom
+        self.forwardFromChat = forwardFromChat
+        self.forwardFromMessageId = forwardFromMessageId
+        self.forwardSignature = forwardSignature
+        self.forwardSenderName = forwardSenderName
+        self.forwardDate = forwardDate
+        self.replyToMessage = replyToMessage
+        self.editDate = editDate
+        self.mediaGroupId = mediaGroupId
+        self.authorSignature = authorSignature
+        self.text = text
+        self.entities = entities
+        self.captionEntities = captionEntities
+        self.audio = audio
+        self.document = document
+        self.animation = animation
+        self.game = game
+        self.photo = photo
+        self.sticker = sticker
+        self.video = video
+        self.voice = voice
+        self.videoNote = videoNote
+        self.caption = caption
+        self.contact = contact
+        self.location = location
+        self.venue = venue
+        self.poll = poll
+        self.newChatMembers = newChatMembers
+        self.leftChatMember = leftChatMember
+        self.newChatTitle = newChatTitle
+        self.newChatPhoto = newChatPhoto
+        self.deleteChatPhoto = deleteChatPhoto
+        self.groupChatCreated = groupChatCreated
+        self.supergroupChatCreated = supergroupChatCreated
+        self.channelChatCreated = channelChatCreated
+        self.migrateToChatId = migrateToChatId
+        self.migrateFromChatId = migrateFromChatId
+        self.pinnedMessage = pinnedMessage
+        self.invoice = invoice
+        self.successfulPayment = successfulPayment
+        self.connectedWebsite = connectedWebsite
+        self.replyMarkup = replyMarkup
+    }
+
+}
+
+
+public class MessageEntity: Codable {
+    public var type: MessageEntityType
+    public var offset: Int
+    public var length: Int
+    public var url: String?
+    public var user: User?
+    public var language: String?
+    public init(type: MessageEntityType, offset: Int, length: Int, url: String? = nil, user: User? = nil, language: String? = nil) {
+        self.type = type
+        self.offset = offset
+        self.length = length
+        self.url = url
+        self.user = user
+        self.language = language
+    }
+
+}
+
+
+public class PhotoSize: Codable {
+    public var fileId: String
+    public var fileUniqueId: String
+    public var width: Int
+    public var height: Int
+    public var fileSize: Int?
+    public init(fileId: String, fileUniqueId: String, width: Int, height: Int, fileSize: Int? = nil) {
+        self.fileId = fileId
+        self.fileUniqueId = fileUniqueId
+        self.width = width
+        self.height = height
+        self.fileSize = fileSize
+    }
+
+}
+
+
+public class Audio: Codable {
+    public var fileId: String
+    public var fileUniqueId: String
+    public var duration: Int
+    public var performer: String?
+    public var title: String?
+    public var mimeType: String?
+    public var fileSize: Int?
+    public var thumb: PhotoSize?
+    public init(fileId: String, fileUniqueId: String, duration: Int, performer: String? = nil, title: String? = nil, mimeType: String? = nil, fileSize: Int? = nil, thumb: PhotoSize? = nil) {
+        self.fileId = fileId
+        self.fileUniqueId = fileUniqueId
+        self.duration = duration
+        self.performer = performer
+        self.title = title
+        self.mimeType = mimeType
+        self.fileSize = fileSize
+        self.thumb = thumb
+    }
+
+}
+
+
+public class Document: Codable {
+    public var fileId: String
+    public var fileUniqueId: String
+    public var thumb: PhotoSize?
+    public var fileName: String?
+    public var mimeType: String?
+    public var fileSize: Int?
+    public init(fileId: String, fileUniqueId: String, thumb: PhotoSize? = nil, fileName: String? = nil, mimeType: String? = nil, fileSize: Int? = nil) {
+        self.fileId = fileId
+        self.fileUniqueId = fileUniqueId
+        self.thumb = thumb
+        self.fileName = fileName
+        self.mimeType = mimeType
+        self.fileSize = fileSize
+    }
+
+}
+
+
+public class Video: Codable {
+    public var fileId: String
+    public var fileUniqueId: String
+    public var width: Int
+    public var height: Int
+    public var duration: Int
+    public var thumb: PhotoSize?
+    public var mimeType: String?
+    public var fileSize: String?
+    public init(fileId: String, fileUniqueId: String, width: Int, height: Int, duration: Int, thumb: PhotoSize? = nil, mimeType: String? = nil, fileSize: String? = nil) {
+        self.fileId = fileId
+        self.fileUniqueId = fileUniqueId
+        self.width = width
+        self.height = height
+        self.duration = duration
+        self.thumb = thumb
+        self.mimeType = mimeType
+        self.fileSize = fileSize
+    }
+
+}
+
+
+public class Animation: Codable {
+    public var fileId: String
+    public var fileUniqueId: String
+    public var width: Int
+    public var height: Int
+    public var duration: Int
+    public var thumb: PhotoSize?
+    public var fileName: String?
+    public var mimeType: String?
+    public var fileSize: Int?
+    public init(fileId: String, fileUniqueId: String, width: Int, height: Int, duration: Int, thumb: PhotoSize? = nil, fileName: String? = nil, mimeType: String? = nil, fileSize: Int? = nil) {
+        self.fileId = fileId
+        self.fileUniqueId = fileUniqueId
+        self.width = width
+        self.height = height
+        self.duration = duration
+        self.thumb = thumb
+        self.fileName = fileName
+        self.mimeType = mimeType
+        self.fileSize = fileSize
+    }
+
+}
+
+
+public class Voice: Codable {
+    public var fileId: String
+    public var fileUniqueId: String
+    public var duration: Int
+    public var mimeType: String?
+    public var fileSize: Int?
+    public init(fileId: String, fileUniqueId: String, duration: Int, mimeType: String? = nil, fileSize: Int? = nil) {
+        self.fileId = fileId
+        self.fileUniqueId = fileUniqueId
+        self.duration = duration
+        self.mimeType = mimeType
+        self.fileSize = fileSize
+    }
+
+}
+
+
+public class VideoNote: Codable {
+    public var fileId: String
+    public var fileUniqueId: String
+    public var length: Int
+    public var duration: Int
+    public var thumb: PhotoSize?
+    public var fileSize: Int?
+    public init(fileId: String, fileUniqueId: String, length: Int, duration: Int, thumb: PhotoSize? = nil, fileSize: Int? = nil) {
+        self.fileId = fileId
+        self.fileUniqueId = fileUniqueId
+        self.length = length
+        self.duration = duration
+        self.thumb = thumb
+        self.fileSize = fileSize
+    }
+
+}
+
+
+public class Contact: Codable {
+    public var phoneNumber: String
+    public var firstName: String
+    public var lastName: String?
+    public var userId: Int64?
+    public var vcard: String?
+    public init(phoneNumber: String, firstName: String, lastName: String? = nil, userId: Int64? = nil, vcard: String? = nil) {
+        self.phoneNumber = phoneNumber
+        self.firstName = firstName
+        self.lastName = lastName
+        self.userId = userId
+        self.vcard = vcard
+    }
+
+}
+
+
+public class Location: Codable {
+    public var longitude: Float
+    public var latitude: Float
+    public init(longitude: Float, latitude: Float) {
+        self.longitude = longitude
+        self.latitude = latitude
+    }
+
+}
+
+
+public class Venue: Codable {
+    public var location: Location
+    public var title: String
+    public var address: String
+    public var foursquareId: String?
+    public var foursquareType: String?
+    public init(location: Location, title: String, address: String, foursquareId: String? = nil, foursquareType: String? = nil) {
+        self.location = location
+        self.title = title
+        self.address = address
+        self.foursquareId = foursquareId
+        self.foursquareType = foursquareType
+    }
+
+}
+
+
+public class PollOption: Codable {
+    public var text: String
+    public var voterCount: Int
+    public init(text: String, voterCount: Int) {
+        self.text = text
+        self.voterCount = voterCount
+    }
+
+}
+
+
+public class PollAnswer: Codable {
+    public var pollId: String
+    public var user: User
+    public var optionIds: [Int] = []
+    public init(pollId: String, user: User, optionIds: [Int]) {
+        self.pollId = pollId
+        self.user = user
+        self.optionIds = optionIds
+    }
+
+}
+
+
+public class Poll: Codable {
+    public var id: String
+    public var question: String
+    public var options: [PollOption] = []
+    public var totalVoterCount: Int
+    public var isClosed: Bool
+    public var isAnonymous: Bool
+    public var type: PollType
+    public var allowsMultipleAnswers: Bool
+    public var correctOptionId: Int?
+    public init(id: String, question: String, options: [PollOption], totalVoterCount: Int, isClosed: Bool, isAnonymous: Bool, type: PollType, allowsMultipleAnswers: Bool, correctOptionId: Int? = nil) {
+        self.id = id
+        self.question = question
+        self.options = options
+        self.totalVoterCount = totalVoterCount
+        self.isClosed = isClosed
+        self.isAnonymous = isAnonymous
+        self.type = type
+        self.allowsMultipleAnswers = allowsMultipleAnswers
+        self.correctOptionId = correctOptionId
+    }
+
+}
+
+
+public class UserProfilePhotos: Codable {
+    public var totalCount: Int
+    public var photos: [[PhotoSize]] = [[]]
+    public init(totalCount: Int, photos: [[PhotoSize]]) {
+        self.totalCount = totalCount
+        self.photos = photos
+    }
 
-    public var poll: Poll {
-        get { return Poll(internalJson: internalJson["poll"]) }
-        set { internalJson["poll"] = JSON(newValue.json) }
-    }
-
-    public var pollAnswer: PollAnswer {
-        get { return PollAnswer(internalJson: internalJson["poll_answer"]) }
-        set { internalJson["poll_answer"] = JSON(newValue.json) }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct WebhookInfo: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var url: String {
-        get { return internalJson["url"].stringValue }
-        set { internalJson["url"].stringValue = newValue }
-    }
-
-    public var hasCustomCertificate: Bool {
-        get { return internalJson["has_custom_certificate"].boolValue }
-        set { internalJson["has_custom_certificate"].boolValue = newValue }
-    }
-
-    public var pendingUpdateCount: Int {
-        get { return internalJson["pending_update_count"].intValue }
-        set { internalJson["pending_update_count"].intValue = newValue }
-    }
-
-    public var lastErrorDate: Date? {
-        get {
-            guard let date = internalJson["last_error_date"].double else { return nil }
-            return Date(timeIntervalSince1970: date)
-        }
-        set {
-            internalJson["last_error_date"].double = newValue?.timeIntervalSince1970
-        }
-    }
-
-    public var lastErrorMessage: String? {
-        get { return internalJson["last_error_message"].string }
-        set { internalJson["last_error_message"].string = newValue }
-    }
-
-    public var maxConnections: Int? {
-        get { return internalJson["max_connections"].int }
-        set { internalJson["max_connections"].int = newValue }
-    }
-
-    public var allowedUpdates: String? {
-        get { return internalJson["allowed_updates"].string }
-        set { internalJson["allowed_updates"].string = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct User: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var id: Int64 {
-        get { return internalJson["id"].int64Value }
-        set { internalJson["id"].int64Value = newValue }
-    }
-
-    public var isBot: Bool {
-        get { return internalJson["is_bot"].boolValue }
-        set { internalJson["is_bot"].boolValue = newValue }
-    }
-
-    public var firstName: String {
-        get { return internalJson["first_name"].stringValue }
-        set { internalJson["first_name"].stringValue = newValue }
-    }
-
-    public var lastName: String? {
-        get { return internalJson["last_name"].string }
-        set { internalJson["last_name"].string = newValue }
-    }
-
-    public var username: String? {
-        get { return internalJson["username"].string }
-        set { internalJson["username"].string = newValue }
-    }
-
-    public var languageCode: String? {
-        get { return internalJson["language_code"].string }
-        set { internalJson["language_code"].string = newValue }
-    }
-
-    public var canJoinGroups: Bool? {
-        get { return internalJson["can_join_groups"].bool }
-        set { internalJson["can_join_groups"].bool = newValue }
-    }
-
-    public var canReadAllGroupMessages: Bool? {
-        get { return internalJson["can_read_all_group_messages"].bool }
-        set { internalJson["can_read_all_group_messages"].bool = newValue }
-    }
-
-    public var supportsInlineQueries: Bool? {
-        get { return internalJson["supports_inline_queries"].bool }
-        set { internalJson["supports_inline_queries"].bool = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct Chat: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var id: Int64 {
-        get { return internalJson["id"].int64Value }
-        set { internalJson["id"].int64Value = newValue }
-    }
-
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var title: String? {
-        get { return internalJson["title"].string }
-        set { internalJson["title"].string = newValue }
-    }
-
-    public var username: String? {
-        get { return internalJson["username"].string }
-        set { internalJson["username"].string = newValue }
-    }
-
-    public var firstName: String? {
-        get { return internalJson["first_name"].string }
-        set { internalJson["first_name"].string = newValue }
-    }
-
-    public var lastName: String? {
-        get { return internalJson["last_name"].string }
-        set { internalJson["last_name"].string = newValue }
-    }
-
-    public var photo: ChatPhoto? {
-        get {
-            let value = internalJson["photo"]
-            return value.isNullOrUnknown ? nil : ChatPhoto(internalJson: value)
-        }
-        set {
-            internalJson["photo"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var description: String? {
-        get { return internalJson["description"].string }
-        set { internalJson["description"].string = newValue }
-    }
-
-    public var inviteLink: String? {
-        get { return internalJson["invite_link"].string }
-        set { internalJson["invite_link"].string = newValue }
-    }
-
-    public var pinnedMessage: Message? {
-        get {
-            let value = internalJson["pinned_message"]
-            return value.isNullOrUnknown ? nil : Message(internalJson: value)
-        }
-        set {
-            internalJson["pinned_message"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var permissions: ChatPermissions? {
-        get {
-            let value = internalJson["permissions"]
-            return value.isNullOrUnknown ? nil : ChatPermissions(internalJson: value)
-        }
-        set {
-            internalJson["permissions"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var slowModeDelay: Int? {
-        get { return internalJson["slow_mode_delay"].int }
-        set { internalJson["slow_mode_delay"].int = newValue }
-    }
-
-    public var stickerSetName: String? {
-        get { return internalJson["sticker_set_name"].string }
-        set { internalJson["sticker_set_name"].string = newValue }
-    }
-
-    public var canSetStickerSet: Bool? {
-        get { return internalJson["can_set_sticker_set"].bool }
-        set { internalJson["can_set_sticker_set"].bool = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct Message: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var messageId: Int {
-        get { return internalJson["message_id"].intValue }
-        set { internalJson["message_id"].intValue = newValue }
-    }
-
-    public var from: User? {
-        get {
-            let value = internalJson["from"]
-            return value.isNullOrUnknown ? nil : User(internalJson: value)
-        }
-        set {
-            internalJson["from"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-public var date: Date {
-        get { return Date(timeIntervalSince1970: internalJson["date"].doubleValue) }
-        set { internalJson["date"].double = newValue.timeIntervalSince1970 }
-    }
-
-    public var chat: Chat {
-        get { return Chat(internalJson: internalJson["chat"]) }
-        set { internalJson["chat"] = JSON(newValue.json) }
-    }
-
-    public var forwardFrom: User? {
-        get {
-            let value = internalJson["forward_from"]
-            return value.isNullOrUnknown ? nil : User(internalJson: value)
-        }
-        set {
-            internalJson["forward_from"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var forwardFromChat: Chat? {
-        get {
-            let value = internalJson["forward_from_chat"]
-            return value.isNullOrUnknown ? nil : Chat(internalJson: value)
-        }
-        set {
-            internalJson["forward_from_chat"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var forwardFromMessageId: Int? {
-        get { return internalJson["forward_from_message_id"].int }
-        set { internalJson["forward_from_message_id"].int = newValue }
-    }
-
-    public var forwardSignature: String? {
-        get { return internalJson["forward_signature"].string }
-        set { internalJson["forward_signature"].string = newValue }
-    }
-
-    public var forwardSenderName: String? {
-        get { return internalJson["forward_sender_name"].string }
-        set { internalJson["forward_sender_name"].string = newValue }
-    }
-
-    public var forwardDate: Date? {
-        get {
-            guard let date = internalJson["forward_date"].double else { return nil }
-            return Date(timeIntervalSince1970: date)
-        }
-        set {
-            internalJson["forward_date"].double = newValue?.timeIntervalSince1970
-        }
-    }
-
-    public var replyToMessage: Message? {
-        get {
-            let value = internalJson["reply_to_message"]
-            return value.isNullOrUnknown ? nil : Message(internalJson: value)
-        }
-        set {
-            internalJson["reply_to_message"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var editDate: Date? {
-        get {
-            guard let date = internalJson["edit_date"].double else { return nil }
-            return Date(timeIntervalSince1970: date)
-        }
-        set {
-            internalJson["edit_date"].double = newValue?.timeIntervalSince1970
-        }
-    }
-
-    public var mediaGroupId: String? {
-        get { return internalJson["media_group_id"].string }
-        set { internalJson["media_group_id"].string = newValue }
-    }
-
-    public var authorSignature: String? {
-        get { return internalJson["author_signature"].string }
-        set { internalJson["author_signature"].string = newValue }
-    }
-
-    public var text: String? {
-        get { return internalJson["text"].string }
-        set { internalJson["text"].string = newValue }
-    }
-
-    public var entities: [MessageEntity] {
-        get { return internalJson["entities"].customArrayValue() }
-        set { internalJson["entities"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
-    }
-
-    public var captionEntities: [MessageEntity] {
-        get { return internalJson["caption_entities"].customArrayValue() }
-        set { internalJson["caption_entities"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
-    }
-
-    public var audio: Audio? {
-        get {
-            let value = internalJson["audio"]
-            return value.isNullOrUnknown ? nil : Audio(internalJson: value)
-        }
-        set {
-            internalJson["audio"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var document: Document? {
-        get {
-            let value = internalJson["document"]
-            return value.isNullOrUnknown ? nil : Document(internalJson: value)
-        }
-        set {
-            internalJson["document"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var animation: Animation? {
-        get {
-            let value = internalJson["animation"]
-            return value.isNullOrUnknown ? nil : Animation(internalJson: value)
-        }
-        set {
-            internalJson["animation"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var game: Game? {
-        get {
-            let value = internalJson["game"]
-            return value.isNullOrUnknown ? nil : Game(internalJson: value)
-        }
-        set {
-            internalJson["game"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var photo: [PhotoSize] {
-        get { return internalJson["photo"].customArrayValue() }
-        set { internalJson["photo"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
-    }
-
-    public var sticker: Sticker? {
-        get {
-            let value = internalJson["sticker"]
-            return value.isNullOrUnknown ? nil : Sticker(internalJson: value)
-        }
-        set {
-            internalJson["sticker"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var video: Video? {
-        get {
-            let value = internalJson["video"]
-            return value.isNullOrUnknown ? nil : Video(internalJson: value)
-        }
-        set {
-            internalJson["video"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var voice: Voice? {
-        get {
-            let value = internalJson["voice"]
-            return value.isNullOrUnknown ? nil : Voice(internalJson: value)
-        }
-        set {
-            internalJson["voice"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var videoNote: VideoNote? {
-        get {
-            let value = internalJson["video_note"]
-            return value.isNullOrUnknown ? nil : VideoNote(internalJson: value)
-        }
-        set {
-            internalJson["video_note"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var contact: Contact? {
-        get {
-            let value = internalJson["contact"]
-            return value.isNullOrUnknown ? nil : Contact(internalJson: value)
-        }
-        set {
-            internalJson["contact"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var location: Location? {
-        get {
-            let value = internalJson["location"]
-            return value.isNullOrUnknown ? nil : Location(internalJson: value)
-        }
-        set {
-            internalJson["location"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var venue: Venue? {
-        get {
-            let value = internalJson["venue"]
-            return value.isNullOrUnknown ? nil : Venue(internalJson: value)
-        }
-        set {
-            internalJson["venue"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var poll: Poll? {
-        get {
-            let value = internalJson["poll"]
-            return value.isNullOrUnknown ? nil : Poll(internalJson: value)
-        }
-        set {
-            internalJson["poll"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var newChatMembers: [User] {
-        get { return internalJson["new_chat_members"].customArrayValue() }
-        set { internalJson["new_chat_members"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
-    }
-
-    public var leftChatMember: User? {
-        get {
-            let value = internalJson["left_chat_member"]
-            return value.isNullOrUnknown ? nil : User(internalJson: value)
-        }
-        set {
-            internalJson["left_chat_member"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var newChatTitle: String? {
-        get { return internalJson["new_chat_title"].string }
-        set { internalJson["new_chat_title"].string = newValue }
-    }
-
-    public var newChatPhoto: [PhotoSize] {
-        get { return internalJson["new_chat_photo"].customArrayValue() }
-        set { internalJson["new_chat_photo"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
-    }
-
-    public var deleteChatPhoto: Bool? {
-        get { return internalJson["delete_chat_photo"].bool }
-        set { internalJson["delete_chat_photo"].bool = newValue }
-    }
-
-    public var groupChatCreated: Bool? {
-        get { return internalJson["group_chat_created"].bool }
-        set { internalJson["group_chat_created"].bool = newValue }
-    }
-
-    public var supergroupChatCreated: Bool? {
-        get { return internalJson["supergroup_chat_created"].bool }
-        set { internalJson["supergroup_chat_created"].bool = newValue }
-    }
-
-    public var channelChatCreated: Bool? {
-        get { return internalJson["channel_chat_created"].bool }
-        set { internalJson["channel_chat_created"].bool = newValue }
-    }
-
-    public var migrateToChatId: Int64? {
-        get { return internalJson["migrate_to_chat_id"].int64 }
-        set { internalJson["migrate_to_chat_id"].int64 = newValue }
-    }
-
-    public var migrateFromChatId: Int64? {
-        get { return internalJson["migrate_from_chat_id"].int64 }
-        set { internalJson["migrate_from_chat_id"].int64 = newValue }
-    }
-
-    public var pinnedMessage: Message? {
-        get {
-            let value = internalJson["pinned_message"]
-            return value.isNullOrUnknown ? nil : Message(internalJson: value)
-        }
-        set {
-            internalJson["pinned_message"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var invoice: Invoice? {
-        get {
-            let value = internalJson["invoice"]
-            return value.isNullOrUnknown ? nil : Invoice(internalJson: value)
-        }
-        set {
-            internalJson["invoice"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var successfulPayment: SuccessfulPayment? {
-        get {
-            let value = internalJson["successful_payment"]
-            return value.isNullOrUnknown ? nil : SuccessfulPayment(internalJson: value)
-        }
-        set {
-            internalJson["successful_payment"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var connectedWebsite: String? {
-        get { return internalJson["connected_website"].string }
-        set { internalJson["connected_website"].string = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct MessageEntity: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String? {
-        get { return internalJson["type"].string }
-        set { internalJson["type"].string = newValue }
-    }
-
-    public var offset: Int {
-        get { return internalJson["offset"].intValue }
-        set { internalJson["offset"].intValue = newValue }
-    }
-
-    public var length: Int {
-        get { return internalJson["length"].intValue }
-        set { internalJson["length"].intValue = newValue }
-    }
-
-    public var url: String? {
-        get { return internalJson["url"].string }
-        set { internalJson["url"].string = newValue }
-    }
-
-    public var user: User? {
-        get {
-            let value = internalJson["user"]
-            return value.isNullOrUnknown ? nil : User(internalJson: value)
-        }
-        set {
-            internalJson["user"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var language: String? {
-        get { return internalJson["language"].string }
-        set { internalJson["language"].string = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct PhotoSize: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var fileId: String {
-        get { return internalJson["file_id"].stringValue }
-        set { internalJson["file_id"].stringValue = newValue }
-    }
-
-    public var fileUniqueId: String {
-        get { return internalJson["file_unique_id"].stringValue }
-        set { internalJson["file_unique_id"].stringValue = newValue }
-    }
-
-    public var width: Int {
-        get { return internalJson["width"].intValue }
-        set { internalJson["width"].intValue = newValue }
-    }
-
-    public var height: Int {
-        get { return internalJson["height"].intValue }
-        set { internalJson["height"].intValue = newValue }
-    }
-
-    public var fileSize: Int? {
-        get { return internalJson["file_size"].int }
-        set { internalJson["file_size"].int = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct Audio: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var fileId: String {
-        get { return internalJson["file_id"].stringValue }
-        set { internalJson["file_id"].stringValue = newValue }
-    }
-
-    public var fileUniqueId: String {
-        get { return internalJson["file_unique_id"].stringValue }
-        set { internalJson["file_unique_id"].stringValue = newValue }
-    }
-
-    public var duration: Int {
-        get { return internalJson["duration"].intValue }
-        set { internalJson["duration"].intValue = newValue }
-    }
-
-    public var performer: String? {
-        get { return internalJson["performer"].string }
-        set { internalJson["performer"].string = newValue }
-    }
-
-    public var title: String? {
-        get { return internalJson["title"].string }
-        set { internalJson["title"].string = newValue }
-    }
-
-    public var mimeType: String? {
-        get { return internalJson["mime_type"].string }
-        set { internalJson["mime_type"].string = newValue }
-    }
-
-    public var fileSize: Int? {
-        get { return internalJson["file_size"].int }
-        set { internalJson["file_size"].int = newValue }
-    }
-
-    public var thumb: PhotoSize? {
-        get {
-            let value = internalJson["thumb"]
-            return value.isNullOrUnknown ? nil : PhotoSize(internalJson: value)
-        }
-        set {
-            internalJson["thumb"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct Document: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var fileId: String {
-        get { return internalJson["file_id"].stringValue }
-        set { internalJson["file_id"].stringValue = newValue }
-    }
-
-    public var fileUniqueId: String {
-        get { return internalJson["file_unique_id"].stringValue }
-        set { internalJson["file_unique_id"].stringValue = newValue }
-    }
-
-    public var thumb: PhotoSize? {
-        get {
-            let value = internalJson["thumb"]
-            return value.isNullOrUnknown ? nil : PhotoSize(internalJson: value)
-        }
-        set {
-            internalJson["thumb"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var fileName: String? {
-        get { return internalJson["file_name"].string }
-        set { internalJson["file_name"].string = newValue }
-    }
-
-    public var mimeType: String? {
-        get { return internalJson["mime_type"].string }
-        set { internalJson["mime_type"].string = newValue }
-    }
-
-    public var fileSize: Int? {
-        get { return internalJson["file_size"].int }
-        set { internalJson["file_size"].int = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct Video: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var fileId: String {
-        get { return internalJson["file_id"].stringValue }
-        set { internalJson["file_id"].stringValue = newValue }
-    }
-
-    public var fileUniqueId: String {
-        get { return internalJson["file_unique_id"].stringValue }
-        set { internalJson["file_unique_id"].stringValue = newValue }
-    }
-
-    public var width: Int {
-        get { return internalJson["width"].intValue }
-        set { internalJson["width"].intValue = newValue }
-    }
-
-    public var height: Int {
-        get { return internalJson["height"].intValue }
-        set { internalJson["height"].intValue = newValue }
-    }
-
-    public var duration: Int {
-        get { return internalJson["duration"].intValue }
-        set { internalJson["duration"].intValue = newValue }
-    }
-
-    public var thumb: PhotoSize? {
-        get {
-            let value = internalJson["thumb"]
-            return value.isNullOrUnknown ? nil : PhotoSize(internalJson: value)
-        }
-        set {
-            internalJson["thumb"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var mimeType: String? {
-        get { return internalJson["mime_type"].string }
-        set { internalJson["mime_type"].string = newValue }
-    }
-
-    public var fileSize: String? {
-        get { return internalJson["file_size"].string }
-        set { internalJson["file_size"].string = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct Animation: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var fileId: String {
-        get { return internalJson["file_id"].stringValue }
-        set { internalJson["file_id"].stringValue = newValue }
-    }
-
-    public var fileUniqueId: String {
-        get { return internalJson["file_unique_id"].stringValue }
-        set { internalJson["file_unique_id"].stringValue = newValue }
-    }
-
-    public var width: Int {
-        get { return internalJson["width"].intValue }
-        set { internalJson["width"].intValue = newValue }
-    }
-
-    public var height: Int {
-        get { return internalJson["height"].intValue }
-        set { internalJson["height"].intValue = newValue }
-    }
-
-    public var duration: Int {
-        get { return internalJson["duration"].intValue }
-        set { internalJson["duration"].intValue = newValue }
-    }
-
-    public var thumb: PhotoSize? {
-        get {
-            let value = internalJson["thumb"]
-            return value.isNullOrUnknown ? nil : PhotoSize(internalJson: value)
-        }
-        set {
-            internalJson["thumb"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var fileName: String? {
-        get { return internalJson["file_name"].string }
-        set { internalJson["file_name"].string = newValue }
-    }
-
-    public var mimeType: String? {
-        get { return internalJson["mime_type"].string }
-        set { internalJson["mime_type"].string = newValue }
-    }
-
-    public var fileSize: Int? {
-        get { return internalJson["file_size"].int }
-        set { internalJson["file_size"].int = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct Voice: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var fileId: String {
-        get { return internalJson["file_id"].stringValue }
-        set { internalJson["file_id"].stringValue = newValue }
-    }
-
-    public var fileUniqueId: String {
-        get { return internalJson["file_unique_id"].stringValue }
-        set { internalJson["file_unique_id"].stringValue = newValue }
-    }
-
-    public var duration: Int {
-        get { return internalJson["duration"].intValue }
-        set { internalJson["duration"].intValue = newValue }
-    }
-
-    public var mimeType: String? {
-        get { return internalJson["mime_type"].string }
-        set { internalJson["mime_type"].string = newValue }
-    }
-
-    public var fileSize: Int? {
-        get { return internalJson["file_size"].int }
-        set { internalJson["file_size"].int = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct VideoNote: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var fileId: String {
-        get { return internalJson["file_id"].stringValue }
-        set { internalJson["file_id"].stringValue = newValue }
-    }
-
-    public var fileUniqueId: String {
-        get { return internalJson["file_unique_id"].stringValue }
-        set { internalJson["file_unique_id"].stringValue = newValue }
-    }
-
-    public var length: Int {
-        get { return internalJson["length"].intValue }
-        set { internalJson["length"].intValue = newValue }
-    }
-
-    public var duration: Int {
-        get { return internalJson["duration"].intValue }
-        set { internalJson["duration"].intValue = newValue }
-    }
-
-    public var thumb: PhotoSize? {
-        get {
-            let value = internalJson["thumb"]
-            return value.isNullOrUnknown ? nil : PhotoSize(internalJson: value)
-        }
-        set {
-            internalJson["thumb"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var fileSize: Int? {
-        get { return internalJson["file_size"].int }
-        set { internalJson["file_size"].int = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct Contact: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var phoneNumber: String {
-        get { return internalJson["phone_number"].stringValue }
-        set { internalJson["phone_number"].stringValue = newValue }
-    }
-
-    public var firstName: String {
-        get { return internalJson["first_name"].stringValue }
-        set { internalJson["first_name"].stringValue = newValue }
-    }
-
-    public var lastName: String? {
-        get { return internalJson["last_name"].string }
-        set { internalJson["last_name"].string = newValue }
-    }
-
-    public var userId: Int64? {
-        get { return internalJson["user_id"].int64 }
-        set { internalJson["user_id"].int64 = newValue }
-    }
-
-    public var vcard: String? {
-        get { return internalJson["vcard"].string }
-        set { internalJson["vcard"].string = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct Location: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var longitude: Float {
-        get { return internalJson["longitude"].floatValue }
-        set { internalJson["longitude"].floatValue = newValue }
-    }
-
-    public var latitude: Float {
-        get { return internalJson["latitude"].floatValue }
-        set { internalJson["latitude"].floatValue = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct Venue: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var location: Location {
-        get { return Location(internalJson: internalJson["location"]) }
-        set { internalJson["location"] = JSON(newValue.json) }
-    }
-
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var address: String {
-        get { return internalJson["address"].stringValue }
-        set { internalJson["address"].stringValue = newValue }
-    }
-
-    public var foursquareId: String? {
-        get { return internalJson["foursquare_id"].string }
-        set { internalJson["foursquare_id"].string = newValue }
-    }
-
-    public var foursquareType: String? {
-        get { return internalJson["foursquare_type"].string }
-        set { internalJson["foursquare_type"].string = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct PollOption: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var text: String {
-        get { return internalJson["text"].stringValue }
-        set { internalJson["text"].stringValue = newValue }
-    }
-
-    public var voterCount: Int {
-        get { return internalJson["voter_count"].intValue }
-        set { internalJson["voter_count"].intValue = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct PollAnswer: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var pollId: String {
-        get { return internalJson["poll_id"].stringValue }
-        set { internalJson["poll_id"].stringValue = newValue }
-    }
-
-    public var user: User {
-        get { return User(internalJson: internalJson["user"]) }
-        set { internalJson["user"] = JSON(newValue.json) }
-    }
-
-    public var optionIds: Int {
-        get { return internalJson["option_ids"].intValue }
-        set { internalJson["option_ids"].intValue = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct Poll: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var question: String {
-        get { return internalJson["question"].stringValue }
-        set { internalJson["question"].stringValue = newValue }
-    }
-
-    public var options: [PollOption] {
-        get { return internalJson["options"].customArrayValue() }
-        set { internalJson["options"] = JSON.initFrom(newValue) }
-    }
-
-    public var totalVoterCount: Int {
-        get { return internalJson["total_voter_count"].intValue }
-        set { internalJson["total_voter_count"].intValue = newValue }
-    }
-
-    public var isClosed: Bool {
-        get { return internalJson["is_closed"].boolValue }
-        set { internalJson["is_closed"].boolValue = newValue }
-    }
-
-    public var isAnonymous: Bool {
-        get { return internalJson["is_anonymous"].boolValue }
-        set { internalJson["is_anonymous"].boolValue = newValue }
-    }
-
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var allowsMultipleAnswers: Bool {
-        get { return internalJson["allows_multiple_answers"].boolValue }
-        set { internalJson["allows_multiple_answers"].boolValue = newValue }
-    }
-
-    public var correctOptionId: Int? {
-        get { return internalJson["correct_option_id"].int }
-        set { internalJson["correct_option_id"].int = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct UserProfilePhotos: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var totalCount: Int {
-        get { return internalJson["total_count"].intValue }
-        set { internalJson["total_count"].intValue = newValue }
-    }
-
-    public var photos: [[PhotoSize]] {
-        get { return internalJson["photos"].twoDArrayValue() }
-        set {
-            var rowsJson = [JSON]()
-            rowsJson.reserveCapacity(newValue.count)
-            for row in newValue {
-                var colsJson = [JSON]()
-                colsJson.reserveCapacity(row.count)
-                for col in row {
-                    let json = col.internalJson
-                    colsJson.append(json)
-                }
-                rowsJson.append(JSON(colsJson))
-            }
-            internalJson["photos"] = JSON(rowsJson)
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct File: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var fileId: String {
-        get { return internalJson["file_id"].stringValue }
-        set { internalJson["file_id"].stringValue = newValue }
-    }
-
-    public var fileUniqueId: String {
-        get { return internalJson["file_unique_id"].stringValue }
-        set { internalJson["file_unique_id"].stringValue = newValue }
-    }
-
-    public var fileSize: Int? {
-        get { return internalJson["file_size"].int }
-        set { internalJson["file_size"].int = newValue }
-    }
-
-    public var filePath: String? {
-        get { return internalJson["file_path"].string }
-        set { internalJson["file_path"].string = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct ReplyKeyboardMarkup: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var keyboard: [[KeyboardButton]] {
-        get { return internalJson["keyboard"].twoDArrayValue() }
-        set {
-            var rowsJson = [JSON]()
-            rowsJson.reserveCapacity(newValue.count)
-            for row in newValue {
-                var colsJson = [JSON]()
-                colsJson.reserveCapacity(row.count)
-                for col in row {
-                    let json = col.internalJson
-                    colsJson.append(json)
-                }
-                rowsJson.append(JSON(colsJson))
-            }
-            internalJson["keyboard"] = JSON(rowsJson)
-        }
-    }
-
-    public var resizeKeyboard: Bool? {
-        get { return internalJson["resize_keyboard"].bool }
-        set { internalJson["resize_keyboard"].bool = newValue }
-    }
-
-    public var oneTimeKeyboard: Bool? {
-        get { return internalJson["one_time_keyboard"].bool }
-        set { internalJson["one_time_keyboard"].bool = newValue }
-    }
-
-    public var selective: Bool? {
-        get { return internalJson["selective"].bool }
-        set { internalJson["selective"].bool = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct KeyboardButton: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var text: String {
-        get { return internalJson["text"].stringValue }
-        set { internalJson["text"].stringValue = newValue }
-    }
-
-    public var requestContact: Bool? {
-        get { return internalJson["request_contact"].bool }
-        set { internalJson["request_contact"].bool = newValue }
-    }
-
-    public var requestLocation: Bool? {
-        get { return internalJson["request_location"].bool }
-        set { internalJson["request_location"].bool = newValue }
-    }
-
-    public var requestPoll: KeyboardButtonPollType? {
-        get {
-            let value = internalJson["request_poll"]
-            return value.isNullOrUnknown ? nil : KeyboardButtonPollType(internalJson: value)
-        }
-        set {
-            internalJson["request_poll"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct KeyboardButtonPollType: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String? {
-        get { return internalJson["type"].string }
-        set { internalJson["type"].string = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct ReplyKeyboardRemove: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var removeKeyboard: Bool {
-        get { return internalJson["remove_keyboard"].boolValue }
-        set { internalJson["remove_keyboard"].boolValue = newValue }
-    }
-
-    public var selective: Bool? {
-        get { return internalJson["selective"].bool }
-        set { internalJson["selective"].bool = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineKeyboardMarkup: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var inlineKeyboard: [[InlineKeyboardButton]] {
-        get { return internalJson["inline_keyboard"].twoDArrayValue() }
-        set {
-            var rowsJson = [JSON]()
-            rowsJson.reserveCapacity(newValue.count)
-            for row in newValue {
-                var colsJson = [JSON]()
-                colsJson.reserveCapacity(row.count)
-                for col in row {
-                    let json = col.internalJson
-                    colsJson.append(json)
-                }
-                rowsJson.append(JSON(colsJson))
-            }
-            internalJson["inline_keyboard"] = JSON(rowsJson)
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineKeyboardButton: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var text: String {
-        get { return internalJson["text"].stringValue }
-        set { internalJson["text"].stringValue = newValue }
-    }
-
-    public var url: String? {
-        get { return internalJson["url"].string }
-        set { internalJson["url"].string = newValue }
-    }
-
-    public var loginUrl: LoginUrl? {
-        get {
-            let value = internalJson["login_url"]
-            return value.isNullOrUnknown ? nil : LoginUrl(internalJson: value)
-        }
-        set {
-            internalJson["login_url"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var callbackData: String? {
-        get { return internalJson["callback_data"].string }
-        set { internalJson["callback_data"].string = newValue }
-    }
-
-    public var switchInlineQuery: String? {
-        get { return internalJson["switch_inline_query"].string }
-        set { internalJson["switch_inline_query"].string = newValue }
-    }
-
-    public var switchInlineQueryCurrentChat: String? {
-        get { return internalJson["switch_inline_query_current_chat"].string }
-        set { internalJson["switch_inline_query_current_chat"].string = newValue }
-    }
-
-    public var callbackGame: CallbackGame? {
-        get {
-            let value = internalJson["callback_game"]
-            return value.isNullOrUnknown ? nil : CallbackGame(internalJson: value)
-        }
-        set {
-            internalJson["callback_game"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var pay: Bool? {
-        get { return internalJson["pay"].bool }
-        set { internalJson["pay"].bool = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct LoginUrl: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct CallbackQuery: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var from: User {
-        get { return User(internalJson: internalJson["from"]) }
-        set { internalJson["from"] = JSON(newValue.json) }
-    }
-
-    public var message: Message? {
-        get {
-            let value = internalJson["message"]
-            return value.isNullOrUnknown ? nil : Message(internalJson: value)
-        }
-        set {
-            internalJson["message"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inlineMessageId: String? {
-        get { return internalJson["inline_message_id"].string }
-        set { internalJson["inline_message_id"].string = newValue }
-    }
-
-    public var chatInstance: String {
-        get { return internalJson["chat_instance"].stringValue }
-        set { internalJson["chat_instance"].stringValue = newValue }
-    }
-
-    public var data: String? {
-        get { return internalJson["data"].string }
-        set { internalJson["data"].string = newValue }
-    }
-
-    public var gameShortName: String? {
-        get { return internalJson["game_short_name"].string }
-        set { internalJson["game_short_name"].string = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct ForceReply: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var forceReply: Bool {
-        get { return internalJson["force_reply"].boolValue }
-        set { internalJson["force_reply"].boolValue = newValue }
-    }
-
-    public var selective: Bool? {
-        get { return internalJson["selective"].bool }
-        set { internalJson["selective"].bool = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct ChatPhoto: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var smallFileId: String {
-        get { return internalJson["small_file_id"].stringValue }
-        set { internalJson["small_file_id"].stringValue = newValue }
-    }
-
-    public var smallFileUniqueId: String {
-        get { return internalJson["small_file_unique_id"].stringValue }
-        set { internalJson["small_file_unique_id"].stringValue = newValue }
-    }
-
-    public var bigFileId: String {
-        get { return internalJson["big_file_id"].stringValue }
-        set { internalJson["big_file_id"].stringValue = newValue }
-    }
-
-    public var bigFileUniqueId: String {
-        get { return internalJson["big_file_unique_id"].stringValue }
-        set { internalJson["big_file_unique_id"].stringValue = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct ChatMember: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var user: User {
-        get { return User(internalJson: internalJson["user"]) }
-        set { internalJson["user"] = JSON(newValue.json) }
-    }
-
-    public var statusString: String {
-        get { return internalJson["status"].stringValue }
-        set { internalJson["status"].stringValue = newValue }
-    }
-
-    public var customTitle: String? {
-        get { return internalJson["custom_title"].string }
-        set { internalJson["custom_title"].string = newValue }
-    }
-
-    public var untilDate: Date? {
-        get {
-            guard let date = internalJson["until_date"].double else { return nil }
-            return Date(timeIntervalSince1970: date)
-        }
-        set {
-            internalJson["until_date"].double = newValue?.timeIntervalSince1970
-        }
-    }
-
-    public var canBeEdited: Bool? {
-        get { return internalJson["can_be_edited"].bool }
-        set { internalJson["can_be_edited"].bool = newValue }
-    }
-
-    public var canPostMessages: Bool? {
-        get { return internalJson["can_post_messages"].bool }
-        set { internalJson["can_post_messages"].bool = newValue }
-    }
-
-    public var canEditMessages: Bool? {
-        get { return internalJson["can_edit_messages"].bool }
-        set { internalJson["can_edit_messages"].bool = newValue }
-    }
-
-    public var canDeleteMessages: Bool? {
-        get { return internalJson["can_delete_messages"].bool }
-        set { internalJson["can_delete_messages"].bool = newValue }
-    }
-
-    public var canRestrictMembers: Bool? {
-        get { return internalJson["can_restrict_members"].bool }
-        set { internalJson["can_restrict_members"].bool = newValue }
-    }
-
-    public var canPromoteMembers: Bool? {
-        get { return internalJson["can_promote_members"].bool }
-        set { internalJson["can_promote_members"].bool = newValue }
-    }
-
-    public var canChangeInfo: Bool? {
-        get { return internalJson["can_change_info"].bool }
-        set { internalJson["can_change_info"].bool = newValue }
-    }
-
-    public var canInviteUsers: Bool? {
-        get { return internalJson["can_invite_users"].bool }
-        set { internalJson["can_invite_users"].bool = newValue }
-    }
-
-    public var canPinMessages: Bool? {
-        get { return internalJson["can_pin_messages"].bool }
-        set { internalJson["can_pin_messages"].bool = newValue }
-    }
-
-    public var isMember: Bool? {
-        get { return internalJson["is_member"].bool }
-        set { internalJson["is_member"].bool = newValue }
-    }
-
-    public var canSendMessages: Bool? {
-        get { return internalJson["can_send_messages"].bool }
-        set { internalJson["can_send_messages"].bool = newValue }
-    }
-
-    public var canSendMediaMessages: Bool? {
-        get { return internalJson["can_send_media_messages"].bool }
-        set { internalJson["can_send_media_messages"].bool = newValue }
-    }
-
-    public var canSendPolls: Bool? {
-        get { return internalJson["can_send_polls"].bool }
-        set { internalJson["can_send_polls"].bool = newValue }
-    }
-
-    public var canSendOtherMessages: Bool? {
-        get { return internalJson["can_send_other_messages"].bool }
-        set { internalJson["can_send_other_messages"].bool = newValue }
-    }
-
-    public var canAddWebPagePreviews: Bool? {
-        get { return internalJson["can_add_web_page_previews"].bool }
-        set { internalJson["can_add_web_page_previews"].bool = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct ChatPermissions: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var canSendMessages: Bool? {
-        get { return internalJson["can_send_messages"].bool }
-        set { internalJson["can_send_messages"].bool = newValue }
-    }
-
-    public var canSendMediaMessages: Bool? {
-        get { return internalJson["can_send_media_messages"].bool }
-        set { internalJson["can_send_media_messages"].bool = newValue }
-    }
-
-    public var canSendPolls: Bool? {
-        get { return internalJson["can_send_polls"].bool }
-        set { internalJson["can_send_polls"].bool = newValue }
-    }
-
-    public var canSendOtherMessages: Bool? {
-        get { return internalJson["can_send_other_messages"].bool }
-        set { internalJson["can_send_other_messages"].bool = newValue }
-    }
-
-    public var canAddWebPagePreviews: Bool? {
-        get { return internalJson["can_add_web_page_previews"].bool }
-        set { internalJson["can_add_web_page_previews"].bool = newValue }
-    }
-
-    public var canChangeInfo: Bool? {
-        get { return internalJson["can_change_info"].bool }
-        set { internalJson["can_change_info"].bool = newValue }
-    }
-
-    public var canInviteUsers: Bool? {
-        get { return internalJson["can_invite_users"].bool }
-        set { internalJson["can_invite_users"].bool = newValue }
-    }
-
-    public var canPinMessages: Bool? {
-        get { return internalJson["can_pin_messages"].bool }
-        set { internalJson["can_pin_messages"].bool = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct ResponseParameters: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var migrateToChatId: Int64? {
-        get { return internalJson["migrate_to_chat_id"].int64 }
-        set { internalJson["migrate_to_chat_id"].int64 = newValue }
-    }
-
-    public var retryAfter: Int? {
-        get { return internalJson["retry_after"].int }
-        set { internalJson["retry_after"].int = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InputMediaPhoto: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var media: String {
-        get { return internalJson["media"].stringValue }
-        set { internalJson["media"].stringValue = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InputMediaVideo: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var media: String {
-        get { return internalJson["media"].stringValue }
-        set { internalJson["media"].stringValue = newValue }
-    }
-
-public var thumb: InputFileOrString? = nil
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var width: Int? {
-        get { return internalJson["width"].int }
-        set { internalJson["width"].int = newValue }
-    }
-
-    public var height: Int? {
-        get { return internalJson["height"].int }
-        set { internalJson["height"].int = newValue }
-    }
-
-    public var duration: Int? {
-        get { return internalJson["duration"].int }
-        set { internalJson["duration"].int = newValue }
-    }
-
-    public var supportsStreaming: Bool? {
-        get { return internalJson["supports_streaming"].bool }
-        set { internalJson["supports_streaming"].bool = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InputMediaAnimation: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var media: String {
-        get { return internalJson["media"].stringValue }
-        set { internalJson["media"].stringValue = newValue }
-    }
-
-public var thumb: InputFileOrString? = nil
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var width: Int? {
-        get { return internalJson["width"].int }
-        set { internalJson["width"].int = newValue }
-    }
-
-    public var height: Int? {
-        get { return internalJson["height"].int }
-        set { internalJson["height"].int = newValue }
-    }
-
-    public var duration: Int? {
-        get { return internalJson["duration"].int }
-        set { internalJson["duration"].int = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InputMediaAudio: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var media: String {
-        get { return internalJson["media"].stringValue }
-        set { internalJson["media"].stringValue = newValue }
-    }
-
-public var thumb: InputFileOrString? = nil
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var duration: Int? {
-        get { return internalJson["duration"].int }
-        set { internalJson["duration"].int = newValue }
-    }
-
-    public var performer: String? {
-        get { return internalJson["performer"].string }
-        set { internalJson["performer"].string = newValue }
-    }
-
-    public var title: String? {
-        get { return internalJson["title"].string }
-        set { internalJson["title"].string = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InputMediaDocument: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var media: String {
-        get { return internalJson["media"].stringValue }
-        set { internalJson["media"].stringValue = newValue }
-    }
-
-public var thumb: InputFileOrString? = nil
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct Sticker: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var fileId: String {
-        get { return internalJson["file_id"].stringValue }
-        set { internalJson["file_id"].stringValue = newValue }
-    }
-
-    public var fileUniqueId: String {
-        get { return internalJson["file_unique_id"].stringValue }
-        set { internalJson["file_unique_id"].stringValue = newValue }
-    }
-
-    public var width: Int {
-        get { return internalJson["width"].intValue }
-        set { internalJson["width"].intValue = newValue }
-    }
-
-    public var height: Int {
-        get { return internalJson["height"].intValue }
-        set { internalJson["height"].intValue = newValue }
-    }
-
-    public var isAnimated: Bool {
-        get { return internalJson["is_animated"].boolValue }
-        set { internalJson["is_animated"].boolValue = newValue }
-    }
-
-    public var thumb: PhotoSize? {
-        get {
-            let value = internalJson["thumb"]
-            return value.isNullOrUnknown ? nil : PhotoSize(internalJson: value)
-        }
-        set {
-            internalJson["thumb"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var emoji: String? {
-        get { return internalJson["emoji"].string }
-        set { internalJson["emoji"].string = newValue }
-    }
-
-    public var setName: String? {
-        get { return internalJson["set_name"].string }
-        set { internalJson["set_name"].string = newValue }
-    }
-
-    public var maskPosition: MaskPosition? {
-        get {
-            let value = internalJson["mask_position"]
-            return value.isNullOrUnknown ? nil : MaskPosition(internalJson: value)
-        }
-        set {
-            internalJson["mask_position"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var fileSize: Int? {
-        get { return internalJson["file_size"].int }
-        set { internalJson["file_size"].int = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct StickerSet: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var name: String {
-        get { return internalJson["name"].stringValue }
-        set { internalJson["name"].stringValue = newValue }
-    }
-
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var isAnimated: Bool {
-        get { return internalJson["is_animated"].boolValue }
-        set { internalJson["is_animated"].boolValue = newValue }
-    }
-
-    public var containsMasks: Bool {
-        get { return internalJson["contains_masks"].boolValue }
-        set { internalJson["contains_masks"].boolValue = newValue }
-    }
-
-    public var stickers: [Sticker] {
-        get { return internalJson["stickers"].customArrayValue() }
-        set { internalJson["stickers"] = JSON.initFrom(newValue) }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct MaskPosition: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var point: String {
-        get { return internalJson["point"].stringValue }
-        set { internalJson["point"].stringValue = newValue }
-    }
-
-    public var xShift: Float {
-        get { return internalJson["x_shift"].floatValue }
-        set { internalJson["x_shift"].floatValue = newValue }
-    }
-
-    public var yShift: Float {
-        get { return internalJson["y_shift"].floatValue }
-        set { internalJson["y_shift"].floatValue = newValue }
-    }
-
-    public var scale: Float {
-        get { return internalJson["scale"].floatValue }
-        set { internalJson["scale"].floatValue = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQuery: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var from: User {
-        get { return User(internalJson: internalJson["from"]) }
-        set { internalJson["from"] = JSON(newValue.json) }
-    }
-
-    public var location: Location? {
-        get {
-            let value = internalJson["location"]
-            return value.isNullOrUnknown ? nil : Location(internalJson: value)
-        }
-        set {
-            internalJson["location"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var query: String {
-        get { return internalJson["query"].stringValue }
-        set { internalJson["query"].stringValue = newValue }
-    }
-
-    public var offset: String {
-        get { return internalJson["offset"].stringValue }
-        set { internalJson["offset"].stringValue = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultArticle: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var inputMessageContent: InputMessageContent {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue.json)
-        }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var url: String? {
-        get { return internalJson["url"].string }
-        set { internalJson["url"].string = newValue }
-    }
-
-    public var hideUrl: Bool? {
-        get { return internalJson["hide_url"].bool }
-        set { internalJson["hide_url"].bool = newValue }
-    }
-
-    public var description: String? {
-        get { return internalJson["description"].string }
-        set { internalJson["description"].string = newValue }
-    }
-
-    public var thumbUrl: String? {
-        get { return internalJson["thumb_url"].string }
-        set { internalJson["thumb_url"].string = newValue }
-    }
-
-    public var thumbWidth: Int? {
-        get { return internalJson["thumb_width"].int }
-        set { internalJson["thumb_width"].int = newValue }
-    }
-
-    public var thumbHeight: Int? {
-        get { return internalJson["thumb_height"].int }
-        set { internalJson["thumb_height"].int = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultPhoto: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var photoUrl: String {
-        get { return internalJson["photo_url"].stringValue }
-        set { internalJson["photo_url"].stringValue = newValue }
-    }
-
-    public var thumbUrl: String {
-        get { return internalJson["thumb_url"].stringValue }
-        set { internalJson["thumb_url"].stringValue = newValue }
-    }
-
-    public var photoWidth: Int? {
-        get { return internalJson["photo_width"].int }
-        set { internalJson["photo_width"].int = newValue }
-    }
-
-    public var photoHeight: Int? {
-        get { return internalJson["photo_height"].int }
-        set { internalJson["photo_height"].int = newValue }
-    }
-
-    public var title: String? {
-        get { return internalJson["title"].string }
-        set { internalJson["title"].string = newValue }
-    }
-
-    public var description: String? {
-        get { return internalJson["description"].string }
-        set { internalJson["description"].string = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultGif: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var gifUrl: String {
-        get { return internalJson["gif_url"].stringValue }
-        set { internalJson["gif_url"].stringValue = newValue }
-    }
-
-    public var gifWidth: Int? {
-        get { return internalJson["gif_width"].int }
-        set { internalJson["gif_width"].int = newValue }
-    }
-
-    public var gifHeight: Int? {
-        get { return internalJson["gif_height"].int }
-        set { internalJson["gif_height"].int = newValue }
-    }
-
-    public var gifDuration: Int? {
-        get { return internalJson["gif_duration"].int }
-        set { internalJson["gif_duration"].int = newValue }
-    }
-
-    public var thumbUrl: String {
-        get { return internalJson["thumb_url"].stringValue }
-        set { internalJson["thumb_url"].stringValue = newValue }
-    }
-
-    public var title: String? {
-        get { return internalJson["title"].string }
-        set { internalJson["title"].string = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultLocation: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var latitude: Float {
-        get { return internalJson["latitude"].floatValue }
-        set { internalJson["latitude"].floatValue = newValue }
-    }
-
-    public var longitude: Float {
-        get { return internalJson["longitude"].floatValue }
-        set { internalJson["longitude"].floatValue = newValue }
-    }
-
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var livePeriod: Int? {
-        get { return internalJson["live_period"].int }
-        set { internalJson["live_period"].int = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    public var thumbUrl: String? {
-        get { return internalJson["thumb_url"].string }
-        set { internalJson["thumb_url"].string = newValue }
-    }
-
-    public var thumbWidth: Int? {
-        get { return internalJson["thumb_width"].int }
-        set { internalJson["thumb_width"].int = newValue }
-    }
-
-    public var thumbHeight: Int? {
-        get { return internalJson["thumb_height"].int }
-        set { internalJson["thumb_height"].int = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultMpeg4Gif: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var mpeg4Url: String {
-        get { return internalJson["mpeg4_url"].stringValue }
-        set { internalJson["mpeg4_url"].stringValue = newValue }
-    }
-
-    public var mpeg4Width: Int? {
-        get { return internalJson["mpeg4_width"].int }
-        set { internalJson["mpeg4_width"].int = newValue }
-    }
-
-    public var mpeg4Height: Int? {
-        get { return internalJson["mpeg4_height"].int }
-        set { internalJson["mpeg4_height"].int = newValue }
-    }
-
-    public var mpeg4Duration: Int? {
-        get { return internalJson["mpeg4_duration"].int }
-        set { internalJson["mpeg4_duration"].int = newValue }
-    }
-
-    public var thumbUrl: String {
-        get { return internalJson["thumb_url"].stringValue }
-        set { internalJson["thumb_url"].stringValue = newValue }
-    }
-
-    public var title: String? {
-        get { return internalJson["title"].string }
-        set { internalJson["title"].string = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultVideo: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var videoUrl: String {
-        get { return internalJson["video_url"].stringValue }
-        set { internalJson["video_url"].stringValue = newValue }
-    }
-
-    public var mimeType: String {
-        get { return internalJson["mime_type"].stringValue }
-        set { internalJson["mime_type"].stringValue = newValue }
-    }
-
-    public var thumbUrl: String {
-        get { return internalJson["thumb_url"].stringValue }
-        set { internalJson["thumb_url"].stringValue = newValue }
-    }
-
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var videoWidth: Int? {
-        get { return internalJson["video_width"].int }
-        set { internalJson["video_width"].int = newValue }
-    }
-
-    public var videoHeight: Int? {
-        get { return internalJson["video_height"].int }
-        set { internalJson["video_height"].int = newValue }
-    }
-
-    public var videoDuration: Int? {
-        get { return internalJson["video_duration"].int }
-        set { internalJson["video_duration"].int = newValue }
-    }
-
-    public var description: String? {
-        get { return internalJson["description"].string }
-        set { internalJson["description"].string = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultAudio: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var audioUrl: String {
-        get { return internalJson["audio_url"].stringValue }
-        set { internalJson["audio_url"].stringValue = newValue }
-    }
-
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var performer: String? {
-        get { return internalJson["performer"].string }
-        set { internalJson["performer"].string = newValue }
-    }
-
-    public var audioDuration: Int? {
-        get { return internalJson["audio_duration"].int }
-        set { internalJson["audio_duration"].int = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultVoice: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var voiceUrl: String {
-        get { return internalJson["voice_url"].stringValue }
-        set { internalJson["voice_url"].stringValue = newValue }
-    }
-
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var voiceDuration: Int? {
-        get { return internalJson["voice_duration"].int }
-        set { internalJson["voice_duration"].int = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultDocument: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var documentUrl: String {
-        get { return internalJson["document_url"].stringValue }
-        set { internalJson["document_url"].stringValue = newValue }
-    }
-
-    public var mimeType: String {
-        get { return internalJson["mime_type"].stringValue }
-        set { internalJson["mime_type"].stringValue = newValue }
-    }
-
-    public var description: String? {
-        get { return internalJson["description"].string }
-        set { internalJson["description"].string = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    public var thumbUrl: String? {
-        get { return internalJson["thumb_url"].string }
-        set { internalJson["thumb_url"].string = newValue }
-    }
-
-    public var thumbWidth: Int? {
-        get { return internalJson["thumb_width"].int }
-        set { internalJson["thumb_width"].int = newValue }
-    }
-
-    public var thumbHeight: Int? {
-        get { return internalJson["thumb_height"].int }
-        set { internalJson["thumb_height"].int = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultVenue: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var latitude: Float {
-        get { return internalJson["latitude"].floatValue }
-        set { internalJson["latitude"].floatValue = newValue }
-    }
-
-    public var longitude: Float {
-        get { return internalJson["longitude"].floatValue }
-        set { internalJson["longitude"].floatValue = newValue }
-    }
-
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var address: String {
-        get { return internalJson["address"].stringValue }
-        set { internalJson["address"].stringValue = newValue }
-    }
-
-    public var foursquareId: String? {
-        get { return internalJson["foursquare_id"].string }
-        set { internalJson["foursquare_id"].string = newValue }
-    }
-
-    public var foursquareType: String? {
-        get { return internalJson["foursquare_type"].string }
-        set { internalJson["foursquare_type"].string = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    public var thumbUrl: String? {
-        get { return internalJson["thumb_url"].string }
-        set { internalJson["thumb_url"].string = newValue }
-    }
-
-    public var thumbWidth: Int? {
-        get { return internalJson["thumb_width"].int }
-        set { internalJson["thumb_width"].int = newValue }
-    }
-
-    public var thumbHeight: Int? {
-        get { return internalJson["thumb_height"].int }
-        set { internalJson["thumb_height"].int = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultContact: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var phoneNumber: String {
-        get { return internalJson["phone_number"].stringValue }
-        set { internalJson["phone_number"].stringValue = newValue }
-    }
-
-    public var firstName: String {
-        get { return internalJson["first_name"].stringValue }
-        set { internalJson["first_name"].stringValue = newValue }
-    }
-
-    public var lastName: String? {
-        get { return internalJson["last_name"].string }
-        set { internalJson["last_name"].string = newValue }
-    }
-
-    public var vcard: String? {
-        get { return internalJson["vcard"].string }
-        set { internalJson["vcard"].string = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    public var thumbUrl: String? {
-        get { return internalJson["thumb_url"].string }
-        set { internalJson["thumb_url"].string = newValue }
-    }
-
-    public var thumbWidth: Int? {
-        get { return internalJson["thumb_width"].int }
-        set { internalJson["thumb_width"].int = newValue }
-    }
-
-    public var thumbHeight: Int? {
-        get { return internalJson["thumb_height"].int }
-        set { internalJson["thumb_height"].int = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultGame: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var gameShortName: String {
-        get { return internalJson["game_short_name"].stringValue }
-        set { internalJson["game_short_name"].stringValue = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultCachedPhoto: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var photoFileId: String {
-        get { return internalJson["photo_file_id"].stringValue }
-        set { internalJson["photo_file_id"].stringValue = newValue }
-    }
-
-    public var title: String? {
-        get { return internalJson["title"].string }
-        set { internalJson["title"].string = newValue }
-    }
-
-    public var description: String? {
-        get { return internalJson["description"].string }
-        set { internalJson["description"].string = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultCachedGif: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var gifFileId: String {
-        get { return internalJson["gif_file_id"].stringValue }
-        set { internalJson["gif_file_id"].stringValue = newValue }
-    }
-
-    public var title: String? {
-        get { return internalJson["title"].string }
-        set { internalJson["title"].string = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultCachedMpeg4Gif: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var mpeg4FileId: String {
-        get { return internalJson["mpeg4_file_id"].stringValue }
-        set { internalJson["mpeg4_file_id"].stringValue = newValue }
-    }
-
-    public var title: String? {
-        get { return internalJson["title"].string }
-        set { internalJson["title"].string = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultCachedSticker: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var stickerFileId: String {
-        get { return internalJson["sticker_file_id"].stringValue }
-        set { internalJson["sticker_file_id"].stringValue = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultCachedDocument: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var documentFileId: String {
-        get { return internalJson["document_file_id"].stringValue }
-        set { internalJson["document_file_id"].stringValue = newValue }
-    }
-
-    public var description: String? {
-        get { return internalJson["description"].string }
-        set { internalJson["description"].string = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
-
-public struct InlineQueryResultCachedVideo: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var videoFileId: String {
-        get { return internalJson["video_file_id"].stringValue }
-        set { internalJson["video_file_id"].stringValue = newValue }
-    }
-
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var description: String? {
-        get { return internalJson["description"].string }
-        set { internalJson["description"].string = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
-
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
-
-
-public struct InlineQueryResultCachedVoice: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var voiceFileId: String {
-        get { return internalJson["voice_file_id"].stringValue }
-        set { internalJson["voice_file_id"].stringValue = newValue }
-    }
-
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
 
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
 
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
+public class File: Codable {
+    public var fileId: String
+    public var fileUniqueId: String
+    public var fileSize: Int?
+    public var filePath: String?
+    public init(fileId: String, fileUniqueId: String, fileSize: Int? = nil, filePath: String? = nil) {
+        self.fileId = fileId
+        self.fileUniqueId = fileUniqueId
+        self.fileSize = fileSize
+        self.filePath = filePath
     }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
-
-
-public struct InlineQueryResultCachedAudio: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var typeString: String {
-        get { return internalJson["type"].stringValue }
-        set { internalJson["type"].stringValue = newValue }
-    }
-
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var audioFileId: String {
-        get { return internalJson["audio_file_id"].stringValue }
-        set { internalJson["audio_file_id"].stringValue = newValue }
-    }
-
-    public var caption: String? {
-        get { return internalJson["caption"].string }
-        set { internalJson["caption"].string = newValue }
-    }
-
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
 
-    public var replyMarkup: InlineKeyboardMarkup? {
-        get {
-            let value = internalJson["reply_markup"]
-            return value.isNullOrUnknown ? nil : InlineKeyboardMarkup(internalJson: value)
-        }
-        set {
-            internalJson["reply_markup"] = newValue?.internalJson ?? JSON.null
-        }
-    }
 
-    public var inputMessageContent: InputMessageContent? {
-        get {
-            fatalError("Not implemented")
-        }
-        set {
-            internalJson["input_message_content"] = JSON(newValue?.json ?? JSON.null)
-        }
+public class ReplyKeyboardMarkup: Codable {
+    public var keyboard: [[KeyboardButton]] = [[]]
+    public var resizeKeyboard: Bool?
+    public var oneTimeKeyboard: Bool?
+    public var selective: Bool?
+    public init(keyboard: [[KeyboardButton]], resizeKeyboard: Bool? = nil, oneTimeKeyboard: Bool? = nil, selective: Bool? = nil) {
+        self.keyboard = keyboard
+        self.resizeKeyboard = resizeKeyboard
+        self.oneTimeKeyboard = oneTimeKeyboard
+        self.selective = selective
     }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
-
-
-public struct InputTextMessageContent: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var messageText: String {
-        get { return internalJson["message_text"].stringValue }
-        set { internalJson["message_text"].stringValue = newValue }
-    }
 
-    public var parseModeString: String? {
-        get { return internalJson["parse_mode"].string }
-        set { internalJson["parse_mode"].string = newValue }
-    }
 
-    public var disableWebPagePreview: Bool? {
-        get { return internalJson["disable_web_page_preview"].bool }
-        set { internalJson["disable_web_page_preview"].bool = newValue }
+public class KeyboardButton: Codable {
+    public var text: String
+    public var requestContact: Bool?
+    public var requestLocation: Bool?
+    public var requestPoll: KeyboardButtonPollType?
+    public init(text: String, requestContact: Bool? = nil, requestLocation: Bool? = nil, requestPoll: KeyboardButtonPollType? = nil) {
+        self.text = text
+        self.requestContact = requestContact
+        self.requestLocation = requestLocation
+        self.requestPoll = requestPoll
     }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
-
 
-public struct InputLocationMessageContent: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var latitude: Float {
-        get { return internalJson["latitude"].floatValue }
-        set { internalJson["latitude"].floatValue = newValue }
-    }
-
-    public var longitude: Float {
-        get { return internalJson["longitude"].floatValue }
-        set { internalJson["longitude"].floatValue = newValue }
-    }
 
-    public var livePeriod: Int? {
-        get { return internalJson["live_period"].int }
-        set { internalJson["live_period"].int = newValue }
+public class KeyboardButtonPollType: Codable {
+    public var type: PollType?
+    public init(type: PollType? = nil) {
+        self.type = type
     }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
-
-
-public struct InputVenueMessageContent: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var latitude: Float {
-        get { return internalJson["latitude"].floatValue }
-        set { internalJson["latitude"].floatValue = newValue }
-    }
-
-    public var longitude: Float {
-        get { return internalJson["longitude"].floatValue }
-        set { internalJson["longitude"].floatValue = newValue }
-    }
-
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var address: String {
-        get { return internalJson["address"].stringValue }
-        set { internalJson["address"].stringValue = newValue }
-    }
 
-    public var foursquareId: String? {
-        get { return internalJson["foursquare_id"].string }
-        set { internalJson["foursquare_id"].string = newValue }
-    }
 
-    public var foursquareType: String? {
-        get { return internalJson["foursquare_type"].string }
-        set { internalJson["foursquare_type"].string = newValue }
+public class ReplyKeyboardRemove: Codable {
+    public var removeKeyboard: Bool
+    public var selective: Bool?
+    public init(removeKeyboard: Bool, selective: Bool? = nil) {
+        self.removeKeyboard = removeKeyboard
+        self.selective = selective
     }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
-
-
-public struct InputContactMessageContent: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var phoneNumber: String {
-        get { return internalJson["phone_number"].stringValue }
-        set { internalJson["phone_number"].stringValue = newValue }
-    }
-
-    public var firstName: String {
-        get { return internalJson["first_name"].stringValue }
-        set { internalJson["first_name"].stringValue = newValue }
-    }
 
-    public var lastName: String? {
-        get { return internalJson["last_name"].string }
-        set { internalJson["last_name"].string = newValue }
-    }
 
-    public var vcard: String? {
-        get { return internalJson["vcard"].string }
-        set { internalJson["vcard"].string = newValue }
+public class InlineKeyboardMarkup: Codable {
+    public var inlineKeyboard: [[InlineKeyboardButton]] = [[]]
+    public init(inlineKeyboard: [[InlineKeyboardButton]]) {
+        self.inlineKeyboard = inlineKeyboard
     }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
-
-
-public struct ChosenInlineResult: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var resultId: String {
-        get { return internalJson["result_id"].stringValue }
-        set { internalJson["result_id"].stringValue = newValue }
-    }
-
-    public var from: User {
-        get { return User(internalJson: internalJson["from"]) }
-        set { internalJson["from"] = JSON(newValue.json) }
-    }
-
-    public var location: Location {
-        get { return Location(internalJson: internalJson["location"]) }
-        set { internalJson["location"] = JSON(newValue.json) }
-    }
 
-    public var inlineMessageId: String? {
-        get { return internalJson["inline_message_id"].string }
-        set { internalJson["inline_message_id"].string = newValue }
-    }
 
-    public var query: String {
-        get { return internalJson["query"].stringValue }
-        set { internalJson["query"].stringValue = newValue }
-    }
+public class InlineKeyboardButton: Codable {
+    public var text: String
+    public var url: String?
+    public var loginUrl: LoginUrl?
+    public var callbackData: String?
+    public var switchInlineQuery: String?
+    public var switchInlineQueryCurrentChat: String?
+    public var callbackGame: CallbackGame?
+    public var pay: Bool?
+    public init(text: String, url: String? = nil, loginUrl: LoginUrl? = nil, callbackData: String? = nil, switchInlineQuery: String? = nil, switchInlineQueryCurrentChat: String? = nil, callbackGame: CallbackGame? = nil, pay: Bool? = nil) {
+        self.text = text
+        self.url = url
+        self.loginUrl = loginUrl
+        self.callbackData = callbackData
+        self.switchInlineQuery = switchInlineQuery
+        self.switchInlineQueryCurrentChat = switchInlineQueryCurrentChat
+        self.callbackGame = callbackGame
+        self.pay = pay
+    }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
 
 
-public struct LabeledPrice: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var label: String {
-        get { return internalJson["label"].stringValue }
-        set { internalJson["label"].stringValue = newValue }
-    }
-
-    public var amount: Int {
-        get { return internalJson["amount"].intValue }
-        set { internalJson["amount"].intValue = newValue }
-    }
-
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
+public class LoginUrl: Codable {
     public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
     }
-}
-
-
-public struct Invoice: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var description: String {
-        get { return internalJson["description"].stringValue }
-        set { internalJson["description"].stringValue = newValue }
-    }
-
-    public var startParameter: String {
-        get { return internalJson["start_parameter"].stringValue }
-        set { internalJson["start_parameter"].stringValue = newValue }
-    }
-
-    public var currency: String {
-        get { return internalJson["currency"].stringValue }
-        set { internalJson["currency"].stringValue = newValue }
-    }
-
-    public var totalAmount: Int {
-        get { return internalJson["total_amount"].intValue }
-        set { internalJson["total_amount"].intValue = newValue }
-    }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
-
-
-public struct ShippingAddress: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var countryCode: String {
-        get { return internalJson["country_code"].stringValue }
-        set { internalJson["country_code"].stringValue = newValue }
-    }
-
-    public var state: String {
-        get { return internalJson["state"].stringValue }
-        set { internalJson["state"].stringValue = newValue }
-    }
 
-    public var city: String {
-        get { return internalJson["city"].stringValue }
-        set { internalJson["city"].stringValue = newValue }
-    }
-
-    public var streetLine1: String {
-        get { return internalJson["street_line1"].stringValue }
-        set { internalJson["street_line1"].stringValue = newValue }
-    }
-
-    public var streetLine2: String {
-        get { return internalJson["street_line2"].stringValue }
-        set { internalJson["street_line2"].stringValue = newValue }
-    }
 
-    public var postCode: String {
-        get { return internalJson["post_code"].stringValue }
-        set { internalJson["post_code"].stringValue = newValue }
+public class CallbackQuery: Codable {
+    public var id: String
+    public var from: User
+    public var message: Message?
+    public var inlineMessageId: String?
+    public var chatInstance: String
+    public var data: String?
+    public var gameShortName: String?
+    public init(id: String, from: User, message: Message? = nil, inlineMessageId: String? = nil, chatInstance: String, data: String? = nil, gameShortName: String? = nil) {
+        self.id = id
+        self.from = from
+        self.message = message
+        self.inlineMessageId = inlineMessageId
+        self.chatInstance = chatInstance
+        self.data = data
+        self.gameShortName = gameShortName
     }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
-
-
-public struct OrderInfo: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var name: String? {
-        get { return internalJson["name"].string }
-        set { internalJson["name"].string = newValue }
-    }
-
-    public var phoneNumber: String? {
-        get { return internalJson["phone_number"].string }
-        set { internalJson["phone_number"].string = newValue }
-    }
 
-    public var email: String? {
-        get { return internalJson["email"].string }
-        set { internalJson["email"].string = newValue }
-    }
 
-    public var shippingAddress: ShippingAddress? {
-        get {
-            let value = internalJson["shipping_address"]
-            return value.isNullOrUnknown ? nil : ShippingAddress(internalJson: value)
-        }
-        set {
-            internalJson["shipping_address"] = newValue?.internalJson ?? JSON.null
-        }
+public class ForceReply: Codable {
+    public var forceReply: Bool
+    public var selective: Bool?
+    public init(forceReply: Bool, selective: Bool? = nil) {
+        self.forceReply = forceReply
+        self.selective = selective
     }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
-
-
-public struct ShippingOption: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
 
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
 
-    public var prices: [LabeledPrice] {
-        get { return internalJson["prices"].customArrayValue() }
-        set { internalJson["prices"] = JSON.initFrom(newValue) }
+public class ChatPhoto: Codable {
+    public var smallFileId: String
+    public var smallFileUniqueId: String
+    public var bigFileId: String
+    public var bigFileUniqueId: String
+    public init(smallFileId: String, smallFileUniqueId: String, bigFileId: String, bigFileUniqueId: String) {
+        self.smallFileId = smallFileId
+        self.smallFileUniqueId = smallFileUniqueId
+        self.bigFileId = bigFileId
+        self.bigFileUniqueId = bigFileUniqueId
     }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
-
-
-public struct SuccessfulPayment: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var currency: String {
-        get { return internalJson["currency"].stringValue }
-        set { internalJson["currency"].stringValue = newValue }
-    }
-
-    public var totalAmount: Int {
-        get { return internalJson["total_amount"].intValue }
-        set { internalJson["total_amount"].intValue = newValue }
-    }
-
-    public var invoicePayload: String {
-        get { return internalJson["invoice_payload"].stringValue }
-        set { internalJson["invoice_payload"].stringValue = newValue }
-    }
 
-    public var shippingOptionId: String? {
-        get { return internalJson["shipping_option_id"].string }
-        set { internalJson["shipping_option_id"].string = newValue }
-    }
-
-    public var orderInfo: OrderInfo? {
-        get {
-            let value = internalJson["order_info"]
-            return value.isNullOrUnknown ? nil : OrderInfo(internalJson: value)
-        }
-        set {
-            internalJson["order_info"] = newValue?.internalJson ?? JSON.null
-        }
-    }
-
-    public var telegramPaymentChargeId: String {
-        get { return internalJson["telegram_payment_charge_id"].stringValue }
-        set { internalJson["telegram_payment_charge_id"].stringValue = newValue }
-    }
 
-    public var providerPaymentChargeId: String {
-        get { return internalJson["provider_payment_charge_id"].stringValue }
-        set { internalJson["provider_payment_charge_id"].stringValue = newValue }
+public class ChatMember: Codable {
+    public var user: User
+    public var status: Status
+    public var customTitle: String?
+    public var untilDate: Date?
+    public var canBeEdited: Bool?
+    public var canPostMessages: Bool?
+    public var canEditMessages: Bool?
+    public var canDeleteMessages: Bool?
+    public var canRestrictMembers: Bool?
+    public var canPromoteMembers: Bool?
+    public var canChangeInfo: Bool?
+    public var canInviteUsers: Bool?
+    public var canPinMessages: Bool?
+    public var isMember: Bool?
+    public var canSendMessages: Bool?
+    public var canSendMediaMessages: Bool?
+    public var canSendPolls: Bool?
+    public var canSendOtherMessages: Bool?
+    public var canAddWebPagePreviews: Bool?
+    public init(user: User, status: Status, customTitle: String? = nil, untilDate: Date? = nil, canBeEdited: Bool? = nil, canPostMessages: Bool? = nil, canEditMessages: Bool? = nil, canDeleteMessages: Bool? = nil, canRestrictMembers: Bool? = nil, canPromoteMembers: Bool? = nil, canChangeInfo: Bool? = nil, canInviteUsers: Bool? = nil, canPinMessages: Bool? = nil, isMember: Bool? = nil, canSendMessages: Bool? = nil, canSendMediaMessages: Bool? = nil, canSendPolls: Bool? = nil, canSendOtherMessages: Bool? = nil, canAddWebPagePreviews: Bool? = nil) {
+        self.user = user
+        self.status = status
+        self.customTitle = customTitle
+        self.untilDate = untilDate
+        self.canBeEdited = canBeEdited
+        self.canPostMessages = canPostMessages
+        self.canEditMessages = canEditMessages
+        self.canDeleteMessages = canDeleteMessages
+        self.canRestrictMembers = canRestrictMembers
+        self.canPromoteMembers = canPromoteMembers
+        self.canChangeInfo = canChangeInfo
+        self.canInviteUsers = canInviteUsers
+        self.canPinMessages = canPinMessages
+        self.isMember = isMember
+        self.canSendMessages = canSendMessages
+        self.canSendMediaMessages = canSendMediaMessages
+        self.canSendPolls = canSendPolls
+        self.canSendOtherMessages = canSendOtherMessages
+        self.canAddWebPagePreviews = canAddWebPagePreviews
     }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
-
-
-public struct ShippingQuery: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var from: User {
-        get { return User(internalJson: internalJson["from"]) }
-        set { internalJson["from"] = JSON(newValue.json) }
-    }
 
-    public var invoicePayload: String {
-        get { return internalJson["invoice_payload"].stringValue }
-        set { internalJson["invoice_payload"].stringValue = newValue }
-    }
 
-    public var shippingAddress: ShippingAddress {
-        get { return ShippingAddress(internalJson: internalJson["shipping_address"]) }
-        set { internalJson["shipping_address"] = JSON(newValue.json) }
+public class ChatPermissions: Codable {
+    public var canSendMessages: Bool?
+    public var canSendMediaMessages: Bool?
+    public var canSendPolls: Bool?
+    public var canSendOtherMessages: Bool?
+    public var canAddWebPagePreviews: Bool?
+    public var canChangeInfo: Bool?
+    public var canInviteUsers: Bool?
+    public var canPinMessages: Bool?
+    public init(canSendMessages: Bool? = nil, canSendMediaMessages: Bool? = nil, canSendPolls: Bool? = nil, canSendOtherMessages: Bool? = nil, canAddWebPagePreviews: Bool? = nil, canChangeInfo: Bool? = nil, canInviteUsers: Bool? = nil, canPinMessages: Bool? = nil) {
+        self.canSendMessages = canSendMessages
+        self.canSendMediaMessages = canSendMediaMessages
+        self.canSendPolls = canSendPolls
+        self.canSendOtherMessages = canSendOtherMessages
+        self.canAddWebPagePreviews = canAddWebPagePreviews
+        self.canChangeInfo = canChangeInfo
+        self.canInviteUsers = canInviteUsers
+        self.canPinMessages = canPinMessages
     }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
-
-
-public struct PreCheckoutQuery: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var id: String {
-        get { return internalJson["id"].stringValue }
-        set { internalJson["id"].stringValue = newValue }
-    }
-
-    public var from: User {
-        get { return User(internalJson: internalJson["from"]) }
-        set { internalJson["from"] = JSON(newValue.json) }
-    }
 
-    public var currency: Int {
-        get { return internalJson["currency"].intValue }
-        set { internalJson["currency"].intValue = newValue }
-    }
 
-    public var invoicePayload: String {
-        get { return internalJson["invoice_payload"].stringValue }
-        set { internalJson["invoice_payload"].stringValue = newValue }
+public class ResponseParameters: Codable {
+    public var migrateToChatId: Int64?
+    public var retryAfter: Int?
+    public init(migrateToChatId: Int64? = nil, retryAfter: Int? = nil) {
+        self.migrateToChatId = migrateToChatId
+        self.retryAfter = retryAfter
     }
 
-    public var shippingOptionId: String? {
-        get { return internalJson["shipping_option_id"].string }
-        set { internalJson["shipping_option_id"].string = newValue }
-    }
+}
+
 
-    public var orderInfo: OrderInfo? {
-        get {
-            let value = internalJson["order_info"]
-            return value.isNullOrUnknown ? nil : OrderInfo(internalJson: value)
-        }
-        set {
-            internalJson["order_info"] = newValue?.internalJson ?? JSON.null
-        }
+public class InputMediaPhoto: Codable {
+    public var type: String
+    public var media: String
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public init(type: String, media: String, caption: String? = nil, parseMode: ParseMode? = nil) {
+        self.type = type
+        self.media = media
+        self.caption = caption
+        self.parseMode = parseMode
     }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
-
-
-public struct Game: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var title: String {
-        get { return internalJson["title"].stringValue }
-        set { internalJson["title"].stringValue = newValue }
-    }
-
-    public var description: String {
-        get { return internalJson["description"].stringValue }
-        set { internalJson["description"].stringValue = newValue }
-    }
-
-    public var photo: [PhotoSize] {
-        get { return internalJson["photo"].customArrayValue() }
-        set { internalJson["photo"] = JSON.initFrom(newValue) }
-    }
 
-    public var text: String? {
-        get { return internalJson["text"].string }
-        set { internalJson["text"].string = newValue }
-    }
 
-    public var textEntities: [MessageEntity] {
-        get { return internalJson["text_entities"].customArrayValue() }
-        set { internalJson["text_entities"] = newValue.isEmpty ? JSON.null : JSON.initFrom(newValue) }
+public class InputMediaVideo: Codable {
+    public var type: String
+    public var media: String
+    public var thumb: InputFileOrString?
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var width: Int?
+    public var height: Int?
+    public var duration: Int?
+    public var supportsStreaming: Bool?
+    public init(type: String, media: String, thumb: InputFileOrString? = nil, caption: String? = nil, parseMode: ParseMode? = nil, width: Int? = nil, height: Int? = nil, duration: Int? = nil, supportsStreaming: Bool? = nil) {
+        self.type = type
+        self.media = media
+        self.thumb = thumb
+        self.caption = caption
+        self.parseMode = parseMode
+        self.width = width
+        self.height = height
+        self.duration = duration
+        self.supportsStreaming = supportsStreaming
     }
 
-    public var animation: Animation? {
-        get {
-            let value = internalJson["animation"]
-            return value.isNullOrUnknown ? nil : Animation(internalJson: value)
-        }
-        set {
-            internalJson["animation"] = newValue?.internalJson ?? JSON.null
-        }
+}
+
+
+public class InputMediaAnimation: Codable {
+    public var type: String
+    public var media: String
+    public var thumb: InputFileOrString?
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var width: Int?
+    public var height: Int?
+    public var duration: Int?
+    public init(type: String, media: String, thumb: InputFileOrString? = nil, caption: String? = nil, parseMode: ParseMode? = nil, width: Int? = nil, height: Int? = nil, duration: Int? = nil) {
+        self.type = type
+        self.media = media
+        self.thumb = thumb
+        self.caption = caption
+        self.parseMode = parseMode
+        self.width = width
+        self.height = height
+        self.duration = duration
     }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
 
 
-public struct CallbackGame: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
+public class InputMediaAudio: Codable {
+    public var type: String
+    public var media: String
+    public var thumb: InputFileOrString?
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var duration: Int?
+    public var performer: String?
+    public var title: String?
+    public init(type: String, media: String, thumb: InputFileOrString? = nil, caption: String? = nil, parseMode: ParseMode? = nil, duration: Int? = nil, performer: String? = nil, title: String? = nil) {
+        self.type = type
+        self.media = media
+        self.thumb = thumb
+        self.caption = caption
+        self.parseMode = parseMode
+        self.duration = duration
+        self.performer = performer
+        self.title = title
     }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
-}
-
 
-public struct GameHighScore: JsonConvertible, InternalJsonConvertible {
-    /// Original JSON for fields not yet added to Swift structures.
-    public var json: Any {
-        get { return internalJson.object }
-        set { internalJson = JSON(newValue) }
-    }
-    internal var internalJson: JSON
-    public var position: Int {
-        get { return internalJson["position"].intValue }
-        set { internalJson["position"].intValue = newValue }
-    }
+}
 
-    public var user: User {
-        get { return User(internalJson: internalJson["user"]) }
-        set { internalJson["user"] = JSON(newValue.json) }
-    }
 
-    public var score: Int {
-        get { return internalJson["score"].intValue }
-        set { internalJson["score"].intValue = newValue }
+public class InputMediaDocument: Codable {
+    public var type: String
+    public var media: String
+    public var thumb: InputFileOrString?
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public init(type: String, media: String, thumb: InputFileOrString? = nil, caption: String? = nil, parseMode: ParseMode? = nil) {
+        self.type = type
+        self.media = media
+        self.thumb = thumb
+        self.caption = caption
+        self.parseMode = parseMode
+    }
+
+}
+
+
+public class Sticker: Codable {
+    public var fileId: String
+    public var fileUniqueId: String
+    public var width: Int
+    public var height: Int
+    public var isAnimated: Bool
+    public var thumb: PhotoSize?
+    public var emoji: String?
+    public var setName: String?
+    public var maskPosition: MaskPosition?
+    public var fileSize: Int?
+    public init(fileId: String, fileUniqueId: String, width: Int, height: Int, isAnimated: Bool, thumb: PhotoSize? = nil, emoji: String? = nil, setName: String? = nil, maskPosition: MaskPosition? = nil, fileSize: Int? = nil) {
+        self.fileId = fileId
+        self.fileUniqueId = fileUniqueId
+        self.width = width
+        self.height = height
+        self.isAnimated = isAnimated
+        self.thumb = thumb
+        self.emoji = emoji
+        self.setName = setName
+        self.maskPosition = maskPosition
+        self.fileSize = fileSize
+    }
+
+}
+
+
+public class StickerSet: Codable {
+    public var name: String
+    public var title: String
+    public var isAnimated: Bool
+    public var containsMasks: Bool
+    public var stickers: [Sticker] = []
+    public init(name: String, title: String, isAnimated: Bool, containsMasks: Bool, stickers: [Sticker]) {
+        self.name = name
+        self.title = title
+        self.isAnimated = isAnimated
+        self.containsMasks = containsMasks
+        self.stickers = stickers
+    }
+
+}
+
+
+public class MaskPosition: Codable {
+    public var point: String
+    public var xShift: Float
+    public var yShift: Float
+    public var scale: Float
+    public init(point: String, xShift: Float, yShift: Float, scale: Float) {
+        self.point = point
+        self.xShift = xShift
+        self.yShift = yShift
+        self.scale = scale
+    }
+
+}
+
+
+public class InlineQuery: Codable {
+    public var id: String
+    public var from: User
+    public var location: Location?
+    public var query: String
+    public var offset: String
+    public init(id: String, from: User, location: Location? = nil, query: String, offset: String) {
+        self.id = id
+        self.from = from
+        self.location = location
+        self.query = query
+        self.offset = offset
+    }
+
+}
+
+
+public class InlineQueryResultArticle: Codable {
+    public var type: String
+    public var id: String
+    public var title: String
+    public var inputMessageContent: InputMessageContent
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var url: String?
+    public var hideUrl: Bool?
+    public var description: String?
+    public var thumbUrl: String?
+    public var thumbWidth: Int?
+    public var thumbHeight: Int?
+    public init(type: String, id: String, title: String, inputMessageContent: InputMessageContent, replyMarkup: InlineKeyboardMarkup? = nil, url: String? = nil, hideUrl: Bool? = nil, description: String? = nil, thumbUrl: String? = nil, thumbWidth: Int? = nil, thumbHeight: Int? = nil) {
+        self.type = type
+        self.id = id
+        self.title = title
+        self.inputMessageContent = inputMessageContent
+        self.replyMarkup = replyMarkup
+        self.url = url
+        self.hideUrl = hideUrl
+        self.description = description
+        self.thumbUrl = thumbUrl
+        self.thumbWidth = thumbWidth
+        self.thumbHeight = thumbHeight
+    }
+
+}
+
+
+public class InlineQueryResultPhoto: Codable {
+    public var type: String
+    public var id: String
+    public var photoUrl: String
+    public var thumbUrl: String
+    public var photoWidth: Int?
+    public var photoHeight: Int?
+    public var title: String?
+    public var description: String?
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public init(type: String, id: String, photoUrl: String, thumbUrl: String, photoWidth: Int? = nil, photoHeight: Int? = nil, title: String? = nil, description: String? = nil, caption: String? = nil, parseMode: ParseMode? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil) {
+        self.type = type
+        self.id = id
+        self.photoUrl = photoUrl
+        self.thumbUrl = thumbUrl
+        self.photoWidth = photoWidth
+        self.photoHeight = photoHeight
+        self.title = title
+        self.description = description
+        self.caption = caption
+        self.parseMode = parseMode
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+    }
+
+}
+
+
+public class InlineQueryResultGif: Codable {
+    public var type: String
+    public var id: String
+    public var gifUrl: String
+    public var gifWidth: Int?
+    public var gifHeight: Int?
+    public var gifDuration: Int?
+    public var thumbUrl: String
+    public var title: String?
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public init(type: String, id: String, gifUrl: String, gifWidth: Int? = nil, gifHeight: Int? = nil, gifDuration: Int? = nil, thumbUrl: String, title: String? = nil, caption: String? = nil, parseMode: ParseMode? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil) {
+        self.type = type
+        self.id = id
+        self.gifUrl = gifUrl
+        self.gifWidth = gifWidth
+        self.gifHeight = gifHeight
+        self.gifDuration = gifDuration
+        self.thumbUrl = thumbUrl
+        self.title = title
+        self.caption = caption
+        self.parseMode = parseMode
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+    }
+
+}
+
+
+public class InlineQueryResultLocation: Codable {
+    public var type: String
+    public var id: String
+    public var latitude: Float
+    public var longitude: Float
+    public var title: String
+    public var livePeriod: Int?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public var thumbUrl: String?
+    public var thumbWidth: Int?
+    public var thumbHeight: Int?
+    public init(type: String, id: String, latitude: Float, longitude: Float, title: String, livePeriod: Int? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil, thumbUrl: String? = nil, thumbWidth: Int? = nil, thumbHeight: Int? = nil) {
+        self.type = type
+        self.id = id
+        self.latitude = latitude
+        self.longitude = longitude
+        self.title = title
+        self.livePeriod = livePeriod
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+        self.thumbUrl = thumbUrl
+        self.thumbWidth = thumbWidth
+        self.thumbHeight = thumbHeight
+    }
+
+}
+
+
+public class InlineQueryResultMpeg4Gif: Codable {
+    public var type: String
+    public var id: String
+    public var mpeg4Url: String
+    public var mpeg4Width: Int?
+    public var mpeg4Height: Int?
+    public var mpeg4Duration: Int?
+    public var thumbUrl: String
+    public var title: String?
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public init(type: String, id: String, mpeg4Url: String, mpeg4Width: Int? = nil, mpeg4Height: Int? = nil, mpeg4Duration: Int? = nil, thumbUrl: String, title: String? = nil, caption: String? = nil, parseMode: ParseMode? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil) {
+        self.type = type
+        self.id = id
+        self.mpeg4Url = mpeg4Url
+        self.mpeg4Width = mpeg4Width
+        self.mpeg4Height = mpeg4Height
+        self.mpeg4Duration = mpeg4Duration
+        self.thumbUrl = thumbUrl
+        self.title = title
+        self.caption = caption
+        self.parseMode = parseMode
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+    }
+
+}
+
+
+public class InlineQueryResultVideo: Codable {
+    public var type: String
+    public var id: String
+    public var videoUrl: String
+    public var mimeType: String
+    public var thumbUrl: String
+    public var title: String
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var videoWidth: Int?
+    public var videoHeight: Int?
+    public var videoDuration: Int?
+    public var description: String?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public init(type: String, id: String, videoUrl: String, mimeType: String, thumbUrl: String, title: String, caption: String? = nil, parseMode: ParseMode? = nil, videoWidth: Int? = nil, videoHeight: Int? = nil, videoDuration: Int? = nil, description: String? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil) {
+        self.type = type
+        self.id = id
+        self.videoUrl = videoUrl
+        self.mimeType = mimeType
+        self.thumbUrl = thumbUrl
+        self.title = title
+        self.caption = caption
+        self.parseMode = parseMode
+        self.videoWidth = videoWidth
+        self.videoHeight = videoHeight
+        self.videoDuration = videoDuration
+        self.description = description
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+    }
+
+}
+
+
+public class InlineQueryResultAudio: Codable {
+    public var type: String
+    public var id: String
+    public var audioUrl: String
+    public var title: String
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var performer: String?
+    public var audioDuration: Int?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public init(type: String, id: String, audioUrl: String, title: String, caption: String? = nil, parseMode: ParseMode? = nil, performer: String? = nil, audioDuration: Int? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil) {
+        self.type = type
+        self.id = id
+        self.audioUrl = audioUrl
+        self.title = title
+        self.caption = caption
+        self.parseMode = parseMode
+        self.performer = performer
+        self.audioDuration = audioDuration
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+    }
+
+}
+
+
+public class InlineQueryResultVoice: Codable {
+    public var type: String
+    public var id: String
+    public var voiceUrl: String
+    public var title: String
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var voiceDuration: Int?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public init(type: String, id: String, voiceUrl: String, title: String, caption: String? = nil, parseMode: ParseMode? = nil, voiceDuration: Int? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil) {
+        self.type = type
+        self.id = id
+        self.voiceUrl = voiceUrl
+        self.title = title
+        self.caption = caption
+        self.parseMode = parseMode
+        self.voiceDuration = voiceDuration
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+    }
+
+}
+
+
+public class InlineQueryResultDocument: Codable {
+    public var type: String
+    public var id: String
+    public var title: String
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var documentUrl: String
+    public var mimeType: String
+    public var description: String?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public var thumbUrl: String?
+    public var thumbWidth: Int?
+    public var thumbHeight: Int?
+    public init(type: String, id: String, title: String, caption: String? = nil, parseMode: ParseMode? = nil, documentUrl: String, mimeType: String, description: String? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil, thumbUrl: String? = nil, thumbWidth: Int? = nil, thumbHeight: Int? = nil) {
+        self.type = type
+        self.id = id
+        self.title = title
+        self.caption = caption
+        self.parseMode = parseMode
+        self.documentUrl = documentUrl
+        self.mimeType = mimeType
+        self.description = description
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+        self.thumbUrl = thumbUrl
+        self.thumbWidth = thumbWidth
+        self.thumbHeight = thumbHeight
+    }
+
+}
+
+
+public class InlineQueryResultVenue: Codable {
+    public var type: String
+    public var id: String
+    public var latitude: Float
+    public var longitude: Float
+    public var title: String
+    public var address: String
+    public var foursquareId: String?
+    public var foursquareType: String?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public var thumbUrl: String?
+    public var thumbWidth: Int?
+    public var thumbHeight: Int?
+    public init(type: String, id: String, latitude: Float, longitude: Float, title: String, address: String, foursquareId: String? = nil, foursquareType: String? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil, thumbUrl: String? = nil, thumbWidth: Int? = nil, thumbHeight: Int? = nil) {
+        self.type = type
+        self.id = id
+        self.latitude = latitude
+        self.longitude = longitude
+        self.title = title
+        self.address = address
+        self.foursquareId = foursquareId
+        self.foursquareType = foursquareType
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+        self.thumbUrl = thumbUrl
+        self.thumbWidth = thumbWidth
+        self.thumbHeight = thumbHeight
+    }
+
+}
+
+
+public class InlineQueryResultContact: Codable {
+    public var type: String
+    public var id: String
+    public var phoneNumber: String
+    public var firstName: String
+    public var lastName: String?
+    public var vcard: String?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public var thumbUrl: String?
+    public var thumbWidth: Int?
+    public var thumbHeight: Int?
+    public init(type: String, id: String, phoneNumber: String, firstName: String, lastName: String? = nil, vcard: String? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil, thumbUrl: String? = nil, thumbWidth: Int? = nil, thumbHeight: Int? = nil) {
+        self.type = type
+        self.id = id
+        self.phoneNumber = phoneNumber
+        self.firstName = firstName
+        self.lastName = lastName
+        self.vcard = vcard
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+        self.thumbUrl = thumbUrl
+        self.thumbWidth = thumbWidth
+        self.thumbHeight = thumbHeight
+    }
+
+}
+
+
+public class InlineQueryResultGame: Codable {
+    public var type: String
+    public var id: String
+    public var gameShortName: String
+    public var replyMarkup: InlineKeyboardMarkup?
+    public init(type: String, id: String, gameShortName: String, replyMarkup: InlineKeyboardMarkup? = nil) {
+        self.type = type
+        self.id = id
+        self.gameShortName = gameShortName
+        self.replyMarkup = replyMarkup
+    }
+
+}
+
+
+public class InlineQueryResultCachedPhoto: Codable {
+    public var type: String
+    public var id: String
+    public var photoFileId: String
+    public var title: String?
+    public var description: String?
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public init(type: String, id: String, photoFileId: String, title: String? = nil, description: String? = nil, caption: String? = nil, parseMode: ParseMode? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil) {
+        self.type = type
+        self.id = id
+        self.photoFileId = photoFileId
+        self.title = title
+        self.description = description
+        self.caption = caption
+        self.parseMode = parseMode
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+    }
+
+}
+
+
+public class InlineQueryResultCachedGif: Codable {
+    public var type: String
+    public var id: String
+    public var gifFileId: String
+    public var title: String?
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public init(type: String, id: String, gifFileId: String, title: String? = nil, caption: String? = nil, parseMode: ParseMode? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil) {
+        self.type = type
+        self.id = id
+        self.gifFileId = gifFileId
+        self.title = title
+        self.caption = caption
+        self.parseMode = parseMode
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+    }
+
+}
+
+
+public class InlineQueryResultCachedMpeg4Gif: Codable {
+    public var type: String
+    public var id: String
+    public var mpeg4FileId: String
+    public var title: String?
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public init(type: String, id: String, mpeg4FileId: String, title: String? = nil, caption: String? = nil, parseMode: ParseMode? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil) {
+        self.type = type
+        self.id = id
+        self.mpeg4FileId = mpeg4FileId
+        self.title = title
+        self.caption = caption
+        self.parseMode = parseMode
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+    }
+
+}
+
+
+public class InlineQueryResultCachedSticker: Codable {
+    public var type: String
+    public var id: String
+    public var stickerFileId: String
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public init(type: String, id: String, stickerFileId: String, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil) {
+        self.type = type
+        self.id = id
+        self.stickerFileId = stickerFileId
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+    }
+
+}
+
+
+public class InlineQueryResultCachedDocument: Codable {
+    public var type: String
+    public var id: String
+    public var title: String
+    public var documentFileId: String
+    public var description: String?
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public init(type: String, id: String, title: String, documentFileId: String, description: String? = nil, caption: String? = nil, parseMode: ParseMode? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil) {
+        self.type = type
+        self.id = id
+        self.title = title
+        self.documentFileId = documentFileId
+        self.description = description
+        self.caption = caption
+        self.parseMode = parseMode
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+    }
+
+}
+
+
+public class InlineQueryResultCachedVideo: Codable {
+    public var type: String
+    public var id: String
+    public var videoFileId: String
+    public var title: String
+    public var description: String?
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public init(type: String, id: String, videoFileId: String, title: String, description: String? = nil, caption: String? = nil, parseMode: ParseMode? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil) {
+        self.type = type
+        self.id = id
+        self.videoFileId = videoFileId
+        self.title = title
+        self.description = description
+        self.caption = caption
+        self.parseMode = parseMode
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+    }
+
+}
+
+
+public class InlineQueryResultCachedVoice: Codable {
+    public var type: String
+    public var id: String
+    public var voiceFileId: String
+    public var title: String
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public init(type: String, id: String, voiceFileId: String, title: String, caption: String? = nil, parseMode: ParseMode? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil) {
+        self.type = type
+        self.id = id
+        self.voiceFileId = voiceFileId
+        self.title = title
+        self.caption = caption
+        self.parseMode = parseMode
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+    }
+
+}
+
+
+public class InlineQueryResultCachedAudio: Codable {
+    public var type: String
+    public var id: String
+    public var audioFileId: String
+    public var caption: String?
+    public var parseMode: ParseMode?
+    public var replyMarkup: InlineKeyboardMarkup?
+    public var inputMessageContent: InputMessageContent?
+    public init(type: String, id: String, audioFileId: String, caption: String? = nil, parseMode: ParseMode? = nil, replyMarkup: InlineKeyboardMarkup? = nil, inputMessageContent: InputMessageContent? = nil) {
+        self.type = type
+        self.id = id
+        self.audioFileId = audioFileId
+        self.caption = caption
+        self.parseMode = parseMode
+        self.replyMarkup = replyMarkup
+        self.inputMessageContent = inputMessageContent
+    }
+
+}
+
+
+public class InputTextMessageContent: Codable {
+    public var messageText: String
+    public var parseMode: ParseMode?
+    public var disableWebPagePreview: Bool?
+    public init(messageText: String, parseMode: ParseMode? = nil, disableWebPagePreview: Bool? = nil) {
+        self.messageText = messageText
+        self.parseMode = parseMode
+        self.disableWebPagePreview = disableWebPagePreview
+    }
+
+}
+
+
+public class InputLocationMessageContent: Codable {
+    public var latitude: Float
+    public var longitude: Float
+    public var livePeriod: Int?
+    public init(latitude: Float, longitude: Float, livePeriod: Int? = nil) {
+        self.latitude = latitude
+        self.longitude = longitude
+        self.livePeriod = livePeriod
+    }
+
+}
+
+
+public class InputVenueMessageContent: Codable {
+    public var latitude: Float
+    public var longitude: Float
+    public var title: String
+    public var address: String
+    public var foursquareId: String?
+    public var foursquareType: String?
+    public init(latitude: Float, longitude: Float, title: String, address: String, foursquareId: String? = nil, foursquareType: String? = nil) {
+        self.latitude = latitude
+        self.longitude = longitude
+        self.title = title
+        self.address = address
+        self.foursquareId = foursquareId
+        self.foursquareType = foursquareType
+    }
+
+}
+
+
+public class InputContactMessageContent: Codable {
+    public var phoneNumber: String
+    public var firstName: String
+    public var lastName: String?
+    public var vcard: String?
+    public init(phoneNumber: String, firstName: String, lastName: String? = nil, vcard: String? = nil) {
+        self.phoneNumber = phoneNumber
+        self.firstName = firstName
+        self.lastName = lastName
+        self.vcard = vcard
+    }
+
+}
+
+
+public class ChosenInlineResult: Codable {
+    public var resultId: String
+    public var from: User
+    public var location: Location
+    public var inlineMessageId: String?
+    public var query: String
+    public init(resultId: String, from: User, location: Location, inlineMessageId: String? = nil, query: String) {
+        self.resultId = resultId
+        self.from = from
+        self.location = location
+        self.inlineMessageId = inlineMessageId
+        self.query = query
+    }
+
+}
+
+
+public class LabeledPrice: Codable {
+    public var label: String
+    public var amount: Int
+    public init(label: String, amount: Int) {
+        self.label = label
+        self.amount = amount
+    }
+
+}
+
+
+public class Invoice: Codable {
+    public var title: String
+    public var description: String
+    public var startParameter: String
+    public var currency: String
+    public var totalAmount: Int
+    public init(title: String, description: String, startParameter: String, currency: String, totalAmount: Int) {
+        self.title = title
+        self.description = description
+        self.startParameter = startParameter
+        self.currency = currency
+        self.totalAmount = totalAmount
+    }
+
+}
+
+
+public class ShippingAddress: Codable {
+    public var countryCode: String
+    public var state: String
+    public var city: String
+    public var streetLine1: String
+    public var streetLine2: String
+    public var postCode: String
+    public init(countryCode: String, state: String, city: String, streetLine1: String, streetLine2: String, postCode: String) {
+        self.countryCode = countryCode
+        self.state = state
+        self.city = city
+        self.streetLine1 = streetLine1
+        self.streetLine2 = streetLine2
+        self.postCode = postCode
+    }
+
+}
+
+
+public class OrderInfo: Codable {
+    public var name: String?
+    public var phoneNumber: String?
+    public var email: String?
+    public var shippingAddress: ShippingAddress?
+    public init(name: String? = nil, phoneNumber: String? = nil, email: String? = nil, shippingAddress: ShippingAddress? = nil) {
+        self.name = name
+        self.phoneNumber = phoneNumber
+        self.email = email
+        self.shippingAddress = shippingAddress
+    }
+
+}
+
+
+public class ShippingOption: Codable {
+    public var id: String
+    public var title: String
+    public var prices: [LabeledPrice] = []
+    public init(id: String, title: String, prices: [LabeledPrice]) {
+        self.id = id
+        self.title = title
+        self.prices = prices
+    }
+
+}
+
+
+public class SuccessfulPayment: Codable {
+    public var currency: String
+    public var totalAmount: Int
+    public var invoicePayload: String
+    public var shippingOptionId: String?
+    public var orderInfo: OrderInfo?
+    public var telegramPaymentChargeId: String
+    public var providerPaymentChargeId: String
+    public init(currency: String, totalAmount: Int, invoicePayload: String, shippingOptionId: String? = nil, orderInfo: OrderInfo? = nil, telegramPaymentChargeId: String, providerPaymentChargeId: String) {
+        self.currency = currency
+        self.totalAmount = totalAmount
+        self.invoicePayload = invoicePayload
+        self.shippingOptionId = shippingOptionId
+        self.orderInfo = orderInfo
+        self.telegramPaymentChargeId = telegramPaymentChargeId
+        self.providerPaymentChargeId = providerPaymentChargeId
+    }
+
+}
+
+
+public class ShippingQuery: Codable {
+    public var id: String
+    public var from: User
+    public var invoicePayload: String
+    public var shippingAddress: ShippingAddress
+    public init(id: String, from: User, invoicePayload: String, shippingAddress: ShippingAddress) {
+        self.id = id
+        self.from = from
+        self.invoicePayload = invoicePayload
+        self.shippingAddress = shippingAddress
+    }
+
+}
+
+
+public class PreCheckoutQuery: Codable {
+    public var id: String
+    public var from: User
+    public var currency: Int
+    public var invoicePayload: String
+    public var shippingOptionId: String?
+    public var orderInfo: OrderInfo?
+    public init(id: String, from: User, currency: Int, invoicePayload: String, shippingOptionId: String? = nil, orderInfo: OrderInfo? = nil) {
+        self.id = id
+        self.from = from
+        self.currency = currency
+        self.invoicePayload = invoicePayload
+        self.shippingOptionId = shippingOptionId
+        self.orderInfo = orderInfo
+    }
+
+}
+
+
+public class Game: Codable {
+    public var title: String
+    public var description: String
+    public var photo: [PhotoSize] = []
+    public var text: String?
+    public var textEntities: [MessageEntity]? = []
+    public var animation: Animation?
+    public init(title: String, description: String, photo: [PhotoSize], text: String? = nil, textEntities: [MessageEntity]? = nil, animation: Animation? = nil) {
+        self.title = title
+        self.description = description
+        self.photo = photo
+        self.text = text
+        self.textEntities = textEntities
+        self.animation = animation
+    }
+
+}
+
+
+public class CallbackGame: Codable {
+    public init() {
+    }
+
+}
+
+
+public class GameHighScore: Codable {
+    public var position: Int
+    public var user: User
+    public var score: Int
+    public init(position: Int, user: User, score: Int) {
+        self.position = position
+        self.user = user
+        self.score = score
     }
 
-    internal init(internalJson: JSON = [:]) {
-        self.internalJson = internalJson
-    }
-    public init() {
-        self.internalJson = JSON()
-    }
-    public init(json: Any) {
-        self.internalJson = JSON(json)
-    }
-    public init(data: Data) {
-        self.internalJson = JSON(data: data)
-    }
 }
 
 

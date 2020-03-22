@@ -30,14 +30,16 @@ class BlockingServerTests: XCTestCase {
         let bot = TelegramBot(token: token)
 
         while let update = bot.nextUpdateSync() {
-            print("--- update: \(update.debugDescription)")
+            print("--- update: \(update)")
             if let message = update.message, let text = message.text, let chatId = message.from?.id {
                 if text == "Hello" {
-                    bot.sendMessageAsync(chatId: chatId, text: "How are you?")
+                    bot.sendMessageAsync(chatId: .chat(chatId), text: "How are you?")
                 }
             }
         }
-        print("Server stopped due to error: \(bot.lastError)")
+        if let lastError = bot.lastError {
+            print("Server stopped due to error: \(lastError)")
+        }
     }
     
     static var allTests : [(String, (BlockingServerTests) -> () throws -> Void)] {

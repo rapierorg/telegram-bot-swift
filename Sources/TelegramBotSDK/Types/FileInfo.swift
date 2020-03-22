@@ -1,5 +1,5 @@
 //
-// InputFileOrString.swift
+// FileInfo.swift
 //
 // This source file is part of the Telegram Bot SDK for Swift (unofficial).
 //
@@ -12,10 +12,9 @@
 
 import Foundation
 
-public enum InputFileOrString: Codable {
+public enum FileInfo: Codable {
     case inputFile(InputFile)
     case string(String)
-    
     case unknown
     
     public init(from decoder: Decoder) throws {
@@ -35,10 +34,10 @@ public enum InputFileOrString: Codable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        case let .inputFile(inputFile):
-            try container.encode(inputFile)
         case let .string(string):
             try container.encode(string)
+        case let .inputFile(inputFile):
+            try container.encode(inputFile)
         default:
             fatalError("Unknown should not be used")
         }

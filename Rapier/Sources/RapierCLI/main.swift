@@ -12,7 +12,7 @@ private func main() throws -> Int32 {
     
     try rapier.parseYml()
     
-    let generator = TelegramBotSDKGenerator(directory: CommandLine.arguments[2])
+    let generator = TelegramBotSDKCodableGenerator(directory: CommandLine.arguments[2])
     try rapier.generate(generator: generator)
     
     return 0

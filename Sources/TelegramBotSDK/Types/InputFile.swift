@@ -3,7 +3,7 @@
 //
 // This source file is part of the Telegram Bot SDK for Swift (unofficial).
 //
-// Copyright (c) 2015 - 2016 Andrey Fidrya and the project authors
+// Copyright (c) 2015 - 2020 Andrey Fidrya and the project authors
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
 // See LICENSE.txt for license information
@@ -12,11 +12,10 @@
 
 import Foundation
 
-
 /// Represents the contents of a file to be uploaded. Must be posted using multipart/form-data in the usual way that files are uploaded via the browser..
 /// - SeeAlso: <https://core.telegram.org/bots/api#inputfile>
 
-public class InputFile {
+public class InputFile: Codable {
     var filename: String
     var data: Data
     var mimeType: String?

@@ -17,13 +17,14 @@ class RouterTests: XCTestCase {
     var token: String!
     var bot: TelegramBot!
 
-    var update = Update()
+    var update = Update(updateId: 1)
 
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
 
-        update.message = Message()
+        let chat = Chat(id: 1, type: .privateChat)
+        update.message = Message(messageId: 1, date: Date(), chat: chat)
 
         token = readToken(from: "TEST_BOT_TOKEN")
         bot = TelegramBot(token: token, fetchBotInfo: false)

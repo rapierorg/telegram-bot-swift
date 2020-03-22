@@ -3,7 +3,7 @@
 //
 // This source file is part of the Telegram Bot SDK for Swift (unofficial).
 //
-// Copyright (c) 2015 - 2016 Andrey Fidrya and the project authors
+// Copyright (c) 2015 - 2020 Andrey Fidrya and the project authors
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
 // See LICENSE.txt for license information
@@ -143,10 +143,10 @@ public class Router {
             case .replyToMessage: return message.replyToMessage != nil
             case .editDate: return message.editDate != nil
             case .text: return message.text != nil
-            case .entities: return !message.entities.isEmpty
+            case .entities: return !(message.entities ?? []).isEmpty
             case .audio: return message.audio != nil
             case .document: return message.document != nil
-            case .photo: return !message.photo.isEmpty
+            case .photo: return !(message.photo ?? []).isEmpty
             case .sticker: return message.sticker != nil
             case .video: return message.video != nil
             case .voice: return message.voice != nil
@@ -154,10 +154,10 @@ public class Router {
             case .contact: return message.contact != nil
             case .location: return message.location != nil
             case .venue: return message.venue != nil
-            case .newChatMembers: return message.newChatMembers.count > 0
+            case .newChatMembers: return !(message.newChatMembers ?? []).isEmpty
             case .leftChatMember: return message.leftChatMember != nil
             case .newChatTitle: return message.newChatTitle != nil
-            case .newChatPhoto: return !message.newChatPhoto.isEmpty
+            case .newChatPhoto: return !(message.newChatPhoto ?? []).isEmpty
             case .deleteChatPhoto: return message.deleteChatPhoto ?? false
             case .groupChatCreated: return message.groupChatCreated ?? false
             case .supergroupChatCreated: return message.supergroupChatCreated ?? false
@@ -176,10 +176,10 @@ public class Router {
             case .editedReplyToMessage: return message.replyToMessage != nil
             case .editedEditDate: return message.editDate != nil
             case .editedText: return message.text != nil
-            case .editedEntities: return !message.entities.isEmpty
+            case .editedEntities: return !(message.entities ?? []).isEmpty
             case .editedAudio: return message.audio != nil
             case .editedDocument: return message.document != nil
-            case .editedPhoto: return !message.photo.isEmpty
+            case .editedPhoto: return !(message.photo ?? []).isEmpty
             case .editedSticker: return message.sticker != nil
             case .editedVideo: return message.video != nil
             case .editedVoice: return message.voice != nil
