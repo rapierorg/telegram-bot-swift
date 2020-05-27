@@ -12,7 +12,7 @@
       },
       {
         "package": "TelegramBotSDK",
-        "repositoryURL": "/Users/cipi1965/Projects/telegram-bot-swift",
+        "repositoryURL": "../../../telegram-bot-swift",
         "state": {
           "branch": null,
           "revision": "4d6e94eb1fcbbe1cbe5f931adc0971b9ebf8449a",
