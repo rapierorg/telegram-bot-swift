@@ -4,3 +4,4 @@ db.sqlite
 /.build
 /Packages
 /*.xcodeproj
+Package.resolved
