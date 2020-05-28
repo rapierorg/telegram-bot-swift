@@ -149,12 +149,12 @@ let bot = TelegramBot(token: token)
 
 while let update = bot.nextUpdateSync() {
     if let message = update.message, let from = message.from, let text = message.text {
-        bot.sendMessageAsync(chatId: from.id,
+        bot.sendMessageAsync(chatId: ChatId.chat(from.id),
                              text: "Hi \(from.firstName)! You said: \(text).\n")
     }
 }
 
-fatalError("Server stopped due to error: \(bot.lastError)")
+fatalError("Server stopped due to error: \(String(describing: bot.lastError))")
 ```
 
 > Do not commit your token to git!
@@ -208,7 +208,7 @@ Press CMD-R to start the bot.
 SDK type and request names closely mirror [original Telegram ones](https://core.telegram.org/bots/api).
 
 Swift types and enums were added where appropriate:
- 
+
 
 ```swift
 if entity.type == .botCommand { ... }
@@ -379,17 +379,17 @@ Handlers take `Context` argument and return `Bool`.
 
  * If handler returns `true`, command matching stops.
  * If handler returns `false`, other paths will be matched.
- 
+
 So, in handler check preconditions and return false if they aren't satisfied:
 
 ```swift
 router["reboot"] = { context in
     guard let fromId = context.fromId where isAdmin(fromId) else { return false }
-    
+
     context.respondAsync("I will now reboot the PC.") { _ in
         reboot()
     }
-    
+
     return true
 }
 ```
@@ -397,7 +397,7 @@ router["reboot"] = { context in
 Handler functions can be marked as `throws` and throw exceptions. Router won't process them and will simply pass the exceptions to caller.
 
 `Context` is a request context, it contains:
- 
+
  * `bot` - a reference to the bot.
  * `update` - current `Update` structure.
  * `message` - convenience method for accessing `update.message`. If `update.message` is nil, fallbacks to `update.edited_message`, then to `update.callback_query?.message`.
@@ -428,21 +428,21 @@ extension Context {
     var session: Session { return properties["session"] as! Session }
 }
 ```
- 
+
 `Context` also contains a few helper methods and variables:
- 
+
  * `privateChat` - true, if this is a private chat with bot, false for all group chat types.
  * `chatId` - shortcut for message?.chat.id. If message is nil, tries to retrieve chatId from other `Update` fields.
  * `fromId` - shortcut for message?.from?.id. If message is nil, tries to retrieve fromId from other `Update` fields.
  * `respondAsync`, `respondSync` - works as `sendMessage(chatId, ...)`
  * `respondPrivatelyAsync/Sync("text", groupText: "text")` - respond to user privately, sending a short message to the group if this was a group chat. For example:
- 
+
 ```swift
 context.respondPrivatelyAsync("Command list: ...",
     groupText: "Please find a list of commands in a private message.")
 ```
 
- * `reportErrorAsync/Sync(text: "User text", errorDescription: "Detailed error description for administrator")` - sends a short message to user and prints detailed error description to a console. `text` parameter can be omitted, in which case user will receive a generic error message. 
+ * `reportErrorAsync/Sync(text: "User text", errorDescription: "Detailed error description for administrator")` - sends a short message to user and prints detailed error description to a console. `text` parameter can be omitted, in which case user will receive a generic error message.
 
 **Text commands**
 
@@ -603,4 +603,3 @@ Happy coding!
 ## License
 
 Apache License Version 2.0 with Runtime Library Exception. Please see LICENSE.txt for more information.
-
