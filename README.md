@@ -237,7 +237,7 @@ Request names closely mirror Telegram ones, but have two versions: `synchronous`
 * Synchronous methods block until the operation is completed.
 
 ```swift
-let fromId: ChatId = ChatId.chat(12345678) // your user id
+let fromId: fromId = ChatId.chat(12345678) // your user id
 bot.sendMessageSync(fromId, "Hello!") // blocks until the message is sent
 bot.sendMessageSync(fromId, "Bye.")
 ```
