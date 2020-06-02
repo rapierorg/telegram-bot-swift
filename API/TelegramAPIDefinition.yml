@@ -164,7 +164,7 @@ fields:
     - duration: Int
     - thumb: PhotoSize?
     - mime_type: String?
-    - file_size: String?
+    - file_size: Int?
 
 ---
 type: Animation
