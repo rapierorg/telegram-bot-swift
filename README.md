@@ -149,7 +149,7 @@ let bot = TelegramBot(token: token)
 
 while let update = bot.nextUpdateSync() {
     if let message = update.message, let from = message.from, let text = message.text {
-        bot.sendMessageAsync(chatId: ChatId.chat(from.id),
+        bot.sendMessageAsync(chatId: .chat(from.id),
                              text: "Hi \(from.firstName)! You said: \(text).\n")
     }
 }
@@ -237,7 +237,7 @@ Request names closely mirror Telegram ones, but have two versions: `synchronous`
 * Synchronous methods block until the operation is completed.
 
 ```swift
-let fromId: Int64 = 12345678 // your user id
+let fromId: ChatId = .chat(12345678) // your user id
 bot.sendMessageSync(fromId, "Hello!") // blocks until the message is sent
 bot.sendMessageSync(fromId, "Bye.")
 ```
