@@ -1,0 +1,7 @@
+.DS_Store
+/.build
+/Packages
+/*.xcodeproj
+xcuserdata/
+Package.resolved
+SIMPLE_KEYBOARD_TOKEN
