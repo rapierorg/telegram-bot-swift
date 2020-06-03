@@ -143,6 +143,7 @@ public class Message: Codable {
     public var videoNote: VideoNote?
     public var caption: String?
     public var contact: Contact?
+    public var dice: Dice?
     public var location: Location?
     public var venue: Venue?
     public var poll: Poll?
@@ -161,7 +162,7 @@ public class Message: Codable {
     public var successfulPayment: SuccessfulPayment?
     public var connectedWebsite: String?
     public var replyMarkup: InlineKeyboardMarkup?
-    public init(messageId: Int, from: User? = nil, date: Date, chat: Chat, forwardFrom: User? = nil, forwardFromChat: Chat? = nil, forwardFromMessageId: Int? = nil, forwardSignature: String? = nil, forwardSenderName: String? = nil, forwardDate: Date? = nil, replyToMessage: Message? = nil, editDate: Date? = nil, mediaGroupId: String? = nil, authorSignature: String? = nil, text: String? = nil, entities: [MessageEntity]? = nil, captionEntities: [MessageEntity]? = nil, audio: Audio? = nil, document: Document? = nil, animation: Animation? = nil, game: Game? = nil, photo: [PhotoSize]? = nil, sticker: Sticker? = nil, video: Video? = nil, voice: Voice? = nil, videoNote: VideoNote? = nil, caption: String? = nil, contact: Contact? = nil, location: Location? = nil, venue: Venue? = nil, poll: Poll? = nil, newChatMembers: [User]? = nil, leftChatMember: User? = nil, newChatTitle: String? = nil, newChatPhoto: [PhotoSize]? = nil, deleteChatPhoto: Bool? = nil, groupChatCreated: Bool? = nil, supergroupChatCreated: Bool? = nil, channelChatCreated: Bool? = nil, migrateToChatId: Int64? = nil, migrateFromChatId: Int64? = nil, pinnedMessage: Message? = nil, invoice: Invoice? = nil, successfulPayment: SuccessfulPayment? = nil, connectedWebsite: String? = nil, replyMarkup: InlineKeyboardMarkup? = nil) {
+    public init(messageId: Int, from: User? = nil, date: Date, chat: Chat, forwardFrom: User? = nil, forwardFromChat: Chat? = nil, forwardFromMessageId: Int? = nil, forwardSignature: String? = nil, forwardSenderName: String? = nil, forwardDate: Date? = nil, replyToMessage: Message? = nil, editDate: Date? = nil, mediaGroupId: String? = nil, authorSignature: String? = nil, text: String? = nil, entities: [MessageEntity]? = nil, captionEntities: [MessageEntity]? = nil, audio: Audio? = nil, document: Document? = nil, animation: Animation? = nil, game: Game? = nil, photo: [PhotoSize]? = nil, sticker: Sticker? = nil, video: Video? = nil, voice: Voice? = nil, videoNote: VideoNote? = nil, caption: String? = nil, contact: Contact? = nil, dice: Dice? = nil, location: Location? = nil, venue: Venue? = nil, poll: Poll? = nil, newChatMembers: [User]? = nil, leftChatMember: User? = nil, newChatTitle: String? = nil, newChatPhoto: [PhotoSize]? = nil, deleteChatPhoto: Bool? = nil, groupChatCreated: Bool? = nil, supergroupChatCreated: Bool? = nil, channelChatCreated: Bool? = nil, migrateToChatId: Int64? = nil, migrateFromChatId: Int64? = nil, pinnedMessage: Message? = nil, invoice: Invoice? = nil, successfulPayment: SuccessfulPayment? = nil, connectedWebsite: String? = nil, replyMarkup: InlineKeyboardMarkup? = nil) {
         self.messageId = messageId
         self.from = from
         self.date = date
@@ -190,6 +191,7 @@ public class Message: Codable {
         self.videoNote = videoNote
         self.caption = caption
         self.contact = contact
+        self.dice = dice
         self.location = location
         self.venue = venue
         self.poll = poll
@@ -392,6 +394,17 @@ public class Contact: Codable {
 }
 
 
+public class Dice: Codable {
+    public var emoji: String
+    public var value: Int
+    public init(emoji: String, value: Int) {
+        self.emoji = emoji
+        self.value = value
+    }
+
+}
+
+
 public class Location: Codable {
     public var longitude: Float
     public var latitude: Float
@@ -454,7 +467,11 @@ public class Poll: Codable {
     public var type: PollType
     public var allowsMultipleAnswers: Bool
     public var correctOptionId: Int?
-    public init(id: String, question: String, options: [PollOption], totalVoterCount: Int, isClosed: Bool, isAnonymous: Bool, type: PollType, allowsMultipleAnswers: Bool, correctOptionId: Int? = nil) {
+    public var explanation: String
+    public var explanationEntities: [MessageEntity]? = []
+    public var openPeriod: Int?
+    public var closeDate: Date?
+    public init(id: String, question: String, options: [PollOption], totalVoterCount: Int, isClosed: Bool, isAnonymous: Bool, type: PollType, allowsMultipleAnswers: Bool, correctOptionId: Int? = nil, explanation: String, explanationEntities: [MessageEntity]? = nil, openPeriod: Int? = nil, closeDate: Date? = nil) {
         self.id = id
         self.question = question
         self.options = options
@@ -464,6 +481,10 @@ public class Poll: Codable {
         self.type = type
         self.allowsMultipleAnswers = allowsMultipleAnswers
         self.correctOptionId = correctOptionId
+        self.explanation = explanation
+        self.explanationEntities = explanationEntities
+        self.openPeriod = openPeriod
+        self.closeDate = closeDate
     }
 
 }
@@ -699,6 +720,17 @@ public class ChatPermissions: Codable {
 }
 
 
+public class BotCommand: Codable {
+    public var command: String
+    public var description: String
+    public init(command: String, description: String) {
+        self.command = command
+        self.description = description
+    }
+
+}
+
+
 public class ResponseParameters: Codable {
     public var migrateToChatId: Int64?
     public var retryAfter: Int?
@@ -846,12 +878,14 @@ public class StickerSet: Codable {
     public var isAnimated: Bool
     public var containsMasks: Bool
     public var stickers: [Sticker] = []
-    public init(name: String, title: String, isAnimated: Bool, containsMasks: Bool, stickers: [Sticker]) {
+    public var thumb: PhotoSize?
+    public init(name: String, title: String, isAnimated: Bool, containsMasks: Bool, stickers: [Sticker], thumb: PhotoSize? = nil) {
         self.name = name
         self.title = title
         self.isAnimated = isAnimated
         self.containsMasks = containsMasks
         self.stickers = stickers
+        self.thumb = thumb
     }
 
 }

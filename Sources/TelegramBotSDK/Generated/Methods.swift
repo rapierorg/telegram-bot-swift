@@ -819,7 +819,12 @@ public extension TelegramBot {
         options: [String],
         isAnonymous: Bool? = nil,
         type: PollType? = nil,
+        allowMultipleAnswers: Bool? = nil,
         correctOptionId: Int? = nil,
+        explanation: String? = nil,
+        explanationParseMode: ParseMode? = nil,
+        openPeriod: Int? = nil,
+        closeDate: Date? = nil,
         isClosed: Bool? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
@@ -831,7 +836,12 @@ public extension TelegramBot {
 "options": options,
 "is_anonymous": isAnonymous,
 "type": type,
+"allow_multiple_answers": allowMultipleAnswers,
 "correct_option_id": correctOptionId,
+"explanation": explanation,
+"explanation_parse_mode": explanationParseMode,
+"open_period": openPeriod,
+"close_date": closeDate,
 "is_closed": isClosed,
 "disable_notification": disableNotification,
 "reply_to_message_id": replyToMessageId,
@@ -844,7 +854,12 @@ public extension TelegramBot {
         options: [String],
         isAnonymous: Bool? = nil,
         type: PollType? = nil,
+        allowMultipleAnswers: Bool? = nil,
         correctOptionId: Int? = nil,
+        explanation: String? = nil,
+        explanationParseMode: ParseMode? = nil,
+        openPeriod: Int? = nil,
+        closeDate: Date? = nil,
         isClosed: Bool? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
@@ -858,8 +873,48 @@ public extension TelegramBot {
 "options": options,
 "is_anonymous": isAnonymous,
 "type": type,
+"allow_multiple_answers": allowMultipleAnswers,
 "correct_option_id": correctOptionId,
+"explanation": explanation,
+"explanation_parse_mode": explanationParseMode,
+"open_period": openPeriod,
+"close_date": closeDate,
 "is_closed": isClosed,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup],
+            queue: queue, completion: completion)
+    }
+    typealias SendDiceCompletion = (_ result: Message?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func sendDiceSync(
+            chatId: ChatId,
+        emoji: String? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: ReplyMarkup? = nil,
+            _ parameters: [String: Encodable?] = [:]) -> Message? {
+        return requestSync("sendDice", defaultParameters["sendDice"], parameters, [
+            "chat_id": chatId,
+"emoji": emoji,
+"disable_notification": disableNotification,
+"reply_to_message_id": replyToMessageId,
+"reply_markup": replyMarkup])
+    }
+
+    func sendDiceAsync(
+            chatId: ChatId,
+        emoji: String? = nil,
+        disableNotification: Bool? = nil,
+        replyToMessageId: Int? = nil,
+        replyMarkup: ReplyMarkup? = nil,
+            _ parameters: [String: Encodable?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SendDiceCompletion? = nil) {
+        return requestAsync("sendDice", defaultParameters["sendDice"], parameters, [
+            "chat_id": chatId,
+"emoji": emoji,
 "disable_notification": disableNotification,
 "reply_to_message_id": replyToMessageId,
 "reply_markup": replyMarkup],
@@ -1441,6 +1496,44 @@ public extension TelegramBot {
 "cache_time": cacheTime],
             queue: queue, completion: completion)
     }
+    typealias SetMyCommandsCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func setMyCommandsSync(
+            commands: [BotCommand],
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
+        return requestSync("setMyCommands", defaultParameters["setMyCommands"], parameters, [
+            "commands": commands])
+    }
+
+    func setMyCommandsAsync(
+            commands: [BotCommand],
+            _ parameters: [String: Encodable?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SetMyCommandsCompletion? = nil) {
+        return requestAsync("setMyCommands", defaultParameters["setMyCommands"], parameters, [
+            "commands": commands],
+            queue: queue, completion: completion)
+    }
+    typealias GetMyCommandsCompletion = (_ result: [BotCommand]?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func getMyCommandsSync(
+            
+            _ parameters: [String: Encodable?] = [:]) -> [BotCommand]? {
+        return requestSync("getMyCommands", defaultParameters["getMyCommands"], parameters, [
+            :])
+    }
+
+    func getMyCommandsAsync(
+            
+            _ parameters: [String: Encodable?] = [:],
+            queue: DispatchQueue = .main,
+            completion: GetMyCommandsCompletion? = nil) {
+        return requestAsync("getMyCommands", defaultParameters["getMyCommands"], parameters, [
+            :],
+            queue: queue, completion: completion)
+    }
     typealias EditMessageTextCompletion = (_ result: MessageOrBool?, _ error: DataTaskError?) -> ()
 
     @discardableResult
@@ -1723,7 +1816,8 @@ public extension TelegramBot {
             userId: Int64,
         name: String,
         title: String,
-        pngSticker: FileInfo,
+        pngSticker: FileInfo? = nil,
+        tgsSticker: InputFile? = nil,
         emojis: String,
         containsMasks: Bool? = nil,
         maskPosition: Bool? = nil,
@@ -1733,6 +1827,7 @@ public extension TelegramBot {
 "name": name,
 "title": title,
 "png_sticker": pngSticker,
+"tgs_sticker": tgsSticker,
 "emojis": emojis,
 "contains_masks": containsMasks,
 "mask_position": maskPosition])
@@ -1742,7 +1837,8 @@ public extension TelegramBot {
             userId: Int64,
         name: String,
         title: String,
-        pngSticker: FileInfo,
+        pngSticker: FileInfo? = nil,
+        tgsSticker: InputFile? = nil,
         emojis: String,
         containsMasks: Bool? = nil,
         maskPosition: Bool? = nil,
@@ -1754,6 +1850,7 @@ public extension TelegramBot {
 "name": name,
 "title": title,
 "png_sticker": pngSticker,
+"tgs_sticker": tgsSticker,
 "emojis": emojis,
 "contains_masks": containsMasks,
 "mask_position": maskPosition],
@@ -1765,7 +1862,8 @@ public extension TelegramBot {
     func addStickerToSetSync(
             userId: Int,
         name: String,
-        pngSticker: FileInfo,
+        pngSticker: FileInfo? = nil,
+        tgsSticker: InputFile? = nil,
         emojis: String,
         maskPosition: MaskPosition? = nil,
             _ parameters: [String: Encodable?] = [:]) -> Bool? {
@@ -1773,6 +1871,7 @@ public extension TelegramBot {
             "user_id": userId,
 "name": name,
 "png_sticker": pngSticker,
+"tgs_sticker": tgsSticker,
 "emojis": emojis,
 "mask_position": maskPosition])
     }
@@ -1780,7 +1879,8 @@ public extension TelegramBot {
     func addStickerToSetAsync(
             userId: Int,
         name: String,
-        pngSticker: FileInfo,
+        pngSticker: FileInfo? = nil,
+        tgsSticker: InputFile? = nil,
         emojis: String,
         maskPosition: MaskPosition? = nil,
             _ parameters: [String: Encodable?] = [:],
@@ -1790,6 +1890,7 @@ public extension TelegramBot {
             "user_id": userId,
 "name": name,
 "png_sticker": pngSticker,
+"tgs_sticker": tgsSticker,
 "emojis": emojis,
 "mask_position": maskPosition],
             queue: queue, completion: completion)
@@ -1834,6 +1935,33 @@ public extension TelegramBot {
             completion: DeleteStickerFromSetCompletion? = nil) {
         return requestAsync("deleteStickerFromSet", defaultParameters["deleteStickerFromSet"], parameters, [
             "sticker": sticker],
+            queue: queue, completion: completion)
+    }
+    typealias SetStickerSetThumbCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()
+
+    @discardableResult
+    func setStickerSetThumbSync(
+            name: String,
+        userId: Int,
+        thumb: FileInfo? = nil,
+            _ parameters: [String: Encodable?] = [:]) -> Bool? {
+        return requestSync("setStickerSetThumb", defaultParameters["setStickerSetThumb"], parameters, [
+            "name": name,
+"user_id": userId,
+"thumb": thumb])
+    }
+
+    func setStickerSetThumbAsync(
+            name: String,
+        userId: Int,
+        thumb: FileInfo? = nil,
+            _ parameters: [String: Encodable?] = [:],
+            queue: DispatchQueue = .main,
+            completion: SetStickerSetThumbCompletion? = nil) {
+        return requestAsync("setStickerSetThumb", defaultParameters["setStickerSetThumb"], parameters, [
+            "name": name,
+"user_id": userId,
+"thumb": thumb],
             queue: queue, completion: completion)
     }
     typealias AnswerInlineQueryCompletion = (_ result: Bool?, _ error: DataTaskError?) -> ()

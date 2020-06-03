@@ -93,6 +93,7 @@ fields:
     - video_note: VideoNote?
     - caption: String?
     - contact: Contact?
+    - dice: Dice?
     - location: Location?
     - venue: Venue?
     - poll: Poll?
@@ -208,6 +209,12 @@ fields:
     - vcard: String?
 
 ---
+type: Dice
+fields:
+    - emoji: String
+    - value: Int
+
+---
 type: Location
 fields:
     - longitude: Float
@@ -247,6 +254,10 @@ fields:
     - type: PollType
     - allows_multiple_answers: Bool
     - correct_option_id: Int?
+    - explanation: String
+    - explanation_entities: MessageEntity[]?
+    - open_period: Int?
+    - close_date: Date?
 
 ---
 type: UserProfilePhotos
@@ -375,6 +386,12 @@ fields:
     - can_pin_messages: Bool?
 
 ---
+type: BotCommand
+fields:
+    - command: String
+    - description: String
+
+---
 type: ResponseParameters
 fields:
     - migrate_to_chat_id: Int64?
@@ -456,6 +473,7 @@ fields:
     - is_animated: Bool
     - contains_masks: Bool
     - stickers: Sticker[]
+    - thumb: PhotoSize?
 
 ---
 type: MaskPosition
@@ -1107,8 +1125,23 @@ parameters:
     - options: String[]
     - is_anonymous: Bool?
     - type: PollType?
+    - allow_multiple_answers: Bool?
     - correct_option_id: Int?
+    - explanation: String?
+    - explanation_parse_mode: ParseMode?
+    - open_period: Int?
+    - close_date: Date?
     - is_closed: Bool?
+    - disable_notification: Bool?
+    - reply_to_message_id: Int?
+    - reply_markup: ReplyMarkup?
+result: Message?
+
+---
+method: sendDice
+parameters:
+    - chat_id: ChatId
+    - emoji: String?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
     - reply_markup: ReplyMarkup?
@@ -1291,6 +1324,16 @@ parameters:
 result: Bool?
 
 ---
+method: setMyCommands
+parameters:
+    - commands: BotCommand[]
+result: Bool?
+
+---
+method: getMyCommands
+result: BotCommand[]?
+
+---
 method: editMessageText
 parameters:
     - chat_id: ChatId?
@@ -1376,7 +1419,8 @@ parameters:
     - user_id: Int64
     - name: String
     - title: String
-    - png_sticker: FileInfo
+    - png_sticker: FileInfo?
+    - tgs_sticker: InputFile?
     - emojis: String
     - contains_masks: Bool?
     - mask_position: Bool?
@@ -1387,7 +1431,8 @@ method: addStickerToSet
 parameters:
     - user_id: Int
     - name: String
-    - png_sticker: FileInfo
+    - png_sticker: FileInfo?
+    - tgs_sticker: InputFile?
     - emojis: String
     - mask_position: MaskPosition?
 result: Bool?
@@ -1403,6 +1448,14 @@ result: Bool?
 method: deleteStickerFromSet
 parameters:
     - sticker: String
+result: Bool?
+
+---
+method: setStickerSetThumb
+parameters:
+    - name: String
+    - user_id: Int
+    - thumb: FileInfo?
 result: Bool?
 
 ---
