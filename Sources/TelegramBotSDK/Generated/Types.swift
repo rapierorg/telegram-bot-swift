@@ -299,8 +299,8 @@ public class Video: Codable {
     public var duration: Int
     public var thumb: PhotoSize?
     public var mimeType: String?
-    public var fileSize: String?
-    public init(fileId: String, fileUniqueId: String, width: Int, height: Int, duration: Int, thumb: PhotoSize? = nil, mimeType: String? = nil, fileSize: String? = nil) {
+    public var fileSize: Int?
+    public init(fileId: String, fileUniqueId: String, width: Int, height: Int, duration: Int, thumb: PhotoSize? = nil, mimeType: String? = nil, fileSize: Int? = nil) {
         self.fileId = fileId
         self.fileUniqueId = fileUniqueId
         self.width = width
