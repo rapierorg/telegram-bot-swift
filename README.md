@@ -51,7 +51,7 @@ router["greet"] = { context in
 router[.newChatMembers] = { context in
     guard let users = context.message?.newChatMembers else { return false }
     for user in users {
-        guard user.id != bot.user.id else { return false }
+        guard user.id != bot.user.id else { continue }
         context.respondAsync("Welcome, \(user.firstName)!")
     }
     return true
