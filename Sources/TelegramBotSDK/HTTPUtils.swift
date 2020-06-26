@@ -28,6 +28,40 @@ extension Encodable {
 }
 
 public class HTTPUtils {
+    enum EncodeResult {
+        case success(String)
+        case skipThisValue
+        case error
+    }
+    
+    private class func encodeValue(_ value: Encodable) -> EncodeResult {
+        if let boolValue = value as? Bool {
+            if !boolValue {
+                return .skipThisValue
+            }
+            // If true, add "key=" to encoded string
+            return .success("true")
+        }
+        
+        if let value = value as? String {
+            return .success(value)
+        }
+        
+        let encodableBox = AnyEncodable(value: value)
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .secondsSince1970
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        let jsonEncodedData = try? encoder.encode(encodableBox)
+        guard let jsonEncodedUnwrappedData = jsonEncodedData else { return .error }
+        guard var jsonEncodedString = String(data: jsonEncodedUnwrappedData, encoding: .utf8) else { return .error }
+        
+        if jsonEncodedString.hasPrefix("\"") && jsonEncodedString.hasSuffix("\"") {
+            jsonEncodedString = String(jsonEncodedString.dropFirst().dropLast())
+        }
+        
+        return .success(jsonEncodedString)
+    }
+    
     /// Encodes keys and values in a dictionary for using with
     /// `application/x-www-form-urlencoded` Content-Type and
     /// joins them into a single string.
@@ -37,47 +71,24 @@ public class HTTPUtils {
     ///
     /// - SeeAlso: Encoding is performed using String's `formUrlencode` method.
     /// - Returns: Encoded string.
-    public class func formUrlencode(_ dictionary: [String: Encodable?]) -> String {
+    public class func formUrlencode(_ dictionary: [String: Encodable?]) -> String? {
         var result = ""
         for (key, valueOrNil) in dictionary {
-            guard let value = valueOrNil else {
-                // Ignore keys with nil values
+            guard let value = valueOrNil else { continue }
+            switch encodeValue(value) {
+            case .success(let valueString):
+                if !result.isEmpty {
+                    result += "&"
+                }
+                let keyUrlencoded = key.formUrlencode()
+                let valueUrlencoded = valueString.formUrlencode()
+                result += "\(keyUrlencoded)=\(valueUrlencoded)"
+            case .skipThisValue:
                 continue
+            case .error:
+                return nil
             }
             
-            var valueString: String
-            
-            if let boolValue = value as? Bool {
-                if !boolValue {
-                    continue
-                }
-                // If true, add "key=" to encoded string
-                valueString = "true"
-            } else if value is String {
-                
-                valueString = value as! String
-            } else {
-                let encodableBox = AnyEncodable(value: value)
-                let encoder = JSONEncoder()
-                encoder.dateEncodingStrategy = .secondsSince1970
-                encoder.keyEncodingStrategy = .convertToSnakeCase
-                let jsonEncodedData = try? encoder.encode(encodableBox)
-                guard let jsonEncodedUnwrappedData = jsonEncodedData else { continue }
-                guard var jsonEncodedString = String(data: jsonEncodedUnwrappedData, encoding: .utf8) else { continue }
-                
-                if jsonEncodedString.hasPrefix("\"") && jsonEncodedString.hasSuffix("\"") {
-                    jsonEncodedString = String(jsonEncodedString.dropFirst().dropLast())
-                }
-                
-                valueString = jsonEncodedString
-            }
-            
-            if !result.isEmpty {
-                result += "&"
-            }
-            let keyUrlencoded = key.formUrlencode()
-            let valueUrlencoded = valueString.formUrlencode()
-            result += "\(keyUrlencoded)=\(valueUrlencoded)"
         }
         return result
     }
@@ -118,7 +129,7 @@ public class HTTPUtils {
     ///
     /// - returns:                The Data of the body of the request
     
-    public class func createMultipartFormDataBody(with parameters: [String: Any?], boundary: String) -> Data? {
+    public class func createMultipartFormDataBody(with parameters: [String: Encodable?], boundary: String) -> Data? {
         var body = Data()
         
         guard let boundary1 = "--\(boundary)\r\n".data(using: .utf8) else {
@@ -129,11 +140,7 @@ public class HTTPUtils {
         }
         
         for (key, valueOrNil) in parameters {
-            
-            guard let value = valueOrNil else {
-                // Ignore keys with nil values
-                continue
-            }
+            guard let value = valueOrNil else { continue }
             
             body.append(boundary1)
             
@@ -168,26 +175,21 @@ public class HTTPUtils {
                     body.append("\r\n".data(using: .utf8)!)
                 }
             } else {
-                var valueString: String
-                
-                if let boolValue = value as? Bool {
-                    if !boolValue {
-                        continue
+                switch encodeValue(value) {
+                case .success(let valueString):
+                    guard let contentDisposition = "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8) else {
+                        return nil
                     }
-                    // If true, add "key=" to encoded string
-                    valueString = "true"
-                } else {
-                    valueString = String(describing: value)
-                }
-                
-                guard let contentDisposition = "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8) else {
+                    body.append(contentDisposition)
+                    guard let valueData = "\(valueString)\r\n".data(using: .utf8) else {
+                        return nil
+                    }
+                    body.append(valueData)
+                case .skipThisValue:
+                    continue
+                case .error:
                     return nil
                 }
-                body.append(contentDisposition)
-                guard let valueData = "\(valueString)\r\n".data(using: .utf8) else {
-                    return nil
-                }
-                body.append(valueData)
             }
         }
         body.append(boundary2)
@@ -204,17 +206,11 @@ public class HTTPUtils {
     /// - returns:                Returns the mime type if successful. Returns application/octet-stream if unable to determine mime type.
     
     public class func mimeType(for path: String) -> String {
-        // TODO: https://gist.github.com/ngs/918b07f448977789cf69
-        #if false
-        let url = NSURL(fileURLWithPath: path)
-        let pathExtension = url.pathExtension
-        
-        if let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension! as NSString, nil)?.takeRetainedValue() {
-            if let mimetype = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType)?.takeRetainedValue() {
-                return mimetype as String
-            }
+        let url = URL(fileURLWithPath: path)
+        if !url.pathExtension.isEmpty,
+                let mimeType = mimeTypes[url.pathExtension.lowercased()] {
+            return mimeType
         }
-        #endif
-        return "application/octet-stream";
+        return "application/octet-stream"
     }
 }

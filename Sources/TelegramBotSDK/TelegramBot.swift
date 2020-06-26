@@ -158,14 +158,16 @@ public class TelegramBot {
         
         // If parameters contain values of type InputFile, use  multipart/form-data for sending them.
         var hasAttachments = false
-        for value in parameters.values {
+        for valueOrNil in parameters.values {
+            guard let value = valueOrNil else { continue }
+            
             if value is InputFile {
                 hasAttachments = true
                 break
             }
             
-            if value is InputFileOrString {
-                if case InputFileOrString.inputFile = (value as! InputFileOrString) {
+            if let inputFileOrString = value as? InputFileOrString {
+                if case .inputFile = inputFileOrString {
                     hasAttachments = true
                     break
                 }
@@ -182,9 +184,10 @@ public class TelegramBot {
             logger("endpoint: \(endpoint), sending parameters as multipart/form-data")
         } else {
             contentType = "application/x-www-form-urlencoded"
-            let encoded = HTTPUtils.formUrlencode(parameters)
-            requestDataOrNil = encoded.data(using: .utf8)
-            logger("endpoint: \(endpoint), data: \(encoded)")
+            if let encoded = HTTPUtils.formUrlencode(parameters) {
+                logger("endpoint: \(endpoint), data: \(encoded)")
+                requestDataOrNil = encoded.data(using: .utf8)
+            }
         }
         requestDataOrNil?.append(0)
 
