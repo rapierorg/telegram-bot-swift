@@ -206,17 +206,11 @@ public class HTTPUtils {
     /// - returns:                Returns the mime type if successful. Returns application/octet-stream if unable to determine mime type.
     
     public class func mimeType(for path: String) -> String {
-        // TODO: https://gist.github.com/ngs/918b07f448977789cf69
-        #if false
-        let url = NSURL(fileURLWithPath: path)
-        let pathExtension = url.pathExtension
-        
-        if let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension! as NSString, nil)?.takeRetainedValue() {
-            if let mimetype = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType)?.takeRetainedValue() {
-                return mimetype as String
-            }
+        let url = URL(fileURLWithPath: path)
+        if !url.pathExtension.isEmpty,
+                let mimeType = mimeTypes[url.pathExtension.lowercased()] {
+            return mimeType
         }
-        #endif
-        return "application/octet-stream";
+        return "application/octet-stream"
     }
 }
