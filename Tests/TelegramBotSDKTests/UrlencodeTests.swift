@@ -65,7 +65,10 @@ class UrlencodeTests: XCTestCase {
             "key2": 123,
             "key3": value3
         ]
-        let encoded = HTTPUtils.formUrlencode(parameters)
+        guard let encoded = HTTPUtils.formUrlencode(parameters) else {
+            XCTFail()
+            return
+        }
         XCTAssert(encoded.contains("key1=value1") && encoded.contains("key2=123") && !encoded.contains("key3"))
     }
     
@@ -120,7 +123,10 @@ class UrlencodeTests: XCTestCase {
             "key4": false,
             "key5": "text"
         ]
-        let encoded = HTTPUtils.formUrlencode(parameters)
+        guard let encoded = HTTPUtils.formUrlencode(parameters) else {
+            XCTFail()
+            return
+        }
         XCTAssert(encoded.contains("key1=123") && encoded.contains("key2=123.456") && encoded.contains("key3=true") && !encoded.contains("key4") && encoded.contains("key5=text"))
     }
     

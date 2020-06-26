@@ -42,7 +42,7 @@ public extension TelegramBot {
     @discardableResult
     func setWebhookSync(
             url: String,
-        certificate: FileInfo? = nil,
+        certificate: InputFile? = nil,
         maxConnections: Int? = nil,
         allowedUpdates: [String]? = nil,
             _ parameters: [String: Encodable?] = [:]) -> Bool? {
@@ -55,7 +55,7 @@ public extension TelegramBot {
 
     func setWebhookAsync(
             url: String,
-        certificate: FileInfo? = nil,
+        certificate: InputFile? = nil,
         maxConnections: Int? = nil,
         allowedUpdates: [String]? = nil,
             _ parameters: [String: Encodable?] = [:],
@@ -204,7 +204,7 @@ public extension TelegramBot {
     @discardableResult
     func sendPhotoSync(
             chatId: ChatId,
-        photo: FileInfo,
+        photo: InputFileOrString,
         caption: String? = nil,
         parseMode: ParseMode? = nil,
         disableNotification: Bool? = nil,
@@ -223,7 +223,7 @@ public extension TelegramBot {
 
     func sendPhotoAsync(
             chatId: ChatId,
-        photo: FileInfo,
+        photo: InputFileOrString,
         caption: String? = nil,
         parseMode: ParseMode? = nil,
         disableNotification: Bool? = nil,
@@ -247,13 +247,13 @@ public extension TelegramBot {
     @discardableResult
     func sendAudioSync(
             chatId: ChatId,
-        audio: FileInfo,
+        audio: InputFileOrString,
         caption: String? = nil,
         parseMode: ParseMode? = nil,
         duration: Int? = nil,
         performer: String? = nil,
         title: String? = nil,
-        thumb: FileInfo? = nil,
+        thumb: InputFileOrString? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: ReplyMarkup? = nil,
@@ -274,13 +274,13 @@ public extension TelegramBot {
 
     func sendAudioAsync(
             chatId: ChatId,
-        audio: FileInfo,
+        audio: InputFileOrString,
         caption: String? = nil,
         parseMode: ParseMode? = nil,
         duration: Int? = nil,
         performer: String? = nil,
         title: String? = nil,
-        thumb: FileInfo? = nil,
+        thumb: InputFileOrString? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: ReplyMarkup? = nil,
@@ -306,8 +306,8 @@ public extension TelegramBot {
     @discardableResult
     func sendDocumentSync(
             chatId: ChatId,
-        document: FileInfo,
-        thumb: FileInfo? = nil,
+        document: InputFileOrString,
+        thumb: InputFileOrString? = nil,
         caption: String? = nil,
         parseMode: ParseMode? = nil,
         disableNotification: Bool? = nil,
@@ -327,8 +327,8 @@ public extension TelegramBot {
 
     func sendDocumentAsync(
             chatId: ChatId,
-        document: FileInfo,
-        thumb: FileInfo? = nil,
+        document: InputFileOrString,
+        thumb: InputFileOrString? = nil,
         caption: String? = nil,
         parseMode: ParseMode? = nil,
         disableNotification: Bool? = nil,
@@ -353,7 +353,7 @@ public extension TelegramBot {
     @discardableResult
     func sendVideoSync(
             chatId: ChatId,
-        video: FileInfo,
+        video: InputFileOrString,
         duration: Int? = nil,
         width: Int? = nil,
         height: Int? = nil,
@@ -382,7 +382,7 @@ public extension TelegramBot {
 
     func sendVideoAsync(
             chatId: ChatId,
-        video: FileInfo,
+        video: InputFileOrString,
         duration: Int? = nil,
         width: Int? = nil,
         height: Int? = nil,
@@ -416,11 +416,11 @@ public extension TelegramBot {
     @discardableResult
     func sendAnimationSync(
             chatId: ChatId,
-        animation: FileInfo,
+        animation: InputFileOrString,
         duration: Int? = nil,
         width: Int? = nil,
         height: Int? = nil,
-        thumb: FileInfo? = nil,
+        thumb: InputFileOrString? = nil,
         caption: String? = nil,
         parseMode: ParseMode? = nil,
         disableNotification: Bool? = nil,
@@ -443,11 +443,11 @@ public extension TelegramBot {
 
     func sendAnimationAsync(
             chatId: ChatId,
-        animation: FileInfo,
+        animation: InputFileOrString,
         duration: Int? = nil,
         width: Int? = nil,
         height: Int? = nil,
-        thumb: FileInfo? = nil,
+        thumb: InputFileOrString? = nil,
         caption: String? = nil,
         parseMode: ParseMode? = nil,
         disableNotification: Bool? = nil,
@@ -475,7 +475,7 @@ public extension TelegramBot {
     @discardableResult
     func sendVoiceSync(
             chatId: ChatId,
-        voice: FileInfo,
+        voice: InputFileOrString,
         caption: String? = nil,
         parseMode: ParseMode? = nil,
         duration: Int? = nil,
@@ -496,7 +496,7 @@ public extension TelegramBot {
 
     func sendVoiceAsync(
             chatId: ChatId,
-        voice: FileInfo,
+        voice: InputFileOrString,
         caption: String? = nil,
         parseMode: ParseMode? = nil,
         duration: Int? = nil,
@@ -522,10 +522,10 @@ public extension TelegramBot {
     @discardableResult
     func sendVideoNoteSync(
             chatId: ChatId,
-        videoNote: FileInfo,
+        videoNote: InputFileOrString,
         duration: Int? = nil,
         length: Int? = nil,
-        thumb: FileInfo? = nil,
+        thumb: InputFileOrString? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: ReplyMarkup? = nil,
@@ -543,10 +543,10 @@ public extension TelegramBot {
 
     func sendVideoNoteAsync(
             chatId: ChatId,
-        videoNote: FileInfo,
+        videoNote: InputFileOrString,
         duration: Int? = nil,
         length: Int? = nil,
-        thumb: FileInfo? = nil,
+        thumb: InputFileOrString? = nil,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: ReplyMarkup? = nil,
@@ -1191,7 +1191,7 @@ public extension TelegramBot {
     @discardableResult
     func setChatPhotoSync(
             chatId: ChatId,
-        photo: FileInfo,
+        photo: InputFile,
             _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("setChatPhoto", defaultParameters["setChatPhoto"], parameters, [
             "chat_id": chatId,
@@ -1200,7 +1200,7 @@ public extension TelegramBot {
 
     func setChatPhotoAsync(
             chatId: ChatId,
-        photo: FileInfo,
+        photo: InputFile,
             _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SetChatPhotoCompletion? = nil) {
@@ -1737,7 +1737,7 @@ public extension TelegramBot {
     @discardableResult
     func sendStickerSync(
             chatId: ChatId,
-        sticker: FileInfo,
+        sticker: InputFileOrString,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: ReplyMarkup? = nil,
@@ -1752,7 +1752,7 @@ public extension TelegramBot {
 
     func sendStickerAsync(
             chatId: ChatId,
-        sticker: FileInfo,
+        sticker: InputFileOrString,
         disableNotification: Bool? = nil,
         replyToMessageId: Int? = nil,
         replyMarkup: ReplyMarkup? = nil,
@@ -1791,7 +1791,7 @@ public extension TelegramBot {
     @discardableResult
     func uploadStickerFileSync(
             userId: Int64,
-        pngSticker: FileInfo,
+        pngSticker: InputFile,
             _ parameters: [String: Encodable?] = [:]) -> File? {
         return requestSync("uploadStickerFile", defaultParameters["uploadStickerFile"], parameters, [
             "user_id": userId,
@@ -1800,7 +1800,7 @@ public extension TelegramBot {
 
     func uploadStickerFileAsync(
             userId: Int64,
-        pngSticker: FileInfo,
+        pngSticker: InputFile,
             _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: UploadStickerFileCompletion? = nil) {
@@ -1816,7 +1816,7 @@ public extension TelegramBot {
             userId: Int64,
         name: String,
         title: String,
-        pngSticker: FileInfo? = nil,
+        pngSticker: InputFileOrString? = nil,
         tgsSticker: InputFile? = nil,
         emojis: String,
         containsMasks: Bool? = nil,
@@ -1837,7 +1837,7 @@ public extension TelegramBot {
             userId: Int64,
         name: String,
         title: String,
-        pngSticker: FileInfo? = nil,
+        pngSticker: InputFileOrString? = nil,
         tgsSticker: InputFile? = nil,
         emojis: String,
         containsMasks: Bool? = nil,
@@ -1862,7 +1862,7 @@ public extension TelegramBot {
     func addStickerToSetSync(
             userId: Int,
         name: String,
-        pngSticker: FileInfo? = nil,
+        pngSticker: InputFileOrString? = nil,
         tgsSticker: InputFile? = nil,
         emojis: String,
         maskPosition: MaskPosition? = nil,
@@ -1879,7 +1879,7 @@ public extension TelegramBot {
     func addStickerToSetAsync(
             userId: Int,
         name: String,
-        pngSticker: FileInfo? = nil,
+        pngSticker: InputFileOrString? = nil,
         tgsSticker: InputFile? = nil,
         emojis: String,
         maskPosition: MaskPosition? = nil,
@@ -1943,7 +1943,7 @@ public extension TelegramBot {
     func setStickerSetThumbSync(
             name: String,
         userId: Int,
-        thumb: FileInfo? = nil,
+        thumb: InputFileOrString? = nil,
             _ parameters: [String: Encodable?] = [:]) -> Bool? {
         return requestSync("setStickerSetThumb", defaultParameters["setStickerSetThumb"], parameters, [
             "name": name,
@@ -1954,7 +1954,7 @@ public extension TelegramBot {
     func setStickerSetThumbAsync(
             name: String,
         userId: Int,
-        thumb: FileInfo? = nil,
+        thumb: InputFileOrString? = nil,
             _ parameters: [String: Encodable?] = [:],
             queue: DispatchQueue = .main,
             completion: SetStickerSetThumbCompletion? = nil) {

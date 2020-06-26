@@ -910,7 +910,7 @@ result: Update[]?
 method: setWebhook
 parameters:
     - url: String
-    - certificate: FileInfo?
+    - certificate: InputFile?
     - max_connections: Int?
     - allowed_updates: String[]?
 result: Bool?
@@ -952,7 +952,7 @@ result: Message?
 method: sendPhoto
 parameters:
     - chat_id: ChatId
-    - photo: FileInfo
+    - photo: InputFileOrString
     - caption: String?
     - parse_mode: ParseMode?
     - disable_notification: Bool?
@@ -964,13 +964,13 @@ result: Message?
 method: sendAudio
 parameters:
     - chat_id: ChatId
-    - audio: FileInfo
+    - audio: InputFileOrString
     - caption: String?
     - parse_mode: ParseMode?
     - duration: Int?
     - performer: String?
     - title: String?
-    - thumb: FileInfo?
+    - thumb: InputFileOrString?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
     - reply_markup: ReplyMarkup?
@@ -980,8 +980,8 @@ result: Message?
 method: sendDocument
 parameters:
     - chat_id: ChatId
-    - document: FileInfo
-    - thumb: FileInfo?
+    - document: InputFileOrString
+    - thumb: InputFileOrString?
     - caption: String?
     - parse_mode: ParseMode?
     - disable_notification: Bool?
@@ -993,7 +993,7 @@ result: Message?
 method: sendVideo
 parameters:
     - chat_id: ChatId
-    - video: FileInfo
+    - video: InputFileOrString
     - duration: Int?
     - width: Int?
     - height: Int?
@@ -1010,11 +1010,11 @@ result: Message?
 method: sendAnimation
 parameters:
     - chat_id: ChatId
-    - animation: FileInfo
+    - animation: InputFileOrString
     - duration: Int?
     - width: Int?
     - height: Int?
-    - thumb: FileInfo?
+    - thumb: InputFileOrString?
     - caption: String?
     - parse_mode: ParseMode?
     - disable_notification: Bool?
@@ -1026,7 +1026,7 @@ result: Message?
 method: sendVoice
 parameters:
     - chat_id: ChatId
-    - voice: FileInfo
+    - voice: InputFileOrString
     - caption: String?
     - parse_mode: ParseMode?
     - duration: Int?
@@ -1039,10 +1039,10 @@ result: Message?
 method: sendVideoNote
 parameters:
     - chat_id: ChatId
-    - video_note: FileInfo
+    - video_note: InputFileOrString
     - duration: Int?
     - length: Int?
-    - thumb: FileInfo?
+    - thumb: InputFileOrString?
     - disable_notification: Bool?
     - reply_to_message_id: Int?
     - reply_markup: ReplyMarkup?
@@ -1232,7 +1232,7 @@ result: String?
 method: setChatPhoto
 parameters:
     - chat_id: ChatId
-    - photo: FileInfo
+    - photo: InputFile
 result: Bool?
 
 ---
@@ -1394,7 +1394,7 @@ result: Bool?
 method: sendSticker
 parameters:
     - chat_id: ChatId
-    - sticker: FileInfo
+    - sticker: InputFileOrString
     - disable_notification: Bool?
     - reply_to_message_id: Int?
     - reply_markup: ReplyMarkup?
@@ -1410,7 +1410,7 @@ result: StickerSet?
 method: uploadStickerFile
 parameters:
     - user_id: Int64
-    - png_sticker: FileInfo
+    - png_sticker: InputFile
 result: File?
 
 ---
@@ -1419,7 +1419,7 @@ parameters:
     - user_id: Int64
     - name: String
     - title: String
-    - png_sticker: FileInfo?
+    - png_sticker: InputFileOrString?
     - tgs_sticker: InputFile?
     - emojis: String
     - contains_masks: Bool?
@@ -1431,7 +1431,7 @@ method: addStickerToSet
 parameters:
     - user_id: Int
     - name: String
-    - png_sticker: FileInfo?
+    - png_sticker: InputFileOrString?
     - tgs_sticker: InputFile?
     - emojis: String
     - mask_position: MaskPosition?
@@ -1455,7 +1455,7 @@ method: setStickerSetThumb
 parameters:
     - name: String
     - user_id: Int
-    - thumb: FileInfo?
+    - thumb: InputFileOrString?
 result: Bool?
 
 ---
