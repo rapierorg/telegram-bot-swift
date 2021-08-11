@@ -8,26 +8,24 @@ on:
 
 jobs:
   build-macos:
-
     runs-on: macos-latest
-
     steps:
     - uses: actions/checkout@v2
-    - name: Swift Setup
-      uses: YOCKOW/Action-setup-swift@v1.1.1
+    - name: Setup Swift
+      uses: fwal/setup-swift@d43a564349d1341cd990cfbd70d94d63b8899475
       with:
-        swift-version: "5.1"
+        swift-version: "5.4"
     - name: Build
       run: swift build
   build-linux:
     runs-on: [ubuntu-18.04]
     steps:
       - uses: actions/checkout@v2
-      - name: Install xmllint
+      - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install libcurl4-openssl-dev
-      - name: Swift Setup
-        uses: YOCKOW/Action-setup-swift@v1.1.1
+      - name: Setup Swift
+        uses: fwal/setup-swift@d43a564349d1341cd990cfbd70d94d63b8899475
         with:
-          swift-version: "5.1"
+          swift-version: "5.4"
       - name: Build
         run: swift build
