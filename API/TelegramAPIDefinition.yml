@@ -804,7 +804,7 @@ type: ChosenInlineResult
 fields:
     - result_id: String
     - from: User
-    - location: Location
+    - location: Location?
     - inline_message_id: String?
     - query: String
 

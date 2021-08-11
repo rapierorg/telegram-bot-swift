@@ -1516,10 +1516,10 @@ public class InputContactMessageContent: Codable {
 public class ChosenInlineResult: Codable {
     public var resultId: String
     public var from: User
-    public var location: Location
+    public var location: Location?
     public var inlineMessageId: String?
     public var query: String
-    public init(resultId: String, from: User, location: Location, inlineMessageId: String? = nil, query: String) {
+    public init(resultId: String, from: User, location: Location? = nil, inlineMessageId: String? = nil, query: String) {
         self.resultId = resultId
         self.from = from
         self.location = location
