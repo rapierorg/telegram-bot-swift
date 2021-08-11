@@ -81,6 +81,9 @@ extension Scanner {
 
     #if os(Linux) || os(Windows)
     func scanUpTo(_ string: String) -> String? {
+        if string.isEmpty {
+            return scanUpToCharacters(from: CharacterSet())
+        }
         return scanUpToString(string)
     }
     #elseif os(OSX)
