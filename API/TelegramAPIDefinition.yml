@@ -254,7 +254,7 @@ fields:
     - type: PollType
     - allows_multiple_answers: Bool
     - correct_option_id: Int?
-    - explanation: String
+    - explanation: String?
     - explanation_entities: MessageEntity[]?
     - open_period: Int?
     - close_date: Date?
