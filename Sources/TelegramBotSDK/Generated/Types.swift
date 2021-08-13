@@ -467,11 +467,11 @@ public class Poll: Codable {
     public var type: PollType
     public var allowsMultipleAnswers: Bool
     public var correctOptionId: Int?
-    public var explanation: String
+    public var explanation: String?
     public var explanationEntities: [MessageEntity]? = []
     public var openPeriod: Int?
     public var closeDate: Date?
-    public init(id: String, question: String, options: [PollOption], totalVoterCount: Int, isClosed: Bool, isAnonymous: Bool, type: PollType, allowsMultipleAnswers: Bool, correctOptionId: Int? = nil, explanation: String, explanationEntities: [MessageEntity]? = nil, openPeriod: Int? = nil, closeDate: Date? = nil) {
+    public init(id: String, question: String, options: [PollOption], totalVoterCount: Int, isClosed: Bool, isAnonymous: Bool, type: PollType, allowsMultipleAnswers: Bool, correctOptionId: Int? = nil, explanation: String? = nil, explanationEntities: [MessageEntity]? = nil, openPeriod: Int? = nil, closeDate: Date? = nil) {
         self.id = id
         self.question = question
         self.options = options
