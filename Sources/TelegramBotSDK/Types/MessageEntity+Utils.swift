@@ -24,6 +24,7 @@ public enum MessageEntityType: String, Codable {
     case italic
     case underline
     case strikethrough
+    case spoiler
     case code
     case pre
     case textLink = "text_link"
