@@ -28,4 +28,13 @@ public enum MessageEntityType: String, Codable {
     case pre
     case textLink = "text_link"
     case textMention = "text_mention"
+    case blockquote
+  
+    case unknown
+  
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let raw = try container.decode(String.self)
+        self = MessageEntityType(rawValue: raw) ?? .unknown
+    }
 }
