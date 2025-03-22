@@ -39,18 +39,23 @@ extension TelegramBot {
 	
 	/// Perform asynchronous request.
 	/// - Returns: Decodable  on success. Nil on error, in which case `error` contains the details.
-    internal func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?] = [:], queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: TResult?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
+  internal func requestAsync<TResult>(_ endpoint: String, _ parameters: [String: Encodable?] = [:], queue: DispatchQueue = DispatchQueue.main, completion: ((_ result: TResult?, _ error: DataTaskError?) -> ())?) where TResult: Decodable {
 		
-        startDataTaskForEndpoint(endpoint, parameters: parameters, resultType: TResult.self) {
-			rawResult, error in
-            var resultValid = false
-            if (rawResult as? TResult?) != nil {
-                resultValid = true
-            }
-			queue.async() {
-                completion?(resultValid ? rawResult as! TResult? : nil, error)
-			}
-		}
+    startDataTaskForEndpoint(endpoint, parameters: parameters, resultType: TResult.self) { rawResult, error in
+      var resultValid = false
+      if (rawResult as? TResult?) != nil {
+          resultValid = true
+      }
+      if endpoint == "getFile" {
+        DispatchQueue.global().async {
+          completion?(resultValid ? rawResult as! TResult? : nil, error)
+        }
+      }  else {
+        queue.async() {
+          completion?(resultValid ? rawResult as! TResult? : nil, error)
+        }
+      }
+    }
 	}
 	
 	/// Perform asynchronous request.
